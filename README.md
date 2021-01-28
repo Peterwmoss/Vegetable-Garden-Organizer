@@ -17,8 +17,8 @@
 
 ### Spørgsmål til Ann
 
-* Må vi tilføje dig til GitHub?
-* Hvorfor vil man gerne se sin historik?
+* Må vi tilføje dig til GitHub? - Ja hvis vi sætter hende ind i, hvordan det fungerer
+* Hvorfor vil man gerne se sin historik? - Til forskellige funktionaliteter dækket af vores actions og crop rotation. Skal mere være en notesbog eller personlig log
 
 ## 27/01-21
 
@@ -31,6 +31,13 @@
 * Plan
 * Værktøjer op og køre + simpel app
 * Skitser og ideer til funktioner
+
+## 19/01-20
+
+### Agenda
+
+* Ret projektbeskrivelse
+
 
 ## 10/12-20
 
@@ -46,3 +53,21 @@
 * Påpege hvor de andre apps er mangelfulde - man skal nok ikke skrive “there are currently no apps”
 * Beholde listen + undersøge
 * Efter eksamen kan vi mødes, hvordan vi kan komme i gang
+
+## 07/12-20
+
+### Agenda
+
+* Videreudvikling og formulering af kravspecifikation
+
+## 26/11-20
+
+### Agenda
+
+* Kravudvikling med Ann
+
+## 05/11-20
+
+### Agenda
+
+* Indledende møde med vejleder
