@@ -1,5 +1,13 @@
 # Køkkenhave app
 
+## Definition of done
+
+* User story er opfyldt
+* Der er skrevet dokumentation
+* CI passed
+* Code review
+* Unit tests til de dele af koden, der er logik
+
 ## 28/01-21
 
 ### Agenda
