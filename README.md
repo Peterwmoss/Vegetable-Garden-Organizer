@@ -20,6 +20,10 @@
 
 ### Feedback
 
+* Plan
+* Værktøjer op og køre + simpel app
+* Skitser og ideer til funktioner
+
 ## 10/12-20
 
 ### Agenda
@@ -28,7 +32,7 @@
 
 ### Feedback
 
-* mangler en refleksion - kunne det være gjort på en anden måde? Er der ting vi skal gå på kompromis med. Bare nedenunder de ting vi vil aflevere. Man kunne kalde det refleksion, kritik, sammenligning. Tilføje “desuden vil rapporten indeholde en kritisk sektion”
+* Mangler en refleksion - kunne det være gjort på en anden måde? Er der ting vi skal gå på kompromis med. Bare nedenunder de ting vi vil aflevere. Man kunne kalde det refleksion, kritik, sammenligning. Tilføje “desuden vil rapporten indeholde en kritisk sektion”
 * Starte med: this goal of this project, the aim of, f.eks. bare flytte den sætning vi allerede har op i toppen
 * Among other things - åbne for mere end de fire ting
 * Påpege hvor de andre apps er mangelfulde - man skal nok ikke skrive “there are currently no apps”
