@@ -1,5 +1,11 @@
 # Køkkenhave app
 
+## 03/02-21
+
+* Mock-ups
+* Plant locations #12
+* Rapportskrivning
+
 ## 01/02-21
 
 ### Agenda
@@ -10,6 +16,7 @@
 * Setup kodeprojekt
 * Setup rapport
 * Sketching og wireframing af #4, #6, #13
+* Styleguide
 
 ### Spørgsmål til vejleder
 
