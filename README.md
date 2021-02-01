@@ -21,7 +21,7 @@
 
 ### Spørgsmål til vejleder
 
-* Hvad skal rapporten indeholde udover dokumentation, brugervejledning, refleksion og sammmenligning?
+* Hvad skal rapporten indeholde udover dokumentation, design, brugervejledning, refleksion og sammmenligning?
 
 ## 28/01-21
 
