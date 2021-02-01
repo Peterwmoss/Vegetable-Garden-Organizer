@@ -20,9 +20,13 @@
 * Sketching og wireframing af #4, #6, #13
 * Styleguide
 
-### Spørgsmål til vejleder
+### Spørgsmål til Jørgen
 
 * Hvad skal rapporten indeholde udover dokumentation, design, brugervejledning, refleksion og sammmenligning?
+
+### Spørgsmål til Ann
+
+* Hvor mange forskellige sorter af samme plante har man som regel?
 
 ## 28/01-21
 
