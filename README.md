@@ -4,7 +4,6 @@
 
 ### Agenda
 
-* Mock-ups
 * Plant locations #12
 * Rapportskrivning
 
