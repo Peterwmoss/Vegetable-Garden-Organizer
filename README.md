@@ -16,7 +16,7 @@
 * Kig på gammelt projekt
 * Læs i Nerd Ranch Guide og Android documentation
 * Svar mail
-* Setup initial project
+* Setup kodeprojekt
 * Setup rapport
 
 ### Spørgsmål til vejleder
