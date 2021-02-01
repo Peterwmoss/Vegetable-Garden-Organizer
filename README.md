@@ -7,16 +7,17 @@
 * CI passed
 * Code review
 * Unit tests til de dele af koden, der er logik
-* Kode til både horisontal og landskab
+* Kode til både portræt og landskab
 
 ## 01/02-21
 
 ### Agenda
 
 * Kig på gammelt projekt
-* Læs i Nerd Ranch Guide
+* Læs i Nerd Ranch Guide og Android documentation
 * Svar mail
 * Setup initial project
+* Setup rapport
 
 ## 28/01-21
 
