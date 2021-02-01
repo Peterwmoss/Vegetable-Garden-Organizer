@@ -1,14 +1,5 @@
 # Køkkenhave app
 
-## Definition of done
-
-* User story er opfyldt
-* Der er skrevet dokumentation
-* CI passed
-* Code review
-* Unit tests til de dele af koden, der er logik
-* Kode til både portræt og landskab
-
 ## 01/02-21
 
 ### Agenda
@@ -18,6 +9,7 @@
 * Svar mail
 * Setup kodeprojekt
 * Setup rapport
+* Sketching og wireframing af #4, #6, #13
 
 ### Spørgsmål til vejleder
 
