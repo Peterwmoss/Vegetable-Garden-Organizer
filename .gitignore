@@ -25,3 +25,6 @@ local.properties
 /report/*.out
 /.idea/vcs.xml
 /report/*.run.xml
+/app/.classpath
+/app/.project
+/app/.settings
