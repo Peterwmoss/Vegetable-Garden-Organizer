@@ -19,7 +19,6 @@
 * Setup rapport
 * Sketching og wireframing af #4, #6, #13
 * Styleguide
-* Moodboard
 
 ### Spørgsmål til vejleder
 
