@@ -19,6 +19,10 @@
 * Setup initial project
 * Setup rapport
 
+### Spørgsmål til vejleder
+
+* Hvad skal rapporten indeholde udover dokumentation, brugervejledning, refleksion og sammmenligning?
+
 ## 28/01-21
 
 ### Agenda
