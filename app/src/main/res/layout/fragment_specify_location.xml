@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/create_location_text"
-        android:textSize="@dimen/small"
+        android:textSize="@dimen/font_small"
         android:id="@+id/specify_location_text_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,7 +20,7 @@
         android:src="@drawable/greenhouse"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
-        android:layout_height="@dimen/xlarge"
-        android:layout_width="@dimen/xlarge"/>
+        android:layout_height="@dimen/font_xlarge"
+        android:layout_width="@dimen/font_xlarge"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

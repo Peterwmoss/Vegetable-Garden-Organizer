@@ -3,11 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".creategarden.ChoosePlantFragment">
+    tools:context=".creategarden.ChoosePlantFragment"
+    android:padding="@dimen/font_small" >
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/font_medium"
         android:id="@+id/search_plant_edittext" />
 
     <androidx.recyclerview.widget.RecyclerView
