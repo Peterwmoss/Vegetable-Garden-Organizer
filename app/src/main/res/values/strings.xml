@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Vegetable Gardening</string>
     <string name="createGarden">New Garden</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="create_location_text">Hvor er dit planteområde lokaliseret?</string>
 </resources>
