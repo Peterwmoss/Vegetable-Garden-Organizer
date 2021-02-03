@@ -16,7 +16,7 @@ class CreateGardenActivity : AppCompatActivity() {
                 .beginTransaction()
                 .add(
                     R.id.fragment_container,
-                   ChoosePlantFragment()
+                   SpecifyLocationFragment()
                 )
                 .commit()
         }
