@@ -4,7 +4,7 @@
 
 ### Agenda
 
-* Plant locations #12
+* Create garden space design #28
 * Rapportskrivning
 
 ## 01/02-21
