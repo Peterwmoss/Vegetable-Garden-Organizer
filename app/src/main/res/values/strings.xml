@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Vegetable Gardening</string>
     <string name="createGarden">New Garden</string>
+    <string name="create_location_text">Hvor er dit planteområde lokaliseret?</string>
 </resources>
