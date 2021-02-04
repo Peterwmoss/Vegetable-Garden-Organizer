@@ -1,10 +1,16 @@
 # Køkkenhave app
 
+## 04/02-21
+
+* Tilføj https://developer.android.com/reference/android/widget/ImageButton til litteraturliste
+* Design og tegning af ikoner til specify location
+* Videreudvikling af create garden space design #28
+
 ## 03/02-21
 
 ### Agenda
 
-* Create garden space design #28
+* Videreudvikling af create garden space design #28
 * Rapportskrivning
 
 ## 01/02-21
