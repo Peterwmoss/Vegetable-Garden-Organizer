@@ -2,7 +2,6 @@
 
 ## 04/02-21
 
-* Tilføj https://developer.android.com/reference/android/widget/ImageButton til litteraturliste
 * Design og tegning af ikoner til specify location
 * Videreudvikling af create garden space design #28
 
