@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
+import dk.mifu.pmos.vegetablegardening.data.PlantViewModel
 import dk.mifu.pmos.vegetablegardening.plantlist.PlantAdapter
 
 class ChoosePlantFragment : Fragment() {
@@ -31,7 +32,7 @@ class ChoosePlantFragment : Fragment() {
     }
 
     private fun updateUI() {
-        val list = listOf("Hello", "World").toTypedArray()
+        val list = PlantViewModel().plants.toTypedArray()
         adapter = PlantAdapter(list)
         recyclerView.adapter = adapter
     }
