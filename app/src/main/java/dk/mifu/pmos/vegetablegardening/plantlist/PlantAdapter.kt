@@ -7,13 +7,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
+import dk.mifu.pmos.vegetablegardening.data.Plant
 
-class PlantAdapter(private val dataSet: Array<String>) : RecyclerView.Adapter<PlantAdapter.ViewHolder>() {
+class PlantAdapter(private val dataSet: Array<Plant>) : RecyclerView.Adapter<PlantAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val plantName: TextView = view.findViewById(R.id.choose_plant_row_item_text)
 
         init {
-            view.setOnClickListener { Toast.makeText(view.context, "${plantName.text} pressed!", Toast.LENGTH_LONG).show() }
+            view.setOnClickListener { Toast.makeText(view.context, "${plantName.text} pressed!", Toast.LENGTH_SHORT).show() }
         }
     }
 
@@ -24,12 +25,9 @@ class PlantAdapter(private val dataSet: Array<String>) : RecyclerView.Adapter<Pl
         return ViewHolder(view)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.plantName.text = dataSet[position]
+        viewHolder.plantName.text = dataSet[position].name
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
-
 }
