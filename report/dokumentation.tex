@@ -6,7 +6,12 @@
 \subsection{XML}
 
 \subsection{Opret et nyt planteområde}
+Den overordnede aktivitet til at oprette et nyt planteområde \texttt{CreateGardenActivity.kt} starter med at indsætte \texttt{SpecifyLocationFragment.kt}, som lader brugeren vælge et område til deres planter.
+
 \subsubsection{Vælg område}
+\texttt{fragment\_specify\_location.xml} indeholder et \texttt{TextView} og tre \texttt{ImageButtons} hver med tilhørende \texttt{TextView}, da der er tre forskellige typer af områder, som kan have indflydelse på planters pasning. Hver \texttt{ImageButton} har en \texttt{drawable} som src, der består af en \texttt{selector} med hver state for billedet. Der er således defineret et billede for tryk, fokusering og normal tilstand af hver knap.
+
+Hver af knapperne har en \texttt{listener}. Når brugeren har valgt en lokation, sørger den gældende \texttt{listener} for at skifte fragment, og sende info om den valgte lokation med i fragmentets konstruktør.
 
 \subsubsection{Byg layoutet}
 
