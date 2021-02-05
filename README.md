@@ -1,5 +1,9 @@
 # Køkkenhave app
 
+## 05/02-21
+
+* Videreudvikling af create garden space design #28
+
 ## 04/02-21
 
 * Design og tegning af ikoner til specify location
