@@ -13,27 +13,19 @@ import dk.mifu.pmos.vegetablegardening.plantlist.PlantAdapter
 
 class ChoosePlantFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
     private var adapter : PlantAdapter? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_choose_plant, container, false)
-        recyclerView = view.findViewById(R.id.choose_plant_recycler_view)
+
+        // Setup recycler view with the plant adapter
+        val recyclerView = view.findViewById<RecyclerView>(R.id.choose_plant_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
-
-        updateUI()
-
-        return view
-    }
-
-    private fun updateUI() {
         val list = PlantViewModel().plants.toTypedArray()
         adapter = PlantAdapter(list)
         recyclerView.adapter = adapter
+
+        return view
     }
 }
