@@ -12,6 +12,7 @@
 
 * Videreudvikling af create garden space design #28
 * Dokumentation #28
+* Opdateret definition of done
 
 ## 04/02-21
 
