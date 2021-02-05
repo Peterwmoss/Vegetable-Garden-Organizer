@@ -3,6 +3,7 @@
 ## 05/02-21
 
 * Videreudvikling af create garden space design #28
+* Dokumentation #28
 
 ## 04/02-21
 
