@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/spacing_medium">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_location_text"
+        android:textSize="@dimen/font_medium"
+        android:textColor="@color/black"
+        android:fontFamily="@font/roboto"
+        android:id="@+id/specify_location_text_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <ImageButton
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/specify_location_text_view"
+        android:background="@null"
+        android:id="@+id/outdoors_button"
+        android:src="@drawable/sun"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_height="@dimen/picture"
+        android:layout_width="@dimen/picture"
+        android:layout_marginTop="@dimen/spacing_medium"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/outdoors_button"
+        app:layout_constraintEnd_toEndOf="@id/outdoors_button"
+        app:layout_constraintTop_toBottomOf="@id/outdoors_button"
+        android:id="@+id/outdoors_text_view"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_medium"
+        android:fontFamily="@font/roboto"
+        android:text="@string/outdoors"/>
+
+    <ImageButton
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/outdoors_text_view"
+        android:background="@null"
+        android:id="@+id/indoors_button"
+        android:src="@drawable/house"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_height="@dimen/picture"
+        android:layout_width="@dimen/picture"
+        android:layout_marginTop="@dimen/spacing_medium"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/indoors_button"
+        app:layout_constraintEnd_toEndOf="@id/indoors_button"
+        app:layout_constraintTop_toBottomOf="@id/indoors_button"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_medium"
+        android:fontFamily="@font/roboto"
+        android:text="@string/indoors"/>
+
+    <ImageButton
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/indoors_button"
+        android:background="@null"
+        android:id="@+id/greenhouse_button"
+        android:src="@drawable/greenhouse"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_height="@dimen/picture"
+        android:layout_width="@dimen/picture"
+        android:layout_marginTop="@dimen/spacing_medium"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/greenhouse_button"
+        app:layout_constraintEnd_toEndOf="@id/greenhouse_button"
+        app:layout_constraintTop_toBottomOf="@id/greenhouse_button"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_medium"
+        android:fontFamily="@font/roboto"
+        android:text="@string/greenhouse"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
