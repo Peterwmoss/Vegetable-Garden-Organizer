@@ -8,13 +8,16 @@
     tools:context=".creategarden.ChoosePlantFragment" >
 
     <EditText
+        android:id="@+id/search_plant_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/green"
+        android:inputType="textCapWords"
+        android:textColor="@color/black"
         android:textSize="@dimen/font_medium"
-        android:id="@+id/search_plant_edittext"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/choose_plant_recycler_view"
