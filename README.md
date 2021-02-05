@@ -1,5 +1,13 @@
 # Køkkenhave app
 
+## 08/02-21
+
+* Møde med Jørgen:
+  * Spørgsmål fra 01/02-21
+  * Ny DoD
+  * Rapportstatus
+  * Kodestatus
+
 ## 05/02-21
 
 * Videreudvikling af create garden space design #28
