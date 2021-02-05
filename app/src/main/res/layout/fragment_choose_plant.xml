@@ -15,6 +15,7 @@
         android:inputType="textCapWords"
         android:textColor="@color/black"
         android:textSize="@dimen/font_medium"
+        android:fontFamily="@font/roboto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
