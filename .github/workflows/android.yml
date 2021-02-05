@@ -13,5 +13,5 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Android Github Action
-      uses: Vukan-Markovic/Github-Android-Action@1.2
+    - name: Android build
+      uses: vgaidarji/android-github-actions-build@v1.0.1
