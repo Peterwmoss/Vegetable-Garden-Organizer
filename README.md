@@ -7,6 +7,11 @@
   * Ny DoD
   * Rapportstatus
   * Kodestatus
+  
+## 07/02-21
+
+* Søgefunktion til #28
+* Dokumentation #28
 
 ## 05/02-21
 
