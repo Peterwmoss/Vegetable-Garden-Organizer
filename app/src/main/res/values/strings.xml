@@ -5,4 +5,5 @@
     <string name="outdoors">Outdoors</string>
     <string name="indoors">Indoors</string>
     <string name="greenhouse">Greenhouse</string>
+    <string name="search_text">Search</string>
 </resources>
