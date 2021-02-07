@@ -10,13 +10,13 @@
   
 ## 07/02-21
 
-* Søgefunktion til #28
-* Dokumentation #28
+* Søgefunktion til #29
+* Dokumentation #29
 
 ## 05/02-21
 
-* Videreudvikling af create garden space design #28
-* Dokumentation #28
+* Videreudvikling af create garden space #29
+* Dokumentation #29
 * Opdateret definition of done
 
 ## 04/02-21
