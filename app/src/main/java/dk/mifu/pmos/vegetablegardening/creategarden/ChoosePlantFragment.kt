@@ -14,7 +14,7 @@ import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.data.PlantViewModel
 import dk.mifu.pmos.vegetablegardening.plantlist.PlantAdapter
 
-class ChoosePlantFragment : Fragment() {
+class ChoosePlantFragment(private val viewModel: PlantViewModel) : Fragment() {
 
     private var adapter : PlantAdapter? = null
 
@@ -35,7 +35,7 @@ class ChoosePlantFragment : Fragment() {
 
     private fun createList(recyclerView: RecyclerView) {
         recyclerView.layoutManager = LinearLayoutManager(context)
-        val list = PlantViewModel().plants
+        val list = viewModel.plants
         adapter = PlantAdapter(list)
         recyclerView.adapter = adapter
     }
