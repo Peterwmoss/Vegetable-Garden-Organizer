@@ -11,6 +11,16 @@
   * Kodestatus
 
 ### Vejledning
+
+* Brug tid på at finde en kilde
+* Spørg bruger om sprog eller lad info styre det
+* Lille dokumentation
+* Hvorfor frem for hvad
+* Nytten af appen falder med om der er nogle gode informationer i den
+* Peer-community hvor man stiller appen til rådighed - brugerne kan tilføje og skabe indhold
+* Kemi-luppen - app, man kan bruge i fx supermakred. Scanner produkt og giver detaljeret beskrivelse. Her har man lavet et samarbejde med dem, der leverer produktet - det kan vi også undersøge
+* Datagrundlag !!!
+* Tænk over GitHub og deling
   
 ## 07/02-21
 
