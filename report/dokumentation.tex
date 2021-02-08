@@ -18,6 +18,11 @@ Hver af knapperne har en \texttt{listener}. Når brugeren har valgt en lokation,
 \subsubsection{Vælg planter}
 
 \texttt{fragment\_choose\_plant.xml} layoutet gør brug af en \texttt{EditText}, som udgør et søgefelt, og et \texttt{RecyclerView}, som er listen af planter.
+Grunden til at vi gør brug af en \texttt{EditText} frem for \texttt{SearchView} er, at \texttt{SearchView} ikke understøtter en brugerdefineret font og den har nogle funktioner, som vi ikke ønsker at gøre brug af, hvorfor det giver bedre mening at bruge en \texttt{EditText}.
+
+Til at vise listen af planter gør vi brug af designmønsteret \texttt{MVVM} - \texttt{Model View ViewModel} - da vi ønsker at kunne repræsentere vores data på tværs af lifecycles.
+
+Planter er repræsenteret i en datastruktur, som hedder \texttt{Plant}, så vi har en abstrakt måde at arbejde med planter på.
 
 \subsection{Datarepræsentation}
 
