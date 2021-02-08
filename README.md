@@ -2,11 +2,15 @@
 
 ## 08/02-21
 
+### Agenda
+
 * Møde med Jørgen:
-  * Spørgsmål fra 01/02-21
+  * Spørgsmål fra 01/02-21 - Hvad skal rapporten indeholde udover dokumentation, design, brugervejledning, refleksion og sammmenligning?
   * Ny DoD
   * Rapportstatus
   * Kodestatus
+
+### Vejledning
   
 ## 07/02-21
 
