@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import dk.mifu.pmos.vegetablegardening.R
+import dk.mifu.pmos.vegetablegardening.data.Garden
 import dk.mifu.pmos.vegetablegardening.data.Location
 import kotlinx.android.synthetic.main.fragment_specify_location.*
+import java.lang.IllegalStateException
 
 class SpecifyLocationFragment: Fragment() {
     override fun onCreateView(
@@ -26,7 +28,8 @@ class SpecifyLocationFragment: Fragment() {
     }
 
     private fun startCreateGridFragment(location: Location){
-        val createGridFragment = CreateGridFragment(location)
+        (activity as CreateGardenActivity).gardenViewModel.gardens.add(Garden(location))
+        val createGridFragment = CreateGridFragment()
         fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, createGridFragment)?.commit()
     }
 }
