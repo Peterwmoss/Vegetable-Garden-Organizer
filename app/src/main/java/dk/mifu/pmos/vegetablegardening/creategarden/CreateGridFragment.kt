@@ -1,6 +1,11 @@
 package dk.mifu.pmos.vegetablegardening.creategarden
 
+import android.content.Context
+import android.media.Image
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,24 +36,9 @@ class CreateGridFragment() : Fragment() {
         location_text_view.text = "Yeet"
 
         add_column_button.setOnClickListener{
-            for(i in 0 until columns){
+            for(i in 0 until rows){
                 val constraintSet = ConstraintSet()
-                val gridTile = ImageButton(context)
-
-                val params = Constraints.LayoutParams(
-                    Constraints.LayoutParams.WRAP_CONTENT,
-                    Constraints.LayoutParams.WRAP_CONTENT
-                )
-
-                params.setMargins(0,0,0,0)
-
-                gridTile.setImageResource(R.drawable.grid_tile)
-                gridTile.scaleType = ImageView.ScaleType.FIT_CENTER
-                gridTile.adjustViewBounds = true
-                gridTile.background = null
-                gridTile.id = View.generateViewId()
-                gridTile.setPadding(0,0,0,0)
-                gridTile.layoutParams = params
+                val gridTile = GridTile(context!!)
                 parent_layout.addView(gridTile)
 
                 garden.tileIds[Pair(columns,i)] = gridTile.id
@@ -62,6 +52,28 @@ class CreateGridFragment() : Fragment() {
                 constraintSet.connect(R.id.add_column_button, ConstraintSet.START, gridTile.id, ConstraintSet.END)
                 constraintSet.applyTo(parent_layout)
             }
+            columns += 1
+        }
+    }
+
+    private inner class GridTile(context: Context): androidx.appcompat.widget.AppCompatImageButton(context) {
+        init {
+            setImageResource(R.drawable.grid_tile)
+            scaleType = ScaleType.FIT_CENTER
+            adjustViewBounds = true
+            background = null
+            id = View.generateViewId()
+            setPadding(0,0,0,0)
+            layoutParams = setParams()
+        }
+
+        private fun setParams(): Constraints.LayoutParams{
+            val params = Constraints.LayoutParams(
+                Constraints.LayoutParams.WRAP_CONTENT,
+                Constraints.LayoutParams.WRAP_CONTENT
+            )
+            params.setMargins(0,0,0,0)
+            return params
         }
     }
 }
