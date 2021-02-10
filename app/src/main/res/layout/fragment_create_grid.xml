@@ -1,6 +1,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/parent_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
@@ -9,8 +10,71 @@
         android:id="@+id/location_text_view"
         android:fontFamily="@font/roboto"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="@dimen/font_xlarge"
         android:textColor="@color/black"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/grid_tile"
+        app:layout_constraintEnd_toStartOf="@id/tile2_image_view"
+        app:layout_constraintTop_toBottomOf="@id/location_text_view"
+        app:layout_constraintBottom_toTopOf="@id/tile3_image_view"
+        android:id="@+id/tile1_image_view"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:background="@null"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/grid_tile"
+        app:layout_constraintStart_toEndOf="@id/tile1_image_view"
+        app:layout_constraintTop_toBottomOf="@id/location_text_view"
+        app:layout_constraintBottom_toTopOf="@id/tile4_image_view"
+        android:id="@+id/tile2_image_view"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:background="@null"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/grid_tile"
+        app:layout_constraintEnd_toStartOf="@id/tile4_image_view"
+        app:layout_constraintTop_toBottomOf="@id/tile1_image_view"
+        android:id="@+id/tile3_image_view"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:background="@null"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/grid_tile"
+        app:layout_constraintStart_toEndOf="@id/tile3_image_view"
+        app:layout_constraintTop_toBottomOf="@id/tile2_image_view"
+        android:id="@+id/tile4_image_view"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:background="@null"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        app:layout_constraintStart_toEndOf="@id/tile2_image_view"
+        app:layout_constraintTop_toBottomOf="@id/location_text_view"
+        android:id="@+id/add_column_button"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tile3_image_view"
+        android:id="@+id/add_row_button"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
