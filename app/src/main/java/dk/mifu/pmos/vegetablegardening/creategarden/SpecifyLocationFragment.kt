@@ -30,9 +30,6 @@ class SpecifyLocationFragment: Fragment() {
     private fun startCreateGridFragment(location: Location){
         (activity as CreateGardenActivity).gardenViewModel.gardens.add(Garden(location))
         val createGridFragment = CreateGridFragment()
-        if (isAdded)
-            parentFragmentManager.beginTransaction().replace(R.id.fragment_container, createGridFragment).commit()
-        else
-            throw IllegalStateException("Something went wrong")
+        fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, createGridFragment)?.commit()
     }
 }
