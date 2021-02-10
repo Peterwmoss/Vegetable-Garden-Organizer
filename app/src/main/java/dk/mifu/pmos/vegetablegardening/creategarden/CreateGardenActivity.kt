@@ -4,14 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import dk.mifu.pmos.vegetablegardening.R
+import dk.mifu.pmos.vegetablegardening.data.CurrentGardenViewModel
 import dk.mifu.pmos.vegetablegardening.data.GardenViewModel
 import dk.mifu.pmos.vegetablegardening.data.Location
 import dk.mifu.pmos.vegetablegardening.data.PlantViewModel
 
 class CreateGardenActivity : AppCompatActivity() {
-
-    val plantViewModel: PlantViewModel by viewModels()
-    val gardenViewModel: GardenViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

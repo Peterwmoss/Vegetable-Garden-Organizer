@@ -6,4 +6,5 @@
     <string name="indoors">Indoors</string>
     <string name="greenhouse">Greenhouse</string>
     <string name="search_text">Search</string>
+    <string name="select_plant_text">Select Plant</string>
 </resources>

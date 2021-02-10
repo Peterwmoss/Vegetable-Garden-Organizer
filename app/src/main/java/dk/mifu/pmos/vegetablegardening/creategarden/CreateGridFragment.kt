@@ -6,18 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dk.mifu.pmos.vegetablegardening.R
-import dk.mifu.pmos.vegetablegardening.data.Location
 import kotlinx.android.synthetic.main.fragment_create_grid.*
 
-class CreateGridFragment(private val location: Location) : Fragment() {
-
+class CreateGridFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
         return inflater.inflate(R.layout.fragment_create_grid, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        location_text_view.text = location.toString()
+
+        insert_plant_btn.setOnClickListener {
+            // TODO update when GridTiles starts fragment
+            val choosePlantFragment = ChoosePlantFragment(Pair(0,0))
+            fragmentManager?.beginTransaction()?.add(R.id.fragment_container, choosePlantFragment)?.commit()
+        }
     }
 }
