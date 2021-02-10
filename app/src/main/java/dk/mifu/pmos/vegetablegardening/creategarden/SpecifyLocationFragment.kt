@@ -1,19 +1,16 @@
 package dk.mifu.pmos.vegetablegardening.creategarden
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.data.CurrentGardenViewModel
 import dk.mifu.pmos.vegetablegardening.data.Garden
 import dk.mifu.pmos.vegetablegardening.data.Location
 import kotlinx.android.synthetic.main.fragment_specify_location.*
-import java.lang.IllegalStateException
 
 class SpecifyLocationFragment: Fragment() {
     private val currentGardenViewModel: CurrentGardenViewModel by activityViewModels()
@@ -34,7 +31,13 @@ class SpecifyLocationFragment: Fragment() {
     }
 
     private fun startCreateGridFragment(location: Location){
-        currentGardenViewModel.garden.value = Garden(location)
+        // TODO Fix so that it does this automatically in the constructor if no map is given
+        val tileIds = HashMap<Pair<Int,Int>, Int>()
+        tileIds[Pair(0,0)] = R.id.tile1_image_view
+        tileIds[Pair(1,0)] = R.id.tile2_image_view
+        tileIds[Pair(0,1)] = R.id.tile3_image_view
+        tileIds[Pair(1,1)] = R.id.tile4_image_view
+        currentGardenViewModel.garden.value = Garden(location, null, HashMap(), tileIds)
         val createGridFragment = CreateGridFragment()
         fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, createGridFragment)?.commit()
     }
