@@ -55,6 +55,32 @@ class CreateGridFragment() : Fragment() {
             }
             columns++
         }
+
+        add_row_button.setOnClickListener{
+            for(i in 0 until columns){
+                val constraintSet = ConstraintSet()
+                val gridTile = GridTile(context!!)
+                parent_layout.addView(gridTile)
+
+                garden.tileIds[Pair(i, rows)] = gridTile.id //Update garden with new tile
+
+                val prevTileId = garden.tileIds[Pair(i-1, rows)]
+                val upperTileId = garden.tileIds[Pair(i, rows-1)]
+
+                constraintSet.apply {
+                    clone(parent_layout)
+                    if(prevTileId!=null) {
+                        connect(gridTile.id, START, prevTileId, END)
+                    } else {
+                        connect(gridTile.id, START, parent_layout.id, START)
+                    }
+                    connect(gridTile.id, TOP, upperTileId!!, BOTTOM)
+                    connect(R.id.add_row_button, TOP, gridTile.id, BOTTOM)
+                    applyTo(parent_layout)
+                }
+            }
+            rows++
+        }
     }
 
     private inner class GridTile(context: Context): androidx.appcompat.widget.AppCompatImageButton(context) {
