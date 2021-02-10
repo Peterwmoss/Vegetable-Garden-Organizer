@@ -1,16 +1,10 @@
 package dk.mifu.pmos.vegetablegardening.creategarden
 
 import android.content.Context
-import android.media.Image
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.Constraints
 import androidx.fragment.app.Fragment
@@ -21,10 +15,10 @@ import kotlinx.android.synthetic.main.fragment_create_grid.*
 class CreateGridFragment() : Fragment() {
     private lateinit var garden: Garden
 
-    private var START = ConstraintSet.START
-    private var END = ConstraintSet.END
-    private var TOP = ConstraintSet.TOP
-    private var BOTTOM = ConstraintSet.BOTTOM
+    private val START = ConstraintSet.START
+    private val END = ConstraintSet.END
+    private val TOP = ConstraintSet.TOP
+    private val BOTTOM = ConstraintSet.BOTTOM
 
     //Initial number of grid tiles
     private var columns = 2;
@@ -49,7 +43,7 @@ class CreateGridFragment() : Fragment() {
                 garden.tileIds[Pair(columns,i)] = gridTile.id //Update garden with new tile
 
                 val prevTileId = garden.tileIds[Pair(columns-1,i)]
-                val upperTileId = garden.tileIds[Pair(columns, i-1)] ?: location_text_view.id
+                val upperTileId = garden.tileIds[Pair(columns, i-1)] ?: location_text_view.id //Choosing uppermost view component if no tile above
 
                 constraintSet.apply{
                     clone(parent_layout)
@@ -59,17 +53,21 @@ class CreateGridFragment() : Fragment() {
                     applyTo(parent_layout)
                 }
             }
-            columns += 1
+            columns++
         }
     }
 
     private inner class GridTile(context: Context): androidx.appcompat.widget.AppCompatImageButton(context) {
         init {
+            id = View.generateViewId()
+
+            //Picture
             setImageResource(R.drawable.grid_tile)
             scaleType = ScaleType.FIT_CENTER
             adjustViewBounds = true
             background = null
-            id = View.generateViewId()
+
+            //Layout
             setPadding(0,0,0,0)
             layoutParams = setParams()
         }
