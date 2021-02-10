@@ -21,9 +21,14 @@ import kotlinx.android.synthetic.main.fragment_create_grid.*
 class CreateGridFragment() : Fragment() {
     private lateinit var garden: Garden
 
+    private var START = ConstraintSet.START
+    private var END = ConstraintSet.END
+    private var TOP = ConstraintSet.TOP
+    private var BOTTOM = ConstraintSet.BOTTOM
+
     //Initial number of grid tiles
-    var columns = 2;
-    var rows = 2;
+    private var columns = 2;
+    private var rows = 2;
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -41,16 +46,18 @@ class CreateGridFragment() : Fragment() {
                 val gridTile = GridTile(context!!)
                 parent_layout.addView(gridTile)
 
-                garden.tileIds[Pair(columns,i)] = gridTile.id
+                garden.tileIds[Pair(columns,i)] = gridTile.id //Update garden with new tile
 
                 val prevTileId = garden.tileIds[Pair(columns-1,i)]
                 val upperTileId = garden.tileIds[Pair(columns, i-1)] ?: location_text_view.id
 
-                constraintSet.clone(parent_layout)
-                constraintSet.connect(gridTile.id, ConstraintSet.START, prevTileId!!, ConstraintSet.END)
-                constraintSet.connect(gridTile.id, ConstraintSet.TOP, upperTileId, ConstraintSet.BOTTOM)
-                constraintSet.connect(R.id.add_column_button, ConstraintSet.START, gridTile.id, ConstraintSet.END)
-                constraintSet.applyTo(parent_layout)
+                constraintSet.apply{
+                    clone(parent_layout)
+                    connect(gridTile.id, START, prevTileId!!, END)
+                    connect(gridTile.id, TOP, upperTileId, BOTTOM)
+                    connect(R.id.add_column_button, START, gridTile.id, END)
+                    applyTo(parent_layout)
+                }
             }
             columns += 1
         }
