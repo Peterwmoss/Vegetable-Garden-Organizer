@@ -66,6 +66,8 @@ class ChoosePlantFragment(private val coordinate: Pair<Int, Int>) : Fragment() {
         init {
             view.setOnClickListener {
                 currentGardenViewModel.garden.value!!.plants[coordinate] = Plant(plantName.text.toString())
+                fragmentManager?.beginTransaction()?.remove(this@ChoosePlantFragment)
+                        ?.commit()
             }
         }
     }
