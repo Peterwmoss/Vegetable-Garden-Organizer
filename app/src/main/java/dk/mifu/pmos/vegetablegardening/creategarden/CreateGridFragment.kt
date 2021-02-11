@@ -42,9 +42,8 @@ class CreateGridFragment : Fragment() {
                 ?.commit()
         }
 
-        add_column_button.setOnClickListener{
+        add_column_right_button.setOnClickListener{
             for(i in 0 until rows){
-                val constraintSet = ConstraintSet()
                 val gridTile = GridTile(requireContext())
                 parent_layout.addView(gridTile)
 
@@ -52,14 +51,7 @@ class CreateGridFragment : Fragment() {
 
                 val prevTileId = garden.tileIds[Pair(columns-1,i)]
                 val upperTileId = garden.tileIds[Pair(columns, i-1)] ?: insert_plant_btn.id //Choosing uppermost view component if no tile above
-
-                constraintSet.apply{
-                    clone(parent_layout)
-                    connect(gridTile.id, START, prevTileId!!, END)
-                    connect(gridTile.id, TOP, upperTileId, BOTTOM)
-                    connect(R.id.add_column_button, START, gridTile.id, END)
-                    applyTo(parent_layout)
-                }
+                gridTile.addToGrid(prevTileId!!, upperTileId, true)
             }
             columns++
         }
@@ -72,20 +64,9 @@ class CreateGridFragment : Fragment() {
 
                 garden.tileIds[Pair(i, rows)] = gridTile.id //Update garden with new tile
 
-                val prevTileId = garden.tileIds[Pair(i-1, rows)]
+                val prevTileId = garden.tileIds[Pair(i-1, rows)] ?: add_column_left_button.id
                 val upperTileId = garden.tileIds[Pair(i, rows-1)]
-
-                constraintSet.apply {
-                    clone(parent_layout)
-                    if(prevTileId!=null) {
-                        connect(gridTile.id, START, prevTileId, END)
-                    } else {
-                        connect(gridTile.id, START, parent_layout.id, START)
-                    }
-                    connect(gridTile.id, TOP, upperTileId!!, BOTTOM)
-                    connect(R.id.add_row_button, TOP, gridTile.id, BOTTOM)
-                    applyTo(parent_layout)
-                }
+                gridTile.addToGrid(prevTileId, upperTileId!!, false)
             }
             rows++
         }
@@ -113,6 +94,22 @@ class CreateGridFragment : Fragment() {
             )
             params.setMargins(0,0,0,0)
             return params
+        }
+
+        fun addToGrid(prevTileId: Int, upperTileId: Int, row: Boolean) {
+            val constraintSet = ConstraintSet()
+
+            constraintSet.apply{
+                clone(parent_layout)
+                connect(id, START, prevTileId, END)
+                connect(id, TOP, upperTileId, BOTTOM)
+                if(row){
+                    connect(R.id.add_column_right_button, START, id, END)
+                } else {
+                    connect(R.id.add_row_button, TOP, id, BOTTOM)
+                }
+                applyTo(parent_layout)
+            }
         }
     }
 }

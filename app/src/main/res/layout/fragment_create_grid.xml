@@ -19,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/grid_tile"
+        app:layout_constraintStart_toEndOf="@id/add_column_left_button"
         app:layout_constraintEnd_toStartOf="@id/tile2_image_view"
         app:layout_constraintTop_toBottomOf="@id/insert_plant_btn"
         app:layout_constraintBottom_toTopOf="@id/tile3_image_view"
@@ -43,6 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/grid_tile"
+        app:layout_constraintStart_toEndOf="@id/add_column_left_button"
         app:layout_constraintEnd_toStartOf="@id/tile4_image_view"
         app:layout_constraintTop_toBottomOf="@id/tile1_image_view"
         android:id="@+id/tile3_image_view"
@@ -67,14 +69,22 @@
         android:text="+"
         app:layout_constraintStart_toEndOf="@id/tile2_image_view"
         app:layout_constraintTop_toBottomOf="@id/insert_plant_btn"
-        android:id="@+id/add_column_button"/>
+        android:id="@+id/add_column_right_button"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        app:layout_constraintStart_toStartOf="@id/tile2_image_view"
+        app:layout_constraintTop_toBottomOf="@id/tile3_image_view"
+        android:id="@+id/add_row_button"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="+"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tile3_image_view"
-        android:id="@+id/add_row_button"/>
+        app:layout_constraintTop_toBottomOf="@id/insert_plant_btn"
+        android:id="@+id/add_column_left_button"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
