@@ -2,7 +2,6 @@ package dk.mifu.pmos.vegetablegardening.data
 
 import androidx.lifecycle.ViewModel
 import dk.mifu.pmos.vegetablegardening.R
-import kotlinx.android.synthetic.main.fragment_create_grid.view.*
 
 class GardenViewModel : ViewModel() {
     val gardens: MutableList<Garden> by lazy {

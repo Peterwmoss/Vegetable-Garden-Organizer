@@ -4,23 +4,23 @@
     android:id="@+id/parent_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/location_text_view"
-        android:fontFamily="@font/roboto"
-        app:layout_constraintStart_toStartOf="parent"
+    <ImageButton
+        android:id="@+id/insert_plant_btn"
+        android:layout_width="@dimen/font_xlarge"
+        android:layout_height="@dimen/font_xlarge"
+        android:background="@null"
+        android:contentDescription="@string/select_plant_text"
+        android:src="@drawable/ic_plant"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="@dimen/font_xlarge"
-        android:textColor="@color/black"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/grid_tile"
         app:layout_constraintEnd_toStartOf="@id/tile2_image_view"
-        app:layout_constraintTop_toBottomOf="@id/location_text_view"
+        app:layout_constraintTop_toBottomOf="@id/insert_plant_btn"
         app:layout_constraintBottom_toTopOf="@id/tile3_image_view"
         android:id="@+id/tile1_image_view"
         android:scaleType="fitCenter"
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/grid_tile"
         app:layout_constraintStart_toEndOf="@id/tile1_image_view"
-        app:layout_constraintTop_toBottomOf="@id/location_text_view"
+        app:layout_constraintTop_toBottomOf="@id/insert_plant_btn"
         app:layout_constraintBottom_toTopOf="@id/tile4_image_view"
         android:id="@+id/tile2_image_view"
         android:scaleType="fitCenter"
@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         android:text="+"
         app:layout_constraintStart_toEndOf="@id/tile2_image_view"
-        app:layout_constraintTop_toBottomOf="@id/location_text_view"
+        app:layout_constraintTop_toBottomOf="@id/insert_plant_btn"
         android:id="@+id/add_column_button"/>
 
     <Button
