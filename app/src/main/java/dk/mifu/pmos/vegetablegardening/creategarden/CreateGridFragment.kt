@@ -17,6 +17,7 @@ class CreateGridFragment : Fragment() {
     private val gardenViewModel: CurrentGardenViewModel by activityViewModels()
     private var height = 0
     private var width = 0
+    private var gridSide = 0
     private lateinit var garden: Garden
 
     private val START = ConstraintSet.START
@@ -39,6 +40,7 @@ class CreateGridFragment : Fragment() {
 
         width = Resources.getSystem().displayMetrics.widthPixels
         height = Resources.getSystem().displayMetrics.heightPixels
+        gridSide = width/4
 
         insertInitialGridTiles()
 
@@ -51,10 +53,16 @@ class CreateGridFragment : Fragment() {
 
         add_column_button.setOnClickListener{
             addColumn()
+            if(columns==4){
+                add_column_button.visibility = View.GONE
+            }
         }
 
         add_row_button.setOnClickListener{
             addRow()
+            if(height-(gridSide*rows) < gridSide){ //If there isn't enough room for a whole row more
+                add_row_button.visibility = View.GONE
+            }
         }
     }
 
@@ -146,8 +154,8 @@ class CreateGridFragment : Fragment() {
 
     fun setParams(): Constraints.LayoutParams{
         val params = Constraints.LayoutParams(
-            width/4,
-            width/4 //Subtracting size of bar in top of view
+            gridSide,
+            gridSide
         )
         params.setMargins(0,0,0,0)
         return params
