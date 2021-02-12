@@ -1,10 +1,9 @@
 package dk.mifu.pmos.vegetablegardening.creategarden
 
 import android.content.Context
+import android.content.res.Resources
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.Constraints
 import androidx.fragment.app.Fragment
@@ -16,6 +15,8 @@ import kotlinx.android.synthetic.main.fragment_create_grid.*
 
 class CreateGridFragment : Fragment() {
     private val gardenViewModel: CurrentGardenViewModel by activityViewModels()
+    private var height = 0
+    private var width = 0
     private lateinit var garden: Garden
 
     private val START = ConstraintSet.START
@@ -24,8 +25,8 @@ class CreateGridFragment : Fragment() {
     private val BOTTOM = ConstraintSet.BOTTOM
 
     //Initial number of grid tiles
-    private var columns = 2;
-    private var rows = 2;
+    private var columns = 1
+    private var rows = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -35,6 +36,10 @@ class CreateGridFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        width = Resources.getSystem().displayMetrics.widthPixels
+        height = Resources.getSystem().displayMetrics.heightPixels
+
         insert_plant_btn.setOnClickListener {
             // TODO update when GridTiles starts fragment
             val choosePlantFragment = ChoosePlantFragment(Pair(0, 0))
@@ -42,33 +47,54 @@ class CreateGridFragment : Fragment() {
                 ?.commit()
         }
 
+        val initialTile1 = GridTile(requireContext())
+        parent_layout.addView(initialTile1)
+        garden.tileIds[Pair(0,0)] = initialTile1.id
+        initialTile1.snapToGrid(null,null,true)
+
+        val initialTile2 = GridTile(requireContext())
+        parent_layout.addView(initialTile2)
+        garden.tileIds[Pair(0,1)] = initialTile2.id
+        initialTile2.snapToGrid(null,null,false)
+
+        addColumn()
+        addRow()
+
         add_column_button.setOnClickListener{
-            for(i in 0 until rows){
-                val gridTile = GridTile(requireContext())
-                parent_layout.addView(gridTile)
-
-                garden.tileIds[Pair(columns,i)] = gridTile.id //Update garden with new tile
-
-                val prevTileId = garden.tileIds[Pair(columns-1,i)]
-                val upperTileId = garden.tileIds[Pair(columns, i-1)]
-                gridTile.addToGrid(prevTileId!!, upperTileId, true)
-            }
-            columns++
+            addColumn()
         }
 
         add_row_button.setOnClickListener{
-            for(i in 0 until columns){
-                val gridTile = GridTile(requireContext())
-                parent_layout.addView(gridTile)
-
-                garden.tileIds[Pair(i, rows)] = gridTile.id //Update garden with new tile
-
-                val prevTileId = garden.tileIds[Pair(i-1, rows)]
-                val upperTileId = garden.tileIds[Pair(i, rows-1)]
-                gridTile.addToGrid(prevTileId, upperTileId!!, false)
-            }
-            rows++
+            addRow()
         }
+    }
+
+    private fun addColumn() {
+        for (i in 0 until rows) {
+            val gridTile = GridTile(requireContext())
+            parent_layout.addView(gridTile)
+
+            garden.tileIds[Pair(columns, i)] = gridTile.id //Update garden with new tile
+
+            val prevTileId = garden.tileIds[Pair(columns - 1, i)]
+            val upperTileId = garden.tileIds[Pair(columns, i - 1)]
+            gridTile.snapToGrid(prevTileId!!, upperTileId, true)
+        }
+        columns++
+    }
+
+    private fun addRow() {
+        for (i in 0 until columns) {
+            val gridTile = GridTile(requireContext())
+            parent_layout.addView(gridTile)
+
+            garden.tileIds[Pair(i, rows)] = gridTile.id //Update garden with new tile
+
+            val prevTileId = garden.tileIds[Pair(i - 1, rows)]
+            val upperTileId = garden.tileIds[Pair(i, rows - 1)]
+            gridTile.snapToGrid(prevTileId, upperTileId!!, false)
+        }
+        rows++
     }
 
     private inner class GridTile(context: Context): androidx.appcompat.widget.AppCompatImageButton(context) {
@@ -86,16 +112,7 @@ class CreateGridFragment : Fragment() {
             layoutParams = setParams()
         }
 
-        private fun setParams(): Constraints.LayoutParams{
-            val params = Constraints.LayoutParams(
-                Constraints.LayoutParams.WRAP_CONTENT,
-                Constraints.LayoutParams.WRAP_CONTENT
-            )
-            params.setMargins(0,0,0,0)
-            return params
-        }
-
-        fun addToGrid(prevTileId: Int?, upperTileId: Int?, row: Boolean) {
+        fun snapToGrid(prevTileId: Int?, upperTileId: Int?, row: Boolean) {
             val constraintSet = ConstraintSet()
 
             constraintSet.apply{
@@ -121,5 +138,14 @@ class CreateGridFragment : Fragment() {
                 applyTo(parent_layout)
             }
         }
+    }
+
+    fun setParams(): Constraints.LayoutParams{
+        val params = Constraints.LayoutParams(
+            200,
+            200
+        )
+        params.setMargins(0,0,0,0)
+        return params
     }
 }
