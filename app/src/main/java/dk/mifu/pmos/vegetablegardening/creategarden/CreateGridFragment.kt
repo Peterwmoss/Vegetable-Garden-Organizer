@@ -42,7 +42,7 @@ class CreateGridFragment : Fragment() {
                 ?.commit()
         }
 
-        add_column_right_button.setOnClickListener{
+        add_column_button.setOnClickListener{
             for(i in 0 until rows){
                 val gridTile = GridTile(requireContext())
                 parent_layout.addView(gridTile)
@@ -50,7 +50,7 @@ class CreateGridFragment : Fragment() {
                 garden.tileIds[Pair(columns,i)] = gridTile.id //Update garden with new tile
 
                 val prevTileId = garden.tileIds[Pair(columns-1,i)]
-                val upperTileId = garden.tileIds[Pair(columns, i-1)] ?: insert_plant_btn.id //Choosing uppermost view component if no tile above
+                val upperTileId = garden.tileIds[Pair(columns, i-1)]
                 gridTile.addToGrid(prevTileId!!, upperTileId, true)
             }
             columns++
@@ -58,13 +58,12 @@ class CreateGridFragment : Fragment() {
 
         add_row_button.setOnClickListener{
             for(i in 0 until columns){
-                val constraintSet = ConstraintSet()
                 val gridTile = GridTile(requireContext())
                 parent_layout.addView(gridTile)
 
                 garden.tileIds[Pair(i, rows)] = gridTile.id //Update garden with new tile
 
-                val prevTileId = garden.tileIds[Pair(i-1, rows)] ?: add_column_left_button.id
+                val prevTileId = garden.tileIds[Pair(i-1, rows)]
                 val upperTileId = garden.tileIds[Pair(i, rows-1)]
                 gridTile.addToGrid(prevTileId, upperTileId!!, false)
             }
@@ -96,15 +95,26 @@ class CreateGridFragment : Fragment() {
             return params
         }
 
-        fun addToGrid(prevTileId: Int, upperTileId: Int, row: Boolean) {
+        fun addToGrid(prevTileId: Int?, upperTileId: Int?, row: Boolean) {
             val constraintSet = ConstraintSet()
 
             constraintSet.apply{
                 clone(parent_layout)
-                connect(id, START, prevTileId, END)
-                connect(id, TOP, upperTileId, BOTTOM)
+
+                if(prevTileId!=null){
+                    connect(id, START, prevTileId, END)
+                } else {
+                    connect(id, START, parent_layout.id, START)
+                }
+
+                if(upperTileId!=null){
+                    connect(id, TOP, upperTileId, BOTTOM)
+                } else {
+                    connect(id, TOP, insert_plant_btn.id, BOTTOM)
+                }
+
                 if(row){
-                    connect(R.id.add_column_right_button, START, id, END)
+                    connect(R.id.add_column_button, START, id, END)
                 } else {
                     connect(R.id.add_row_button, TOP, id, BOTTOM)
                 }
