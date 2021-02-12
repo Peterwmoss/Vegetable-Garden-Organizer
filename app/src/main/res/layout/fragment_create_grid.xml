@@ -6,8 +6,8 @@
 
     <ImageButton
         android:id="@+id/insert_plant_btn"
-        android:layout_width="@dimen/font_xlarge"
-        android:layout_height="@dimen/font_xlarge"
+        android:layout_width="@dimen/spacing_xlarge"
+        android:layout_height="@dimen/spacing_xlarge"
         android:background="@null"
         android:contentDescription="@string/select_plant_text"
         android:src="@drawable/ic_plant"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:text="+"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/insert_plant_btn"
+        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/add_column_button"/>
 
     <Button

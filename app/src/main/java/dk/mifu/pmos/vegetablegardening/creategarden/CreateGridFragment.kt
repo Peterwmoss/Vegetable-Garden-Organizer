@@ -131,7 +131,7 @@ class CreateGridFragment : Fragment() {
                 if(upperTileId!=null){
                     connect(id, TOP, upperTileId, BOTTOM)
                 } else {
-                    connect(id, TOP, insert_plant_btn.id, BOTTOM)
+                    connect(id, TOP, parent_layout.id, TOP)
                 }
 
                 if(row){
@@ -146,8 +146,8 @@ class CreateGridFragment : Fragment() {
 
     fun setParams(): Constraints.LayoutParams{
         val params = Constraints.LayoutParams(
-            200,
-            200
+            width/4,
+            width/4 //Subtracting size of bar in top of view
         )
         params.setMargins(0,0,0,0)
         return params
