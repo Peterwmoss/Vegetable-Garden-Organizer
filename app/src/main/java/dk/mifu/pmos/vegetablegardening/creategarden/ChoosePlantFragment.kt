@@ -12,6 +12,8 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
@@ -20,7 +22,8 @@ import dk.mifu.pmos.vegetablegardening.data.Plant
 import dk.mifu.pmos.vegetablegardening.data.PlantViewModel
 import java.util.*
 
-class ChoosePlantFragment(private val coordinate: Pair<Int, Int>) : Fragment() {
+class ChoosePlantFragment : Fragment() {
+    private val args: ChoosePlantFragmentArgs by navArgs()
     private val plantViewModel: PlantViewModel by activityViewModels()
     private val currentGardenViewModel: CurrentGardenViewModel by activityViewModels()
 
@@ -65,9 +68,8 @@ class ChoosePlantFragment(private val coordinate: Pair<Int, Int>) : Fragment() {
 
         init {
             view.setOnClickListener {
-                currentGardenViewModel.garden.value!!.plants[coordinate] = Plant(plantName.text.toString())
-                fragmentManager?.beginTransaction()?.remove(this@ChoosePlantFragment)
-                        ?.commit()
+                currentGardenViewModel.garden.value!!.plants[args.coordinate] = Plant(plantName.text.toString())
+                requireView().findNavController().navigateUp()
             }
         }
     }
@@ -103,6 +105,7 @@ class ChoosePlantFragment(private val coordinate: Pair<Int, Int>) : Fragment() {
                 return results
             }
 
+            @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 flowingData = results!!.values as List<Plant>
                 notifyDataSetChanged()
