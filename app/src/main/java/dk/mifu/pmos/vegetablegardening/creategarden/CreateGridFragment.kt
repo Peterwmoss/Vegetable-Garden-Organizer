@@ -40,6 +40,8 @@ class CreateGridFragment : Fragment() {
         width = Resources.getSystem().displayMetrics.widthPixels
         height = Resources.getSystem().displayMetrics.heightPixels
 
+        insertInitialGridTiles()
+
         insert_plant_btn.setOnClickListener {
             // TODO update when GridTiles starts fragment
             val choosePlantFragment = ChoosePlantFragment(Pair(0, 0))
@@ -47,6 +49,16 @@ class CreateGridFragment : Fragment() {
                 ?.commit()
         }
 
+        add_column_button.setOnClickListener{
+            addColumn()
+        }
+
+        add_row_button.setOnClickListener{
+            addRow()
+        }
+    }
+
+    private fun insertInitialGridTiles(){
         val initialTile1 = GridTile(requireContext())
         parent_layout.addView(initialTile1)
         garden.tileIds[Pair(0,0)] = initialTile1.id
@@ -59,14 +71,6 @@ class CreateGridFragment : Fragment() {
 
         addColumn()
         addRow()
-
-        add_column_button.setOnClickListener{
-            addColumn()
-        }
-
-        add_row_button.setOnClickListener{
-            addRow()
-        }
     }
 
     private fun addColumn() {
