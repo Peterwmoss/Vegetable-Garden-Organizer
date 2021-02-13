@@ -44,6 +44,7 @@ class CreateGridFragment : Fragment() {
         gridSide = width/4
 
         insertInitialGridTiles()
+        setInitialVisibilityOfButtons()
 
         insert_plant_btn.setOnClickListener {
             // TODO update when GridTiles starts fragment
@@ -58,6 +59,9 @@ class CreateGridFragment : Fragment() {
                 add_column_button.visibility = View.GONE
                 changePlacementOfRemoveColumnButton(true)
             }
+            if(remove_column_button.visibility == View.GONE){
+                remove_column_button.visibility = View.VISIBLE
+            }
         }
 
         add_row_button.setOnClickListener{
@@ -65,6 +69,9 @@ class CreateGridFragment : Fragment() {
             if(height-(gridSide*rows) < gridSide){ //If there isn't enough room for a whole row more
                 add_row_button.visibility = View.GONE
                 changePlacementOfRemoveRowButton(true)
+            }
+            if(remove_row_button.visibility == View.GONE){
+                remove_row_button.visibility = View.VISIBLE
             }
         }
 
@@ -74,6 +81,9 @@ class CreateGridFragment : Fragment() {
                 add_column_button.visibility = View.VISIBLE
                 changePlacementOfRemoveColumnButton(false)
             }
+            if(columns==2){
+                remove_column_button.visibility = View.GONE
+            }
         }
 
         remove_row_button.setOnClickListener{
@@ -81,6 +91,10 @@ class CreateGridFragment : Fragment() {
             if(add_row_button.visibility == View.GONE){
                 add_row_button.visibility = View.VISIBLE
                 changePlacementOfRemoveRowButton(false)
+            }
+
+            if(rows==2){
+                remove_row_button.visibility = View.GONE
             }
         }
     }
@@ -96,6 +110,11 @@ class CreateGridFragment : Fragment() {
 
         addColumn()
         addRow()
+    }
+
+    private fun setInitialVisibilityOfButtons(){
+        remove_row_button.visibility = View.GONE
+        remove_column_button.visibility = View.GONE
     }
 
     private fun removeColumn() {
