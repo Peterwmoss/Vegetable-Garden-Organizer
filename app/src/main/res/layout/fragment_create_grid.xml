@@ -35,4 +35,24 @@
         app:layout_constraintStart_toStartOf="parent"
         android:src="@drawable/ic_plus"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/remove_column_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/add_column_text"
+        android:layout_marginTop="@dimen/spacing_small"
+        app:layout_constraintTop_toBottomOf="@id/add_column_button"
+        app:layout_constraintStart_toStartOf="@id/add_column_button"
+        android:src="@drawable/ic_minus"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/remove_row_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/add_column_text"
+        android:layout_marginStart="@dimen/spacing_small"
+        app:layout_constraintTop_toTopOf="@id/add_row_button"
+        app:layout_constraintStart_toEndOf="@id/add_row_button"
+        android:src="@drawable/ic_minus"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
