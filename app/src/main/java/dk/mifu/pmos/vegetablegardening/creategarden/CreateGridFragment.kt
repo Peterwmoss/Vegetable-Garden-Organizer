@@ -9,7 +9,9 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.Constraints
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.R
+import dk.mifu.pmos.vegetablegardening.data.Coordinate
 import dk.mifu.pmos.vegetablegardening.data.CurrentGardenViewModel
 import dk.mifu.pmos.vegetablegardening.data.Garden
 import kotlinx.android.synthetic.main.fragment_create_grid.*
@@ -37,9 +39,9 @@ class CreateGridFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         insert_plant_btn.setOnClickListener {
             // TODO update when GridTiles starts fragment
-            val choosePlantFragment = ChoosePlantFragment(Pair(0, 0))
-            fragmentManager?.beginTransaction()?.add(R.id.fragment_container, choosePlantFragment)
-                ?.commit()
+            requireView().findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(
+                Coordinate(0,0)
+            ))
         }
 
         add_column_button.setOnClickListener{
@@ -48,10 +50,10 @@ class CreateGridFragment : Fragment() {
                 val gridTile = GridTile(requireContext())
                 parent_layout.addView(gridTile)
 
-                garden.tileIds[Pair(columns,i)] = gridTile.id //Update garden with new tile
+                garden.tileIds[Coordinate(columns,i)] = gridTile.id //Update garden with new tile
 
-                val prevTileId = garden.tileIds[Pair(columns-1,i)]
-                val upperTileId = garden.tileIds[Pair(columns, i-1)] ?: insert_plant_btn.id //Choosing uppermost view component if no tile above
+                val prevTileId = garden.tileIds[Coordinate(columns-1,i)]
+                val upperTileId = garden.tileIds[Coordinate(columns, i-1)] ?: insert_plant_btn.id //Choosing uppermost view component if no tile above
 
                 constraintSet.apply{
                     clone(parent_layout)
@@ -70,10 +72,10 @@ class CreateGridFragment : Fragment() {
                 val gridTile = GridTile(requireContext())
                 parent_layout.addView(gridTile)
 
-                garden.tileIds[Pair(i, rows)] = gridTile.id //Update garden with new tile
+                garden.tileIds[Coordinate(i, rows)] = gridTile.id //Update garden with new tile
 
-                val prevTileId = garden.tileIds[Pair(i-1, rows)]
-                val upperTileId = garden.tileIds[Pair(i, rows-1)]
+                val prevTileId = garden.tileIds[Coordinate(i-1, rows)]
+                val upperTileId = garden.tileIds[Coordinate(i, rows-1)]
 
                 constraintSet.apply {
                     clone(parent_layout)
