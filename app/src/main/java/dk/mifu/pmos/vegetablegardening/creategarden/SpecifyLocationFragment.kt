@@ -33,14 +33,8 @@ class SpecifyLocationFragment: Fragment() {
     }
 
     private fun startCreateGridFragment(location: Location){
-        // TODO Fix so that it does this automatically in the constructor if no map is given
-        val tileIds = HashMap<Coordinate, Int>()
-        tileIds[Coordinate(0,0)] = R.id.tile1_image_view
-        tileIds[Coordinate(1,0)] = R.id.tile2_image_view
-        tileIds[Coordinate(0,1)] = R.id.tile3_image_view
-        tileIds[Coordinate(1,1)] = R.id.tile4_image_view
-        currentGardenViewModel.garden.value = Garden(location, null, HashMap(), tileIds)
-
+        currentGardenViewModel.garden.value = Garden(location)
+      
         // Navigate to next view
         requireView().findNavController().navigate(SpecifyLocationFragmentDirections.nextAction())
     }
