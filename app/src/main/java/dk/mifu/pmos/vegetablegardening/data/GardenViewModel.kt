@@ -9,6 +9,10 @@ class GardenViewModel : ViewModel() {
     }
 
     private fun loadGardens(): MutableList<Garden> {
-        return mutableListOf(Garden(Location.Outdoors))
+        return mutableListOf(
+            Garden(Location.Outdoors, "Outdoors garden"),
+            Garden(Location.Indoors, "Indoors garden"),
+            Garden(Location.Greenhouse, "Greenhouse garden"),
+        )
     }
 }
