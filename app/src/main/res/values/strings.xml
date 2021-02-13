@@ -7,4 +7,6 @@
     <string name="greenhouse">Greenhouse</string>
     <string name="search_text">Search</string>
     <string name="select_plant_text">Select Plant</string>
+    <string name="add_column_text">Add column</string>
+    <string name="add_row_text">Add row</string>
 </resources>

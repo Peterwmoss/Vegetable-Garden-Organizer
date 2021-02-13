@@ -15,20 +15,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_column_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+"
-        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/add_column_text"
+        android:layout_margin="@dimen/spacing_small"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/add_column_button"/>
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/ic_plus"/>
 
-    <Button
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_row_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+"
-        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/add_row_text"
+        android:layout_margin="@dimen/spacing_small"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/add_row_button"/>
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/ic_plus"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
