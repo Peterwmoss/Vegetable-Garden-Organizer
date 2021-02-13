@@ -100,12 +100,7 @@ class CreateGridFragment : Fragment() {
 
     private fun removeColumn() {
         for (i in 0 until rows){
-            val coordinate = Pair(columns-1, i)
-            val gridTileId = garden.tileIds[coordinate]
-            val gridTile = requireView().findViewById<ImageButton>(gridTileId!!)
-            parent_layout.removeView(gridTile)
-
-            garden.tileIds[coordinate] = 0 //Remove tile from garden
+            removeTile(Pair(columns-1, i))
 
             val prevTileId = garden.tileIds[Pair(columns-2, i)]
             snapButtonsToRestOfGrid(prevTileId!!, true)
@@ -115,17 +110,20 @@ class CreateGridFragment : Fragment() {
 
     private fun removeRow() {
         for (i in 0 until columns){
-            val coordinate = Pair(i, rows-1)
-            val gridTileId = garden.tileIds[coordinate]
-            val gridTile = requireView().findViewById<ImageButton>(gridTileId!!)
-            parent_layout.removeView(gridTile)
-
-            garden.tileIds[coordinate] = 0 //Remove tile from garden
+            removeTile(Pair(i, rows-1))
 
             val upperTileId = garden.tileIds[Pair(i, rows-2)]
             snapButtonsToRestOfGrid(upperTileId!!, false)
         }
         rows--
+    }
+
+    private fun removeTile(coordinate: Pair<Int, Int>){
+        val gridTileId = garden.tileIds[coordinate]
+        val gridTile = requireView().findViewById<ImageButton>(gridTileId!!)
+        parent_layout.removeView(gridTile)
+
+        garden.tileIds[coordinate] = 0 //Remove tile from garden
     }
 
     private fun addColumn() {
@@ -160,8 +158,10 @@ class CreateGridFragment : Fragment() {
             clone(parent_layout)
             if(column){
                 connect(add_column_button.id, START, tileId, END)
+                connect(add_column_button.id, TOP, parent_layout.id, TOP)
             } else {
                 connect(add_row_button.id, TOP, tileId, BOTTOM)
+                connect(add_row_button.id, START, parent_layout.id, START)
             }
             applyTo(parent_layout)
         }
