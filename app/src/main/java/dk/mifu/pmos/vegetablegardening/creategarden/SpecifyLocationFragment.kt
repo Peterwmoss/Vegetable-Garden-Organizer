@@ -5,12 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.R
+import dk.mifu.pmos.vegetablegardening.data.Coordinate
+import dk.mifu.pmos.vegetablegardening.data.CurrentGardenViewModel
+import dk.mifu.pmos.vegetablegardening.data.Garden
 import dk.mifu.pmos.vegetablegardening.data.Location
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentSpecifyLocationBinding
 
 class SpecifyLocationFragment: Fragment() {
     private lateinit var binding: FragmentSpecifyLocationBinding
+
+    private val currentGardenViewModel: CurrentGardenViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +36,9 @@ class SpecifyLocationFragment: Fragment() {
     }
 
     private fun startCreateGridFragment(location: Location){
-        val createGridFragment = CreateGridFragment(location)
-        fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, createGridFragment)?.commit()
+        currentGardenViewModel.garden.value = Garden(location)
+      
+        // Navigate to next view
+        requireView().findNavController().navigate(SpecifyLocationFragmentDirections.nextAction())
     }
 }
