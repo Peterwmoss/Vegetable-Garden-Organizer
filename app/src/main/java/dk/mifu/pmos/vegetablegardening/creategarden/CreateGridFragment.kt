@@ -5,19 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.data.Location
-import kotlinx.android.synthetic.main.fragment_create_grid.*
+import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
 
 class CreateGridFragment(private val location: Location) : Fragment() {
+    private lateinit var binding: FragmentCreateGridBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_create_grid, container, false)
+                              savedInstanceState: Bundle?): View {
+        binding = FragmentCreateGridBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        location_text_view.text = location.toString()
+        binding.locationTextView.text = location.toString()
     }
 }
