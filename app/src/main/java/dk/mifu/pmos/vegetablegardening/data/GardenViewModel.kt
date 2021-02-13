@@ -9,9 +9,6 @@ class GardenViewModel : ViewModel() {
     }
 
     private fun loadGardens(): MutableList<Garden> {
-        val list = ArrayList<Garden>()
-        val tileIds = HashMap<Pair<Int,Int>, Int>()
-        list.add(Garden(Location.Outdoors, null, HashMap(), tileIds))
-        return list
+        return mutableListOf(Garden(Location.Outdoors))
     }
 }
