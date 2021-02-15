@@ -17,9 +17,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
-import dk.mifu.pmos.vegetablegardening.data.CurrentGardenViewModel
-import dk.mifu.pmos.vegetablegardening.data.Plant
-import dk.mifu.pmos.vegetablegardening.data.PlantViewModel
+import dk.mifu.pmos.vegetablegardening.viewmodels.CurrentGardenViewModel
+import dk.mifu.pmos.vegetablegardening.models.Plant
+import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.util.*
 
 class ChoosePlantFragment : Fragment() {

@@ -1,6 +1,7 @@
-package dk.mifu.pmos.vegetablegardening.data
+package dk.mifu.pmos.vegetablegardening.viewmodels
 
 import androidx.lifecycle.ViewModel
+import dk.mifu.pmos.vegetablegardening.models.Plant
 
 class PlantViewModel : ViewModel() {
     val plants: List<Plant> by lazy {

@@ -1,4 +1,6 @@
-package dk.mifu.pmos.vegetablegardening.data
+package dk.mifu.pmos.vegetablegardening.models
+
+import dk.mifu.pmos.vegetablegardening.enums.Location
 
 data class Garden(
         val location: Location,
