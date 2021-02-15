@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
-import dk.mifu.pmos.vegetablegardening.R
-import dk.mifu.pmos.vegetablegardening.data.Coordinate
-import dk.mifu.pmos.vegetablegardening.data.CurrentGardenViewModel
-import dk.mifu.pmos.vegetablegardening.data.Garden
-import dk.mifu.pmos.vegetablegardening.data.Location
+import dk.mifu.pmos.vegetablegardening.viewmodels.CurrentGardenViewModel
+import dk.mifu.pmos.vegetablegardening.models.Garden
+import dk.mifu.pmos.vegetablegardening.enums.Location
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentSpecifyLocationBinding
 
 class SpecifyLocationFragment: Fragment() {

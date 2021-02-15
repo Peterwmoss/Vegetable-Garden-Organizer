@@ -1,4 +1,4 @@
-package dk.mifu.pmos.vegetablegardening.data
+package dk.mifu.pmos.vegetablegardening.models
 
 import java.io.Serializable
 

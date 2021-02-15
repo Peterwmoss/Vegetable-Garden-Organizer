@@ -1,7 +1,8 @@
-package dk.mifu.pmos.vegetablegardening.data
+package dk.mifu.pmos.vegetablegardening.viewmodels
 
 import androidx.lifecycle.ViewModel
-import dk.mifu.pmos.vegetablegardening.R
+import dk.mifu.pmos.vegetablegardening.enums.Location
+import dk.mifu.pmos.vegetablegardening.models.Garden
 
 class GardenViewModel : ViewModel() {
     val gardens: MutableList<Garden> by lazy {
