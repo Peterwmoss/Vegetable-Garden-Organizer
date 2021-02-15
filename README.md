@@ -1,5 +1,20 @@
 # Køkkenhave app
 
+## 15/02-21
+
+* Videre arbejde med create garden space with plants #37
+* Dokumentation af #37
+* Sprint afslutning og start
+
+## 13/02-21
+
+* Videre arbejde med create garden space with plants #37
+* Planting locations #12
+
+## 10/02-21
+
+* Videre arbejde med create garden space with plants #37
+
 ## 08/02-21
 
 ### Agenda
