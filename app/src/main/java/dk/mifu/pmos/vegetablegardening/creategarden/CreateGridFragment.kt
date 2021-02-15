@@ -3,11 +3,10 @@ package dk.mifu.pmos.vegetablegardening.creategarden
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.*
-import android.widget.ImageButton
+import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.viewmodels.CurrentGardenViewModel
@@ -154,7 +153,7 @@ class CreateGridFragment : Fragment() {
 
     private fun removeTile(coordinate: Coordinate){
         val gridTileId = garden.tileIds[coordinate]
-        val gridTile = requireView().findViewById<ImageButton>(gridTileId!!)
+        val gridTile = requireView().findViewById<Button>(gridTileId!!)
         binding.parentLayout.removeView(gridTile)
 
         garden.tileIds.remove(coordinate)

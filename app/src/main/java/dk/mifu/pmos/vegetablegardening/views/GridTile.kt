@@ -11,7 +11,7 @@ import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
 @SuppressLint("ViewConstructor")
 class GridTile(context: Context,
                private val binding: FragmentCreateGridBinding,
-               private val tileSideLength: Int): androidx.appcompat.widget.AppCompatImageButton(context) {
+               private val tileSideLength: Int): androidx.appcompat.widget.AppCompatButton(context) {
 
     private val START = ConstraintSet.START
     private val END = ConstraintSet.END
@@ -22,10 +22,11 @@ class GridTile(context: Context,
         id = View.generateViewId()
 
         //Picture
-        setImageResource(R.drawable.grid_tile)
-        scaleType = ScaleType.FIT_CENTER
-        adjustViewBounds = true
-        background = null
+        setBackgroundResource(R.drawable.grid_tile)
+        //setImageResource(R.drawable.grid_tile)
+        //scaleType = ScaleType.FIT_CENTER
+        //adjustViewBounds = true
+        //background = null
 
         //Layout
         setPadding(0,0,0,0)
