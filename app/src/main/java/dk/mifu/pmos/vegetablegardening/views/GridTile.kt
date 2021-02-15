@@ -20,15 +20,7 @@ class GridTile(context: Context,
 
     init {
         id = View.generateViewId()
-
-        //Picture
         setBackgroundResource(R.drawable.grid_tile)
-        //setImageResource(R.drawable.grid_tile)
-        //scaleType = ScaleType.FIT_CENTER
-        //adjustViewBounds = true
-        //background = null
-
-        //Layout
         setPadding(0,0,0,0)
         layoutParams = setParams()
     }
