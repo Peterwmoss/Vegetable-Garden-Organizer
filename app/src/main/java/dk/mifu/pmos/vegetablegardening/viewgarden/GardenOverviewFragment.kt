@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.data.Garden
 import dk.mifu.pmos.vegetablegardening.data.GardenViewModel
-import dk.mifu.pmos.vegetablegardening.data.Location
+import dk.mifu.pmos.vegetablegardening.enums.Location
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentGardenOverviewBinding
 
 class GardenOverviewFragment : Fragment() {
