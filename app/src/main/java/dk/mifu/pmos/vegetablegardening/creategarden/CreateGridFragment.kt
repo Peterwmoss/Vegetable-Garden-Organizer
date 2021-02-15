@@ -48,7 +48,10 @@ class CreateGridFragment : Fragment() {
 
         insertInitialGridTiles()
         setInitialVisibilityOfButtons()
+        setListeners()
+    }
 
+    private fun setListeners() {
         binding.insertPlantBtn.setOnClickListener {
             // TODO update when GridTiles starts fragment
             requireView().findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(
