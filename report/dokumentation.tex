@@ -25,6 +25,7 @@ Den overordnede aktivitet til at oprette et nyt planteområde \texttt{CreateGard
 Hver af knapperne har en \texttt{listener}. Når brugeren har valgt en lokation, sørger den gældende \texttt{listener} for at skifte fragment, og sende info om den valgte lokation med i fragmentets konstruktør i form af et \texttt{enum}.
 
 \subsubsection{Byg layoutet}
+Når fragmentet skal bruges, bliver der i \texttt{onCreateView} sat fire felter i en tabel ind, som udgør et udgangspunkt for at bygge en have. \texttt{fragment\_create\_grid.xml} indeholder kun knapper til at ændre på størrelsen af en tabel. Hvert felt udgør en knap, som brugeren kan trykke på, og som leder til \texttt{ChoosePlantFragment.kt}. Når brugeren trykker på en af knapperne i xml-filen, ændres størrelsen på tabellen ved at indsætte eller fjerne felter. Størrelsen på et felt er sat ud fra telefonskærmens bredde, så brugeren altid har plads til fire felter, som fordeler sig ligeligt på skærmen. 
 
 \subsubsection{Vælg planter}
 
