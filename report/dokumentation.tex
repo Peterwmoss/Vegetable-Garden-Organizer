@@ -14,6 +14,17 @@
     \item Årstidernes plantekalender \hyperlink{https://issuu.com/aarstiderne\_com/docs/aarstidernes-plante-og-saa-kalender}{https://issuu.com/aarstiderne\_com/docs/aarstidernes-plante-og-saa-kalender}
 \end{itemize}
 
+\subsubsection{Datarepræsentation}
+
+Vi har tre datastrukturer, som vi bruger til at abstrahere haver, planter og placeringen af en plante i haveområdet.
+
+Placeringen af en plante er abstraheret til at være et koordinat, som beskriver rækken og kolonnen planten er placeret i.
+
+Haver er repræsenteret med en type, et navn og to maps, der hver repræsenterer hvilke tiles der ligger hvor og hvilken plante der er plantet på det givne tile.
+Haven bruger maps da det er en effektiv måde at koble en nøgle til en værdi, i vores tilfælde altså en placering til et id eller en plante.
+
+Planter er repræsenteret som en \texttt{Plant}, som har et navn, så vi kan adskille hver plante.
+
 \subsection{XML}
 
 \subsection{Opret et nyt planteområde}
@@ -25,6 +36,7 @@ Den overordnede aktivitet til at oprette et nyt planteområde \texttt{CreateGard
 Hver af knapperne har en \texttt{listener}. Når brugeren har valgt en lokation, sørger den gældende \texttt{listener} for at skifte fragment, og sende info om den valgte lokation med i fragmentets konstruktør i form af et \texttt{enum}.
 
 \subsubsection{Byg layoutet}
+Når fragmentet skal bruges, bliver der i \texttt{onCreateView} sat fire felter i en tabel ind, som udgør et udgangspunkt for at bygge en have. \texttt{fragment\_create\_grid.xml} indeholder kun knapper til at ændre på størrelsen af en tabel. Hvert felt udgør en knap, som brugeren kan trykke på, og som leder til \texttt{ChoosePlantFragment.kt}. Når brugeren trykker på en af knapperne i xml-filen, ændres størrelsen på tabellen ved at indsætte eller fjerne felter. Størrelsen på et felt er sat ud fra telefonskærmens bredde, så brugeren altid har plads til fire felter, som fordeler sig ligeligt på skærmen. 
 
 \subsubsection{Vælg planter}
 
@@ -32,9 +44,3 @@ Hver af knapperne har en \texttt{listener}. Når brugeren har valgt en lokation,
 Grunden til at vi gør brug af en \texttt{EditText} frem for \texttt{SearchView} er, at \texttt{SearchView} ikke understøtter en brugerdefineret font og den har nogle funktioner, som vi ikke ønsker at gøre brug af, hvorfor det giver bedre mening at bruge en \texttt{EditText}.
 
 Til at vise listen af planter gør vi brug af designmønsteret \texttt{MVVM} - \texttt{Model View ViewModel} - da vi ønsker at kunne repræsentere vores data på tværs af lifecycles.
-
-Planter er repræsenteret i en datastruktur, som hedder \texttt{Plant}, så vi har en abstrakt måde at arbejde med planter på.
-
-\subsection{Datarepræsentation}
-
-

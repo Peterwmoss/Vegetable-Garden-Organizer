@@ -6,10 +6,12 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -17,12 +19,15 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
-import dk.mifu.pmos.vegetablegardening.data.CurrentGardenViewModel
-import dk.mifu.pmos.vegetablegardening.data.Plant
-import dk.mifu.pmos.vegetablegardening.data.PlantViewModel
+import dk.mifu.pmos.vegetablegardening.databinding.FragmentChoosePlantBinding
+import dk.mifu.pmos.vegetablegardening.viewmodels.CurrentGardenViewModel
+import dk.mifu.pmos.vegetablegardening.models.Plant
+import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.util.*
 
-class ChoosePlantFragment : Fragment() {
+class ChoosePlantFragment : DialogFragment() {
+    private lateinit var binder: FragmentChoosePlantBinding
+
     private val args: ChoosePlantFragmentArgs by navArgs()
     private val plantViewModel: PlantViewModel by activityViewModels()
     private val currentGardenViewModel: CurrentGardenViewModel by activityViewModels()
@@ -30,17 +35,28 @@ class ChoosePlantFragment : Fragment() {
     private var adapter : PlantAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_choose_plant, container, false)
+                              savedInstanceState: Bundle?): View {
+        binder = FragmentChoosePlantBinding.inflate(inflater, container, false)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.choose_plant_recycler_view)
+        val recyclerView = binder.choosePlantRecyclerView
         createList(recyclerView)
 
-        val search = view.findViewById<EditText>(R.id.search_plant_edittext)
+        val search = binder.searchPlantEdittext
         search.requestFocus()
         setupSearch(search)
 
-        return view
+        return binder.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val params = dialog!!.window!!.attributes
+
+        params.width = WindowManager.LayoutParams.MATCH_PARENT
+        params.height = WindowManager.LayoutParams.MATCH_PARENT
+
+        dialog!!.window!!.attributes = params
     }
 
     private fun createList(recyclerView: RecyclerView) {
@@ -69,7 +85,7 @@ class ChoosePlantFragment : Fragment() {
         init {
             view.setOnClickListener {
                 currentGardenViewModel.garden.value!!.plants[args.coordinate] = Plant(plantName.text.toString())
-                requireView().findNavController().navigateUp()
+                dialog?.dismiss()
             }
         }
     }
