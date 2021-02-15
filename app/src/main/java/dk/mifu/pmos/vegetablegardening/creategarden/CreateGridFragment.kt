@@ -2,17 +2,20 @@ package dk.mifu.pmos.vegetablegardening.creategarden
 
 import android.content.res.Resources
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.databinding.ObservableMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.findNavController
-import dk.mifu.pmos.vegetablegardening.models.Coordinate
-import dk.mifu.pmos.vegetablegardening.viewmodels.CurrentGardenViewModel
-import dk.mifu.pmos.vegetablegardening.models.Garden
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
+import dk.mifu.pmos.vegetablegardening.models.Coordinate
+import dk.mifu.pmos.vegetablegardening.models.Garden
+import dk.mifu.pmos.vegetablegardening.models.Plant
+import dk.mifu.pmos.vegetablegardening.viewmodels.CurrentGardenViewModel
 import dk.mifu.pmos.vegetablegardening.views.GridTile
 
 class CreateGridFragment : Fragment() {
@@ -49,17 +52,34 @@ class CreateGridFragment : Fragment() {
 
         insertInitialGridTiles()
         setListeners()
+
+        garden.plants.addOnMapChangedCallback(Callback())
+    }
+
+    private inner class Callback : ObservableMap.OnMapChangedCallback<ObservableMap<Coordinate, Plant>, Coordinate, Plant>() {
+        override fun onMapChanged(sender: ObservableMap<Coordinate, Plant>?, key: Coordinate?) {
+            val id = garden.tileIds[key]!!
+            requireView().findViewById<Button>(id).text = garden.plants[key]?.name
+        }
+    }
+
+    private fun gridTileListener(coordinate: Coordinate): View.OnClickListener {
+        return View.OnClickListener {
+            requireView().findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(coordinate))
+        }
     }
 
     private fun insertInitialGridTiles(){
-        val initialTile1 = GridTile(requireContext(), binding, tileSideLength)
+        val coordinate1 = Coordinate(0,0)
+        val initialTile1 = GridTile(requireContext(), gridTileListener(coordinate1), binding, tileSideLength)
         binding.parentLayout.addView(initialTile1)
-        garden.tileIds[Coordinate(0,0)] = initialTile1.id
+        garden.tileIds[coordinate1] = initialTile1.id
         initialTile1.snapToGrid(null,null,true)
 
-        val initialTile2 = GridTile(requireContext(), binding, tileSideLength)
+        val coordinate2 = Coordinate(0,1)
+        val initialTile2 = GridTile(requireContext(), gridTileListener(coordinate1), binding, tileSideLength)
         binding.parentLayout.addView(initialTile2)
-        garden.tileIds[Coordinate(0,1)] = initialTile2.id
+        garden.tileIds[coordinate2] = initialTile2.id
         initialTile2.snapToGrid(null,null,false)
 
         addColumn()
@@ -67,13 +87,6 @@ class CreateGridFragment : Fragment() {
     }
 
     private fun setListeners() {
-        binding.insertPlantBtn.setOnClickListener {
-            // TODO update when GridTiles starts fragment
-            requireView().findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(
-                Coordinate(0,0)
-            ))
-        }
-
         binding.addColumnButton.setOnClickListener{
             addColumn()
             if(columns==4){
@@ -162,10 +175,11 @@ class CreateGridFragment : Fragment() {
 
     private fun addColumn() {
         for (i in 0 until rows) {
-            val gridTile = GridTile(requireContext(), binding, tileSideLength)
+            val coordinate = Coordinate(columns, i)
+            val gridTile = GridTile(requireContext(), gridTileListener(coordinate), binding, tileSideLength)
             binding.parentLayout.addView(gridTile)
 
-            garden.tileIds[Coordinate(columns, i)] = gridTile.id //Update garden with new tile
+            garden.tileIds[coordinate] = gridTile.id //Update garden with new tile
 
             val prevTileId = garden.tileIds[Coordinate(columns-1, i)]
             val upperTileId = garden.tileIds[Coordinate(columns, i - 1)]
@@ -176,10 +190,11 @@ class CreateGridFragment : Fragment() {
 
     private fun addRow() {
         for (i in 0 until columns) {
-            val gridTile = GridTile(requireContext(), binding, tileSideLength)
+            val coordinate = Coordinate(i, rows)
+            val gridTile = GridTile(requireContext(), gridTileListener(coordinate), binding, tileSideLength)
             binding.parentLayout.addView(gridTile)
 
-            garden.tileIds[Coordinate(i, rows)] = gridTile.id //Update garden with new tile
+            garden.tileIds[coordinate] = gridTile.id //Update garden with new tile
 
             val prevTileId = garden.tileIds[Coordinate(i-1, rows)]
             val upperTileId = garden.tileIds[Coordinate(i, rows - 1)]

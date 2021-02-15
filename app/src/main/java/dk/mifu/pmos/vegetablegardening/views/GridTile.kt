@@ -10,6 +10,7 @@ import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
 
 @SuppressLint("ViewConstructor")
 class GridTile(context: Context,
+               onClickListener: OnClickListener,
                private val binding: FragmentCreateGridBinding,
                private val tileSideLength: Int): androidx.appcompat.widget.AppCompatButton(context) {
 
@@ -23,6 +24,7 @@ class GridTile(context: Context,
         setBackgroundResource(R.drawable.grid_tile)
         setPadding(0,0,0,0)
         layoutParams = setParams()
+        setOnClickListener(onClickListener)
     }
 
     fun snapToGrid(prevTileId: Int?, upperTileId: Int?, row: Boolean) {
@@ -31,23 +33,15 @@ class GridTile(context: Context,
         constraintSet.apply{
             clone(binding.parentLayout)
 
-            if(prevTileId!=null){
-                connect(id, START, prevTileId, END)
-            } else {
-                connect(id, START, binding.parentLayout.id, START)
-            }
+            if(prevTileId!=null) connect(id, START, prevTileId, END)
+            else connect(id, START, binding.parentLayout.id, START)
 
-            if(upperTileId!=null){
-                connect(id, TOP, upperTileId, BOTTOM)
-            } else {
-                connect(id, TOP, binding.parentLayout.id, TOP)
-            }
+            if(upperTileId!=null) connect(id, TOP, upperTileId, BOTTOM)
+            else connect(id, TOP, binding.parentLayout.id, TOP)
 
-            if(row){
-                connect(binding.addColumnButton.id, START, id, END)
-            } else {
-                connect(binding.addRowButton.id, TOP, id, BOTTOM)
-            }
+            if(row) connect(binding.addColumnButton.id, START, id, END)
+            else connect(binding.addRowButton.id, TOP, id, BOTTOM)
+
             applyTo(binding.parentLayout)
         }
     }
