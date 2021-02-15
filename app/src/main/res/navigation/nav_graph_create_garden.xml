@@ -14,7 +14,7 @@
             android:id="@+id/plant_selected_action"
             app:destination="@id/createGridFragment" />
         <argument android:name="coordinate"
-            app:argType="dk.mifu.pmos.vegetablegardening.data.Coordinate" />
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
     </fragment>
     <fragment
         android:id="@+id/createGridFragment"
