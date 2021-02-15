@@ -12,24 +12,27 @@ import dk.mifu.pmos.vegetablegardening.data.Coordinate
 import dk.mifu.pmos.vegetablegardening.data.CurrentGardenViewModel
 import dk.mifu.pmos.vegetablegardening.data.Garden
 import dk.mifu.pmos.vegetablegardening.data.Location
-import kotlinx.android.synthetic.main.fragment_specify_location.*
+import dk.mifu.pmos.vegetablegardening.databinding.FragmentSpecifyLocationBinding
 
 class SpecifyLocationFragment: Fragment() {
+    private lateinit var binding: FragmentSpecifyLocationBinding
+
     private val currentGardenViewModel: CurrentGardenViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_specify_location, container, false)
+    ): View {
+        binding = FragmentSpecifyLocationBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        outdoors_button.setOnClickListener { startCreateGridFragment(Location.Outdoors) }
-        indoors_button.setOnClickListener { startCreateGridFragment(Location.Indoors) }
-        greenhouse_button.setOnClickListener{ startCreateGridFragment(Location.Greenhouse) }
+        binding.outdoorsButton.setOnClickListener { startCreateGridFragment(Location.Outdoors) }
+        binding.indoorsButton.setOnClickListener { startCreateGridFragment(Location.Indoors) }
+        binding.greenhouseButton.setOnClickListener{ startCreateGridFragment(Location.Greenhouse) }
     }
 
     private fun startCreateGridFragment(location: Location){

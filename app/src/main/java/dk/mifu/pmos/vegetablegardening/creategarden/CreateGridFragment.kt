@@ -14,9 +14,11 @@ import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.data.Coordinate
 import dk.mifu.pmos.vegetablegardening.data.CurrentGardenViewModel
 import dk.mifu.pmos.vegetablegardening.data.Garden
-import kotlinx.android.synthetic.main.fragment_create_grid.*
+import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
 
 class CreateGridFragment : Fragment() {
+    private lateinit var binding: FragmentCreateGridBinding
+  
     private val gardenViewModel: CurrentGardenViewModel by activityViewModels()
     private var height = 0
     private var width = 0
@@ -35,7 +37,8 @@ class CreateGridFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         garden = gardenViewModel.garden.value!!
-        return inflater.inflate(R.layout.fragment_create_grid, container, false)
+        binding = FragmentCreateGridBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,55 +51,55 @@ class CreateGridFragment : Fragment() {
         insertInitialGridTiles()
         setInitialVisibilityOfButtons()
 
-        insert_plant_btn.setOnClickListener {
+        binding.insertPlantBtn.setOnClickListener {
             // TODO update when GridTiles starts fragment
             requireView().findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(
                 Coordinate(0,0)
             ))
         }
 
-        add_column_button.setOnClickListener{
+        binding.addColumnButton.setOnClickListener{
             addColumn()
             if(columns==4){
-                add_column_button.visibility = View.GONE
+                binding.addColumnButton.visibility = View.GONE
                 changePlacementOfRemoveColumnButton(true)
             }
-            if(remove_column_button.visibility == View.GONE){
-                remove_column_button.visibility = View.VISIBLE
+            if(binding.removeColumnButton.visibility == View.GONE){
+                binding.removeColumnButton.visibility = View.VISIBLE
             }
         }
 
-        add_row_button.setOnClickListener{
+        binding.addRowButton.setOnClickListener{
             addRow()
             if(height-(gridSide*rows) < gridSide){ //If there isn't enough room for a whole row more
-                add_row_button.visibility = View.GONE
+                binding.addRowButton.visibility = View.GONE
                 changePlacementOfRemoveRowButton(true)
             }
-            if(remove_row_button.visibility == View.GONE){
-                remove_row_button.visibility = View.VISIBLE
+            if(binding.removeRowButton.visibility == View.GONE){
+                binding.removeRowButton.visibility = View.VISIBLE
             }
         }
 
-        remove_column_button.setOnClickListener{
+        binding.removeColumnButton.setOnClickListener{
             removeColumn()
-            if(add_column_button.visibility == View.GONE){
-                add_column_button.visibility = View.VISIBLE
+            if(binding.addColumnButton.visibility == View.GONE){
+                binding.addColumnButton.visibility = View.VISIBLE
                 changePlacementOfRemoveColumnButton(false)
             }
             if(columns==2){
-                remove_column_button.visibility = View.GONE
+                binding.removeColumnButton.visibility = View.GONE
             }
         }
 
-        remove_row_button.setOnClickListener{
+        binding.removeRowButton.setOnClickListener{
             removeRow()
-            if(add_row_button.visibility == View.GONE){
-                add_row_button.visibility = View.VISIBLE
+            if(binding.addRowButton.visibility == View.GONE){
+                binding.addRowButton.visibility = View.VISIBLE
                 changePlacementOfRemoveRowButton(false)
             }
 
             if(rows==2){
-                remove_row_button.visibility = View.GONE
+                binding.removeRowButton.visibility = View.GONE
             }
         }
     }
@@ -115,8 +118,8 @@ class CreateGridFragment : Fragment() {
     }
 
     private fun setInitialVisibilityOfButtons(){
-        remove_row_button.visibility = View.GONE
-        remove_column_button.visibility = View.GONE
+        binding.removeRowButton.visibility = View.GONE
+        binding.removeColumnButton.visibility = View.GONE
     }
 
     private fun removeColumn() {
@@ -142,7 +145,7 @@ class CreateGridFragment : Fragment() {
     private fun removeTile(coordinate: Coordinate){
         val gridTileId = garden.tileIds[coordinate]
         val gridTile = requireView().findViewById<ImageButton>(gridTileId!!)
-        parent_layout.removeView(gridTile)
+        binding.parentLayout.removeView(gridTile)
 
         garden.tileIds[coordinate] = 0 //Remove tile from garden
     }
@@ -176,15 +179,15 @@ class CreateGridFragment : Fragment() {
     private fun snapButtonsToRestOfGrid(tileId: Int, column: Boolean) {
         val constraintSet = ConstraintSet()
         constraintSet.apply {
-            clone(parent_layout)
+            clone(binding.parentLayout)
             if(column){
-                connect(add_column_button.id, START, tileId, END)
-                connect(add_column_button.id, TOP, parent_layout.id, TOP)
+                connect(binding.addColumnButton.id, START, tileId, END)
+                connect(binding.addColumnButton.id, TOP, binding.parentLayout.id, TOP)
             } else {
-                connect(add_row_button.id, TOP, tileId, BOTTOM)
-                connect(add_row_button.id, START, parent_layout.id, START)
+                connect(binding.addRowButton.id, TOP, tileId, BOTTOM)
+                connect(binding.addRowButton.id, START, binding.parentLayout.id, START)
             }
-            applyTo(parent_layout)
+            applyTo(binding.parentLayout)
         }
     }
 
@@ -192,16 +195,16 @@ class CreateGridFragment : Fragment() {
         val furthestTileId = garden.tileIds[Coordinate(columns-1,rows-1)]
         val constraintSet = ConstraintSet()
         constraintSet.apply {
-            clone(parent_layout)
+            clone(binding.parentLayout)
             if(full){
-                connect(remove_column_button.id, START, furthestTileId!!, START)
-                connect(remove_column_button.id, TOP, parent_layout.id, TOP)
+                connect(binding.removeColumnButton.id, START, furthestTileId!!, START)
+                connect(binding.removeColumnButton.id, TOP, binding.parentLayout.id, TOP)
             } else {
-                connect(remove_column_button.id, START, add_column_button.id, START)
-                connect(remove_column_button.id, TOP, add_column_button.id, BOTTOM)
+                connect(binding.removeColumnButton.id, START, binding.addColumnButton.id, START)
+                connect(binding.removeColumnButton.id, TOP, binding.addColumnButton.id, BOTTOM)
             }
 
-            applyTo(parent_layout)
+            applyTo(binding.parentLayout)
         }
     }
 
@@ -209,16 +212,16 @@ class CreateGridFragment : Fragment() {
         val furthestTileId = garden.tileIds[Coordinate(columns-1,rows-1)]
         val constraintSet = ConstraintSet()
         constraintSet.apply {
-            clone(parent_layout)
+            clone(binding.parentLayout)
             if(full){
-                connect(remove_row_button.id, START, parent_layout.id, START)
-                connect(remove_row_button.id, TOP, furthestTileId!!, TOP)
+                connect(binding.removeRowButton.id, START, binding.parentLayout.id, START)
+                connect(binding.removeRowButton.id, TOP, furthestTileId!!, TOP)
             } else {
-                connect(remove_row_button.id, START, add_row_button.id, END)
-                connect(remove_row_button.id, TOP, add_row_button.id, TOP)
+                connect(binding.removeRowButton.id, START, binding.addRowButton.id, END)
+                connect(binding.removeRowButton.id, TOP, binding.addRowButton.id, TOP)
             }
 
-            applyTo(parent_layout)
+            applyTo(binding.parentLayout)
         }
     }
 
@@ -237,33 +240,33 @@ class CreateGridFragment : Fragment() {
             layoutParams = setParams()
 
             //View
-            parent_layout.addView(this)
+            binding.parentLayout.addView(this)
         }
 
         fun snapToGrid(prevTileId: Int?, upperTileId: Int?, row: Boolean) {
             val constraintSet = ConstraintSet()
 
             constraintSet.apply{
-                clone(parent_layout)
+                clone(binding.parentLayout)
 
                 if(prevTileId!=null){
                     connect(id, START, prevTileId, END)
                 } else {
-                    connect(id, START, parent_layout.id, START)
+                    connect(id, START, binding.parentLayout.id, START)
                 }
 
                 if(upperTileId!=null){
                     connect(id, TOP, upperTileId, BOTTOM)
                 } else {
-                    connect(id, TOP, parent_layout.id, TOP)
+                    connect(id, TOP, binding.parentLayout.id, TOP)
                 }
 
                 if(row){
-                    connect(R.id.add_column_button, START, id, END)
+                    connect(binding.addColumnButton.id, START, id, END)
                 } else {
-                    connect(R.id.add_row_button, TOP, id, BOTTOM)
+                    connect(binding.addRowButton.id, TOP, id, BOTTOM)
                 }
-                applyTo(parent_layout)
+                applyTo(binding.parentLayout)
             }
         }
     }
