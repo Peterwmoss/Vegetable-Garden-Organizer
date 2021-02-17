@@ -1,5 +1,10 @@
 # Køkkenhave app
 
+## 17/02-21
+
+* Update grid text #62
+* Integrate data with app #41
+
 ## 15/02-21
 
 * Videre arbejde med create garden space with plants #37
