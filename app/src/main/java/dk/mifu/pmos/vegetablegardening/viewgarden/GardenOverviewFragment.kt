@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
@@ -31,8 +32,10 @@ class GardenOverviewFragment : Fragment() {
         val recyclerView = binding.gardensRecyclerView
 
         recyclerView.layoutManager = GridLayoutManager(context, 2)
-        adapter = GardenOverviewAdapter(gardenViewModel.gardens)
-        recyclerView.adapter = adapter
+        gardenViewModel.gardens.observe(viewLifecycleOwner, {
+            adapter = GardenOverviewAdapter(it)
+            recyclerView.adapter = adapter
+        })
 
         binding.newLocationBtn.setOnClickListener {
             val createIntent = Intent(context, CreateGardenActivity::class.java)
@@ -51,7 +54,7 @@ class GardenOverviewFragment : Fragment() {
         }
     }
 
-    private inner class GardenOverviewAdapter(private val dataSet: MutableList<Garden>): RecyclerView.Adapter<ViewHolder>() {
+    private inner class GardenOverviewAdapter(private val dataSet: List<Garden>): RecyclerView.Adapter<ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_garden, parent, false)
             return ViewHolder(view)

@@ -34,7 +34,7 @@ class SpecifyLocationFragment: Fragment() {
     }
 
     private fun startCreateGridFragment(location: Location){
-        currentGardenViewModel.garden.value = Garden(location)
+        currentGardenViewModel.garden.value = Garden(location, "Test")
       
         // Navigate to next view
         requireView().findNavController().navigate(SpecifyLocationFragmentDirections.nextAction())
