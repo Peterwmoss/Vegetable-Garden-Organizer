@@ -14,10 +14,5 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
-        binding.newLocationBtn.setOnClickListener {
-            val createIntent = Intent(this, CreateGardenActivity::class.java)
-            startActivity(createIntent)
-        }
     }
 }

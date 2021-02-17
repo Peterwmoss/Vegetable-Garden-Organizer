@@ -1,5 +1,6 @@
 package dk.mifu.pmos.vegetablegardening.viewgarden
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
+import dk.mifu.pmos.vegetablegardening.creategarden.CreateGardenActivity
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentGardenOverviewBinding
 import dk.mifu.pmos.vegetablegardening.enums.Location.*
 import dk.mifu.pmos.vegetablegardening.models.Garden
@@ -31,6 +33,11 @@ class GardenOverviewFragment : Fragment() {
         recyclerView.layoutManager = GridLayoutManager(context, 2)
         adapter = GardenOverviewAdapter(gardenViewModel.gardens)
         recyclerView.adapter = adapter
+
+        binding.newLocationBtn.setOnClickListener {
+            val createIntent = Intent(context, CreateGardenActivity::class.java)
+            startActivity(createIntent)
+        }
 
         return binding.root
     }
