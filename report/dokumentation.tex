@@ -44,3 +44,5 @@ Når fragmentet skal bruges, bliver der i \texttt{onCreateView} sat fire felter 
 Grunden til at vi gør brug af en \texttt{EditText} frem for \texttt{SearchView} er, at \texttt{SearchView} ikke understøtter en brugerdefineret font og den har nogle funktioner, som vi ikke ønsker at gøre brug af, hvorfor det giver bedre mening at bruge en \texttt{EditText}.
 
 Til at vise listen af planter gør vi brug af designmønsteret \texttt{MVVM} - \texttt{Model View ViewModel} - da vi ønsker at kunne repræsentere vores data på tværs af lifecycles.
+
+Når man vælger en plante bliver den nuværende haves map fra koordinater til planter opdateret med den plante man vælger og det vises dermed der hvor layoutet vises.
