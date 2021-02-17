@@ -22,6 +22,7 @@ class CreateGridFragment : Fragment() {
     private var height = 0
     private var width = 0
     private var tileSideLength = 0
+
     private lateinit var garden: Garden
 
     private val START = ConstraintSet.START
@@ -178,7 +179,6 @@ class CreateGridFragment : Fragment() {
         for (i in 0 until columns) {
             val gridTile = GridTile(requireContext(), binding, tileSideLength)
             binding.parentLayout.addView(gridTile)
-
             garden.tileIds[Coordinate(i, rows)] = gridTile.id //Update garden with new tile
 
             val prevTileId = garden.tileIds[Coordinate(i-1, rows)]
