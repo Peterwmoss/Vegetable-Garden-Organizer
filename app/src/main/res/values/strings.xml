@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Vegetable Gardening</string>
+    <string name="createGarden">New Garden</string>
+    <string name="create_location_text">Where is your planting area?</string>
+    <string name="outdoors">Outdoors</string>
+    <string name="indoors">Indoors</string>
+    <string name="greenhouse">Greenhouse</string>
+    <string name="search_text">Search</string>
+    <string name="select_plant_text">Select Plant</string>
+    <string name="add_column_text">Add column</string>
+    <string name="add_row_text">Add row</string>
 </resources>
