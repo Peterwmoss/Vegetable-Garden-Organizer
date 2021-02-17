@@ -1,21 +1,20 @@
 package dk.mifu.pmos.vegetablegardening.viewgarden
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
-import dk.mifu.pmos.vegetablegardening.data.Garden
-import dk.mifu.pmos.vegetablegardening.data.GardenViewModel
-import dk.mifu.pmos.vegetablegardening.enums.Location
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentGardenOverviewBinding
+import dk.mifu.pmos.vegetablegardening.enums.Location.*
+import dk.mifu.pmos.vegetablegardening.models.Garden
+import dk.mifu.pmos.vegetablegardening.viewmodels.GardenViewModel
 
 class GardenOverviewFragment : Fragment() {
     private lateinit var binding: FragmentGardenOverviewBinding
@@ -55,9 +54,9 @@ class GardenOverviewFragment : Fragment() {
             holder.gardenName.text = dataSet[position].name
 
             when (dataSet[position].location) {
-                Location.Outdoors -> holder.gardenImage.setImageResource(R.drawable.outdoors_normal)
-                Location.Indoors -> holder.gardenImage.setImageResource(R.drawable.indoors_normal)
-                Location.Greenhouse -> holder.gardenImage.setImageResource(R.drawable.greenhouse_normal)
+                Outdoors -> holder.gardenImage.setImageResource(R.drawable.outdoors_normal)
+                Indoors -> holder.gardenImage.setImageResource(R.drawable.indoors_normal)
+                Greenhouse -> holder.gardenImage.setImageResource(R.drawable.greenhouse_normal)
             }
         }
 
