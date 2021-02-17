@@ -41,7 +41,6 @@ class GridTile(context: Context,
 
             if(row) connect(binding.addColumnButton.id, START, id, END)
             else connect(binding.addRowButton.id, TOP, id, BOTTOM)
-
             applyTo(binding.parentLayout)
         }
     }
