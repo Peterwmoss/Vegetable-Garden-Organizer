@@ -84,7 +84,7 @@ class ChoosePlantFragment : DialogFragment() {
 
         init {
             view.setOnClickListener {
-                currentGardenViewModel.garden.value!!.plants[args.coordinate] = Plant(plantName.text.toString())
+                currentGardenViewModel.garden.value!!.plants[args.coordinate] = plantViewModel.plants.first { plant -> plant.name == plantName.text }
                 dialog?.dismiss()
             }
         }
