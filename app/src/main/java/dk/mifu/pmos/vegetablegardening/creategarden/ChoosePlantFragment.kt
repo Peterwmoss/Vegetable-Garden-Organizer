@@ -61,9 +61,11 @@ class ChoosePlantFragment : DialogFragment() {
 
     private fun createList(recyclerView: RecyclerView) {
         recyclerView.layoutManager = LinearLayoutManager(context)
-        val list = plantViewModel.plants
-        adapter = PlantAdapter(list)
-        recyclerView.adapter = adapter
+
+        plantViewModel.plants.observe(viewLifecycleOwner, {
+            adapter = PlantAdapter(it)
+            recyclerView.adapter = adapter
+        })
     }
 
     private fun setupSearch(search: EditText) {
@@ -84,7 +86,7 @@ class ChoosePlantFragment : DialogFragment() {
 
         init {
             view.setOnClickListener {
-                currentGardenViewModel.garden.value!!.plants[args.coordinate] = plantViewModel.plants.first { plant -> plant.name == plantName.text }
+                currentGardenViewModel.garden.value!!.plants[args.coordinate] = plantViewModel.plants.value?.first { it.name == plantName.text }
                 dialog?.dismiss()
             }
         }
