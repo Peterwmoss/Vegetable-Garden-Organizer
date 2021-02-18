@@ -4,13 +4,14 @@ import java.util.*
 
 data class Plant(
         val name: String,
-        val earliest: Date,
-        val latest: Date,
-        val sowing: Boolean,
-        val cropRotation: String,
-        val quantity: String,
-        val sowingDepth: String,
-        val distance: Int,
-        val fertilizer: String,
-        val harvest: String
+        val category: String? = null,
+        val earliest: Date? = null,
+        val latest: Date? = null,
+        val sowing: Boolean? = null,
+        val cropRotation: String? = null,
+        val quantity: String? = null,
+        val sowingDepth: String? = null,
+        val distance: Int? = null,
+        val fertilizer: String? = null,
+        val harvest: String? = null
 )
