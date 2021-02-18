@@ -62,7 +62,6 @@ class GardenOverviewFragment : Fragment() {
 
             when (dataSet[position].location) {
                 Outdoors -> holder.gardenImage.setImageResource(R.drawable.outdoors_normal)
-                Indoors -> holder.gardenImage.setImageResource(R.drawable.indoors_normal)
                 Greenhouse -> holder.gardenImage.setImageResource(R.drawable.greenhouse_normal)
             }
         }
