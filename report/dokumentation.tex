@@ -48,3 +48,12 @@ Grunden til at vi gør brug af en \texttt{EditText} frem for \texttt{SearchView}
 Til at vise listen af planter gør vi brug af designmønsteret \texttt{MVVM} - \texttt{Model View ViewModel} - da vi ønsker at kunne repræsentere vores data på tværs af lifecycles.
 
 Når man vælger en plante bliver den nuværende haves map fra koordinater til planter opdateret med den plante man vælger og det vises dermed der hvor layoutet vises.
+
+\subsection{Lagring af data}
+
+Vi gør brug af en Room-database til at gemme de have-områder, brugeren opretter. Vi bruger en Room-database, da det er en del af Androidx og officielt understøttet af Google / Android. Vores database indeholder en type af entries - en \texttt{entity} - som er en repræsentation af et haveområde. Denne entity indeholder al data knyttet til området, så vi har det hele gemt ét sted.
+
+Til at tilgå vores data gør vi brug af DAO'er - Data Access Objects. Disse er en abstraktion til at tilgå, opdatere, slette mv. i databasen på en ensartet måde, så vi ikke skal skrive queries direkte til databasen hver gang vi ønsker at bruge eller ændre data deri.
+For at gøre arbejdet med disse DAO'er lidt lettere for os har vi lavet et \texttt{GardenRepository}, som laver en yderligere abstraktion for at vi kan kalde metoderne (såsom \texttt{updateGarden}, \texttt{insertGarden} osv.) asynkront, så vi ikke blokerer for UI- / Main-tråden mens vi lægger data i databasen.
+
+Selve databasen er en singleton-instans, så vi ikke behøver at lave en ny instans hver gang vi skal tilgå databasen, da det er en relativt omstændig process. Dette er også anbefalet af Google på deres Android developer side \hyperlink{https://developer.android.com/training/data-storage/room/#database}{https://developer.android.com/training/data-storage/room/#database}
