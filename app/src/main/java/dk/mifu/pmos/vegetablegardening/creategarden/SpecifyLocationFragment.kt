@@ -29,7 +29,6 @@ class SpecifyLocationFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.outdoorsButton.setOnClickListener { startCreateGridFragment(Location.Outdoors) }
-        binding.indoorsButton.setOnClickListener { startCreateGridFragment(Location.Indoors) }
         binding.greenhouseButton.setOnClickListener{ startCreateGridFragment(Location.Greenhouse) }
     }
 
