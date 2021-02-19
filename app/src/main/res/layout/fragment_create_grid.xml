@@ -4,17 +4,6 @@
     android:id="@+id/parent_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageButton
-        android:id="@+id/insert_plant_btn"
-        android:layout_width="@dimen/spacing_xlarge"
-        android:layout_height="@dimen/spacing_xlarge"
-        android:background="@null"
-        android:contentDescription="@string/select_plant_text"
-        android:src="@drawable/ic_plant"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_column_button"
         android:layout_width="wrap_content"

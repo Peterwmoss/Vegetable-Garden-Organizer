@@ -45,6 +45,8 @@ Grunden til at vi gør brug af en \texttt{EditText} frem for \texttt{SearchView}
 
 Til at vise listen af planter gør vi brug af designmønsteret \texttt{MVVM} - \texttt{Model View ViewModel} - da vi ønsker at kunne repræsentere vores data på tværs af lifecycles.
 
+Når man vælger en plante bliver den nuværende haves map fra koordinater til planter opdateret med den plante man vælger og det vises dermed der hvor layoutet vises.
+
 \subsection{Lagring af data}
 
 Vi gør brug af en Room-database til at gemme de have-områder, brugeren opretter. Vi bruger en Room-database, da det er en del af Androidx og officielt understøttet af Google / Android. Vores database indeholder en type af entries - en \texttt{entity} - som er en repræsentation af et haveområde. Denne entity indeholder al data knyttet til området, så vi har det hele gemt ét sted.

@@ -2,17 +2,20 @@ package dk.mifu.pmos.vegetablegardening.creategarden
 
 import android.content.res.Resources
 import android.os.Bundle
-import android.view.*
-import android.widget.ImageButton
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.databinding.ObservableMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.findNavController
-import dk.mifu.pmos.vegetablegardening.models.Coordinate
-import dk.mifu.pmos.vegetablegardening.viewmodels.CurrentGardenViewModel
-import dk.mifu.pmos.vegetablegardening.models.Garden
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
+import dk.mifu.pmos.vegetablegardening.models.Coordinate
+import dk.mifu.pmos.vegetablegardening.models.Garden
+import dk.mifu.pmos.vegetablegardening.models.Plant
+import dk.mifu.pmos.vegetablegardening.viewmodels.CurrentGardenViewModel
 import dk.mifu.pmos.vegetablegardening.views.GridTile
 
 class CreateGridFragment : Fragment() {
@@ -22,7 +25,6 @@ class CreateGridFragment : Fragment() {
     private var height = 0
     private var width = 0
     private var tileSideLength = 0
-
     private lateinit var garden: Garden
 
     private val START = ConstraintSet.START
@@ -50,33 +52,44 @@ class CreateGridFragment : Fragment() {
 
         insertInitialGridTiles()
         setListeners()
+
+        garden.plants.addOnMapChangedCallback(Callback())
+    }
+
+    private inner class Callback : ObservableMap.OnMapChangedCallback<ObservableMap<Coordinate, Plant>, Coordinate, Plant>() {
+        override fun onMapChanged(sender: ObservableMap<Coordinate, Plant>?, key: Coordinate?) {
+            val id = garden.tileIds[key]!!
+            requireView().findViewById<Button>(id).text = garden.plants[key]?.name
+        }
+    }
+
+    private fun gridTileListener(coordinate: Coordinate): View.OnClickListener {
+        return View.OnClickListener {
+            requireView().findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(coordinate))
+        }
     }
 
     private fun insertInitialGridTiles(){
-        val initialTile1 = GridTile(requireContext(), binding, tileSideLength)
+        val coordinate1 = Coordinate(0,0)
+        val initialTile1 = GridTile(requireContext(), gridTileListener(coordinate1), binding, tileSideLength)
         binding.parentLayout.addView(initialTile1)
-        garden.tileIds[Coordinate(0,0)] = initialTile1.id
+        garden.tileIds[coordinate1] = initialTile1.id
         initialTile1.snapToGrid(null,null,true)
 
-        val initialTile2 = GridTile(requireContext(), binding, tileSideLength)
+        val coordinate2 = Coordinate(0,1)
+        val initialTile2 = GridTile(requireContext(), gridTileListener(coordinate2), binding, tileSideLength)
         binding.parentLayout.addView(initialTile2)
-        garden.tileIds[Coordinate(0,1)] = initialTile2.id
-        initialTile2.snapToGrid(null,null,false)
+        garden.tileIds[coordinate2] = initialTile2.id
+        initialTile2.snapToGrid(null,initialTile1.id,false)
 
-        addColumn()
-        addRow()
+        rows++
+
+        addTiles(column = true)
     }
 
     private fun setListeners() {
-        binding.insertPlantBtn.setOnClickListener {
-            // TODO update when GridTiles starts fragment
-            requireView().findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(
-                Coordinate(0,0)
-            ))
-        }
-
         binding.addColumnButton.setOnClickListener{
-            addColumn()
+            addTiles(column = true)
             if(columns==4){
                 binding.addColumnButton.visibility = View.GONE
                 changePlacementOfRemoveButton(
@@ -91,7 +104,7 @@ class CreateGridFragment : Fragment() {
         }
 
         binding.addRowButton.setOnClickListener{
-            addRow()
+            addTiles(column = false)
             if(height-(tileSideLength*rows) < tileSideLength){ //If there isn't enough room for a whole row more
                 binding.addRowButton.visibility = View.GONE
                 changePlacementOfRemoveButton(
@@ -106,7 +119,7 @@ class CreateGridFragment : Fragment() {
         }
 
         binding.removeColumnButton.setOnClickListener{
-            removeColumn()
+            removeTiles(column = true)
             if(binding.addColumnButton.visibility == View.GONE){
                 binding.addColumnButton.visibility = View.VISIBLE
                 changePlacementOfRemoveButton(
@@ -121,7 +134,7 @@ class CreateGridFragment : Fragment() {
         }
 
         binding.removeRowButton.setOnClickListener{
-            removeRow()
+            removeTiles(column = false)
             if(binding.addRowButton.visibility == View.GONE){
                 binding.addRowButton.visibility = View.VISIBLE
                 changePlacementOfRemoveButton(
@@ -137,66 +150,45 @@ class CreateGridFragment : Fragment() {
         }
     }
 
-    private fun removeColumn() {
-        for (i in 0 until rows)
-            removeTile(Coordinate(columns-1, i))
-        val prevTileId = garden.tileIds[Coordinate(columns-2, 0)]
-        snapButtonsToRestOfGrid(prevTileId!!, true)
-        columns--
+    private fun removeTiles(column: Boolean) {
+        for (i in 0 until if (column) rows else columns) {
+            val coordinate = if (column) Coordinate(columns-1, i) else Coordinate(i, rows-1)
+            val gridTileId = garden.tileIds[coordinate]
+            val gridTile = requireView().findViewById<Button>(gridTileId!!)
+            binding.parentLayout.removeView(gridTile)
+
+            garden.tileIds.remove(coordinate)
+        }
+        if (column) columns-- else rows--
+        snapButtonsToRestOfGrid(column)
     }
 
-    private fun removeRow() {
-        for (i in 0 until columns)
-            removeTile(Coordinate(i, rows-1))
-        val upperTileId = garden.tileIds[Coordinate(0, rows-2)]
-        snapButtonsToRestOfGrid(upperTileId!!, false)
-        rows--
-    }
-
-    private fun removeTile(coordinate: Coordinate){
-        val gridTileId = garden.tileIds[coordinate]
-        val gridTile = requireView().findViewById<ImageButton>(gridTileId!!)
-        binding.parentLayout.removeView(gridTile)
-
-        garden.tileIds.remove(coordinate)
-    }
-
-    private fun addColumn() {
-        for (i in 0 until rows) {
-            val gridTile = GridTile(requireContext(), binding, tileSideLength)
+    private fun addTiles(column: Boolean) {
+        for (i in 0 until if (column) rows else columns) {
+            val coordinate = if (column) Coordinate(columns, i) else Coordinate(i, rows)
+            val gridTile = GridTile(requireContext(), gridTileListener(coordinate), binding, tileSideLength)
             binding.parentLayout.addView(gridTile)
 
-            garden.tileIds[Coordinate(columns, i)] = gridTile.id //Update garden with new tile
+            garden.tileIds[coordinate] = gridTile.id //Update garden with new tile
 
-            val prevTileId = garden.tileIds[Coordinate(columns-1, i)]
-            val upperTileId = garden.tileIds[Coordinate(columns, i - 1)]
-            gridTile.snapToGrid(prevTileId!!, upperTileId, true)
+            val prevTileId = garden.tileIds[if (column) Coordinate(columns-1, i) else Coordinate(i-1, rows)]
+            val upperTileId = garden.tileIds[if (column) Coordinate(columns, i - 1) else Coordinate(i, rows - 1)]
+            gridTile.snapToGrid(prevTileId, upperTileId, false)
         }
-        columns++
+        if (column) columns++ else rows++
+        snapButtonsToRestOfGrid(column)
     }
 
-    private fun addRow() {
-        for (i in 0 until columns) {
-            val gridTile = GridTile(requireContext(), binding, tileSideLength)
-            binding.parentLayout.addView(gridTile)
-            garden.tileIds[Coordinate(i, rows)] = gridTile.id //Update garden with new tile
-
-            val prevTileId = garden.tileIds[Coordinate(i-1, rows)]
-            val upperTileId = garden.tileIds[Coordinate(i, rows - 1)]
-            gridTile.snapToGrid(prevTileId, upperTileId!!, false)
-        }
-        rows++
-    }
-
-    private fun snapButtonsToRestOfGrid(tileId: Int, column: Boolean) {
+    private fun snapButtonsToRestOfGrid(column: Boolean) {
+        val tileId = garden.tileIds[if (column) Coordinate(columns-1, 0) else Coordinate(0, rows-1)]
         val constraintSet = ConstraintSet()
         constraintSet.apply {
             clone(binding.parentLayout)
             if(column){
-                connect(binding.addColumnButton.id, START, tileId, END)
+                connect(binding.addColumnButton.id, START, tileId!!, END)
                 connect(binding.addColumnButton.id, TOP, binding.parentLayout.id, TOP)
             } else {
-                connect(binding.addRowButton.id, TOP, tileId, BOTTOM)
+                connect(binding.addRowButton.id, TOP, tileId!!, BOTTOM)
                 connect(binding.addRowButton.id, START, binding.parentLayout.id, START)
             }
             applyTo(binding.parentLayout)
