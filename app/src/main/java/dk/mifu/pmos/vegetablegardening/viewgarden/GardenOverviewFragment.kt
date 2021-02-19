@@ -24,8 +24,6 @@ class GardenOverviewFragment : Fragment() {
 
     private val gardenViewModel: GardenViewModel by activityViewModels()
 
-    private lateinit var adapter: GardenOverviewAdapter
-
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentGardenOverviewBinding.inflate(inflater, container, false)
 
@@ -33,7 +31,7 @@ class GardenOverviewFragment : Fragment() {
 
         recyclerView.layoutManager = GridLayoutManager(context, 2)
         gardenViewModel.gardens.observe(viewLifecycleOwner, {
-            adapter = GardenOverviewAdapter(it)
+            val adapter = GardenOverviewAdapter(it)
             recyclerView.adapter = adapter
         })
 
