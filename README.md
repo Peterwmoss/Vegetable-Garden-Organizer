@@ -1,5 +1,9 @@
 # Køkkenhave app
 
+## 19/02
+
+* Færdiggørelse af setup storage #60 og integrate data with app #41
+
 ## 17/02-21
 
 * Update grid text #62
