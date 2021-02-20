@@ -66,8 +66,7 @@ class ChoosePlantFragment : DialogFragment() {
         val location = currentGardenViewModel.garden.value?.location
         plantViewModel.plants.observe(viewLifecycleOwner, {
             adapter = PlantAdapter(it.filter { plant ->
-                val locale = Locale("da", "DK")
-                val category = plant.category?.toLowerCase(locale)
+                val category = plant.category?.toLowerCase(Locale.getDefault())
                 val greenHouseString = "drivhus"
                 when (location) {
                     Location.Greenhouse -> category == greenHouseString
