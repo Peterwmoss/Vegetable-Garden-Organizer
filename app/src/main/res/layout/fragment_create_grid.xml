@@ -46,4 +46,16 @@
         app:layout_constraintStart_toEndOf="@id/add_row_button"
         android:src="@drawable/ic_minus"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/save_garden_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/save_garden_text"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_margin="@dimen/spacing_small"
+        android:backgroundTint="@color/green"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_save"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

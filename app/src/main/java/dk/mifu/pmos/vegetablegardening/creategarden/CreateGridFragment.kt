@@ -11,12 +11,18 @@ import androidx.databinding.ObservableMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import dk.mifu.pmos.vegetablegardening.dao.GardenDao
+import dk.mifu.pmos.vegetablegardening.dao.GardenRepository
+import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Garden
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.CurrentGardenViewModel
 import dk.mifu.pmos.vegetablegardening.views.GridTile
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 class CreateGridFragment : Fragment() {
     private lateinit var binding: FragmentCreateGridBinding
@@ -54,6 +60,15 @@ class CreateGridFragment : Fragment() {
         setListeners()
 
         garden.plants.addOnMapChangedCallback(Callback())
+
+        binding.saveGardenButton.setOnClickListener {
+            MainScope().launch(Dispatchers.IO) {
+                val dao = AppDatabase.getDatabase(requireContext()).gardenDao()
+                val repository = GardenRepository(dao)
+                repository.insertGarden(garden)
+            }
+            requireActivity().finish()
+        }
     }
 
     private inner class Callback : ObservableMap.OnMapChangedCallback<ObservableMap<Coordinate, Plant>, Coordinate, Plant>() {

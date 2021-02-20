@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -33,9 +34,13 @@ class SpecifyLocationFragment: Fragment() {
     }
 
     private fun startCreateGridFragment(location: Location){
-        currentGardenViewModel.garden.value = Garden("Test", location)
-      
-        // Navigate to next view
-        requireView().findNavController().navigate(SpecifyLocationFragmentDirections.nextAction())
+        val name = binding.gardenNameEditText.text.toString()
+        if (name.isBlank()) {
+            Toast.makeText(context, "Please give your garden a name", Toast.LENGTH_SHORT).show()
+            binding.gardenNameEditText.requestFocus()
+        } else {
+            currentGardenViewModel.garden.value = Garden(name, location)
+            requireView().findNavController().navigate(SpecifyLocationFragmentDirections.nextAction())
+        }
     }
 }

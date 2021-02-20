@@ -1,5 +1,6 @@
 package dk.mifu.pmos.vegetablegardening.models
 
+import androidx.databinding.ObservableArrayMap
 import androidx.databinding.ObservableMap
 import androidx.room.TypeConverter
 import com.google.gson.Gson
@@ -17,7 +18,7 @@ class Converters {
     fun fromPlantMap(value: ObservableMap<Coordinate, Plant>): String = Gson().toJson(value)
 
     @TypeConverter
-    fun toPlantMap(value: String): ObservableMap<Coordinate, Plant> = Gson().fromJson(value, ObservableMap::class.java) as ObservableMap<Coordinate, Plant>
+    fun toPlantMap(value: String): ObservableMap<Coordinate, Plant> = Gson().fromJson(value, ObservableArrayMap::class.java) as ObservableMap<Coordinate, Plant>
 
     @TypeConverter
     fun fromTileIdMap(value: MutableMap<Coordinate, Int>): String = Gson().toJson(value)
