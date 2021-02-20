@@ -1,7 +1,5 @@
 package dk.mifu.pmos.vegetablegardening.models
 
-import androidx.databinding.ObservableArrayMap
-import androidx.databinding.ObservableMap
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import dk.mifu.pmos.vegetablegardening.enums.Location
@@ -15,10 +13,10 @@ class Converters {
     fun fromLocation(value: Location) = value.name
 
     @TypeConverter
-    fun fromPlantMap(value: ObservableMap<Coordinate, Plant>): String = Gson().toJson(value)
+    fun fromPlantMap(value: Map<Coordinate, Plant>): String = Gson().toJson(value)
 
     @TypeConverter
-    fun toPlantMap(value: String): ObservableMap<Coordinate, Plant> = Gson().fromJson(value, ObservableArrayMap::class.java) as ObservableMap<Coordinate, Plant>
+    fun toPlantMap(value: String): Map<Coordinate, Plant> = Gson().fromJson(value, Map::class.java) as Map<Coordinate, Plant>
 
     @TypeConverter
     fun fromTileIdMap(value: MutableMap<Coordinate, Int>): String = Gson().toJson(value)

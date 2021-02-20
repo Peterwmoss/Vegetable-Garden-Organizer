@@ -27,11 +27,10 @@ import kotlinx.coroutines.launch
 class CreateGridFragment : Fragment() {
     private lateinit var binding: FragmentCreateGridBinding
   
-    private val gardenViewModel: CurrentGardenViewModel by activityViewModels()
+    private val garden: CurrentGardenViewModel by activityViewModels()
     private var height = 0
     private var width = 0
     private var tileSideLength = 0
-    private lateinit var garden: Garden
 
     private val START = ConstraintSet.START
     private val END = ConstraintSet.END
@@ -44,7 +43,6 @@ class CreateGridFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        garden = gardenViewModel.garden.value!!
         binding = FragmentCreateGridBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -65,7 +63,7 @@ class CreateGridFragment : Fragment() {
             MainScope().launch(Dispatchers.IO) {
                 val dao = AppDatabase.getDatabase(requireContext()).gardenDao()
                 val repository = GardenRepository(dao)
-                repository.insertGarden(garden)
+                repository.insertGarden(Garden(garden.name!!, garden.location!!, garden.plants, garden.tileIds))
             }
             requireActivity().finish()
         }

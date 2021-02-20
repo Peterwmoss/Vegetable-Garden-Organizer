@@ -39,7 +39,8 @@ class SpecifyLocationFragment: Fragment() {
             Toast.makeText(context, "Please give your garden a name", Toast.LENGTH_SHORT).show()
             binding.gardenNameEditText.requestFocus()
         } else {
-            currentGardenViewModel.garden.value = Garden(name, location)
+            currentGardenViewModel.name = name
+            currentGardenViewModel.location = location
             requireView().findNavController().navigate(SpecifyLocationFragmentDirections.nextAction())
         }
     }

@@ -1,9 +1,14 @@
 package dk.mifu.pmos.vegetablegardening.viewmodels
 
-import androidx.lifecycle.MutableLiveData
+import androidx.databinding.ObservableArrayMap
 import androidx.lifecycle.ViewModel
-import dk.mifu.pmos.vegetablegardening.models.Garden
+import dk.mifu.pmos.vegetablegardening.enums.Location
+import dk.mifu.pmos.vegetablegardening.models.Coordinate
+import dk.mifu.pmos.vegetablegardening.models.Plant
 
 class CurrentGardenViewModel : ViewModel() {
-    val garden = MutableLiveData<Garden>()
+    var name : String? = null
+    var location : Location? = null
+    val plants = ObservableArrayMap<Coordinate, Plant>()
+    val tileIds = HashMap<Coordinate, Int>()
 }
