@@ -1,5 +1,9 @@
 # Køkkenhave app
 
+## 21/02-21
+
+* Små rettelser af #60 og #41
+
 ## 19/02-21
 
 * Færdiggørelse af setup storage #60 og integrate data with app #41
