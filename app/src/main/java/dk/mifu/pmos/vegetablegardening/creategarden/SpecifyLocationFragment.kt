@@ -29,23 +29,11 @@ class SpecifyLocationFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.outdoorsButton.setOnClickListener { if (validate()) startCreateGridFragment(Location.Outdoors) }
-        binding.greenhouseButton.setOnClickListener{ if (validate()) startCreateGridFragment(Location.Greenhouse) }
-    }
-
-    private fun validate() : Boolean {
-        val name = binding.gardenNameEditText.text.toString()
-        return if (name.isBlank()) {
-            Toast.makeText(context, "Please give your garden a name", Toast.LENGTH_SHORT).show()
-            binding.gardenNameEditText.requestFocus()
-            false
-        } else
-            true
+        binding.outdoorsButton.setOnClickListener { startCreateGridFragment(Location.Outdoors) }
+        binding.greenhouseButton.setOnClickListener{ startCreateGridFragment(Location.Greenhouse) }
     }
 
     private fun startCreateGridFragment(location: Location){
-        val name = binding.gardenNameEditText.text.toString()
-        currentGardenViewModel.name = name
         currentGardenViewModel.location = location
         requireView().findNavController().navigate(SpecifyLocationFragmentDirections.nextAction())
     }

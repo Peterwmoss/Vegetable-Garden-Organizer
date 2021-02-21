@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.ObservableMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
-import dk.mifu.pmos.vegetablegardening.dao.GardenDao
 import dk.mifu.pmos.vegetablegardening.dao.GardenRepository
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
@@ -56,16 +58,43 @@ class CreateGridFragment : Fragment() {
 
         insertInitialGridTiles()
         setListeners()
+        setSaveBedListener()
 
         garden.plants.addOnMapChangedCallback(Callback())
+    }
 
+    private fun setSaveBedListener() {
         binding.saveGardenButton.setOnClickListener {
-            MainScope().launch(Dispatchers.IO) {
-                val dao = AppDatabase.getDatabase(requireContext()).gardenDao()
-                val repository = GardenRepository(dao)
-                repository.insertGarden(Garden(garden.name!!, garden.location!!, garden.plants, garden.tileIds))
+
+            val dialog = activity?.let {
+                val editText = EditText(requireContext())
+                editText.hint = "Navn"
+                editText.requestFocus()
+
+                val builder = AlertDialog.Builder(it)
+                builder.setTitle("Navngiv dit bed")
+                        .setNegativeButton("Annullér") { dialog, _ -> dialog.cancel() }
+                        .setPositiveButton("Gem") { dialog, _ ->
+                            val text = editText.text.toString()
+                            if (text.isEmpty()) {
+                                Toast.makeText(it, "Indtast venligst en navn til dit bed", Toast.LENGTH_SHORT).show()
+                            }
+                            else {
+                                garden.name = editText.text.toString()
+                                run {
+                                    MainScope().launch(Dispatchers.IO) {
+                                        val dao = AppDatabase.getDatabase(requireContext()).gardenDao()
+                                        val repository = GardenRepository(dao)
+                                        repository.insertGarden(Garden(garden.name!!, garden.location!!, garden.plants, garden.tileIds))
+                                    }
+                                }
+                                it.finish()
+                            }
+                        }
+                        .setView(editText)
+                        .create()
             }
-            requireActivity().finish()
+            dialog?.show()
         }
     }
 
