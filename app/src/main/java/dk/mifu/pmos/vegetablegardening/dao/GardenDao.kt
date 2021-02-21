@@ -2,22 +2,22 @@ package dk.mifu.pmos.vegetablegardening.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import dk.mifu.pmos.vegetablegardening.models.Garden
+import dk.mifu.pmos.vegetablegardening.models.Bed
 
 @Dao
 interface GardenDao {
     @Query("SELECT * FROM gardens")
-    fun getAll(): LiveData<List<Garden>>
+    fun getAll(): LiveData<List<Bed>>
 
     @Query("SELECT * FROM gardens where name LIKE (:name) LIMIT 1")
-    fun findByName(name: String): Garden
+    fun findByName(name: String): Bed
 
     @Insert
-    fun insert(garden: Garden)
+    fun insert(bed: Bed)
 
     @Update
-    fun update(garden: Garden)
+    fun update(bed: Bed)
 
     @Delete
-    fun delete(garden: Garden)
+    fun delete(bed: Bed)
 }

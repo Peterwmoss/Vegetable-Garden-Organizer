@@ -5,9 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import dk.mifu.pmos.vegetablegardening.dao.GardenDao
-import dk.mifu.pmos.vegetablegardening.models.Garden
+import dk.mifu.pmos.vegetablegardening.models.Bed
 
-@Database(entities = [Garden::class], version = 1)
+@Database(entities = [Bed::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun gardenDao(): GardenDao
 

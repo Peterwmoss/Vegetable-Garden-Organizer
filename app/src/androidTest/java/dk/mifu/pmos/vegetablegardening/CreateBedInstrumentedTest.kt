@@ -17,7 +17,7 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class CreateGardenInstrumentedTest {
+class CreateBedInstrumentedTest {
     @Test
     fun outdoors_button_clicked_startCreateGridFragment_with_outdoors() {
         Espresso.onView(ViewMatchers.withId(R.id.outdoors_button)).perform(ViewActions.click())
