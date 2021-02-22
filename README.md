@@ -3,11 +3,16 @@
 ## 22/02-21
 
 ### Agenda
+
 * Læst om forspiring
 * Afslut sprint 3
 * Møde med vejleder
 
 ### Vejledning
+
+* Overvej om man skal kunne skrive personlig info / personlige notater
+* Vi har nok forskellige planter
+* Lytte til brugeren - hvad har de brug for og ikke hvad vi har lyst til
 
 ## 21/02-21
 
