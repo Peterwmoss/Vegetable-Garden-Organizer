@@ -17,11 +17,14 @@ import dk.mifu.pmos.vegetablegardening.databinding.FragmentGardenOverviewBinding
 import dk.mifu.pmos.vegetablegardening.enums.Location.*
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.viewmodels.GardenViewModel
+import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
+import dk.mifu.pmos.vegetablegardening.views.PlantInfoDialog
 
 class GardenOverviewFragment : Fragment() {
     private lateinit var binding: FragmentGardenOverviewBinding
 
     private val gardenViewModel: GardenViewModel by activityViewModels()
+    private val plantViewModel: PlantViewModel by activityViewModels()
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentGardenOverviewBinding.inflate(inflater, container, false)
@@ -38,6 +41,8 @@ class GardenOverviewFragment : Fragment() {
             val createIntent = Intent(context, CreateBedActivity::class.java)
             startActivity(createIntent)
         }
+
+        PlantInfoDialog(plantViewModel.plants.value!![0]).show(childFragmentManager, PlantInfoDialog.TAG)
 
         return binding.root
     }

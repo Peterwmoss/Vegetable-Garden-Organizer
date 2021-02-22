@@ -13,5 +13,7 @@ data class Plant(
         val sowingDepth: String? = null,
         val distance: Int? = null,
         val fertilizer: String? = null,
-        val harvest: String? = null
+        val harvest: String? = null,
+        val plantedDate: Date? = null,
+        val wateredDate: Date? = null,
 )

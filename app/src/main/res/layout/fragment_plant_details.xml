@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/plant_name"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/plant_category"
+        app:layout_constraintTop_toBottomOf="@id/plant_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/plant_earliest"
+        app:layout_constraintTop_toBottomOf="@id/plant_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/plant_latest"
+        app:layout_constraintTop_toBottomOf="@id/plant_earliest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/plant_sowing"
+        app:layout_constraintTop_toBottomOf="@id/plant_latest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/plant_crop_rotation"
+        app:layout_constraintTop_toBottomOf="@id/plant_sowing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/plant_sowing_depth"
+        app:layout_constraintTop_toBottomOf="@id/plant_crop_rotation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/plant_distance"
+        app:layout_constraintTop_toBottomOf="@id/plant_sowing_depth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/plant_fertilizer"
+        app:layout_constraintTop_toBottomOf="@id/plant_distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/plant_harvest"
+        app:layout_constraintTop_toBottomOf="@id/plant_fertilizer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/plant_planted_date"
+        app:layout_constraintTop_toBottomOf="@id/plant_harvest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/plant_watered_date"
+        app:layout_constraintTop_toBottomOf="@id/plant_planted_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
