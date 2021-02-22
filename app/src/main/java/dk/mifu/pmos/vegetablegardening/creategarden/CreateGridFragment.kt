@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.databinding.ObservableArrayMap
 import androidx.databinding.ObservableMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -46,6 +47,11 @@ class CreateGridFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = FragmentCreateGridBinding.inflate(inflater, container, false)
+
+        // Initialize current bed
+        bed.plants = ObservableArrayMap()
+        bed.tileIds = HashMap()
+
         return binding.root
     }
 
@@ -60,7 +66,7 @@ class CreateGridFragment : Fragment() {
         setListeners()
         setSaveBedListener()
 
-        bed.plants.addOnMapChangedCallback(Callback())
+        bed.plants?.addOnMapChangedCallback(Callback())
     }
 
     private fun setSaveBedListener() {
@@ -85,7 +91,7 @@ class CreateGridFragment : Fragment() {
                                     MainScope().launch(Dispatchers.IO) {
                                         val dao = AppDatabase.getDatabase(requireContext()).gardenDao()
                                         val repository = GardenRepository(dao)
-                                        repository.insertBed(Bed(bed.name!!, bed.location!!, bed.plants, bed.tileIds))
+                                        repository.insertBed(Bed(bed.name!!, bed.location!!, bed.plants!!, bed.tileIds!!))
                                     }
                                 }
                                 it.finish()
@@ -100,8 +106,8 @@ class CreateGridFragment : Fragment() {
 
     private inner class Callback : ObservableMap.OnMapChangedCallback<ObservableMap<Coordinate, Plant>, Coordinate, Plant>() {
         override fun onMapChanged(sender: ObservableMap<Coordinate, Plant>?, key: Coordinate?) {
-            val id = bed.tileIds[key]!!
-            requireView().findViewById<Button>(id).text = bed.plants[key]?.name
+            val id = bed.tileIds?.get(key)!!
+            requireView().findViewById<Button>(id).text = bed.plants?.get(key)?.name
         }
     }
 
@@ -115,13 +121,13 @@ class CreateGridFragment : Fragment() {
         val coordinate1 = Coordinate(0,0)
         val initialTile1 = GridTile(requireContext(), gridTileListener(coordinate1), binding, tileSideLength)
         binding.parentLayout.addView(initialTile1)
-        bed.tileIds[coordinate1] = initialTile1.id
+        bed.tileIds?.set(coordinate1, initialTile1.id)
         initialTile1.snapToGrid(null,null,false)
 
         val coordinate2 = Coordinate(0,1)
         val initialTile2 = GridTile(requireContext(), gridTileListener(coordinate2), binding, tileSideLength)
         binding.parentLayout.addView(initialTile2)
-        bed.tileIds[coordinate2] = initialTile2.id
+        bed.tileIds?.set(coordinate2, initialTile2.id)
         initialTile2.snapToGrid(null,initialTile1.id,false)
 
         rows++
@@ -195,11 +201,11 @@ class CreateGridFragment : Fragment() {
     private fun removeTiles(column: Boolean) {
         for (i in 0 until if (column) rows else columns) {
             val coordinate = if (column) Coordinate(columns-1, i) else Coordinate(i, rows-1)
-            val gridTileId = bed.tileIds[coordinate]
+            val gridTileId = bed.tileIds?.get(coordinate)
             val gridTile = requireView().findViewById<Button>(gridTileId!!)
             binding.parentLayout.removeView(gridTile)
 
-            bed.tileIds.remove(coordinate)
+            bed.tileIds?.remove(coordinate)
         }
         if (column) columns-- else rows--
         snapButtonsToRestOfGrid(column)
@@ -211,10 +217,10 @@ class CreateGridFragment : Fragment() {
             val gridTile = GridTile(requireContext(), gridTileListener(coordinate), binding, tileSideLength)
             binding.parentLayout.addView(gridTile)
 
-            bed.tileIds[coordinate] = gridTile.id //Update garden with new tile
+            bed.tileIds?.set(coordinate, gridTile.id) //Update garden with new tile
 
-            val prevTileId = bed.tileIds[if (column) Coordinate(columns-1, i) else Coordinate(i-1, rows)]
-            val upperTileId = bed.tileIds[if (column) Coordinate(columns, i - 1) else Coordinate(i, rows - 1)]
+            val prevTileId = bed.tileIds?.get(if (column) Coordinate(columns-1, i) else Coordinate(i-1, rows))
+            val upperTileId = bed.tileIds?.get(if (column) Coordinate(columns, i - 1) else Coordinate(i, rows - 1))
             gridTile.snapToGrid(prevTileId, upperTileId, column)
         }
         if (column) columns++ else rows++
@@ -222,7 +228,7 @@ class CreateGridFragment : Fragment() {
     }
 
     private fun snapButtonsToRestOfGrid(column: Boolean) {
-        val tileId = bed.tileIds[if (column) Coordinate(columns-1, 0) else Coordinate(0, rows-1)]
+        val tileId = bed.tileIds?.get(if (column) Coordinate(columns-1, 0) else Coordinate(0, rows-1))
         val constraintSet = ConstraintSet()
         constraintSet.apply {
             clone(binding.parentLayout)
@@ -238,7 +244,7 @@ class CreateGridFragment : Fragment() {
     }
 
     private fun changePlacementOfRemoveButton(full: Boolean, column: Boolean, buttonId: Int){
-        val furthestTileId = bed.tileIds[if (column) Coordinate(columns-1,0) else Coordinate(0, rows-1)]
+        val furthestTileId = bed.tileIds?.get(if (column) Coordinate(columns-1,0) else Coordinate(0, rows-1))
         val constraintSet = ConstraintSet()
         constraintSet.apply {
             clone(binding.parentLayout)
