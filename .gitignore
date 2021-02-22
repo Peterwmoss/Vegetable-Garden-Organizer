@@ -23,6 +23,7 @@ local.properties
 /report/*.bcf
 /report/*.blg
 /report/*.out
+/report/*.pdf
 /.idea/vcs.xml
 /report/*.run.xml
 /app/.classpath

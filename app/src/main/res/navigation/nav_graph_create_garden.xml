@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/specifyLocationFragment">
+
+    <dialog
+        android:id="@+id/choosePlantFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.creategarden.ChoosePlantFragment"
+        android:label="fragment_choose_plant"
+        tools:layout="@layout/fragment_choose_plant" >
+        <argument android:name="coordinate"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
+    </dialog>
+    <fragment
+        android:id="@+id/createGridFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.creategarden.CreateGridFragment"
+        android:label="CreateGridFragment" >
+        <action
+            android:id="@+id/choose_plant_action"
+            app:destination="@id/choosePlantFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/specifyLocationFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.creategarden.SpecifyLocationFragment"
+        android:label="SpecifyLocationFragment" >
+        <action
+            android:id="@+id/next_action"
+            app:destination="@id/createGridFragment" />
+    </fragment>
+</navigation>
