@@ -7,6 +7,8 @@
 * Læst om forspiring
 * Afslut sprint 3
 * Møde med vejleder
+* Bug fixing #72
+* Opstart på plant overview #3
 
 ### Vejledning
 
