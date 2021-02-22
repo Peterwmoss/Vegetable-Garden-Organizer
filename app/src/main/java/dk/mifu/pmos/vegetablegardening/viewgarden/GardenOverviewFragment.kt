@@ -9,10 +9,12 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.creategarden.CreateBedActivity
+import dk.mifu.pmos.vegetablegardening.creategarden.SpecifyLocationFragmentDirections
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentGardenOverviewBinding
 import dk.mifu.pmos.vegetablegardening.enums.Location.*
 import dk.mifu.pmos.vegetablegardening.models.Bed
@@ -43,11 +45,13 @@ class GardenOverviewFragment : Fragment() {
     }
 
     private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val gardenImage: ImageButton = view.findViewById(R.id.garden_image_button)
-        val gardenName: TextView = view.findViewById(R.id.garden_name_text)
+        val bedImage: ImageButton = view.findViewById(R.id.bed_image_button)
+        val bedName: TextView = view.findViewById(R.id.bed_name_text)
 
         init {
-            gardenImage.setOnClickListener { /* TODO Do something */ }
+            bedImage.setOnClickListener {
+                requireView().findNavController().navigate(GardenOverviewFragmentDirections.seeBedAction())
+            }
         }
     }
 
@@ -58,11 +62,11 @@ class GardenOverviewFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.gardenName.text = dataSet[position].name
+            holder.bedName.text = dataSet[position].name
 
             when (dataSet[position].location) {
-                Outdoors -> holder.gardenImage.setImageResource(R.drawable.outdoors_normal)
-                Greenhouse -> holder.gardenImage.setImageResource(R.drawable.greenhouse_normal)
+                Outdoors -> holder.bedImage.setImageResource(R.drawable.outdoors_normal)
+                Greenhouse -> holder.bedImage.setImageResource(R.drawable.greenhouse_normal)
             }
         }
 

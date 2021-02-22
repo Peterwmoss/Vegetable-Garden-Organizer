@@ -25,7 +25,7 @@ import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.util.*
 
 class ChoosePlantFragment : DialogFragment() {
-    private lateinit var binder: FragmentChoosePlantBinding
+    private lateinit var binding: FragmentChoosePlantBinding
 
     private val args: ChoosePlantFragmentArgs by navArgs()
     private val plantViewModel: PlantViewModel by activityViewModels()
@@ -35,16 +35,16 @@ class ChoosePlantFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        binder = FragmentChoosePlantBinding.inflate(inflater, container, false)
+        binding = FragmentChoosePlantBinding.inflate(inflater, container, false)
 
-        val recyclerView = binder.choosePlantRecyclerView
+        val recyclerView = binding.choosePlantRecyclerView
         createList(recyclerView)
 
-        val search = binder.searchPlantEdittext
+        val search = binding.searchPlantEdittext
         search.requestFocus()
         setupSearch(search)
 
-        return binder.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
