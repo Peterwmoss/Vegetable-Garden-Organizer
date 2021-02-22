@@ -12,6 +12,6 @@ import dk.mifu.pmos.vegetablegardening.enums.Location
 data class Bed (
         @PrimaryKey var name: String,
         val location: Location,
-        val plants: ObservableMap<Coordinate, Plant> = ObservableArrayMap(),
+        val plants: Map<Coordinate, Plant> = HashMap(),
         val tileIds: MutableMap<Coordinate, Int> = HashMap()
 )

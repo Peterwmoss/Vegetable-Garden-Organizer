@@ -6,26 +6,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.ObservableMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import dk.mifu.pmos.vegetablegardening.dao.GardenRepository
+import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.views.GridTile
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 class CreateGridFragment : Fragment() {
     private lateinit var binding: FragmentCreateGridBinding
   
-    private val gardenViewModel: BedViewModel by activityViewModels()
+    private val bed: BedViewModel by activityViewModels()
     private var height = 0
     private var width = 0
     private var tileSideLength = 0
-    private lateinit var bed: Bed
 
     private val START = ConstraintSet.START
     private val END = ConstraintSet.END
@@ -38,7 +45,6 @@ class CreateGridFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        bed = gardenViewModel.garden.value!!
         binding = FragmentCreateGridBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -52,8 +58,44 @@ class CreateGridFragment : Fragment() {
 
         insertInitialGridTiles()
         setListeners()
+        setSaveBedListener()
 
         bed.plants.addOnMapChangedCallback(Callback())
+    }
+
+    private fun setSaveBedListener() {
+        binding.saveGardenButton.setOnClickListener {
+
+            val dialog = activity?.let {
+                val editText = EditText(requireContext())
+                editText.hint = "Navn"
+                editText.requestFocus()
+
+                val builder = AlertDialog.Builder(it)
+                builder.setTitle("Navngiv dit bed")
+                        .setNegativeButton("Annullér") { dialog, _ -> dialog.cancel() }
+                        .setPositiveButton("Gem") { dialog, _ ->
+                            val text = editText.text.toString()
+                            if (text.isEmpty()) {
+                                Toast.makeText(it, "Indtast venligst en navn til dit bed", Toast.LENGTH_SHORT).show()
+                            }
+                            else {
+                                bed.name = editText.text.toString()
+                                run {
+                                    MainScope().launch(Dispatchers.IO) {
+                                        val dao = AppDatabase.getDatabase(requireContext()).gardenDao()
+                                        val repository = GardenRepository(dao)
+                                        repository.insertBed(Bed(bed.name!!, bed.location!!, bed.plants, bed.tileIds))
+                                    }
+                                }
+                                it.finish()
+                            }
+                        }
+                        .setView(editText)
+                        .create()
+            }
+            dialog?.show()
+        }
     }
 
     private inner class Callback : ObservableMap.OnMapChangedCallback<ObservableMap<Coordinate, Plant>, Coordinate, Plant>() {

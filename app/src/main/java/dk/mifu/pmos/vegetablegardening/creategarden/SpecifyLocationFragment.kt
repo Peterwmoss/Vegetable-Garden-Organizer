@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -33,9 +34,7 @@ class SpecifyLocationFragment: Fragment() {
     }
 
     private fun startCreateGridFragment(location: Location){
-        bedViewModel.garden.value = Bed("Test", location)
-      
-        // Navigate to next view
+        bedViewModel.location = location
         requireView().findNavController().navigate(SpecifyLocationFragmentDirections.nextAction())
     }
 }
