@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
-
 import dk.mifu.pmos.vegetablegardening.enums.Location
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentSpecifyLocationBinding
 
