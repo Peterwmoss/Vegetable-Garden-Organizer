@@ -27,7 +27,7 @@ class GridTile(context: Context,
         setOnClickListener(onClickListener)
     }
 
-    fun snapToGrid(prevTileId: Int?, upperTileId: Int?, row: Boolean) {
+    fun snapToGrid(prevTileId: Int?, upperTileId: Int?, column: Boolean) {
         val constraintSet = ConstraintSet()
 
         constraintSet.apply{
@@ -39,7 +39,7 @@ class GridTile(context: Context,
             if(upperTileId!=null) connect(id, TOP, upperTileId, BOTTOM)
             else connect(id, TOP, binding.parentLayout.id, TOP)
 
-            if(row) connect(binding.addColumnButton.id, START, id, END)
+            if(column) connect(binding.addColumnButton.id, START, id, END)
             else connect(binding.addRowButton.id, TOP, id, BOTTOM)
             applyTo(binding.parentLayout)
         }
