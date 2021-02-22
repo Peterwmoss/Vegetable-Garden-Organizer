@@ -122,7 +122,7 @@ class CreateGridFragment : Fragment() {
         val initialTile1 = GridTile(requireContext(), gridTileListener(coordinate1), binding, tileSideLength)
         binding.parentLayout.addView(initialTile1)
         bed.tileIds?.set(coordinate1, initialTile1.id)
-        initialTile1.snapToGrid(null,null,true)
+        initialTile1.snapToGrid(null,null,false)
 
         val coordinate2 = Coordinate(0,1)
         val initialTile2 = GridTile(requireContext(), gridTileListener(coordinate2), binding, tileSideLength)
@@ -221,7 +221,7 @@ class CreateGridFragment : Fragment() {
 
             val prevTileId = bed.tileIds?.get(if (column) Coordinate(columns-1, i) else Coordinate(i-1, rows))
             val upperTileId = bed.tileIds?.get(if (column) Coordinate(columns, i - 1) else Coordinate(i, rows - 1))
-            gridTile.snapToGrid(prevTileId, upperTileId, false)
+            gridTile.snapToGrid(prevTileId, upperTileId, column)
         }
         if (column) columns++ else rows++
         snapButtonsToRestOfGrid(column)
