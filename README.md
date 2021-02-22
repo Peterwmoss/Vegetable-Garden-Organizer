@@ -1,13 +1,91 @@
 # Køkkenhave app
 
-## Definition of done
+## 22/02-21
 
-* User story er opfyldt
-* Der er skrevet dokumentation
-* CI passed
-* Code review
-* Unit tests til de dele af koden, der er logik
-* Kode til både portræt og landskab
+### Agenda
+
+* Læst om forspiring
+* Afslut sprint 3
+* Møde med vejleder
+
+### Vejledning
+
+* Overvej om man skal kunne skrive personlig info / personlige notater
+* Vi har nok forskellige planter
+* Lytte til brugeren - hvad har de brug for og ikke hvad vi har lyst til
+
+## 21/02-21
+
+* Små rettelser af #60 og #41
+
+## 19/02-21
+
+* Færdiggørelse af setup storage #60 og integrate data with app #41
+
+## 17/02-21
+
+* Update grid text #62
+* Integrate data with app #41
+
+## 15/02-21
+
+* Videre arbejde med create garden space with plants #37
+* Dokumentation af #37
+* Sprint afslutning og start
+
+## 13/02-21
+
+* Videre arbejde med create garden space with plants #37
+* Planting locations #12
+
+## 10/02-21
+
+* Videre arbejde med create garden space with plants #37
+
+## 08/02-21
+
+### Agenda
+
+* Møde med Jørgen:
+  * Spørgsmål fra 01/02-21 - Hvad skal rapporten indeholde udover dokumentation, design, brugervejledning, refleksion og sammmenligning?
+  * Ny DoD
+  * Rapportstatus
+  * Kodestatus
+
+### Vejledning
+
+* Brug tid på at finde en kilde
+* Spørg bruger om sprog eller lad info styre det
+* Lille dokumentation
+* Hvorfor frem for hvad
+* Nytten af appen falder med om der er nogle gode informationer i den
+* Peer-community hvor man stiller appen til rådighed - brugerne kan tilføje og skabe indhold
+* Kemi-luppen - app, man kan bruge i fx supermakred. Scanner produkt og giver detaljeret beskrivelse. Her har man lavet et samarbejde med dem, der leverer produktet - det kan vi også undersøge
+* Datagrundlag !!!
+* Tænk over GitHub og deling
+  
+## 07/02-21
+
+* Søgefunktion til #29
+* Dokumentation #29
+
+## 05/02-21
+
+* Videreudvikling af create garden space #29
+* Dokumentation #29
+* Opdateret definition of done
+
+## 04/02-21
+
+* Design og tegning af ikoner til specify location
+* Videreudvikling af create garden space design #28
+
+## 03/02-21
+
+### Agenda
+
+* Videreudvikling af create garden space design #28
+* Rapportskrivning
 
 ## 01/02-21
 
@@ -16,8 +94,18 @@
 * Kig på gammelt projekt
 * Læs i Nerd Ranch Guide og Android documentation
 * Svar mail
-* Setup initial project
+* Setup kodeprojekt
 * Setup rapport
+* Sketching og wireframing af #4, #6, #13
+* Styleguide
+
+### Spørgsmål til Jørgen
+
+* Hvad skal rapporten indeholde udover dokumentation, design, brugervejledning, refleksion og sammmenligning?
+
+### Spørgsmål til Ann
+
+* Hvor mange forskellige sorter af samme plante har man som regel?
 
 ## 28/01-21
 
