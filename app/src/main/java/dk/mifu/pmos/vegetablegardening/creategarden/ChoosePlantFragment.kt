@@ -12,16 +12,14 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentChoosePlantBinding
+import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.enums.Location
-import dk.mifu.pmos.vegetablegardening.viewmodels.CurrentGardenViewModel
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.util.*
@@ -31,7 +29,7 @@ class ChoosePlantFragment : DialogFragment() {
 
     private val args: ChoosePlantFragmentArgs by navArgs()
     private val plantViewModel: PlantViewModel by activityViewModels()
-    private val currentGardenViewModel: CurrentGardenViewModel by activityViewModels()
+    private val bedViewModel: BedViewModel by activityViewModels()
 
     private var adapter : PlantAdapter? = null
 
@@ -63,7 +61,7 @@ class ChoosePlantFragment : DialogFragment() {
     private fun createList(recyclerView: RecyclerView) {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        val location = currentGardenViewModel.garden.value?.location
+        val location = bedViewModel.garden.value?.location
         plantViewModel.plants.observe(viewLifecycleOwner, {
             adapter = PlantAdapter(it.filter { plant ->
                 val locale = Locale("da", "DK")
@@ -96,7 +94,7 @@ class ChoosePlantFragment : DialogFragment() {
 
         init {
             view.setOnClickListener {
-                currentGardenViewModel.garden.value!!.plants[args.coordinate] = plantViewModel.plants.value?.first { it.name == plantName.text }
+                bedViewModel.garden.value!!.plants[args.coordinate] = plantViewModel.plants.value?.first { it.name == plantName.text }
                 dialog?.dismiss()
             }
         }
