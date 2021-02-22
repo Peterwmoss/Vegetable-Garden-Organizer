@@ -1,5 +1,14 @@
 # Køkkenhave app
 
+## 22/02-21
+
+### Agenda
+* Læst om forspiring
+* Afslut sprint 3
+* Møde med vejleder
+
+### Vejledning
+
 ## 21/02-21
 
 * Små rettelser af #60 og #41
