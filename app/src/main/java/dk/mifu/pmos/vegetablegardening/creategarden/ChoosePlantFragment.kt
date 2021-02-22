@@ -61,7 +61,7 @@ class ChoosePlantFragment : DialogFragment() {
     private fun createList(recyclerView: RecyclerView) {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        val location = currentGardenViewModel.garden.value?.location
+        val location = bedViewModel.garden.value?.location
         plantViewModel.plants.observe(viewLifecycleOwner, {
             adapter = PlantAdapter(it.filter { plant ->
                 val locale = Locale("da", "DK")
