@@ -8,15 +8,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
-import dk.mifu.pmos.vegetablegardening.viewmodels.CurrentGardenViewModel
-import dk.mifu.pmos.vegetablegardening.models.Garden
+import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
+import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.enums.Location
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentSpecifyLocationBinding
 
 class SpecifyLocationFragment: Fragment() {
     private lateinit var binding: FragmentSpecifyLocationBinding
 
-    private val currentGardenViewModel: CurrentGardenViewModel by activityViewModels()
+    private val bedViewModel: BedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +34,7 @@ class SpecifyLocationFragment: Fragment() {
     }
 
     private fun startCreateGridFragment(location: Location){
-        currentGardenViewModel.location = location
+        bedViewModel.location = location
         requireView().findNavController().navigate(SpecifyLocationFragmentDirections.nextAction())
     }
 }

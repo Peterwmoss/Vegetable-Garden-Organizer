@@ -1,21 +1,21 @@
 package dk.mifu.pmos.vegetablegardening.dao
 
 import androidx.lifecycle.LiveData
-import dk.mifu.pmos.vegetablegardening.models.Garden
+import dk.mifu.pmos.vegetablegardening.models.Bed
 
 class GardenRepository(private val gardenDao: GardenDao) {
 
-    suspend fun insertGarden(garden: Garden) {
-        gardenDao.insert(garden)
+    suspend fun insertBed(bed: Bed) {
+        gardenDao.insert(bed)
     }
 
-    suspend fun updateGarden(garden: Garden) {
-        gardenDao.update(garden)
+    suspend fun updateBed(bed: Bed) {
+        gardenDao.update(bed)
     }
 
-    suspend fun deleteGarden(garden: Garden) {
-        gardenDao.delete(garden)
+    suspend fun deleteBed(bed: Bed) {
+        gardenDao.delete(bed)
     }
 
-    fun getAllGardens(): LiveData<List<Garden>> = gardenDao.getAll()
+    fun getAllBeds(): LiveData<List<Bed>> = gardenDao.getAll()
 }

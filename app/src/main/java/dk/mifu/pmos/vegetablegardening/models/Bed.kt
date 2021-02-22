@@ -9,7 +9,7 @@ import dk.mifu.pmos.vegetablegardening.enums.Location
 
 @Entity(tableName = "gardens")
 @TypeConverters(Converters::class)
-data class Garden (
+data class Bed (
         @PrimaryKey var name: String,
         val location: Location,
         val plants: Map<Coordinate, Plant> = HashMap(),

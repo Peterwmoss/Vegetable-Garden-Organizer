@@ -1,9 +1,7 @@
 package dk.mifu.pmos.vegetablegardening
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import dk.mifu.pmos.vegetablegardening.creategarden.CreateGardenActivity
 import dk.mifu.pmos.vegetablegardening.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

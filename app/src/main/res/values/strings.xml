@@ -1,14 +1,16 @@
 <resources>
-    <string name="app_name">Vegetable Gardening</string>
-    <string name="createGarden">New Garden</string>
-    <string name="create_location_text">Where is your planting area?</string>
-    <string name="outdoors">Outdoors</string>
-    <string name="indoors">Indoors</string>
-    <string name="greenhouse">Greenhouse</string>
-    <string name="search_text">Search</string>
-    <string name="select_plant_text">Select Plant</string>
-    <string name="add_column_text">Add column</string>
-    <string name="add_row_text">Add row</string>
-    <string name="name_your_garden">Name your garden</string>
-    <string name="save_garden_text">Save garden</string>
+    <string name="app_name">Køkkenhave</string>
+    <string name="createGarden">Nyt bed</string>
+    <string name="create_location_text">Hvor er dit bed?</string>
+    <string name="outdoors">Udendørs</string>
+    <string name="indoors">Indendørs</string>
+    <string name="greenhouse">Drivhus</string>
+    <string name="search_text">Søg</string>
+    <string name="select_plant_text">Vælg plante</string>
+    <string name="add_column_text">Tilføj kolonne</string>
+    <string name="add_row_text">Tilføj række</string>
+    <string name="bed_button_text">Bed</string>
+    <string name="plant_button_text">Planter</string>
+    <string name="save_garden_text">Gem bed</string>
+    <string name="name_your_garden">Navngiv dit bed</string>
 </resources>

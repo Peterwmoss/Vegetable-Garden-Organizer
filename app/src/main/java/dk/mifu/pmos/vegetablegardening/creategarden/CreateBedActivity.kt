@@ -7,7 +7,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import dk.mifu.pmos.vegetablegardening.R
 
-class CreateGardenActivity : AppCompatActivity() {
+class CreateBedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_garden)

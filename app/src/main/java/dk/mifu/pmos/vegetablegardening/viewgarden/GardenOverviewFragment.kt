@@ -9,14 +9,13 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
-import dk.mifu.pmos.vegetablegardening.creategarden.CreateGardenActivity
+import dk.mifu.pmos.vegetablegardening.creategarden.CreateBedActivity
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentGardenOverviewBinding
 import dk.mifu.pmos.vegetablegardening.enums.Location.*
-import dk.mifu.pmos.vegetablegardening.models.Garden
+import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.viewmodels.GardenViewModel
 
 class GardenOverviewFragment : Fragment() {
@@ -36,7 +35,7 @@ class GardenOverviewFragment : Fragment() {
         })
 
         binding.newLocationBtn.setOnClickListener {
-            val createIntent = Intent(context, CreateGardenActivity::class.java)
+            val createIntent = Intent(context, CreateBedActivity::class.java)
             startActivity(createIntent)
         }
 
@@ -52,7 +51,7 @@ class GardenOverviewFragment : Fragment() {
         }
     }
 
-    private inner class GardenOverviewAdapter(private val dataSet: List<Garden>): RecyclerView.Adapter<ViewHolder>() {
+    private inner class GardenOverviewAdapter(private val dataSet: List<Bed>): RecyclerView.Adapter<ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_garden, parent, false)
             return ViewHolder(view)
