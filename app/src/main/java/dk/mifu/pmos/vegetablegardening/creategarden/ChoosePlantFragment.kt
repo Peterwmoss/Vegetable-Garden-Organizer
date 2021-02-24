@@ -27,6 +27,8 @@ import java.util.*
 class ChoosePlantFragment : ChoosePlantNavigation() {
     private lateinit var binder: FragmentChoosePlantBinding
 
+    private val plantViewModel: PlantViewModel by activityViewModels()
+
     private val args: ChoosePlantFragmentArgs by navArgs()
 
     private var adapter : PlantAdapter? = null
