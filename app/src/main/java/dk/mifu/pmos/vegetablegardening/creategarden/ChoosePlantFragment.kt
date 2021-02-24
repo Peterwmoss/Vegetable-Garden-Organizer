@@ -24,12 +24,10 @@ import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.util.*
 
-class ChoosePlantFragment : DialogFragment() {
+class ChoosePlantFragment : ChoosePlantNavigation() {
     private lateinit var binder: FragmentChoosePlantBinding
 
     private val args: ChoosePlantFragmentArgs by navArgs()
-    private val plantViewModel: PlantViewModel by activityViewModels()
-    private val bedViewModel: BedViewModel by activityViewModels()
 
     private var adapter : PlantAdapter? = null
 
@@ -90,11 +88,11 @@ class ChoosePlantFragment : DialogFragment() {
 
     private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val plantName: TextView = view.findViewById(R.id.choose_plant_row_item_text)
+        lateinit var plant : Plant
 
         init {
             view.setOnClickListener {
-                bedViewModel.plants?.set(args.coordinate, plantViewModel.plants.value?.first { it.name == plantName.text })
-                dialog?.dismiss()
+                navigateBack(args, plant)
             }
         }
     }
@@ -112,6 +110,7 @@ class ChoosePlantFragment : DialogFragment() {
 
         override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
             viewHolder.plantName.text = flowingData[position].name
+            viewHolder.plant = flowingData[position]
         }
 
         override fun getItemCount() = flowingData.size
