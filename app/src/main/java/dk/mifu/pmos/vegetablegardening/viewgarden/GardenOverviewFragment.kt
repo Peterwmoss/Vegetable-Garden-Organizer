@@ -42,13 +42,6 @@ class GardenOverviewFragment : GardenOverviewNavigation() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        requireView().findNavController().navigate(GardenOverviewFragmentDirections.showPlantInfo())
-        //PlantInfoDialog(plantViewModel.plants.value!![0]).show(childFragmentManager, PlantInfoDialog.TAG)
-    }
-
     private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val gardenImage: ImageButton = view.findViewById(R.id.garden_image_button)
         val gardenName: TextView = view.findViewById(R.id.garden_name_text)

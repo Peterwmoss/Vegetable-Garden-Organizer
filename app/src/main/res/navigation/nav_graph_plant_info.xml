@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/plantDetails"
-        android:name="dk.mifu.pmos.vegetablegardening.viewgarden.PlantDetails"
+        android:name="dk.mifu.pmos.vegetablegardening.viewgarden.PlantDetailsFragment"
         android:label="PlantDetails" >
         <argument android:name="plant"
             app:argType="dk.mifu.pmos.vegetablegardening.models.Plant" />

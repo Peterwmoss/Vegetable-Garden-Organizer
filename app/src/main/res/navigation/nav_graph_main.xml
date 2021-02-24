@@ -10,8 +10,16 @@
         android:label="fragment_garden_overview"
         tools:layout="@layout/fragment_garden_overview" >
         <action
+            android:id="@+id/see_bed_action"
+            app:destination="@id/bedOverviewFragment" />
+    </fragment>
+    <include app:graph="@navigation/nav_graph_plant_info" />
+    <fragment
+        android:id="@+id/bedOverviewFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.viewgarden.BedOverviewFragment"
+        android:label="BedOverviewFragment" >
+        <action
             android:id="@+id/show_plant_info"
             app:destination="@id/nav_graph_plant_info" />
     </fragment>
-    <include app:graph="@navigation/nav_graph_plant_info" />
 </navigation>
