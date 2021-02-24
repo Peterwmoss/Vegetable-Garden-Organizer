@@ -33,6 +33,7 @@ class PlantInfoDialog(private val plant: Plant) : DialogFragment() {
 
         binding.detailsButton.setOnClickListener {
             Toast.makeText(activity, "Detaljer", Toast.LENGTH_SHORT).show()
+            //parentFragment?.requireView()?.findNavController()?.navigate(R.id.)
         }
     }
 

@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
@@ -42,9 +43,14 @@ class GardenOverviewFragment : Fragment() {
             startActivity(createIntent)
         }
 
-        PlantInfoDialog(plantViewModel.plants.value!![0]).show(childFragmentManager, PlantInfoDialog.TAG)
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        requireView().findNavController().navigate(GardenOverviewFragmentDirections.showPlantInfo())
+        //PlantInfoDialog(plantViewModel.plants.value!![0]).show(childFragmentManager, PlantInfoDialog.TAG)
     }
 
     private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
