@@ -14,16 +14,17 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.creategarden.CreateBedActivity
-import dk.mifu.pmos.vegetablegardening.creategarden.SpecifyLocationFragmentDirections
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentGardenOverviewBinding
 import dk.mifu.pmos.vegetablegardening.enums.Location.*
 import dk.mifu.pmos.vegetablegardening.models.Bed
+import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.GardenViewModel
 
 class GardenOverviewFragment : Fragment() {
     private lateinit var binding: FragmentGardenOverviewBinding
 
     private val gardenViewModel: GardenViewModel by activityViewModels()
+    private val bedViewModel: BedViewModel by activityViewModels()
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentGardenOverviewBinding.inflate(inflater, container, false)
@@ -31,7 +32,7 @@ class GardenOverviewFragment : Fragment() {
         val recyclerView = binding.gardensRecyclerView
 
         recyclerView.layoutManager = GridLayoutManager(context, 2)
-        gardenViewModel.gardens.observe(viewLifecycleOwner, {
+        gardenViewModel.beds.observe(viewLifecycleOwner, {
             val adapter = GardenOverviewAdapter(it)
             recyclerView.adapter = adapter
         })
@@ -47,9 +48,11 @@ class GardenOverviewFragment : Fragment() {
     private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val bedImage: ImageButton = view.findViewById(R.id.bed_image_button)
         val bedName: TextView = view.findViewById(R.id.bed_name_text)
+        var bed: Bed? = null
 
         init {
             bedImage.setOnClickListener {
+                bedViewModel.setBed(bed!!)
                 requireView().findNavController().navigate(GardenOverviewFragmentDirections.seeBedAction())
             }
         }
@@ -63,6 +66,7 @@ class GardenOverviewFragment : Fragment() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.bedName.text = dataSet[position].name
+            holder.bed = dataSet[position]
 
             when (dataSet[position].location) {
                 Outdoors -> holder.bedImage.setImageResource(R.drawable.outdoors_normal)

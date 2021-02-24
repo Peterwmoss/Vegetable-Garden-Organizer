@@ -17,5 +17,6 @@
         android:id="@+id/bedOverviewFragment"
         android:name="dk.mifu.pmos.vegetablegardening.viewgarden.BedOverviewFragment"
         android:label="fragment_bed_overview"
-        tools:layout="@layout/fragment_bed_overview"/>
+        tools:layout="@layout/fragment_bed_overview">
+    </fragment>
 </navigation>

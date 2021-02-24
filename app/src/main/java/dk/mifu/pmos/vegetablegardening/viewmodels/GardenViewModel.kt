@@ -10,5 +10,5 @@ import dk.mifu.pmos.vegetablegardening.models.Bed
 class GardenViewModel(application: Application) : AndroidViewModel(application) {
     private val gardenDb = AppDatabase.getDatabase(getApplication()).gardenDao()
     private val repository = GardenRepository(gardenDb)
-    val gardens: LiveData<List<Bed>> = repository.getAllBeds()
+    val beds: LiveData<List<Bed>> = repository.getAllBeds()
 }
