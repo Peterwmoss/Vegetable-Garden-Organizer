@@ -1,15 +1,14 @@
 package dk.mifu.pmos.vegetablegardening.viewgarden
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
+import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
@@ -35,7 +34,8 @@ class BedOverviewFragment: Fragment() {
         val columns = gridSize.first
         val rows = gridSize.second
 
-        binding.gridViewComponent.numColumns = columns
+        binding.gridlayout.columnCount = columns
+        binding.gridlayout.rowCount = rows
 
         val orderedArrayList: ArrayList<Plant?> = ArrayList()
         for(i in 0 until columns){
@@ -44,22 +44,24 @@ class BedOverviewFragment: Fragment() {
             }
         }
 
-        val adapter = ArrayAdapter<Plant>(requireContext(), R.layout.list_item_tile, orderedArrayList)
-        binding.gridViewComponent.adapter = adapter
+        orderedArrayList.forEach {
+            val itemTileBinding = ListItemTileBinding.inflate(layoutInflater, binding.gridlayout, true)
+            itemTileBinding.plantTextView.text = it?.name ?: "TOM BITCH"
+        }
     }
 
     private fun sizeOfBed(): Pair<Int,Int> {
-        var columns = 0
-        var rows = 0
+        var column = 0
+        var row = 0
 
         val map = bedViewModel.plants?.toMap()
         map?.keys?.forEach {
             val plantPosCol = it.col
             val plantPosRow = it.row
-            if(plantPosCol > columns) columns = plantPosCol
-            if(plantPosRow > rows) rows = plantPosRow
+            if(plantPosCol > column) column = plantPosCol
+            if(plantPosRow > row) row = plantPosRow
         }
 
-        return Pair(columns, rows)
+        return Pair(column+1, row+1)
     }
 }

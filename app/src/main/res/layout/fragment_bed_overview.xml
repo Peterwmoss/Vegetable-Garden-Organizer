@@ -17,10 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bed_text_view">
-
-        <GridView
-            android:id="@+id/gridView_component"
-            />
+        app:layout_constraintTop_toBottomOf="@id/bed_text_view"
+        android:id="@+id/gridlayout">
     </GridLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
