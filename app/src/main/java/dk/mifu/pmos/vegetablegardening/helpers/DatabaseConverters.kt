@@ -1,12 +1,14 @@
-package dk.mifu.pmos.vegetablegardening.models
+package dk.mifu.pmos.vegetablegardening.helpers
 
 import androidx.room.TypeConverter
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import dk.mifu.pmos.vegetablegardening.enums.Location
+import dk.mifu.pmos.vegetablegardening.models.Coordinate
+import dk.mifu.pmos.vegetablegardening.models.Plant
 import java.lang.reflect.Type
 
-class Converters {
+class DatabaseConverters {
     private val plantMapType : Type = object : TypeToken<Map<Coordinate, Plant>>(){}.type
     private val gson = GsonBuilder().registerTypeAdapter(plantMapType, GsonAdapters.PlantMapAdapter()).create()
 

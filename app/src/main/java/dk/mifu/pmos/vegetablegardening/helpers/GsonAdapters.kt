@@ -1,8 +1,10 @@
-package dk.mifu.pmos.vegetablegardening.models
+package dk.mifu.pmos.vegetablegardening.helpers
 
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
+import dk.mifu.pmos.vegetablegardening.models.Coordinate
+import dk.mifu.pmos.vegetablegardening.models.Plant
 
 class GsonAdapters {
     class PlantMapAdapter: TypeAdapter<Map<Coordinate, Plant>>() {
