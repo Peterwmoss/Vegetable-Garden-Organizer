@@ -1,18 +1,15 @@
 package dk.mifu.pmos.vegetablegardening.viewgarden
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
-import dk.mifu.pmos.vegetablegardening.creategarden.CreateBedActivity
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentGardenOverviewBinding
 import dk.mifu.pmos.vegetablegardening.enums.Location.*
 import dk.mifu.pmos.vegetablegardening.models.Bed
@@ -20,7 +17,7 @@ import dk.mifu.pmos.vegetablegardening.viewmodels.GardenViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import dk.mifu.pmos.vegetablegardening.views.PlantInfoDialog
 
-class GardenOverviewFragment : Fragment() {
+class GardenOverviewFragment : GardenOverviewNavigation() {
     private lateinit var binding: FragmentGardenOverviewBinding
 
     private val gardenViewModel: GardenViewModel by activityViewModels()
@@ -38,8 +35,7 @@ class GardenOverviewFragment : Fragment() {
         })
 
         binding.newLocationBtn.setOnClickListener {
-            val createIntent = Intent(context, CreateBedActivity::class.java)
-            startActivity(createIntent)
+            navigateToCreateBedActivity()
         }
 
         PlantInfoDialog(plantViewModel.plants.value!![0]).show(childFragmentManager, PlantInfoDialog.TAG)
@@ -52,7 +48,7 @@ class GardenOverviewFragment : Fragment() {
         val gardenName: TextView = view.findViewById(R.id.garden_name_text)
 
         init {
-            gardenImage.setOnClickListener { /* TODO Do something */ }
+            gardenImage.setOnClickListener { navigateToBedOverviewFragment() }
         }
     }
 
