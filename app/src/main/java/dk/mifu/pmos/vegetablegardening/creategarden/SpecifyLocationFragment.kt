@@ -11,7 +11,7 @@ import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.enums.Location
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentSpecifyLocationBinding
 
-class SpecifyLocationFragment: Fragment() {
+class SpecifyLocationFragment: SpecifyLocationNavigation() {
     private lateinit var binding: FragmentSpecifyLocationBinding
 
     private val bedViewModel: BedViewModel by activityViewModels()
@@ -33,6 +33,6 @@ class SpecifyLocationFragment: Fragment() {
 
     private fun startCreateGridFragment(location: Location){
         bedViewModel.location = location
-        requireView().findNavController().navigate(SpecifyLocationFragmentDirections.nextAction())
+        toNextView()
     }
 }
