@@ -77,7 +77,7 @@ class CreateGridFragment : CreateGridNavigation() {
 
     private fun gridTileListener(coordinate: Coordinate): View.OnClickListener {
         return View.OnClickListener {
-            addPlantToTile(coordinate)
+            navigateToChoosePlantFragment(coordinate)
         }
     }
 

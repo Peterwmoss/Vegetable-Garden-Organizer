@@ -28,6 +28,7 @@ class ChoosePlantFragment : ChoosePlantNavigation() {
     private lateinit var binder: FragmentChoosePlantBinding
 
     private val plantViewModel: PlantViewModel by activityViewModels()
+    private val bedViewModel: BedViewModel by activityViewModels()
 
     private val args: ChoosePlantFragmentArgs by navArgs()
 
@@ -94,7 +95,8 @@ class ChoosePlantFragment : ChoosePlantNavigation() {
 
         init {
             view.setOnClickListener {
-                navigateBack(args, plant)
+                bedViewModel.plants?.set(args.coordinate, plant)
+                navigateBack()
             }
         }
     }

@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.enums.Location
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentSpecifyLocationBinding
@@ -33,6 +31,6 @@ class SpecifyLocationFragment: SpecifyLocationNavigation() {
 
     private fun startCreateGridFragment(location: Location){
         bedViewModel.location = location
-        toNextView()
+        navigateToNextView()
     }
 }
