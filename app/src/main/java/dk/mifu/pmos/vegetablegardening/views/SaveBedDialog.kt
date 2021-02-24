@@ -26,7 +26,7 @@ class SaveBedDialog() : DialogFragment() {
         val builder = AlertDialog.Builder(requireActivity())
         return builder.setTitle("Navngiv dit bed")
                 .setNegativeButton("Annullér") { dialog, _ -> dialog.cancel() }
-                .setPositiveButton("Gem") { dialog, _ ->
+                .setPositiveButton("Gem") { _, _ ->
                     val text = editText.text.toString()
                     if (text.isEmpty()) {
                         Toast.makeText(requireActivity(), "Indtast venligst en navn til dit bed", Toast.LENGTH_SHORT).show()
@@ -37,7 +37,7 @@ class SaveBedDialog() : DialogFragment() {
                             MainScope().launch(Dispatchers.IO) {
                                 val dao = AppDatabase.getDatabase(requireContext()).gardenDao()
                                 val repository = GardenRepository(dao)
-                                repository.insertBed(Bed(bed.name!!, bed.location!!, bed.plants!!, bed.tileIds!!))
+                                repository.insertBed(Bed(bed.name!!, bed.location!!, bed.plants!!.toMap()))
                             }
                         }
                         requireActivity().finish()

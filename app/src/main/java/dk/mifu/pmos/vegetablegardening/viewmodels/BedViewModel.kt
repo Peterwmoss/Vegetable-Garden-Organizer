@@ -23,6 +23,5 @@ class BedViewModel : ViewModel() {
         name = bed.name
         location = bed.location
         plants = map
-        tileIds = bed.tileIds
     }
 }
