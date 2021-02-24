@@ -14,25 +14,30 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.creategarden.CreateBedActivity
+import dk.mifu.pmos.vegetablegardening.dao.GardenDao
+import dk.mifu.pmos.vegetablegardening.dao.GardenRepository
+import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentGardenOverviewBinding
 import dk.mifu.pmos.vegetablegardening.enums.Location.*
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
-import dk.mifu.pmos.vegetablegardening.viewmodels.GardenViewModel
 
 class GardenOverviewFragment : Fragment() {
     private lateinit var binding: FragmentGardenOverviewBinding
 
-    private val gardenViewModel: GardenViewModel by activityViewModels()
     private val bedViewModel: BedViewModel by activityViewModels()
+    private var gardenDb: GardenDao? = null
+    private var repository: GardenRepository? = null
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentGardenOverviewBinding.inflate(inflater, container, false)
+        gardenDb = AppDatabase.getDatabase(requireContext()).gardenDao()
+        repository = GardenRepository(gardenDb!!)
 
         val recyclerView = binding.gardensRecyclerView
 
         recyclerView.layoutManager = GridLayoutManager(context, 2)
-        gardenViewModel.beds.observe(viewLifecycleOwner, {
+        repository?.getAllBeds()?.observe(viewLifecycleOwner, {
             val adapter = GardenOverviewAdapter(it)
             recyclerView.adapter = adapter
         })
