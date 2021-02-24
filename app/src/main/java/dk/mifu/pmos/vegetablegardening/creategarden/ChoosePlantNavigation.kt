@@ -8,7 +8,7 @@ import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 abstract class ChoosePlantNavigation : DialogFragment() {
     protected val bedViewModel: BedViewModel by activityViewModels()
 
-    fun navigateBack(args: ChoosePlantFragmentArgs, plant: Plant) {
+    protected fun navigateBack(args: ChoosePlantFragmentArgs, plant: Plant) {
         bedViewModel.plants?.set(args.coordinate, plant)
         dialog?.dismiss()
     }
