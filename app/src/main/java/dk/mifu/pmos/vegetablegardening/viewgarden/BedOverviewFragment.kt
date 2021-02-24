@@ -25,5 +25,23 @@ class BedOverviewFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.bedTextView.text = bedViewModel.name
+
+        val gridSize = sizeOfBed()
+
+        binding.gridViewComponent.numColumns = gridSize.first
+    }
+
+    private fun sizeOfBed(): Pair<Int,Int> {
+        var columns = 0
+        var rows = 0
+
+        bedViewModel.plants?.forEach {
+            val plantPosCol = it.key.col
+            val plantPosRow = it.key.row
+            if(plantPosCol > columns) columns = plantPosCol
+            if(plantPosRow > rows) rows = plantPosRow
+        }
+
+        return Pair(columns, rows)
     }
 }
