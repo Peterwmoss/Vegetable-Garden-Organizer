@@ -17,8 +17,9 @@ class BedViewModel : ViewModel() {
 
     fun setBed(bed: Bed){
         val map = ObservableArrayMap<Coordinate, Plant>()
-        map.putAll(bed.plants)
-
+        bed.plants.forEach {
+            map[it.key] = it.value
+        }
         name = bed.name
         location = bed.location
         plants = map
