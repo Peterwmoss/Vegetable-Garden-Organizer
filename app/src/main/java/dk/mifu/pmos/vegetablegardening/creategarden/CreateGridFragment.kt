@@ -6,31 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.ObservableArrayMap
 import androidx.databinding.ObservableMap
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
-import dk.mifu.pmos.vegetablegardening.dao.GardenRepository
-import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
-import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.views.GridTile
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
+import dk.mifu.pmos.vegetablegardening.views.SaveBedDialog
 
-class CreateGridFragment : Fragment() {
+class CreateGridFragment : CreateGridNavigation() {
     private lateinit var binding: FragmentCreateGridBinding
-  
+
     private val bed: BedViewModel by activityViewModels()
+
     private var height = 0
     private var width = 0
     private var tileSideLength = 0
@@ -72,35 +63,8 @@ class CreateGridFragment : Fragment() {
     private fun setSaveBedListener() {
         binding.saveGardenButton.setOnClickListener {
 
-            val dialog = activity?.let {
-                val editText = EditText(requireContext())
-                editText.hint = "Navn"
-                editText.requestFocus()
-
-                val builder = AlertDialog.Builder(it)
-                builder.setTitle("Navngiv dit bed")
-                        .setNegativeButton("Annullér") { dialog, _ -> dialog.cancel() }
-                        .setPositiveButton("Gem") { dialog, _ ->
-                            val text = editText.text.toString()
-                            if (text.isEmpty()) {
-                                Toast.makeText(it, "Indtast venligst en navn til dit bed", Toast.LENGTH_SHORT).show()
-                            }
-                            else {
-                                bed.name = editText.text.toString()
-                                run {
-                                    MainScope().launch(Dispatchers.IO) {
-                                        val dao = AppDatabase.getDatabase(requireContext()).gardenDao()
-                                        val repository = GardenRepository(dao)
-                                        repository.insertBed(Bed(bed.name!!, bed.location!!, bed.plants!!, bed.tileIds!!))
-                                    }
-                                }
-                                it.finish()
-                            }
-                        }
-                        .setView(editText)
-                        .create()
-            }
-            dialog?.show()
+            val dialog = SaveBedDialog()
+            dialog.show(childFragmentManager, SaveBedDialog.TAG)
         }
     }
 
@@ -113,7 +77,7 @@ class CreateGridFragment : Fragment() {
 
     private fun gridTileListener(coordinate: Coordinate): View.OnClickListener {
         return View.OnClickListener {
-            requireView().findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(coordinate))
+            navigateToChoosePlantFragment(coordinate)
         }
     }
 

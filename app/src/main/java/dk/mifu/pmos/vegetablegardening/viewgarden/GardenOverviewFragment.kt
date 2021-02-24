@@ -1,19 +1,16 @@
 package dk.mifu.pmos.vegetablegardening.viewgarden
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
-import dk.mifu.pmos.vegetablegardening.creategarden.CreateBedActivity
 import dk.mifu.pmos.vegetablegardening.dao.GardenDao
 import dk.mifu.pmos.vegetablegardening.dao.GardenRepository
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
@@ -22,7 +19,7 @@ import dk.mifu.pmos.vegetablegardening.enums.Location.*
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 
-class GardenOverviewFragment : Fragment() {
+class GardenOverviewFragment : GardenOverviewNavigation() {
     private lateinit var binding: FragmentGardenOverviewBinding
 
     private val bedViewModel: BedViewModel by activityViewModels()
@@ -43,8 +40,7 @@ class GardenOverviewFragment : Fragment() {
         })
 
         binding.newLocationBtn.setOnClickListener {
-            val createIntent = Intent(context, CreateBedActivity::class.java)
-            startActivity(createIntent)
+            navigateToCreateBedActivity()
         }
 
         return binding.root
@@ -58,7 +54,7 @@ class GardenOverviewFragment : Fragment() {
         init {
             bedImage.setOnClickListener {
                 bedViewModel.setBed(bed!!)
-                requireView().findNavController().navigate(GardenOverviewFragmentDirections.seeBedAction())
+                navigateToBedOverviewFragment()
             }
         }
     }
