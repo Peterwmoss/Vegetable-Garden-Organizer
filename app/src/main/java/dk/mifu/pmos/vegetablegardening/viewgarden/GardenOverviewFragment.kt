@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
@@ -15,7 +14,8 @@ import dk.mifu.pmos.vegetablegardening.dao.GardenDao
 import dk.mifu.pmos.vegetablegardening.dao.GardenRepository
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentGardenOverviewBinding
-import dk.mifu.pmos.vegetablegardening.enums.Location.*
+import dk.mifu.pmos.vegetablegardening.enums.Location.Greenhouse
+import dk.mifu.pmos.vegetablegardening.enums.Location.Outdoors
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 
