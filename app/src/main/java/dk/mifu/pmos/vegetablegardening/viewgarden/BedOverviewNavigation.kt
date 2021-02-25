@@ -2,9 +2,10 @@ package dk.mifu.pmos.vegetablegardening.viewgarden
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import dk.mifu.pmos.vegetablegardening.models.Plant
 
 abstract class BedOverviewNavigation: Fragment(){
-    protected fun navigateToPlantInfoDialog() {
-        requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantInfo())
+    protected fun navigateToPlantInfoDialog(plant: Plant) {
+        requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantInfo(plant))
     }
 }

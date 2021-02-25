@@ -22,7 +22,6 @@ class GardenOverviewFragment : GardenOverviewNavigation() {
     private lateinit var binding: FragmentGardenOverviewBinding
 
     private val gardenViewModel: GardenViewModel by activityViewModels()
-    private val plantViewModel: PlantViewModel by activityViewModels()
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentGardenOverviewBinding.inflate(inflater, container, false)
