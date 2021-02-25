@@ -19,7 +19,7 @@
         android:label="BedOverviewFragment" >
         <action
             android:id="@+id/show_plant_info"
-            app:destination="@id/plantInfoDialog" />
+            app:destination="@id/plantInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/plantDetails"
@@ -29,9 +29,9 @@
             app:argType="dk.mifu.pmos.vegetablegardening.models.Plant" />
     </fragment>
     <dialog
-        android:id="@+id/plantInfoDialog"
-        android:name="dk.mifu.pmos.vegetablegardening.views.PlantInfoDialog"
-        android:label="PlantInfoDialog" >
+        android:id="@+id/plantInfoFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.viewgarden.PlantInfoFragment"
+        android:label="PlantInfoFragment" >
         <action
             android:id="@+id/to_plant_details"
             app:destination="@id/plantDetails" />
