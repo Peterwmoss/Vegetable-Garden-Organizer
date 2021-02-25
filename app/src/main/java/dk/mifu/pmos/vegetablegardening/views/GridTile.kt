@@ -7,12 +7,12 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.Constraints
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
 
 @SuppressLint("ViewConstructor")
 class GridTile(context: Context,
                onClickListener: OnClickListener,
-               private val binding: FragmentCreateGridBinding,
-               private val tileSideLength: Int): androidx.appcompat.widget.AppCompatButton(context) {
+               private val binding: FragmentCreateGridBinding): androidx.appcompat.widget.AppCompatButton(context) {
 
     private val START = ConstraintSet.START
     private val END = ConstraintSet.END
@@ -47,8 +47,8 @@ class GridTile(context: Context,
 
     private fun setParams(): Constraints.LayoutParams{
         val params = Constraints.LayoutParams(
-            tileSideLength,
-            tileSideLength
+            GridHelper.getTileSideLength(),
+            GridHelper.getTileSideLength()
         )
         params.setMargins(0,0,0,0)
         return params
