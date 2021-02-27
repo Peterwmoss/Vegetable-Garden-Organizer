@@ -20,7 +20,6 @@
     <TextView
         android:id="@+id/bed_name_text"
         android:textSize="@dimen/font_medium"
-        android:textColor="@color/black"
         android:fontFamily="@font/roboto"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
