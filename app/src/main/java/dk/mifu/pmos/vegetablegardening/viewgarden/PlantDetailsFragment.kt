@@ -30,6 +30,7 @@ class PlantDetailsFragment: PlantDetailsNavigation() {
             plantHarvest.text       = plant.harvest
             plantPlantedDate.text   = plant.plantedDate.toString()
             plantWateredDate.text   = plant.wateredDate.toString()
+            plantHarvestedDate.text = plant.harvestedDate.toString()
         }
 
         return binding.root

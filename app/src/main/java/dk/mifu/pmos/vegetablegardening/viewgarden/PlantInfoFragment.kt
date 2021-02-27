@@ -6,12 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantInfoBinding
+import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
+import java.util.*
 
 class PlantInfoFragment : PlantInfoNavigation() {
     private val args : PlantInfoFragmentArgs by navArgs()
     private lateinit var binding: FragmentPlantInfoBinding
+
+    private val bedViewModel: BedViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPlantInfoBinding.inflate(inflater, container, false)
@@ -26,11 +31,13 @@ class PlantInfoFragment : PlantInfoNavigation() {
 
     private fun setButtonListeners() {
         binding.waterButton.setOnClickListener {
-            Toast.makeText(activity, "Vand", Toast.LENGTH_SHORT).show()
+            args.plant.wateredDate = Date()
+            bedViewModel.plants?.put(args.coordinate, args.plant)
         }
 
         binding.harvestButton.setOnClickListener {
-            Toast.makeText(activity, "Høst", Toast.LENGTH_SHORT).show()
+            args.plant.harvestedDate = Date()
+            bedViewModel.plants?.put(args.coordinate, args.plant)
         }
 
         binding.detailsButton.setOnClickListener {

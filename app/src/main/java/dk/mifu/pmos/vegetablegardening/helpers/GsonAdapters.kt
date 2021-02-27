@@ -14,6 +14,20 @@ class GsonAdapters {
     class PlantMapAdapter: TypeAdapter<Map<Coordinate, Plant>>() {
         private val format = SimpleDateFormat("dd-MM-yyyy", Locale("da","DK"))
 
+        private fun dateToString(date: Date?): String {
+            return if (date != null)
+                format.format(date)
+            else
+                ""
+        }
+
+        private fun stringToDate(date: String): Date? {
+            return if (date.isNotBlank())
+                format.parse(date)
+            else
+                null
+        }
+
         override fun write(out: JsonWriter?, value: Map<Coordinate, Plant>?) {
             out!!.beginArray()
             value!!.forEach {
@@ -37,8 +51,9 @@ class GsonAdapters {
                 out.name("distance").value(it.value.distance)
                 out.name("fertilizer").value(it.value.fertilizer)
                 out.name("harvest").value(it.value.harvest)
-                out.name("plantedDate").value(if (it.value.plantedDate != null) format.format(it.value.plantedDate) else "")
-                out.name("wateredDate").value(if (it.value.wateredDate != null) format.format(it.value.wateredDate) else "")
+                out.name("plantedDate").value(dateToString(it.value.plantedDate))
+                out.name("wateredDate").value(dateToString(it.value.wateredDate))
+                out.name("harvestedDate").value(dateToString(it.value.harvestedDate))
                 out.endObject()
 
                 out.endArray()
@@ -67,6 +82,7 @@ class GsonAdapters {
                 var harvest: String? = null
                 var plantedDate: Date? = null
                 var wateredDate: Date? = null
+                var harvestedDate: Date? = null
 
                 reader.beginArray()
                 reader.beginObject()
@@ -91,22 +107,15 @@ class GsonAdapters {
                         "distance" -> distance = reader.nextInt()
                         "fertilizer" -> fertilizer = reader.nextString()
                         "harvest" -> harvest = reader.nextString()
-                        "plantedDate" -> {
-                            val date = reader.nextString()
-                            if (date.isNotBlank())
-                                plantedDate = format.parse(date)
-                        }
-                        "wateredDate" -> {
-                            val date = reader.nextString()
-                            if (date.isNotBlank())
-                                wateredDate = format.parse(date)
-                        }
+                        "plantedDate" -> { plantedDate = stringToDate(reader.nextString()) }
+                        "wateredDate" -> { wateredDate = stringToDate(reader.nextString()) }
+                        "harvestedDate" -> { harvestedDate = stringToDate(reader.nextString()) }
                     }
                 }
                 reader.endObject()
                 reader.endArray()
 
-                map[Coordinate(col, row)] = Plant(name, category, earliest, latest, sowing, cropRotation, quantity, sowingDepth, distance, fertilizer, harvest, plantedDate, wateredDate)
+                map[Coordinate(col, row)] = Plant(name, category, earliest, latest, sowing, cropRotation, quantity, sowingDepth, distance, fertilizer, harvest, plantedDate, wateredDate, harvestedDate)
             }
             reader.endArray()
 

@@ -36,6 +36,9 @@
             android:id="@+id/to_plant_details"
             app:destination="@id/plantDetails" />
         <argument
+            android:name="coordinate"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
+        <argument
             android:name="plant"
             app:argType="dk.mifu.pmos.vegetablegardening.models.Plant" />
     </dialog>
