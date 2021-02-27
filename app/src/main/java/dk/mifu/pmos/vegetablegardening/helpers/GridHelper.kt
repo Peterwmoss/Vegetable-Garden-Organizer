@@ -6,7 +6,7 @@ class GridHelper {
     companion object {
         fun getTileSideLength(): Int {
             val width = Resources.getSystem().displayMetrics.widthPixels
-            return width/4
+            return width shr 2 // Divide by 4
         }
 
         fun getWidthOfScreen(): Int {
