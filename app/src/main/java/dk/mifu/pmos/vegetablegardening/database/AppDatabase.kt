@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import dk.mifu.pmos.vegetablegardening.dao.GardenDao
 import dk.mifu.pmos.vegetablegardening.models.Bed
 
 @Database(entities = [Bed::class], version = 1)

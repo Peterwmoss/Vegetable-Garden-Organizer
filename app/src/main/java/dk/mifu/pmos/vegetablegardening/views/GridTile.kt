@@ -8,17 +8,15 @@ import androidx.constraintlayout.widget.Constraints
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.START
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.TOP
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.BOTTOM
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.END
 
 @SuppressLint("ViewConstructor")
 class GridTile(context: Context,
                onClickListener: OnClickListener,
                private val binding: FragmentCreateGridBinding): androidx.appcompat.widget.AppCompatButton(context) {
-
-    private val START = ConstraintSet.START
-    private val END = ConstraintSet.END
-    private val TOP = ConstraintSet.TOP
-    private val BOTTOM = ConstraintSet.BOTTOM
-
     init {
         id = View.generateViewId()
         setBackgroundResource(R.drawable.grid_tile)

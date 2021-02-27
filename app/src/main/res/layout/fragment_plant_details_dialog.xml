@@ -6,7 +6,7 @@
     android:padding="@dimen/spacing_small"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".viewgarden.PlantDetailsDialogFragment">
+    tools:context=".fragments.viewgarden.PlantDetailsDialogFragment">
 
     <Button
         android:id="@+id/water_button"

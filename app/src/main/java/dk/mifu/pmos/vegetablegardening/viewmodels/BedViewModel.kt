@@ -1,12 +1,11 @@
 package dk.mifu.pmos.vegetablegardening.viewmodels
 
 import android.app.Application
-import android.content.Context
 import androidx.databinding.ObservableArrayMap
 import androidx.databinding.ObservableMap
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import dk.mifu.pmos.vegetablegardening.dao.GardenRepository
+import dk.mifu.pmos.vegetablegardening.database.GardenRepository
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.enums.Location
 import dk.mifu.pmos.vegetablegardening.models.Bed

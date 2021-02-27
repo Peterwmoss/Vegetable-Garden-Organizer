@@ -1,10 +1,7 @@
-package dk.mifu.pmos.vegetablegardening.creategarden
+package dk.mifu.pmos.vegetablegardening.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import dk.mifu.pmos.vegetablegardening.R
 
 class CreateBedActivity : AppCompatActivity() {
