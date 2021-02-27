@@ -21,7 +21,7 @@ Placeringen af en plante er abstraheret til at være et koordinat, som beskriver
 Haver er repræsenteret med en type, et navn og to maps, der hver repræsenterer hvilke tiles der ligger hvor og hvilken plante der er plantet på det givne tile.
 Haven bruger maps da det er en effektiv måde at koble en nøgle til en værdi, i vores tilfælde altså en placering til et id eller en plante.
 
-Planter er repræsenteret som en \texttt{Plant}, som har et navn, så vi kan adskille hver plante.
+Planter er repræsenteret som en \texttt{Plant}, som blandt andet har et navn, så vi kan adskille hver plante.
 
 \subsubsection{XML}
 Her noget om constraintlayouts og vores beslutning om portrait only.
@@ -50,8 +50,18 @@ Når man vælger en plante bliver den nuværende haves map fra koordinater til p
 
 \subsubsection{Oversigt over haven}
 
+Vi har lavet en oversigt over alle de bed, som brugeren har oprettet og sat dem op i et liste-view, så man får nemt overblik over sine bed. Herfra kan man klikke på hvert bed og få mere information om bedet.
+
+Hvert bed har det ikon tilknyttet som angiver hvilken lokation brugeren valgte at bedet hører til, så det er nemmere at skælne mellem sine drivhuse og sine udendørs bed.
+
 \subsubsection{Bed}
 Når man trykker på et bestemt bed fra oversigten, vil man blive navigeret til \texttt{BedOverviewFragment}. Den løber alle planter igennem gemt i \texttt{BedViewModel}, som holder styr på det nuværende bed. I løkken tilføjes planterne til et array, så de er placeret i den rigtige røkkefølge og derefter er let at sætte ind i et simpelt \texttt{GridView}, da et \texttt{ObservableMap} i sig selv ikke er sorteret.
+
+Fra dette GridView er det muligt at navigere sig videre og se detaljerne om den enkelte plante, så man ikke behøver at gå et andet sted hen for at finde informationer om sine planter.
+
+\subsubsection{Detaljer om planten}
+
+Man kan se alt data, som er gemt om planten i et "detaljeview" ved at klikke på planten og i dialogboksen klikke på detaljer. Vi har gjort det i to steps for ikke at brugeren skulle blive bombaderet med informationer i den dialogboks som der kommer frem når man klikker på planten og blot vil vælge om man har vandet eller høstet fra planten.
 
 \subsection{Lagring af data}
 
@@ -64,3 +74,5 @@ For at gøre arbejdet med disse DAO'er lidt lettere for os har vi lavet et \text
 Selve databasen er en singleton-instans, så vi ikke behøver at lave en ny instans hver gang vi skal tilgå databasen, da det er en relativt omstændig process. Dette er også anbefalet af Google på deres Android developer side \hyperlink{https://developer.android.com/training/data-storage/room/#database}{https://developer.android.com/training/data-storage/room/#database}
 
 \subsubsection{Dynamisk data}
+
+% Læser fra en CVS-fil

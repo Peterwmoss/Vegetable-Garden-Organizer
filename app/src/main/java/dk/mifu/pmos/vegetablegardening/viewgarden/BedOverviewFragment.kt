@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridLayout
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
@@ -15,7 +12,7 @@ import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 
-class BedOverviewFragment: Fragment() {
+class BedOverviewFragment: BedOverviewNavigation() {
     private lateinit var binding: FragmentBedOverviewBinding
     private val bedViewModel: BedViewModel by activityViewModels()
 
@@ -39,19 +36,23 @@ class BedOverviewFragment: Fragment() {
         binding.gridlayout.columnCount = columns
         binding.gridlayout.rowCount = rows
 
-        val orderedArrayList: ArrayList<Plant?> = ArrayList()
+        val orderedArrayList: ArrayList<Pair<Coordinate, Plant?>> = ArrayList()
         for(i in 0 until columns){
             for(j in 0 until rows){
-                orderedArrayList.add(bedViewModel.plants?.get(Coordinate(i,j)))
+                val coordinate = Coordinate(i,j)
+                orderedArrayList.add(Pair(coordinate, bedViewModel.plants?.get(coordinate)))
             }
         }
 
         orderedArrayList.forEach {
+            val coordinate = it.first
+            val plant = it.second
             val tileSideLength = GridHelper.getTileSideLength()
             val itemTileBinding = ListItemTileBinding.inflate(layoutInflater, binding.gridlayout, true)
-            itemTileBinding.plantButton.text = it?.name ?: ""
+            itemTileBinding.plantButton.text = plant?.name ?: ""
             itemTileBinding.plantButton.width = tileSideLength
             itemTileBinding.plantButton.height = tileSideLength
+            itemTileBinding.plantButton.setOnClickListener { _ -> navigateToPlantInfoDialog(coordinate, plant) }
         }
     }
 
