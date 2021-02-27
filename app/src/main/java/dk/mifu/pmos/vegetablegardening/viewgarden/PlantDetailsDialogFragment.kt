@@ -5,21 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
-import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantInfoBinding
+import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsDialogBinding
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import java.util.*
 
-class PlantInfoFragment : PlantInfoNavigation() {
-    private val args : PlantInfoFragmentArgs by navArgs()
-    private lateinit var binding: FragmentPlantInfoBinding
+class PlantDetailsDialogFragment : PlantDetailsDialogNavigation() {
+    private val args : PlantDetailsDialogFragmentArgs by navArgs()
+    private lateinit var binding: FragmentPlantDetailsDialogBinding
 
     private val bedViewModel: BedViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentPlantInfoBinding.inflate(inflater, container, false)
+        binding = FragmentPlantDetailsDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
 

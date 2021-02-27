@@ -30,7 +30,7 @@
     </fragment>
     <dialog
         android:id="@+id/plantInfoFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.viewgarden.PlantInfoFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.viewgarden.PlantDetailsDialogFragment"
         android:label="PlantInfoFragment" >
         <action
             android:id="@+id/to_plant_details"

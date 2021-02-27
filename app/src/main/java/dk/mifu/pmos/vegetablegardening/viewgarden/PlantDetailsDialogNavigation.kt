@@ -4,8 +4,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.models.Plant
 
-abstract class PlantInfoNavigation: DialogFragment() {
+abstract class PlantDetailsDialogNavigation: DialogFragment() {
     protected fun navigateToPlantDetails(plant: Plant) {
-        findNavController().navigate(PlantInfoFragmentDirections.toPlantDetails(plant))
+        findNavController().navigate(PlantDetailsDialogFragmentDirections.toPlantDetails(plant))
     }
 }
