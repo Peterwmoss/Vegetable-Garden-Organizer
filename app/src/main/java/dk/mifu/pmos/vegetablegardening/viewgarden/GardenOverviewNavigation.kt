@@ -2,6 +2,7 @@ package dk.mifu.pmos.vegetablegardening.viewgarden
 
 import android.content.Intent
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.creategarden.CreateBedActivity
 
 abstract class GardenOverviewNavigation: Fragment() {
@@ -11,6 +12,6 @@ abstract class GardenOverviewNavigation: Fragment() {
     }
 
     protected fun navigateToBedOverviewFragment() {
-        // TODO
+        requireView().findNavController().navigate(GardenOverviewFragmentDirections.seeBedAction())
     }
 }

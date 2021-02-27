@@ -11,6 +11,6 @@
     <dimen name="spacing_xlarge">80dp</dimen>
 
     <dimen name="picture">200dp</dimen>
-    <dimen name="grid_tile">100dp</dimen>
+    <dimen name="grid_tile">50dp</dimen>
     <dimen name="line">2dp</dimen>
 </resources>

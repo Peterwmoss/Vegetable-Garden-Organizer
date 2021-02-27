@@ -1,8 +1,9 @@
 package dk.mifu.pmos.vegetablegardening.models
 
+import java.io.Serializable
 import java.util.*
 
-data class Plant(
+data class Plant (
         val name: String,
         val category: String? = null,
         val earliest: String? = null,
@@ -14,6 +15,7 @@ data class Plant(
         val distance: Int? = null,
         val fertilizer: String? = null,
         val harvest: String? = null,
-        val plantedDate: Date? = null,
-        val wateredDate: Date? = null,
-)
+        var plantedDate: Date? = null,
+        var wateredDate: Date? = null,
+        var harvestedDate: Date? = null,
+) : Serializable
