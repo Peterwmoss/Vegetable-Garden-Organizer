@@ -11,6 +11,7 @@ import androidx.databinding.ObservableArrayMap
 import androidx.databinding.ObservableMap
 import androidx.fragment.app.activityViewModels
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
@@ -23,7 +24,6 @@ class CreateGridFragment : CreateGridNavigation() {
     private val bed: BedViewModel by activityViewModels()
 
     private var height = 0
-    private var width = 0
     private var tileSideLength = 0
 
     private val START = ConstraintSet.START
@@ -49,9 +49,8 @@ class CreateGridFragment : CreateGridNavigation() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        width = Resources.getSystem().displayMetrics.widthPixels
-        height = Resources.getSystem().displayMetrics.heightPixels
-        tileSideLength = width/4
+        height = GridHelper.getHeightOfScreen()
+        tileSideLength = GridHelper.getTileSideLength()
 
         insertInitialGridTiles()
         setListeners()
@@ -83,13 +82,13 @@ class CreateGridFragment : CreateGridNavigation() {
 
     private fun insertInitialGridTiles(){
         val coordinate1 = Coordinate(0,0)
-        val initialTile1 = GridTile(requireContext(), gridTileListener(coordinate1), binding, tileSideLength)
+        val initialTile1 = GridTile(requireContext(), gridTileListener(coordinate1), binding)
         binding.parentLayout.addView(initialTile1)
         bed.tileIds?.set(coordinate1, initialTile1.id)
         initialTile1.snapToGrid(null,null,false)
 
         val coordinate2 = Coordinate(0,1)
-        val initialTile2 = GridTile(requireContext(), gridTileListener(coordinate2), binding, tileSideLength)
+        val initialTile2 = GridTile(requireContext(), gridTileListener(coordinate2), binding)
         binding.parentLayout.addView(initialTile2)
         bed.tileIds?.set(coordinate2, initialTile2.id)
         initialTile2.snapToGrid(null,initialTile1.id,false)
@@ -178,7 +177,7 @@ class CreateGridFragment : CreateGridNavigation() {
     private fun addTiles(column: Boolean) {
         for (i in 0 until if (column) rows else columns) {
             val coordinate = if (column) Coordinate(columns, i) else Coordinate(i, rows)
-            val gridTile = GridTile(requireContext(), gridTileListener(coordinate), binding, tileSideLength)
+            val gridTile = GridTile(requireContext(), gridTileListener(coordinate), binding)
             binding.parentLayout.addView(gridTile)
 
             bed.tileIds?.set(coordinate, gridTile.id) //Update garden with new tile
