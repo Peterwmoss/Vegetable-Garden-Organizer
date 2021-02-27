@@ -34,7 +34,6 @@ class PlantInfoFragment : PlantInfoNavigation() {
         }
 
         binding.detailsButton.setOnClickListener {
-            Toast.makeText(activity, "Detaljer", Toast.LENGTH_SHORT).show()
             navigateToPlantDetails(args.plant)
         }
     }

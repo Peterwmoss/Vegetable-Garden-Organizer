@@ -15,19 +15,21 @@ class PlantDetailsFragment: PlantDetailsNavigation() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPlantDetailsBinding.inflate(inflater, container, false)
 
+        val plant = args.plant
+
         binding.run {
-            plantName.text          = args.plant.name
-            plantCategory.text      = args.plant.category
-            plantCropRotation.text  = args.plant.cropRotation
-            plantDistance.text      = args.plant.distance.toString()
-            plantEarliest.text      = args.plant.earliest
-            plantLatest.text        = args.plant.latest
-            plantFertilizer.text    = args.plant.fertilizer
-            plantSowing.text        = args.plant.sowing.toString()
-            plantSowingDepth.text   = args.plant.sowingDepth
-            plantHarvest.text       = args.plant.harvest
-            plantPlantedDate.text   = args.plant.plantedDate.toString()
-            plantWateredDate.text   = args.plant.wateredDate.toString()
+            plantName.text          = plant.name
+            plantCategory.text      = plant.category
+            plantCropRotation.text  = plant.cropRotation
+            plantDistance.text      = plant.distance.toString()
+            plantEarliest.text      = plant.earliest
+            plantLatest.text        = plant.latest
+            plantFertilizer.text    = plant.fertilizer
+            plantSowing.text        = plant.sowing.toString()
+            plantSowingDepth.text   = plant.sowingDepth
+            plantHarvest.text       = plant.harvest
+            plantPlantedDate.text   = plant.plantedDate.toString()
+            plantWateredDate.text   = plant.wateredDate.toString()
         }
 
         return binding.root
