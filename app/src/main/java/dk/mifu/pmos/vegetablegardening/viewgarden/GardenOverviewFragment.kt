@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.Constraints
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -60,6 +62,11 @@ class GardenOverviewFragment : GardenOverviewNavigation() {
                 Outdoors -> holder.gardenImage.setImageResource(R.drawable.outdoors_normal)
                 Greenhouse -> holder.gardenImage.setImageResource(R.drawable.greenhouse_normal)
             }
+
+            holder.gardenImage.layoutParams = Constraints.LayoutParams(
+                    Constraints.LayoutParams.WRAP_CONTENT,
+                    Constraints.LayoutParams.WRAP_CONTENT
+            )
         }
 
         override fun getItemCount(): Int {
