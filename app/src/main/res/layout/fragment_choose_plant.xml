@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:foregroundTint="@color/black"
     tools:context=".creategarden.ChoosePlantFragment">
 
     <EditText
@@ -16,8 +15,6 @@
         android:fontFamily="@font/roboto"
         android:hint="@string/search_text"
         android:iconifiedByDefault="false"
-        android:textColor="@color/black"
-        android:textColorHint="@android:color/darker_gray"
         android:textSize="@dimen/font_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
