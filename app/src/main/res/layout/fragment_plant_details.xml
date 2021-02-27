@@ -9,6 +9,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:fontFamily="@font/roboto"
         android:layout_width="match_parent"
+        android:textSize="@dimen/font_large"
         android:layout_height="wrap_content" />
 
     <TextView
@@ -16,83 +17,102 @@
         app:layout_constraintTop_toBottomOf="@id/plant_name"
         android:fontFamily="@font/roboto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_small"/>
 
     <TextView
         android:id="@+id/plant_earliest"
         app:layout_constraintTop_toBottomOf="@id/plant_category"
         android:fontFamily="@font/roboto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_small"/>
 
     <TextView
         android:id="@+id/plant_latest"
         app:layout_constraintTop_toBottomOf="@id/plant_earliest"
         android:fontFamily="@font/roboto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_small"/>
 
     <TextView
         android:id="@+id/plant_sowing"
         app:layout_constraintTop_toBottomOf="@id/plant_latest"
         android:fontFamily="@font/roboto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_small"/>
 
     <TextView
         android:id="@+id/plant_crop_rotation"
         app:layout_constraintTop_toBottomOf="@id/plant_sowing"
         android:fontFamily="@font/roboto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_small"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/plant_quantity"
+        app:layout_constraintTop_toBottomOf="@id/plant_crop_rotation"
+        android:textSize="@dimen/font_small"/>
 
     <TextView
         android:id="@+id/plant_sowing_depth"
-        app:layout_constraintTop_toBottomOf="@id/plant_crop_rotation"
+        app:layout_constraintTop_toBottomOf="@id/plant_quantity"
         android:fontFamily="@font/roboto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_small"/>
 
     <TextView
         android:id="@+id/plant_distance"
         app:layout_constraintTop_toBottomOf="@id/plant_sowing_depth"
         android:fontFamily="@font/roboto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_small"/>
 
     <TextView
         android:id="@+id/plant_fertilizer"
         app:layout_constraintTop_toBottomOf="@id/plant_distance"
         android:fontFamily="@font/roboto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_small"/>
 
     <TextView
         android:id="@+id/plant_harvest"
         app:layout_constraintTop_toBottomOf="@id/plant_fertilizer"
         android:fontFamily="@font/roboto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_small"/>
 
     <TextView
         android:id="@+id/plant_planted_date"
         app:layout_constraintTop_toBottomOf="@id/plant_harvest"
         android:fontFamily="@font/roboto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_small"/>
 
     <TextView
         android:id="@+id/plant_watered_date"
         app:layout_constraintTop_toBottomOf="@id/plant_planted_date"
         android:fontFamily="@font/roboto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_small"/>
 
     <TextView
         android:id="@+id/plant_harvested_date"
         app:layout_constraintTop_toBottomOf="@id/plant_watered_date"
         android:fontFamily="@font/roboto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_small"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
