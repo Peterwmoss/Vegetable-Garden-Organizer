@@ -76,7 +76,7 @@ class GardenOverviewFragment : GardenOverviewNavigation() {
                 Greenhouse -> holder.bedImage.setImageResource(R.drawable.greenhouse_normal)
             }
 
-            holder.gardenImage.layoutParams = Constraints.LayoutParams(
+            holder.bedImage.layoutParams = Constraints.LayoutParams(
                     Constraints.LayoutParams.WRAP_CONTENT,
                     Constraints.LayoutParams.WRAP_CONTENT
             )
