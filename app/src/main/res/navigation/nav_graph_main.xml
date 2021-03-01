@@ -6,7 +6,7 @@
     app:startDestination="@id/gardenOverviewFragment">
     <fragment
         android:id="@+id/gardenOverviewFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.viewgarden.GardenOverviewFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.viewgarden.GardenOverviewFragment"
         android:label="fragment_garden_overview"
         tools:layout="@layout/fragment_garden_overview">
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/bedOverviewFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.viewgarden.BedOverviewFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.viewgarden.BedOverviewFragment"
         android:label="BedOverviewFragment" >
         <action
             android:id="@+id/show_plant_info"
@@ -23,14 +23,14 @@
     </fragment>
     <fragment
         android:id="@+id/plantDetails"
-        android:name="dk.mifu.pmos.vegetablegardening.viewgarden.PlantDetailsFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.viewgarden.PlantDetailsFragment"
         android:label="PlantDetails" >
         <argument android:name="plant"
             app:argType="dk.mifu.pmos.vegetablegardening.models.Plant" />
     </fragment>
     <dialog
         android:id="@+id/plantInfoFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.viewgarden.PlantDetailsDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.viewgarden.PlantDetailsDialogFragment"
         android:label="PlantInfoFragment" >
         <action
             android:id="@+id/to_plant_details"

@@ -1,4 +1,4 @@
-package dk.mifu.pmos.vegetablegardening
+package dk.mifu.pmos.vegetablegardening.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

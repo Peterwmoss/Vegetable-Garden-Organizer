@@ -1,17 +1,17 @@
-package dk.mifu.pmos.vegetablegardening.viewgarden
+package dk.mifu.pmos.vegetablegardening.fragments.viewgarden
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsBinding
-import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 
-class PlantDetailsFragment: PlantDetailsNavigation() {
+class PlantDetailsFragment: Fragment() {
     private val args: PlantDetailsFragmentArgs by navArgs()
     private val plantViewModel: PlantViewModel by activityViewModels()
 

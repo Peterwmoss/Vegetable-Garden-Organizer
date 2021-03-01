@@ -1,4 +1,4 @@
-package dk.mifu.pmos.vegetablegardening.dao
+package dk.mifu.pmos.vegetablegardening.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

@@ -1,4 +1,4 @@
-package dk.mifu.pmos.vegetablegardening.creategarden
+package dk.mifu.pmos.vegetablegardening.fragments.creategarden
 
 import android.os.Bundle
 import android.text.Editable
@@ -24,7 +24,7 @@ import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.util.*
 
-class ChoosePlantFragment : ChoosePlantNavigation() {
+class ChoosePlantFragment : DialogFragment() {
     private lateinit var binding: FragmentChoosePlantBinding
 
     private val plantViewModel: PlantViewModel by activityViewModels()
@@ -143,5 +143,9 @@ class ChoosePlantFragment : ChoosePlantNavigation() {
         override fun getFilter(): Filter {
             return filter
         }
+    }
+
+    private fun navigateBack() {
+        dialog?.dismiss()
     }
 }

@@ -1,10 +1,12 @@
-package dk.mifu.pmos.vegetablegardening.viewgarden
+package dk.mifu.pmos.vegetablegardening.fragments.viewgarden
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
@@ -12,7 +14,7 @@ import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 
-class BedOverviewFragment: BedOverviewNavigation() {
+class BedOverviewFragment: Fragment() {
     private lateinit var binding: FragmentBedOverviewBinding
     private val bedViewModel: BedViewModel by activityViewModels()
 
@@ -69,5 +71,11 @@ class BedOverviewFragment: BedOverviewNavigation() {
         }
 
         return Pair(column+1, row+1)
+    }
+
+    private fun navigateToPlantInfoDialog(coordinate: Coordinate, plant: Plant?) {
+        if (plant != null) {
+            requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantInfo(coordinate, plant))
+        }
     }
 }

@@ -1,6 +1,5 @@
-package dk.mifu.pmos.vegetablegardening.creategarden
+package dk.mifu.pmos.vegetablegardening.fragments.creategarden
 
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,27 +8,27 @@ import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.ObservableArrayMap
 import androidx.databinding.ObservableMap
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.START
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.TOP
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.BOTTOM
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.END
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.views.GridTile
-import dk.mifu.pmos.vegetablegardening.views.SaveBedDialog
 
-class CreateGridFragment : CreateGridNavigation() {
+class CreateGridFragment : Fragment() {
     private lateinit var binding: FragmentCreateGridBinding
 
     private val bed: BedViewModel by activityViewModels()
 
     private var height = 0
     private var tileSideLength = 0
-
-    private val START = ConstraintSet.START
-    private val END = ConstraintSet.END
-    private val TOP = ConstraintSet.TOP
-    private val BOTTOM = ConstraintSet.BOTTOM
 
     //Initial number of grid tiles
     private var columns = 1
@@ -62,8 +61,8 @@ class CreateGridFragment : CreateGridNavigation() {
     private fun setSaveBedListener() {
         binding.saveGardenButton.setOnClickListener {
 
-            val dialog = SaveBedDialog()
-            dialog.show(childFragmentManager, SaveBedDialog.TAG)
+            val dialog = SaveBedDialogFragment()
+            dialog.show(childFragmentManager, SaveBedDialogFragment.TAG)
         }
     }
 
@@ -226,5 +225,9 @@ class CreateGridFragment : CreateGridNavigation() {
 
             applyTo(binding.parentLayout)
         }
+    }
+
+    private fun navigateToChoosePlantFragment(coordinate: Coordinate) {
+        requireView().findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(coordinate))
     }
 }

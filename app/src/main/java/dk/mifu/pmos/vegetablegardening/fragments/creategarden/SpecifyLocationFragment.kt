@@ -1,15 +1,17 @@
-package dk.mifu.pmos.vegetablegardening.creategarden
+package dk.mifu.pmos.vegetablegardening.fragments.creategarden
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.enums.Location
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentSpecifyLocationBinding
 
-class SpecifyLocationFragment: SpecifyLocationNavigation() {
+class SpecifyLocationFragment: Fragment() {
     private lateinit var binding: FragmentSpecifyLocationBinding
 
     private val bedViewModel: BedViewModel by activityViewModels()
@@ -32,5 +34,9 @@ class SpecifyLocationFragment: SpecifyLocationNavigation() {
     private fun startCreateGridFragment(location: Location){
         bedViewModel.location = location
         navigateToNextView()
+    }
+
+    private fun navigateToNextView() {
+        requireView().findNavController().navigate(SpecifyLocationFragmentDirections.nextAction())
     }
 }
