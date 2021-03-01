@@ -22,7 +22,7 @@
             app:destination="@id/plantDetailsDialogFragment" />
         <action
             android:id="@+id/show_planting_options"
-            app:destination="@id/emptyTileDialogFragment"/>
+            app:destination="@id/emptyTileFragment"/>
     </fragment>
     <fragment
         android:id="@+id/plantDetails"
@@ -45,8 +45,8 @@
             android:name="plant"
             app:argType="dk.mifu.pmos.vegetablegardening.models.Plant" />
     </dialog>
-    <dialog
-        android:id="@+id/emptyTileDialogFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.viewgarden.EmptyTileDialogFragment"
+    <fragment
+        android:id="@+id/emptyTileFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.viewgarden.EmptyTileFragment"
         android:label="EmptyTile"/>
 </navigation>

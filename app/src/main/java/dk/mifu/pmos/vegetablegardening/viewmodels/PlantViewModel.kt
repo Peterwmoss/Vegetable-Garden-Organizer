@@ -2,7 +2,6 @@ package dk.mifu.pmos.vegetablegardening.viewmodels
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -71,11 +70,17 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
-    private fun toDate(date: String?): Date? {
+    private fun toDate(dateString: String?): Date? {
         val format = SimpleDateFormat("d. MMMM", Locale("da", "DK"))
-        return if (date != null && date.isNotBlank())
-            format.parse(date)
-        else
+        return if (dateString != null && dateString.isNotBlank()){
+            val c = Calendar.getInstance()
+            val date = format.parse(dateString)
+            val year = c.get(Calendar.YEAR)
+            c.time = date!!
+            c.set(Calendar.YEAR, year)
+            c.time
+        } else {
             null
+        }
     }
 }
