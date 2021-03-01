@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:text="HELLO"
         android:id="@+id/test_textview"
-        android:elevation="@dimen/bring_on_top_of_button"/>
+        android:elevation="@dimen/bring_on_top_of_button"
+        android:visibility="gone"/>
 
 </FrameLayout>
 

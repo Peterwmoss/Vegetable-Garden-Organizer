@@ -47,14 +47,7 @@ class BedOverviewFragment: Fragment() {
         }
 
         orderedArrayList.forEach {
-            val coordinate = it.first
-            val plant = it.second
-            val tileSideLength = GridHelper.getTileSideLength()
-            val itemTileBinding = ListItemTileBinding.inflate(layoutInflater, binding.gridlayout, true)
-            itemTileBinding.plantButton.text = plant?.name ?: ""
-            itemTileBinding.plantButton.width = tileSideLength
-            itemTileBinding.plantButton.height = tileSideLength
-            itemTileBinding.plantButton.setOnClickListener { _ -> navigateToPlantInfoDialog(coordinate, plant) }
+            initializeTile(coordinate = it.first, plant = it.second)
         }
     }
 
@@ -73,8 +66,19 @@ class BedOverviewFragment: Fragment() {
         return Pair(column+1, row+1)
     }
 
+    private fun initializeTile(coordinate: Coordinate, plant: Plant?) {
+        val tileSideLength = GridHelper.getTileSideLength()
+        val itemTileBinding = ListItemTileBinding.inflate(layoutInflater, binding.gridlayout, true)
+        itemTileBinding.plantButton.text = plant?.name ?: ""
+        itemTileBinding.plantButton.width = tileSideLength
+        itemTileBinding.plantButton.height = tileSideLength
+        itemTileBinding.plantButton.setOnClickListener { _ -> navigateToPlantInfoDialog(coordinate, plant) }
+    }
+
     private fun navigateToPlantInfoDialog(coordinate: Coordinate, plant: Plant?) {
-        if (plant != null) {
+        if(plant == null) {
+            requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantingOptions())
+        } else {
             requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantInfo(coordinate, plant))
         }
     }
