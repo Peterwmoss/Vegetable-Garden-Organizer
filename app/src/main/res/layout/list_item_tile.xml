@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.appcompat.widget.AppCompatButton xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:id="@+id/plant_button"
-    android:background="@drawable/grid_tile"
-/>
+    android:layout_width="wrap_content"
+    android:id="@+id/tile_frame_layout">
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/plant_button"
+        android:background="@drawable/grid_tile"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HELLO"
+        android:id="@+id/test_textview"
+        android:elevation="@dimen/bring_on_top_of_button"/>
+
+</FrameLayout>
+
