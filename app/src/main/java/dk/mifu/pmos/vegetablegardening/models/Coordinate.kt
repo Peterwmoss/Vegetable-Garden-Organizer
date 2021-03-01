@@ -2,9 +2,9 @@ package dk.mifu.pmos.vegetablegardening.models
 
 import java.io.Serializable
 
-data class Coordinate(val x: Int, val y: Int) : Serializable {
+data class Coordinate(val col: Int, val row: Int) : Serializable {
     override fun hashCode(): Int {
-        return Pair(x,y).hashCode()
+        return Pair(col,row).hashCode()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -13,8 +13,8 @@ data class Coordinate(val x: Int, val y: Int) : Serializable {
 
         other as Coordinate
 
-        if (x != other.x) return false
-        if (y != other.y) return false
+        if (col != other.col) return false
+        if (row != other.row) return false
 
         return true
     }

@@ -1,4 +1,4 @@
-package dk.mifu.pmos.vegetablegardening.dao
+package dk.mifu.pmos.vegetablegardening.database
 
 import androidx.lifecycle.LiveData
 import dk.mifu.pmos.vegetablegardening.models.Bed
@@ -15,6 +15,10 @@ class GardenRepository(private val gardenDao: GardenDao) {
 
     suspend fun deleteBed(bed: Bed) {
         gardenDao.delete(bed)
+    }
+
+    suspend fun findBed(name: String) {
+        gardenDao.findByName(name)
     }
 
     fun getAllBeds(): LiveData<List<Bed>> = gardenDao.getAll()

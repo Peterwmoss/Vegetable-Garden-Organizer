@@ -7,18 +7,16 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.Constraints
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.START
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.TOP
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.BOTTOM
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.END
 
 @SuppressLint("ViewConstructor")
 class GridTile(context: Context,
                onClickListener: OnClickListener,
-               private val binding: FragmentCreateGridBinding,
-               private val tileSideLength: Int): androidx.appcompat.widget.AppCompatButton(context) {
-
-    private val START = ConstraintSet.START
-    private val END = ConstraintSet.END
-    private val TOP = ConstraintSet.TOP
-    private val BOTTOM = ConstraintSet.BOTTOM
-
+               private val binding: FragmentCreateGridBinding): androidx.appcompat.widget.AppCompatButton(context) {
     init {
         id = View.generateViewId()
         setBackgroundResource(R.drawable.grid_tile)
@@ -27,7 +25,7 @@ class GridTile(context: Context,
         setOnClickListener(onClickListener)
     }
 
-    fun snapToGrid(prevTileId: Int?, upperTileId: Int?, row: Boolean) {
+    fun snapToGrid(prevTileId: Int?, upperTileId: Int?, column: Boolean) {
         val constraintSet = ConstraintSet()
 
         constraintSet.apply{
@@ -39,7 +37,7 @@ class GridTile(context: Context,
             if(upperTileId!=null) connect(id, TOP, upperTileId, BOTTOM)
             else connect(id, TOP, binding.parentLayout.id, TOP)
 
-            if(row) connect(binding.addColumnButton.id, START, id, END)
+            if(column) connect(binding.addColumnButton.id, START, id, END)
             else connect(binding.addRowButton.id, TOP, id, BOTTOM)
             applyTo(binding.parentLayout)
         }
@@ -47,8 +45,8 @@ class GridTile(context: Context,
 
     private fun setParams(): Constraints.LayoutParams{
         val params = Constraints.LayoutParams(
-            tileSideLength,
-            tileSideLength
+            GridHelper.getTileSideLength(),
+            GridHelper.getTileSideLength()
         )
         params.setMargins(0,0,0,0)
         return params

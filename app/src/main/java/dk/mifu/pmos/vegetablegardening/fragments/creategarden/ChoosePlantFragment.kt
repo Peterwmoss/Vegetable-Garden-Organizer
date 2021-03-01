@@ -1,4 +1,4 @@
-package dk.mifu.pmos.vegetablegardening.creategarden
+package dk.mifu.pmos.vegetablegardening.fragments.creategarden
 
 import android.os.Bundle
 import android.text.Editable
@@ -25,26 +25,27 @@ import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.util.*
 
 class ChoosePlantFragment : DialogFragment() {
-    private lateinit var binder: FragmentChoosePlantBinding
+    private lateinit var binding: FragmentChoosePlantBinding
 
-    private val args: ChoosePlantFragmentArgs by navArgs()
     private val plantViewModel: PlantViewModel by activityViewModels()
     private val bedViewModel: BedViewModel by activityViewModels()
+
+    private val args: ChoosePlantFragmentArgs by navArgs()
 
     private var adapter : PlantAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        binder = FragmentChoosePlantBinding.inflate(inflater, container, false)
+        binding = FragmentChoosePlantBinding.inflate(inflater, container, false)
 
-        val recyclerView = binder.choosePlantRecyclerView
+        val recyclerView = binding.choosePlantRecyclerView
         createList(recyclerView)
 
-        val search = binder.searchPlantEdittext
+        val search = binding.searchPlantEdittext
         search.requestFocus()
         setupSearch(search)
 
-        return binder.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -90,11 +91,12 @@ class ChoosePlantFragment : DialogFragment() {
 
     private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val plantName: TextView = view.findViewById(R.id.choose_plant_row_item_text)
+        lateinit var plant : Plant
 
         init {
             view.setOnClickListener {
-                bedViewModel.plants[args.coordinate] = plantViewModel.plants.value?.first { it.name == plantName.text }
-                dialog?.dismiss()
+                bedViewModel.plants?.set(args.coordinate, plant)
+                navigateBack()
             }
         }
     }
@@ -112,6 +114,7 @@ class ChoosePlantFragment : DialogFragment() {
 
         override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
             viewHolder.plantName.text = flowingData[position].name
+            viewHolder.plant = flowingData[position]
         }
 
         override fun getItemCount() = flowingData.size
@@ -140,5 +143,9 @@ class ChoosePlantFragment : DialogFragment() {
         override fun getFilter(): Filter {
             return filter
         }
+    }
+
+    private fun navigateBack() {
+        dialog?.dismiss()
     }
 }

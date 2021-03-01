@@ -1,4 +1,4 @@
-package dk.mifu.pmos.vegetablegardening.creategarden
+package dk.mifu.pmos.vegetablegardening.fragments.creategarden
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -33,6 +33,10 @@ class SpecifyLocationFragment: Fragment() {
 
     private fun startCreateGridFragment(location: Location){
         bedViewModel.location = location
+        navigateToNextView()
+    }
+
+    private fun navigateToNextView() {
         requireView().findNavController().navigate(SpecifyLocationFragmentDirections.nextAction())
     }
 }

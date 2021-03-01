@@ -13,4 +13,8 @@
     <string name="plant_button_text">Planter</string>
     <string name="save_garden_text">Gem bed</string>
     <string name="name_your_garden">Navngiv dit bed</string>
+    <string name="harvest_text">Høst</string>
+    <string name="water_text">Vand</string>
+    <string name="details_text">Detaljer</string>
+    <string name="category_format">%1$s: %2$s</string>
 </resources>

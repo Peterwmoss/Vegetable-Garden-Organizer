@@ -3,16 +3,12 @@
 
 \subsection{Overordnede opbygning}
 
+\subsubsection{Aktiviteter og fragmenter}
+Her noget om fragments og activities generelt i vores app. Måske også noget om navigation.
+
 \subsubsection{Datagrundlag}
-\begin{itemize}
-    \item Generelle handlinger i forskellige måneder - \hyperlink{https://www.idenyt.dk/kokkenhaven/}{https://www.idenyt.dk/kokkenhaven/}
-    \item Højsæson og høst - \hyperlink{https://saeson-web.dk/frugt-groent-i-saeson/}{https://saeson-web.dk/frugt-groent-i-saeson/}
-    \item Oversigt over græntsager - \hyperlink{https://haveselskabet.dk/groentsager}{https://haveselskabet.dk/groentsager}
-    \item Meget om kartofler - \hyperlink{https://www.danespo.com/dansk-forbruger/l\%C3\%A6ggekartofler/dyrkningsvejledning-l\%C3\%A6ggekartofler-til-din-have}{https://www.danespo.com/dansk-forbruger/l\%C3\%A6ggekartofler/dyrkningsvejledning-l\%C3\%A6ggekartofler-til-din-have}
-    \item Generel side - \hyperlink{https://minkøkkenhave.dk/dyrkningsvejledning/}{https://minkøkkenhave.dk/dyrkningsvejledning/}
-    \item Planting calendar \hyperlink{https://www.almanac.com/gardening/planting-calendar}{https://www.almanac.com/gardening/planting-calendar}
-    \item Årstidernes plantekalender \hyperlink{https://issuu.com/aarstiderne\_com/docs/aarstidernes-plante-og-saa-kalender}{https://issuu.com/aarstiderne\_com/docs/aarstidernes-plante-og-saa-kalender}
-\end{itemize}
+Årstidernes plantekalender \hyperlink{https://issuu.com/aarstiderne\_com/docs/aarstidernes-plante-og-saa-kalender}{https://issuu.com/aarstiderne\_com/docs/aarstidernes-plante-og-saa-kalender}
+
 
 Dataet er lagt ind i en \texttt{.csv}-fil, som læses ind i \texttt{PlantViewModel} via en \texttt{CSVReader}. På den måde er det nemt, hvis man skulle få mere data, eller at dataet ændrer sig. Hvis dataet ændrer sig meget drastisk, skal man kun rette på \texttt{Plant}-klassens felter - logikken er stadig den samme.
 
@@ -25,17 +21,18 @@ Placeringen af en plante er abstraheret til at være et koordinat, som beskriver
 Haver er repræsenteret med en type, et navn og to maps, der hver repræsenterer hvilke tiles der ligger hvor og hvilken plante der er plantet på det givne tile.
 Haven bruger maps da det er en effektiv måde at koble en nøgle til en værdi, i vores tilfælde altså en placering til et id eller en plante.
 
-Planter er repræsenteret som en \texttt{Plant}, som har et navn, så vi kan adskille hver plante.
+Planter er repræsenteret som en \texttt{Plant}, som blandt andet har et navn, så vi kan adskille hver plante.
 
-\subsection{XML}
+\subsubsection{XML}
+Her noget om constraintlayouts og vores beslutning om portrait only.
 
-\subsection{Opret et nyt planteområde}
+\subsection{Opret et nyt bed}
 Den overordnede aktivitet til at oprette et nyt planteområde \texttt{CreateGardenActivity.kt} starter med at indsætte \texttt{SpecifyLocationFragment.kt}, som lader brugeren vælge et område til deres planter.
 
 \subsubsection{Vælg område}
 \texttt{fragment\_specify\_location.xml} indeholder et \texttt{TextView} og tre \texttt{ImageButtons} hver med tilhørende \texttt{TextView}, da der er tre forskellige typer af områder, som kan have indflydelse på planters pasning. Hver \texttt{ImageButton} har en \texttt{drawable} som src, der består af en \texttt{selector} med hver state for billedet. Der er således defineret et billede for tryk, fokusering og normal tilstand af hver knap.
 
-Hver af knapperne har en \texttt{listener}. Når brugeren har valgt en lokation, sørger den gældende \texttt{listener} for at skifte fragment, og sende info om den valgte lokation med i fragmentets konstruktør i form af et \texttt{enum}.
+Hver af knapperne har en \texttt{listener}. Når brugeren har valgt en lokation, sørger den gældende \texttt{listener} for at skifte fragment.
 
 \subsubsection{Byg layoutet}
 Når fragmentet skal bruges, bliver der i \texttt{onCreateView} sat fire felter i en tabel ind, som udgør et udgangspunkt for at bygge en have. \texttt{fragment\_create\_grid.xml} indeholder kun knapper til at ændre på størrelsen af en tabel. Hvert felt udgør en knap, som brugeren kan trykke på, og som leder til \texttt{ChoosePlantFragment.kt}. Når brugeren trykker på en af knapperne i xml-filen, ændres størrelsen på tabellen ved at indsætte eller fjerne felter. Størrelsen på et felt er sat ud fra telefonskærmens bredde, så brugeren altid har plads til fire felter, som fordeler sig ligeligt på skærmen. 
@@ -49,11 +46,33 @@ Til at vise listen af planter gør vi brug af designmønsteret \texttt{MVVM} - \
 
 Når man vælger en plante bliver den nuværende haves map fra koordinater til planter opdateret med den plante man vælger og det vises dermed der hvor layoutet vises.
 
+\subsection{Se dine bed}
+
+\subsubsection{Oversigt over haven}
+
+Vi har lavet en oversigt over alle de bed, som brugeren har oprettet og sat dem op i et liste-view, så man får nemt overblik over sine bed. Herfra kan man klikke på hvert bed og få mere information om bedet.
+
+Hvert bed har det ikon tilknyttet som angiver hvilken lokation brugeren valgte at bedet hører til, så det er nemmere at skælne mellem sine drivhuse og sine udendørs bed.
+
+\subsubsection{Bed}
+Når man trykker på et bestemt bed fra oversigten, vil man blive navigeret til \texttt{BedOverviewFragment}. Den løber alle planter igennem gemt i \texttt{BedViewModel}, som holder styr på det nuværende bed. I løkken tilføjes planterne til et array, så de er placeret i den rigtige røkkefølge og derefter er let at sætte ind i et simpelt \texttt{GridView}, da et \texttt{ObservableMap} i sig selv ikke er sorteret.
+
+Fra dette GridView er det muligt at navigere sig videre og se detaljerne om den enkelte plante, så man ikke behøver at gå et andet sted hen for at finde informationer om sine planter.
+
+\subsubsection{Detaljer om planten}
+
+Man kan se alt data, som er gemt om planten i et "detaljeview" ved at klikke på planten og i dialogboksen klikke på detaljer. Vi har gjort det i to steps for ikke at brugeren skulle blive bombaderet med informationer i den dialogboks som der kommer frem når man klikker på planten og blot vil vælge om man har vandet eller høstet fra planten.
+
 \subsection{Lagring af data}
 
+\subsubsection{Permanent data}
 Vi gør brug af en Room-database til at gemme de have-områder, brugeren opretter. Vi bruger en Room-database, da det er en del af Androidx og officielt understøttet af Google / Android. Vores database indeholder en type af entries - en \texttt{entity} - som er en repræsentation af et haveområde. Denne entity indeholder al data knyttet til området, så vi har det hele gemt ét sted.
 
 Til at tilgå vores data gør vi brug af DAO'er - Data Access Objects. Disse er en abstraktion til at tilgå, opdatere, slette mv. i databasen på en ensartet måde, så vi ikke skal skrive queries direkte til databasen hver gang vi ønsker at bruge eller ændre data deri.
 For at gøre arbejdet med disse DAO'er lidt lettere for os har vi lavet et \texttt{GardenRepository}, som laver en yderligere abstraktion for at vi kan kalde metoderne (såsom \texttt{updateGarden}, \texttt{insertGarden} osv.) asynkront, så vi ikke blokerer for UI- / Main-tråden mens vi lægger data i databasen.
 
 Selve databasen er en singleton-instans, så vi ikke behøver at lave en ny instans hver gang vi skal tilgå databasen, da det er en relativt omstændig process. Dette er også anbefalet af Google på deres Android developer side \hyperlink{https://developer.android.com/training/data-storage/room/#database}{https://developer.android.com/training/data-storage/room/#database}
+
+\subsubsection{Dynamisk data}
+
+% Læser fra en CVS-fil
