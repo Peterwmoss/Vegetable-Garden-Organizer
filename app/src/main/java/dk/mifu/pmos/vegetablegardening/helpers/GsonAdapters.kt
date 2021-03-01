@@ -42,8 +42,8 @@ class GsonAdapters {
                 out.beginObject()
                 out.name("name").value(it.value.name)
                 out.name("category").value(it.value.category)
-                out.name("earliest").value(it.value.earliest)
-                out.name("latest").value(it.value.latest)
+                out.name("earliest").value(dateToString(it.value.earliest))
+                out.name("latest").value(dateToString(it.value.latest))
                 out.name("sowing").value(it.value.sowing)
                 out.name("cropRotation").value(it.value.cropRotation)
                 out.name("quantity").value(it.value.quantity)
@@ -71,8 +71,8 @@ class GsonAdapters {
 
                 var name = ""
                 var category: String? = null
-                var earliest: String? = null
-                var latest: String? = null
+                var earliest: Date? = null
+                var latest: Date? = null
                 var sowing: Boolean? = null
                 var cropRotation: String? = null
                 var quantity: String? = null
@@ -98,8 +98,8 @@ class GsonAdapters {
                     when (reader.nextName()) {
                         "name" -> name = reader.nextString()
                         "category" -> category = reader.nextString()
-                        "earliest" -> earliest = reader.nextString()
-                        "latest" -> latest = reader.nextString()
+                        "earliest" -> { earliest = stringToDate(reader.nextString()) }
+                        "latest" -> { latest = stringToDate(reader.nextString()) }
                         "sowing" -> sowing = reader.nextBoolean()
                         "cropRotation" -> cropRotation = reader.nextString()
                         "quantity" -> quantity = reader.nextString()

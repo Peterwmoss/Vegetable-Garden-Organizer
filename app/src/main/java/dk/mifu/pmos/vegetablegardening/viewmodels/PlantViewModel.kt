@@ -12,6 +12,8 @@ import com.opencsv.CSVReaderBuilder
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import java.io.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PlantViewModel(application: Application) : AndroidViewModel(application) {
     val categoryTitles: LiveData<List<String>> by lazy {
@@ -32,8 +34,8 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
                     Plant(
                             name = plant[0],
                             category = plant[1],
-                            earliest = plant[2],
-                            latest = plant[3],
+                            earliest = toDate(plant[2]),
+                            latest = toDate(plant[3]),
                             sowing = plant[4]=="såning",
                             cropRotation = plant[5],
                             quantity = plant[6],
@@ -53,9 +55,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
         val list: MutableList<String> = mutableListOf()
 
-        data?.forEach {
-            list.add(it)
-        }
+        data?.forEach { list.add(it) }
 
         val categories: MutableLiveData<List<String>> = MutableLiveData()
         categories.value = list
@@ -69,5 +69,13 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         val parser = CSVParserBuilder().withSeparator(';').build()
         return CSVReaderBuilder(InputStreamReader(stream)).withCSVParser(parser).withSkipLines(skipLines).build()
 
+    }
+
+    private fun toDate(date: String?): Date? {
+        val format = SimpleDateFormat("d. MMMM", Locale("da", "DK"))
+        return if (date != null && date.isNotBlank())
+            format.parse(date)
+        else
+            null
     }
 }
