@@ -21,6 +21,7 @@ import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentGardenOverviewBinding
 import dk.mifu.pmos.vegetablegardening.enums.Location.Greenhouse
 import dk.mifu.pmos.vegetablegardening.enums.Location.Outdoors
+import dk.mifu.pmos.vegetablegardening.helpers.Weather
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 
@@ -47,6 +48,8 @@ class GardenOverviewFragment : Fragment() {
         binding.newLocationBtn.setOnClickListener {
             navigateToCreateBedActivity()
         }
+
+        Weather.getWeatherData(requireContext())
 
         return binding.root
     }
