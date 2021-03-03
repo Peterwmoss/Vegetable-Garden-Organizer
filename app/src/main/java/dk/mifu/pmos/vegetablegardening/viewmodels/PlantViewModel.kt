@@ -15,6 +15,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class PlantViewModel(application: Application) : AndroidViewModel(application) {
+    companion object {
+        fun plantablePlantsPredicate(): (Plant) -> Boolean {
+            val today = Date()
+            return {plant: Plant -> plant.earliest!! <= today && today <= plant.latest }
+        }
+    }
+
     val categoryTitles: LiveData<List<String>> by lazy {
         loadCategoryTitles()
     }

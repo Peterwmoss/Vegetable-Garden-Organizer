@@ -63,7 +63,7 @@ class ChoosePlantFragment : DialogFragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         val location = bedViewModel.location
         plantViewModel.plants.observe(viewLifecycleOwner, {
-            adapter = PlantAdapter(it.filter { plant ->
+            val locationFilter = it.filter { plant ->
                 val locale = Locale("da", "DK")
                 val category = plant.category?.toLowerCase(locale)
                 val greenHouseString = "drivhus"
@@ -71,7 +71,9 @@ class ChoosePlantFragment : DialogFragment() {
                     Location.Greenhouse -> category == greenHouseString
                     else -> category != greenHouseString
                 }
-            })
+            }
+            val parameterFilter = locationFilter.filter(args.predicate)
+            adapter = PlantAdapter(parameterFilter)
             recyclerView.adapter = adapter
         })
     }

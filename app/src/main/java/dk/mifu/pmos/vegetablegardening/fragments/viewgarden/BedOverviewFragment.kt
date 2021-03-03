@@ -10,13 +10,16 @@ import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
+import dk.mifu.pmos.vegetablegardening.helpers.predicates.PlantToBooleanPredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
+import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 
 class BedOverviewFragment: Fragment() {
     private lateinit var binding: FragmentBedOverviewBinding
     private val bedViewModel: BedViewModel by activityViewModels()
+    private val plantViewModel: PlantViewModel by activityViewModels()
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -47,7 +50,11 @@ class BedOverviewFragment: Fragment() {
         }
 
         orderedArrayList.forEach {
-            initializeTile(coordinate = it.first, plant = it.second)
+            val coordinate = it.first
+            val plant = it.second
+            val tileBinding = ListItemTileBinding.inflate(layoutInflater, binding.gridlayout, true)
+            initializeTile(coordinate, plant, tileBinding)
+            initializeIcons(plant, tileBinding)
         }
     }
 
@@ -66,18 +73,26 @@ class BedOverviewFragment: Fragment() {
         return Pair(column+1, row+1)
     }
 
-    private fun initializeTile(coordinate: Coordinate, plant: Plant?) {
+    private fun initializeTile(coordinate: Coordinate, plant: Plant?, tileBinding: ListItemTileBinding) {
         val tileSideLength = GridHelper.getTileSideLength()
-        val itemTileBinding = ListItemTileBinding.inflate(layoutInflater, binding.gridlayout, true)
-        itemTileBinding.plantButton.text = plant?.name ?: ""
-        itemTileBinding.plantButton.width = tileSideLength
-        itemTileBinding.plantButton.height = tileSideLength
-        itemTileBinding.plantButton.setOnClickListener { _ -> navigateToPlantInfoDialog(coordinate, plant) }
+
+        tileBinding.plantButton.text = plant?.name ?: ""
+        tileBinding.plantButton.width = tileSideLength
+        tileBinding.plantButton.height = tileSideLength
+        tileBinding.plantButton.setOnClickListener { _ -> navigateToPlantInfoDialog(coordinate, plant) }
+    }
+
+    private fun initializeIcons(plant: Plant?, tileBinding: ListItemTileBinding){
+        val plantablePlants = plantViewModel.plants.value?.filter(PlantViewModel.plantablePlantsPredicate())
+        if(plant == null && !plantablePlants.isNullOrEmpty()){
+            tileBinding.testTextview.text = "!"
+            tileBinding.testTextview.visibility = View.VISIBLE
+        }
     }
 
     private fun navigateToPlantInfoDialog(coordinate: Coordinate, plant: Plant?) {
         if(plant == null) {
-            requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantingOptions())
+            requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantingOptions(coordinate, PlantToBooleanPredicate()))
         } else {
             requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantInfo(coordinate, plant))
         }

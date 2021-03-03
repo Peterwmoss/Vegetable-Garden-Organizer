@@ -22,7 +22,7 @@
             app:destination="@id/plantDetailsDialogFragment" />
         <action
             android:id="@+id/show_planting_options"
-            app:destination="@id/emptyTileFragment"/>
+            app:destination="@id/choosePlantFragment"/>
     </fragment>
     <fragment
         android:id="@+id/plantDetails"
@@ -45,8 +45,15 @@
             android:name="plant"
             app:argType="dk.mifu.pmos.vegetablegardening.models.Plant" />
     </dialog>
-    <fragment
-        android:id="@+id/emptyTileFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.viewgarden.EmptyTileFragment"
-        android:label="EmptyTile"/>
+    <dialog
+        android:id="@+id/choosePlantFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.creategarden.ChoosePlantFragment"
+        android:label="fragment_choose_plant"
+        tools:layout="@layout/fragment_choose_plant" >
+        <argument android:name="coordinate"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
+        <argument
+            android:name="predicate"
+            app:argType="dk.mifu.pmos.vegetablegardening.helpers.predicates.Predicate" />
+    </dialog>
 </navigation>

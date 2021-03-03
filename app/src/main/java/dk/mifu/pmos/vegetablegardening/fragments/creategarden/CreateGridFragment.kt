@@ -17,6 +17,8 @@ import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.START
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.TOP
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.BOTTOM
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.END
+import dk.mifu.pmos.vegetablegardening.helpers.predicates.AllPlantsPredicate
+import dk.mifu.pmos.vegetablegardening.helpers.predicates.PlantToBooleanPredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
@@ -228,6 +230,6 @@ class CreateGridFragment : Fragment() {
     }
 
     private fun navigateToChoosePlantFragment(coordinate: Coordinate) {
-        requireView().findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(coordinate))
+        requireView().findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(coordinate, AllPlantsPredicate()))
     }
 }

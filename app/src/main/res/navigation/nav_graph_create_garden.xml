@@ -12,6 +12,9 @@
         tools:layout="@layout/fragment_choose_plant" >
         <argument android:name="coordinate"
             app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
+        <argument
+            android:name="predicate"
+            app:argType="dk.mifu.pmos.vegetablegardening.helpers.predicates.Predicate" />
     </dialog>
     <fragment
         android:id="@+id/createGridFragment"
