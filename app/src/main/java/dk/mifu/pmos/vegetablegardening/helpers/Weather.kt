@@ -1,6 +1,7 @@
 package dk.mifu.pmos.vegetablegardening.helpers
 
 import android.content.Context
+import android.location.Location
 import android.util.Log
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -8,21 +9,35 @@ import dk.mifu.pmos.vegetablegardening.BuildConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
-import java.util.*
 
-abstract class Weather(protected val date: Date, private val context: Context) {
+abstract class Weather(private val context: Context) {
     protected abstract fun handleResponse(json: JSONObject)
 
-    suspend fun getLastRained() {
-        withContext(Dispatchers.IO) {
-            val queue = Volley.newRequestQueue(context)
-            val url = "https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?stationId=06187&datetime=2020-01-01T00:00:00Z/2021-02-01T23:59:59Z"
+    companion object {
+        private const val PERIOD = "latest-week"
+        private const val LIMIT = 10000
+    }
 
+    suspend fun getLastRained(location: Location) {
+        withContext(Dispatchers.IO) {
+            val lon = location.longitude
+            val lat = location.latitude
+
+            val minLon = lon - 0.4
+            val maxLon = lon + 0.4
+            val minLat = lat - 0.4
+            val maxLat = lat + 0.4
+            val boundaryBox = "${minLon},${minLat},${maxLon},${maxLat}"
+
+            val url = "https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?parameterId=precip_past10min&period=${PERIOD}&limit=${LIMIT}&bbox=${boundaryBox}"
+
+            val queue = Volley.newRequestQueue(context)
             val request = object : JsonObjectRequest(Method.GET, url, null,
                     { response ->
+                        Log.d("getLastRained()", "Response received: ${response.toString().subSequence(0,100)}")
                         handleResponse(response)
                     },
-                    { error -> Log.e("Lort", error.toString()) }) {
+                    { error -> Log.e("getLastRained()", error.toString()) }) {
                 override fun getHeaders(): MutableMap<String, String> {
                     val map = mutableMapOf<String, String>()
                     map.putAll(super.getHeaders())

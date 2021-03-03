@@ -1,5 +1,10 @@
 package dk.mifu.pmos.vegetablegardening.fragments.viewgarden
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,18 +13,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
+import dk.mifu.pmos.vegetablegardening.helpers.WeatherDataLocationService
 import dk.mifu.pmos.vegetablegardening.helpers.Weather
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
-import java.util.*
 import kotlin.collections.ArrayList
 
 class BedOverviewFragment: Fragment() {
@@ -33,20 +38,34 @@ class BedOverviewFragment: Fragment() {
     ): View {
         binding = FragmentBedOverviewBinding.inflate(inflater, container, false)
 
-        lifecycleScope.launch {
-            val weather = object : Weather(Date(), requireContext()) {
-                override fun handleResponse(json: JSONObject) {
-                    json.keys().forEach {
-                        Log.e("json", it)
-                    }
-                    val arr = json.getJSONArray("features")
-                    for (i in 0 until arr.length()) {
-                        Log.e("feature", arr[i].toString())
+        requireContext().startService(Intent(context, WeatherDataLocationService::class.java))
+
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                Log.d("onReceive()", "Location intent received")
+                lifecycleScope.launch {
+                    if (context != null) {
+                        val weather = object : Weather(context) {
+                            override fun handleResponse(json: JSONObject) {
+                                Log.v("json", json.toString())
+                                json.keys().forEach {
+                                    Log.v("json", it)
+                                }
+                                val arr = json.getJSONArray("features")
+                                for (i in 0 until arr.length()) {
+                                    Log.v("feature", arr[i].toString())
+                                }
+                            }
+                        }
+                        val bundle = intent?.getBundleExtra("location")
+                        val location = bundle?.getParcelable<Location>("location")
+                        location?.let { weather.getLastRained(it) }
                     }
                 }
             }
-            weather.getLastRained()
         }
+
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, IntentFilter("sendLocation"))
 
         return binding.root
     }
@@ -101,5 +120,10 @@ class BedOverviewFragment: Fragment() {
         if (plant != null) {
             requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantInfo(coordinate, plant))
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        requireContext().stopService(Intent(context, WeatherDataLocationService::class.java))
     }
 }
