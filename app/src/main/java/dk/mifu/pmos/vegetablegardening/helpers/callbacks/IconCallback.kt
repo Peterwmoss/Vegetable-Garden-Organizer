@@ -15,6 +15,6 @@ class IconCallback(private val view: View, private val bedViewModel: BedViewMode
         val id = bedViewModel.tileIds?.get(key)!!
         val associatedButton = view.findViewById<AppCompatButton>(id)
         val layout = associatedButton.parent as FrameLayout
-        layout.findViewById<TextView>(R.id.test_textview).visibility = View.GONE
+        layout.findViewById<TextView>(R.id.icon_view).visibility = View.GONE
     }
 }

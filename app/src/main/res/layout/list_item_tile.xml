@@ -13,12 +13,14 @@
         android:background="@drawable/grid_tile"
         />
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HELLO"
-        android:id="@+id/test_textview"
+        android:id="@+id/icon_view"
         android:elevation="@dimen/bring_on_top_of_button"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:background="@null"
         android:visibility="gone"/>
 
 </FrameLayout>

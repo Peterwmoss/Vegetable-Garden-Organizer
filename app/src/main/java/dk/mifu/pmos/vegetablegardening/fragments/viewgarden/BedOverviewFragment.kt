@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
@@ -102,8 +103,8 @@ class BedOverviewFragment: Fragment() {
     private fun initializeIcons(plant: Plant?, tileBinding: ListItemTileBinding){
         val plantablePlants = plantViewModel.plants.value?.filter(PlantViewModel.plantablePlantsPredicate())
         if(plant == null && !plantablePlants.isNullOrEmpty()){
-            tileBinding.testTextview.text = "!"
-            tileBinding.testTextview.visibility = View.VISIBLE
+            tileBinding.iconView.setImageResource(R.drawable.ic_flower)
+            tileBinding.iconView.visibility = View.VISIBLE
         }
     }
 
