@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
-import dk.mifu.pmos.vegetablegardening.helpers.BedCallback
+import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.START
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.TOP

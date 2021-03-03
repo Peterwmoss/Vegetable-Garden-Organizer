@@ -4,15 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.databinding.ObservableMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
-import dk.mifu.pmos.vegetablegardening.helpers.BedCallback
+import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
+import dk.mifu.pmos.vegetablegardening.helpers.callbacks.IconCallback
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.PlantToBooleanPredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
@@ -23,6 +22,8 @@ class BedOverviewFragment: Fragment() {
     private lateinit var binding: FragmentBedOverviewBinding
     private val bedViewModel: BedViewModel by activityViewModels()
     private val plantViewModel: PlantViewModel by activityViewModels()
+    private var columns = 0
+    private var rows = 0
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -38,29 +39,16 @@ class BedOverviewFragment: Fragment() {
         binding.bedTextView.text = bedViewModel.name
 
         val gridSize = sizeOfBed()
-        val columns = gridSize.first
-        val rows = gridSize.second
+        columns = gridSize.first
+        rows = gridSize.second
 
         binding.gridlayout.columnCount = columns
         binding.gridlayout.rowCount = rows
 
-        val orderedArrayList: ArrayList<Pair<Coordinate, Plant?>> = ArrayList()
-        for(i in 0 until rows){
-            for(j in 0 until columns){
-                val coordinate = Coordinate(j,i)
-                orderedArrayList.add(Pair(coordinate, bedViewModel.plants?.get(coordinate)))
-            }
-        }
+        val orderedArrayList = getTilesInOrder()
 
-        orderedArrayList.forEach {
-            val coordinate = it.first
-            val plant = it.second
-            val tileBinding = ListItemTileBinding.inflate(layoutInflater, binding.gridlayout, true)
-            initializeTile(coordinate, plant, tileBinding)
-            initializeIcons(plant, tileBinding)
-        }
-
-        bedViewModel.plants?.addOnMapChangedCallback(BedCallback(requireView(), bedViewModel))
+        insertTilesInView(orderedArrayList)
+        addOnMapChangedCallbacks()
     }
 
     private fun sizeOfBed(): Pair<Int,Int> {
@@ -76,6 +64,27 @@ class BedOverviewFragment: Fragment() {
         }
 
         return Pair(column+1, row+1)
+    }
+
+    private fun getTilesInOrder(): ArrayList<Pair<Coordinate, Plant?>> {
+        val orderedArrayList: ArrayList<Pair<Coordinate, Plant?>> = ArrayList()
+        for(i in 0 until rows){
+            for(j in 0 until columns){
+                val coordinate = Coordinate(j,i)
+                orderedArrayList.add(Pair(coordinate, bedViewModel.plants?.get(coordinate)))
+            }
+        }
+        return orderedArrayList
+    }
+
+    private fun insertTilesInView(arrayList: ArrayList<Pair<Coordinate, Plant?>>){
+        arrayList.forEach {
+            val coordinate = it.first
+            val plant = it.second
+            val tileBinding = ListItemTileBinding.inflate(layoutInflater, binding.gridlayout, true)
+            initializeTile(coordinate, plant, tileBinding)
+            initializeIcons(plant, tileBinding)
+        }
     }
 
     private fun initializeTile(coordinate: Coordinate, plant: Plant?, tileBinding: ListItemTileBinding) {
@@ -96,6 +105,11 @@ class BedOverviewFragment: Fragment() {
             tileBinding.testTextview.text = "!"
             tileBinding.testTextview.visibility = View.VISIBLE
         }
+    }
+
+    private fun addOnMapChangedCallbacks(){
+        bedViewModel.plants?.addOnMapChangedCallback(BedCallback(requireView(), bedViewModel))
+        bedViewModel.plants?.addOnMapChangedCallback(IconCallback(requireView(), bedViewModel))
     }
 
     private fun navigateToPlantInfoDialog(coordinate: Coordinate, plant: Plant?) {

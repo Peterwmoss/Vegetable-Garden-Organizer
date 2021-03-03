@@ -1,4 +1,4 @@
-package dk.mifu.pmos.vegetablegardening.helpers
+package dk.mifu.pmos.vegetablegardening.helpers.callbacks
 
 import android.view.View
 import android.widget.Button
