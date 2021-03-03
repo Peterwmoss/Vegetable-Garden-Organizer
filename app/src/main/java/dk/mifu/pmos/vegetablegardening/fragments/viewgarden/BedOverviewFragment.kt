@@ -103,6 +103,8 @@ class BedOverviewFragment: Fragment() {
     private fun initializeIcons(plant: Plant?, tileBinding: ListItemTileBinding){
         val plantablePlants = plantViewModel.plants.value?.filter(PlantViewModel.plantablePlantsPredicate())
         if(plant == null && !plantablePlants.isNullOrEmpty()){
+            binding.explanationTextView.text = getString(R.string.explanation_new_plants)
+            binding.explanationImageView.setImageResource(R.drawable.ic_flower)
             tileBinding.iconView.setImageResource(R.drawable.ic_flower)
             tileBinding.iconView.visibility = View.VISIBLE
         }
