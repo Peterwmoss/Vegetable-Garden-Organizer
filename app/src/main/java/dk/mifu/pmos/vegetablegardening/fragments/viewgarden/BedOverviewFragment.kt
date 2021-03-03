@@ -1,18 +1,26 @@
 package dk.mifu.pmos.vegetablegardening.fragments.viewgarden
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
+import dk.mifu.pmos.vegetablegardening.helpers.Weather
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.util.*
+import kotlin.collections.ArrayList
 
 class BedOverviewFragment: Fragment() {
     private lateinit var binding: FragmentBedOverviewBinding
@@ -24,6 +32,22 @@ class BedOverviewFragment: Fragment() {
             savedInstanceState: Bundle?
     ): View {
         binding = FragmentBedOverviewBinding.inflate(inflater, container, false)
+
+        lifecycleScope.launch {
+            val weather = object : Weather(Date(), requireContext()) {
+                override fun handleResponse(json: JSONObject) {
+                    json.keys().forEach {
+                        Log.e("json", it)
+                    }
+                    val arr = json.getJSONArray("features")
+                    for (i in 0 until arr.length()) {
+                        Log.e("feature", arr[i].toString())
+                    }
+                }
+            }
+            weather.getLastRained()
+        }
+
         return binding.root
     }
 
