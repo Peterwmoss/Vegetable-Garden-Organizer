@@ -19,12 +19,14 @@ import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
 import dk.mifu.pmos.vegetablegardening.helpers.WeatherDataLocationService
-import dk.mifu.pmos.vegetablegardening.helpers.Weather
+import dk.mifu.pmos.vegetablegardening.helpers.WeatherData
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
+import dk.mifu.pmos.vegetablegardening.models.Weather
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import java.util.*
 import kotlin.collections.ArrayList
 
 class BedOverviewFragment: Fragment() {
@@ -45,21 +47,17 @@ class BedOverviewFragment: Fragment() {
                 Log.d("onReceive()", "Location intent received")
                 lifecycleScope.launch {
                     if (context != null) {
-                        val weather = object : Weather(context) {
-                            override fun handleResponse(json: JSONObject) {
-                                Log.v("json", json.toString())
-                                json.keys().forEach {
-                                    Log.v("json", it)
-                                }
-                                val arr = json.getJSONArray("features")
-                                for (i in 0 until arr.length()) {
-                                    Log.v("feature", arr[i].toString())
+                        val bundle = intent?.getBundleExtra("location")
+                        val location = bundle?.getParcelable<Location>("location")
+                        val weatherData = object : WeatherData(context) {
+                            override fun handleResponse(date: Date?) {
+                                Log.d("handleResponse()", "date: $date")
+                                if (date != null) {
+                                    bedViewModel.updateLastRainedDate(date)
                                 }
                             }
                         }
-                        val bundle = intent?.getBundleExtra("location")
-                        val location = bundle?.getParcelable<Location>("location")
-                        location?.let { weather.getLastRained(it) }
+                        location?.let { weatherData.getLastRained(it) }
                     }
                 }
             }

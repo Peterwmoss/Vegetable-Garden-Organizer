@@ -8,17 +8,22 @@ import androidx.lifecycle.viewModelScope
 import dk.mifu.pmos.vegetablegardening.database.GardenRepository
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.enums.Location
+import dk.mifu.pmos.vegetablegardening.helpers.WeatherData
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.util.*
+import kotlin.collections.HashMap
 
 class BedViewModel(application: Application) : AndroidViewModel(application) {
     var name : String? = null
     var location : Location? = null
     var plants : ObservableMap<Coordinate, Plant>? = null
     var tileIds : MutableMap<Coordinate, Int>? = null
+    var plantsToWater : MutableMap<Coordinate, Plant> = HashMap()
 
     fun setBed(bed: Bed){
         val map = ObservableArrayMap<Coordinate, Plant>()
@@ -31,6 +36,13 @@ class BedViewModel(application: Application) : AndroidViewModel(application) {
         name = bed.name
         location = bed.location
         plants = map
+    }
+
+    fun updateLastRainedDate(date: Date) {
+        val filteredPlants = plants?.filterValues { plant -> if (plant.wateredDate != null) plant.wateredDate!! > date else { true } }
+        if (filteredPlants != null) {
+            plantsToWater.putAll(filteredPlants)
+        }
     }
 
     private inner class Callback : ObservableMap.OnMapChangedCallback<ObservableMap<Coordinate, Plant>, Coordinate, Plant>() {
