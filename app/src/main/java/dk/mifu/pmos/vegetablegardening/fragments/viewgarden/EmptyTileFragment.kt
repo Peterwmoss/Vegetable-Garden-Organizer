@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentEmptyTileBinding
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.time.format.DateTimeFormatter
@@ -29,7 +30,7 @@ class EmptyTileFragment : DialogFragment() {
             it.earliest!! <= today && today <= it.latest
         }
 
-        binding.emptyTileTextView.text = if(plantablePlants.isNullOrEmpty()) "YEET" else plantablePlants.toString()
+        binding.emptyTileTextView.text = if(plantablePlants.isNullOrEmpty()) resources.getString(R.string.no_plantables_text) else plantablePlants.toString()
 
     }
 }

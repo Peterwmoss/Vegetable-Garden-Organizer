@@ -17,4 +17,6 @@
     <string name="water_text">Vand</string>
     <string name="details_text">Detaljer</string>
     <string name="category_format">%1$s: %2$s</string>
+    <string name="no_plantables_text">Der er ingen planter, der kan plantes i øjeblikket</string>
+    <string name="plantbare_planter">Plantbare planter</string>
 </resources>
