@@ -34,8 +34,8 @@ class GsonAdapters {
                 out.beginArray()
                 // Coordinate
                 out.beginObject()
-                out.name("col")?.value(it.key.col)
-                out.name("row")?.value(it.key.row)
+                out.name("col").value(it.key.col)
+                out.name("row").value(it.key.row)
                 out.endObject()
 
                 // Plant

@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.databinding.ObservableMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
+import dk.mifu.pmos.vegetablegardening.helpers.BedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.PlantToBooleanPredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
@@ -42,9 +45,9 @@ class BedOverviewFragment: Fragment() {
         binding.gridlayout.rowCount = rows
 
         val orderedArrayList: ArrayList<Pair<Coordinate, Plant?>> = ArrayList()
-        for(i in 0 until columns){
-            for(j in 0 until rows){
-                val coordinate = Coordinate(i,j)
+        for(i in 0 until rows){
+            for(j in 0 until columns){
+                val coordinate = Coordinate(j,i)
                 orderedArrayList.add(Pair(coordinate, bedViewModel.plants?.get(coordinate)))
             }
         }
@@ -56,6 +59,8 @@ class BedOverviewFragment: Fragment() {
             initializeTile(coordinate, plant, tileBinding)
             initializeIcons(plant, tileBinding)
         }
+
+        bedViewModel.plants?.addOnMapChangedCallback(BedCallback(requireView(), bedViewModel))
     }
 
     private fun sizeOfBed(): Pair<Int,Int> {
@@ -80,6 +85,9 @@ class BedOverviewFragment: Fragment() {
         tileBinding.plantButton.width = tileSideLength
         tileBinding.plantButton.height = tileSideLength
         tileBinding.plantButton.setOnClickListener { _ -> navigateToPlantInfoDialog(coordinate, plant) }
+        tileBinding.plantButton.id = View.generateViewId()
+
+        bedViewModel.tileIds?.put(coordinate, tileBinding.plantButton.id)
     }
 
     private fun initializeIcons(plant: Plant?, tileBinding: ListItemTileBinding){
