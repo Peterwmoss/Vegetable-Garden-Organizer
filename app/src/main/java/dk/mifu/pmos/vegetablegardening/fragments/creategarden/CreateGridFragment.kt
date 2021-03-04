@@ -115,7 +115,7 @@ class CreateGridFragment : Fragment() {
 
         binding.addRowButton.setOnClickListener{
             addTiles(column = false)
-            if(height-(tileSideLength*rows) < tileSideLength){ //If there isn't enough room for a whole row more
+            if(height-(tileSideLength*rows)-GridHelper.buttonSideLength < tileSideLength){ //If there isn't enough room for a whole row more
                 binding.addRowButton.visibility = View.GONE
                 changePlacementOfRemoveButton(
                     full = true,
@@ -210,19 +210,13 @@ class CreateGridFragment : Fragment() {
         val constraintSet = ConstraintSet()
         constraintSet.apply {
             clone(binding.parentLayout)
-            if(full){
-                connect(buttonId, START, if(column) furthestTileId!! else binding.parentLayout.id, START)
-                connect(buttonId, TOP, if(column) binding.parentLayout.id else furthestTileId!!, TOP)
+            if(column) {
+                connect(buttonId, START, binding.addColumnButton.id, START)
+                connect(buttonId, TOP, binding.addColumnButton.id, BOTTOM)
             } else {
-                if(column) {
-                    connect(buttonId, START, binding.addColumnButton.id, START)
-                    connect(buttonId, TOP, binding.addColumnButton.id, BOTTOM)
-                } else {
-                    connect(buttonId, START, binding.addRowButton.id, END)
-                    connect(buttonId, TOP, binding.addRowButton.id, TOP)
-                }
+                connect(buttonId, START, binding.addRowButton.id, END)
+                connect(buttonId, TOP, binding.addRowButton.id, TOP)
             }
-
             applyTo(binding.parentLayout)
         }
     }
