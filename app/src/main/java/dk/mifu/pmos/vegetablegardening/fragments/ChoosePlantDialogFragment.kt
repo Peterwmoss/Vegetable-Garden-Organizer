@@ -1,4 +1,4 @@
-package dk.mifu.pmos.vegetablegardening.fragments.creategarden
+package dk.mifu.pmos.vegetablegardening.fragments
 
 import android.os.Bundle
 import android.text.Editable
@@ -19,12 +19,10 @@ import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentChoosePlantBinding
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
-import dk.mifu.pmos.vegetablegardening.enums.Location
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPredicate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.util.*
-import kotlin.reflect.KProperty
 
 class ChoosePlantDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentChoosePlantBinding
