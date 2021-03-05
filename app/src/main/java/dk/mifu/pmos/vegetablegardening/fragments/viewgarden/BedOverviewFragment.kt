@@ -18,6 +18,7 @@ import dk.mifu.pmos.vegetablegardening.helpers.predicates.PlantablePredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
+import kotlin.collections.ArrayList
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 
 class BedOverviewFragment: Fragment() {
@@ -35,7 +36,10 @@ class BedOverviewFragment: Fragment() {
             savedInstanceState: Bundle?
     ): View {
         binding = FragmentBedOverviewBinding.inflate(inflater, container, false)
-        plantablePlants = plantViewModel.plants.value?.filter(PlantablePredicate())?.filter(LocationPredicate(bedViewModel.location))
+
+        plantablePlants = plantViewModel.plants.value
+                ?.filter(PlantablePredicate())
+                ?.filter(LocationPredicate(bedViewModel.bedLocation))
         return binding.root
     }
 

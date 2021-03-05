@@ -1,6 +1,6 @@
 package dk.mifu.pmos.vegetablegardening.enums
 
-enum class Location {
+enum class BedLocation {
     Outdoors,
     Greenhouse
 }

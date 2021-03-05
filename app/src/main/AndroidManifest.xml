@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dk.mifu.pmos.vegetablegardening">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VegetableGardening">
+        <service
+            android:name="dk.mifu.pmos.vegetablegardening.helpers.weather.LocationService"
+            android:foregroundServiceType="location"
+            android:enabled="true"
+            android:exported="false"/>
         <activity
             android:name="dk.mifu.pmos.vegetablegardening.activities.CreateBedActivity"
             android:screenOrientation="portrait"/>
@@ -22,5 +29,6 @@
             </intent-filter>
         </activity>
     </application>
+
 
 </manifest>
