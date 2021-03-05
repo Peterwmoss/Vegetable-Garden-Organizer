@@ -144,9 +144,4 @@ class BedOverviewFragment: Fragment() {
             requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantInfo(coordinate, plant))
         }
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        requireContext().stopService(Intent(context, WeatherDataLocationService::class.java))
-    }
 }
