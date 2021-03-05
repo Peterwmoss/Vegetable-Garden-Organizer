@@ -1,4 +1,4 @@
-package dk.mifu.pmos.vegetablegardening.helpers
+package dk.mifu.pmos.vegetablegardening.helpers.weather
 
 import android.Manifest
 import android.app.Service

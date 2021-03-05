@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.TypeConverters
 import androidx.room.PrimaryKey
 import dk.mifu.pmos.vegetablegardening.enums.Location
-import dk.mifu.pmos.vegetablegardening.helpers.DatabaseConverters
+import dk.mifu.pmos.vegetablegardening.helpers.database.DatabaseConverters
 
 @Entity(tableName = "gardens")
 @TypeConverters(DatabaseConverters::class)

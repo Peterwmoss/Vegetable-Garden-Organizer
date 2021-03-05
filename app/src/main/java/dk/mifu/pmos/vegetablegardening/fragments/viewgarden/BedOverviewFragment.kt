@@ -20,17 +20,15 @@ import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
-import dk.mifu.pmos.vegetablegardening.helpers.WeatherDataLocationService
-import dk.mifu.pmos.vegetablegardening.helpers.WeatherData
+import dk.mifu.pmos.vegetablegardening.helpers.weather.WeatherDataLocationService
+import dk.mifu.pmos.vegetablegardening.helpers.weather.WeatherData
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.IconCallback
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPredicate
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.PlantablePredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
-import dk.mifu.pmos.vegetablegardening.models.Weather
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
@@ -50,31 +48,6 @@ class BedOverviewFragment: Fragment() {
             savedInstanceState: Bundle?
     ): View {
         binding = FragmentBedOverviewBinding.inflate(inflater, container, false)
-
-        requireContext().startService(Intent(context, WeatherDataLocationService::class.java))
-
-        val receiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                Log.d("onReceive()", "Location intent received")
-                lifecycleScope.launch {
-                    if (context != null) {
-                        val bundle = intent?.getBundleExtra("location")
-                        val location = bundle?.getParcelable<Location>("location")
-                        val weatherData = object : WeatherData(context) {
-                            override fun handleResponse(date: Date?) {
-                                Log.d("handleResponse()", "date: $date")
-                                if (date != null) {
-                                    bedViewModel.updateLastRainedDate(date)
-                                }
-                            }
-                        }
-                        location?.let { weatherData.getLastRained(it) }
-                    }
-                }
-            }
-        }
-
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, IntentFilter("sendLocation"))
 
         plantablePlants = plantViewModel.plants.value
                 ?.filter(PlantablePredicate())

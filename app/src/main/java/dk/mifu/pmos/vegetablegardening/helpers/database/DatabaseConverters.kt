@@ -1,4 +1,4 @@
-package dk.mifu.pmos.vegetablegardening.helpers
+package dk.mifu.pmos.vegetablegardening.helpers.database
 
 import androidx.room.TypeConverter
 import com.google.gson.GsonBuilder

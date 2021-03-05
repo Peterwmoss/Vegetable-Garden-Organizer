@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VegetableGardening">
         <service
-            android:name="dk.mifu.pmos.vegetablegardening.helpers.WeatherDataLocationService"
+            android:name="dk.mifu.pmos.vegetablegardening.helpers.weather.WeatherDataLocationService"
             android:foregroundServiceType="location"
             android:enabled="true"
             android:exported="false"/>

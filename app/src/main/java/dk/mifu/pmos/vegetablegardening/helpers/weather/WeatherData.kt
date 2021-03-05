@@ -1,13 +1,13 @@
-package dk.mifu.pmos.vegetablegardening.helpers
+package dk.mifu.pmos.vegetablegardening.helpers.weather
 
 import android.content.Context
+import android.content.res.Resources
 import android.location.Location
 import android.util.Log
-import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import dk.mifu.pmos.vegetablegardening.BuildConfig
-import dk.mifu.pmos.vegetablegardening.models.Weather
+import dk.mifu.pmos.vegetablegardening.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -34,7 +34,9 @@ abstract class WeatherData(private val context: Context) {
             val maxLat = lat + 0.4
             val boundaryBox = "${minLon},${minLat},${maxLon},${maxLat}"
 
-            val url = "https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?parameterId=precip_past10min&period=${PERIOD}&limit=${LIMIT}&bbox=${boundaryBox}"
+            val apiBaseUrl = context.resources.getString(R.string.weather_api_url)
+            val parameters = "parameterId=precip_past10min&period=${PERIOD}&limit=${LIMIT}&bbox=${boundaryBox}"
+            val url = String.format(apiBaseUrl, parameters)
 
             val queue = Volley.newRequestQueue(context)
             val request = object : JsonObjectRequest(Method.GET, url, null,

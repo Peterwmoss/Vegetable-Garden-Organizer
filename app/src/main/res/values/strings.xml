@@ -20,4 +20,5 @@
     <string name="no_plantables_text">Der er ingen planter, der kan plantes i øjeblikket</string>
     <string name="plantbare_planter">Plantbare planter</string>
     <string name="explanation_new_plants">Der er i øjeblikket mulighed for at plante/så i dit bed!</string>
+    <string name="weather_api_url">https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?%1$s</string>
 </resources>
