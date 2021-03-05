@@ -23,7 +23,7 @@ import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 
 class BedOverviewFragment: Fragment() {
     private lateinit var binding: FragmentBedOverviewBinding
-    private var plantablePlants: List<Plant>? = null
+    private var plantablePlants = false
     private val bedViewModel: BedViewModel by activityViewModels()
     private val plantViewModel: PlantViewModel by activityViewModels()
     private var columns = 0
@@ -37,9 +37,10 @@ class BedOverviewFragment: Fragment() {
     ): View {
         binding = FragmentBedOverviewBinding.inflate(inflater, container, false)
 
-        plantablePlants = plantViewModel.plants.value
+        plantablePlants = !plantViewModel.plants.value
                 ?.filter(PlantablePredicate())
                 ?.filter(LocationPredicate(bedViewModel.bedLocation))
+                .isNullOrEmpty()
         return binding.root
     }
 
@@ -58,6 +59,7 @@ class BedOverviewFragment: Fragment() {
 
         insertTilesInView(orderedArrayList)
         addOnMapChangedCallbacks()
+        setExplanationTextViews()
     }
 
     private fun sizeOfBed(): Pair<Int,Int> {
@@ -92,14 +94,14 @@ class BedOverviewFragment: Fragment() {
             val plant = it.second
             val tileBinding = ListItemTileBinding.inflate(layoutInflater, binding.gridlayout, true)
             initializeTile(coordinate, plant, tileBinding)
-            initializeIcons(plant, tileBinding)
+            initializeIcons(coordinate, plant, tileBinding)
         }
     }
 
     private fun initializeTile(coordinate: Coordinate, plant: Plant?, tileBinding: ListItemTileBinding) {
         val tileSideLength = GridHelper.getTileSideLength()
 
-        if(plant != null || !plantablePlants.isNullOrEmpty()) //Only create listeners for tiles with plants or plantables
+        if(plant != null || plantablePlants) //Only create listeners for tiles with plants or plantables
             tileBinding.plantButton.setOnClickListener { _ -> navigate(coordinate, plant) }
 
         tileBinding.plantButton.text = plant?.name ?: ""
@@ -110,12 +112,12 @@ class BedOverviewFragment: Fragment() {
         bedViewModel.tileIds?.put(coordinate, tileBinding.plantButton.id)
     }
 
-    private fun initializeIcons(plant: Plant?, tileBinding: ListItemTileBinding){
-
-        if(plant == null && !plantablePlants.isNullOrEmpty()){
-            binding.explanationTextView.text = getString(R.string.explanation_new_plants)
-            binding.explanationImageView.setImageResource(R.drawable.ic_flower)
+    private fun initializeIcons(coordinate: Coordinate, plant: Plant?, tileBinding: ListItemTileBinding){
+        if(plant == null && plantablePlants) {
             tileBinding.iconView.setImageResource(R.drawable.ic_flower)
+            tileBinding.iconView.visibility = View.VISIBLE
+        } else if(plant != null && bedViewModel.plantsToWater?.get(coordinate) != null){
+            tileBinding.iconView.setImageResource(R.drawable.ic_plus)
             tileBinding.iconView.visibility = View.VISIBLE
         }
     }
@@ -130,6 +132,18 @@ class BedOverviewFragment: Fragment() {
             requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantingOptions(coordinate, PlantablePredicate()))
         } else {
             requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantInfo(coordinate, plant))
+        }
+    }
+
+    private fun setExplanationTextViews(){
+        if(plantablePlants){
+            binding.plantableExplanationTextView.text = getString(R.string.explanation_new_plants)
+            binding.plantableExplanationImageView.setImageResource(R.drawable.ic_flower)
+        }
+
+        if(!bedViewModel.plantsToWater.isNullOrEmpty()){
+            binding.waterExplanationTextView.text = getString(R.string.explanation_check_water)
+            binding.waterExplanationImageView.setImageResource(R.drawable.ic_plus)
         }
     }
 }

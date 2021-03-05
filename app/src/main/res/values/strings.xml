@@ -21,4 +21,5 @@
     <string name="plantbare_planter">Plantbare planter</string>
     <string name="explanation_new_plants">Der er i øjeblikket mulighed for at plante/så i dit bed!</string>
     <string name="weather_api_url">https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?%1$s</string>
+    <string name="explanation_check_water">Baseret på vejret i dit område, kan det være, dine planter har brug for vand</string>
 </resources>
