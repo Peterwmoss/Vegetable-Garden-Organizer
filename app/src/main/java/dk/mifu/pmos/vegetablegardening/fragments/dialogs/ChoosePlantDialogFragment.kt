@@ -62,9 +62,10 @@ class ChoosePlantDialogFragment : DialogFragment() {
     private fun createList(recyclerView: RecyclerView) {
         recyclerView.layoutManager = LinearLayoutManager(context)
         plantViewModel.plants.observe(viewLifecycleOwner, {
-            val locationFilter = it.filter(LocationPredicate(bedViewModel.location))
-            val parameterFilter = locationFilter.filter(args.predicate)
-            adapter = PlantAdapter(parameterFilter)
+            val plants = it
+                    .filter(LocationPredicate(bedViewModel.location))
+                    .filter(args.predicate)
+            adapter = PlantAdapter(plants)
             recyclerView.adapter = adapter
         })
     }
