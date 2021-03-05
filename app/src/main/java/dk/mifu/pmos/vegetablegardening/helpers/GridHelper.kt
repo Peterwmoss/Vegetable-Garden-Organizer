@@ -5,9 +5,11 @@ import androidx.constraintlayout.widget.ConstraintSet
 
 class GridHelper {
     companion object {
+        const val buttonSideLength = 160
+
         fun getTileSideLength(): Int {
-            val width = Resources.getSystem().displayMetrics.widthPixels
-            return width shr 2 // Divide by 4
+            val width = Resources.getSystem().displayMetrics.widthPixels - buttonSideLength
+            return width shr 2 //Divide by 4
         }
 
         fun getWidthOfScreen(): Int {
