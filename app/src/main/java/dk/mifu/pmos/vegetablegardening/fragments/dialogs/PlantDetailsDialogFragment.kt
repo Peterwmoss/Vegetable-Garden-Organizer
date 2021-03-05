@@ -1,4 +1,4 @@
-package dk.mifu.pmos.vegetablegardening.fragments.viewgarden
+package dk.mifu.pmos.vegetablegardening.fragments.dialogs
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.appcompat.widget.AppCompatButton xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:id="@+id/plant_button"
-    android:background="@drawable/grid_tile"
-/>
+    android:layout_width="wrap_content"
+    android:id="@+id/tile_frame_layout">
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/plant_button"
+        android:background="@drawable/grid_tile"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/icon_view"
+        android:elevation="@dimen/bring_on_top_of_button"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:background="@null"
+        android:visibility="gone"/>
+
+</FrameLayout>
+

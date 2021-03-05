@@ -31,6 +31,7 @@ class BedViewModel(application: Application) : AndroidViewModel(application) {
         name = bed.name
         location = bed.location
         plants = map
+        tileIds = HashMap()
     }
 
     private inner class Callback : ObservableMap.OnMapChangedCallback<ObservableMap<Coordinate, Plant>, Coordinate, Plant>() {
