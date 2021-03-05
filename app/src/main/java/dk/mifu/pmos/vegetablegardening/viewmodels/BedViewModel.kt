@@ -36,6 +36,7 @@ class BedViewModel(application: Application) : AndroidViewModel(application) {
         name = bed.name
         location = bed.location
         plants = map
+        tileIds = HashMap()
     }
 
     fun updateLastRainedDate(date: Date) {

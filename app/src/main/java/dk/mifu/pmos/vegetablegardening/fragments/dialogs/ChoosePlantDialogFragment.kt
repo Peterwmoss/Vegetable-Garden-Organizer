@@ -1,4 +1,4 @@
-package dk.mifu.pmos.vegetablegardening.fragments.creategarden
+package dk.mifu.pmos.vegetablegardening.fragments.dialogs
 
 import android.os.Bundle
 import android.text.Editable
@@ -19,18 +19,18 @@ import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentChoosePlantBinding
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
-import dk.mifu.pmos.vegetablegardening.enums.Location
+import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPredicate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.util.*
 
-class ChoosePlantFragment : DialogFragment() {
+class ChoosePlantDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentChoosePlantBinding
 
     private val plantViewModel: PlantViewModel by activityViewModels()
     private val bedViewModel: BedViewModel by activityViewModels()
 
-    private val args: ChoosePlantFragmentArgs by navArgs()
+    private val args: ChoosePlantDialogFragmentArgs by navArgs()
 
     private var adapter : PlantAdapter? = null
 
@@ -61,17 +61,11 @@ class ChoosePlantFragment : DialogFragment() {
 
     private fun createList(recyclerView: RecyclerView) {
         recyclerView.layoutManager = LinearLayoutManager(context)
-        val location = bedViewModel.location
         plantViewModel.plants.observe(viewLifecycleOwner, {
-            adapter = PlantAdapter(it.filter { plant ->
-                val locale = Locale("da", "DK")
-                val category = plant.category?.toLowerCase(locale)
-                val greenHouseString = "drivhus"
-                when (location) {
-                    Location.Greenhouse -> category == greenHouseString
-                    else -> category != greenHouseString
-                }
-            })
+            val plants = it
+                    .filter(LocationPredicate(bedViewModel.location))
+                    .filter(args.predicate)
+            adapter = PlantAdapter(plants)
             recyclerView.adapter = adapter
         })
     }

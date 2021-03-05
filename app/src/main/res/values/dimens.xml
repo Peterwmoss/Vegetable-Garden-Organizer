@@ -13,4 +13,5 @@
     <dimen name="picture">200dp</dimen>
     <dimen name="grid_tile">50dp</dimen>
     <dimen name="line">2dp</dimen>
+    <dimen name="bring_on_top_of_button">6dp</dimen>
 </resources>

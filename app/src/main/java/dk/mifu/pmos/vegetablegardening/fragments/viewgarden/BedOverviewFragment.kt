@@ -15,11 +15,16 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.findNavController
+import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
+import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
 import dk.mifu.pmos.vegetablegardening.helpers.WeatherDataLocationService
 import dk.mifu.pmos.vegetablegardening.helpers.WeatherData
+import dk.mifu.pmos.vegetablegardening.helpers.callbacks.IconCallback
+import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPredicate
+import dk.mifu.pmos.vegetablegardening.helpers.predicates.PlantablePredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.models.Weather
@@ -28,10 +33,16 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
+import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 
 class BedOverviewFragment: Fragment() {
     private lateinit var binding: FragmentBedOverviewBinding
+    private var plantablePlants: List<Plant>? = null
     private val bedViewModel: BedViewModel by activityViewModels()
+    private val plantViewModel: PlantViewModel by activityViewModels()
+    private var columns = 0
+    private var rows = 0
+
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -65,6 +76,9 @@ class BedOverviewFragment: Fragment() {
 
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, IntentFilter("sendLocation"))
 
+        plantablePlants = plantViewModel.plants.value
+                ?.filter(PlantablePredicate())
+                ?.filter(LocationPredicate(bedViewModel.location))
         return binding.root
     }
 
@@ -73,30 +87,16 @@ class BedOverviewFragment: Fragment() {
         binding.bedTextView.text = bedViewModel.name
 
         val gridSize = sizeOfBed()
-        val columns = gridSize.first
-        val rows = gridSize.second
+        columns = gridSize.first
+        rows = gridSize.second
 
         binding.gridlayout.columnCount = columns
         binding.gridlayout.rowCount = rows
 
-        val orderedArrayList: ArrayList<Pair<Coordinate, Plant?>> = ArrayList()
-        for(i in 0 until columns){
-            for(j in 0 until rows){
-                val coordinate = Coordinate(i,j)
-                orderedArrayList.add(Pair(coordinate, bedViewModel.plants?.get(coordinate)))
-            }
-        }
+        val orderedArrayList = getTilesInOrder()
 
-        orderedArrayList.forEach {
-            val coordinate = it.first
-            val plant = it.second
-            val tileSideLength = GridHelper.getTileSideLength()
-            val itemTileBinding = ListItemTileBinding.inflate(layoutInflater, binding.gridlayout, true)
-            itemTileBinding.plantButton.text = plant?.name ?: ""
-            itemTileBinding.plantButton.width = tileSideLength
-            itemTileBinding.plantButton.height = tileSideLength
-            itemTileBinding.plantButton.setOnClickListener { _ -> navigateToPlantInfoDialog(coordinate, plant) }
-        }
+        insertTilesInView(orderedArrayList)
+        addOnMapChangedCallbacks()
     }
 
     private fun sizeOfBed(): Pair<Int,Int> {
@@ -114,8 +114,60 @@ class BedOverviewFragment: Fragment() {
         return Pair(column+1, row+1)
     }
 
-    private fun navigateToPlantInfoDialog(coordinate: Coordinate, plant: Plant?) {
-        if (plant != null) {
+    private fun getTilesInOrder(): ArrayList<Pair<Coordinate, Plant?>> {
+        val orderedArrayList: ArrayList<Pair<Coordinate, Plant?>> = ArrayList()
+        for(i in 0 until rows){
+            for(j in 0 until columns){
+                val coordinate = Coordinate(j,i)
+                orderedArrayList.add(Pair(coordinate, bedViewModel.plants?.get(coordinate)))
+            }
+        }
+        return orderedArrayList
+    }
+
+    private fun insertTilesInView(arrayList: ArrayList<Pair<Coordinate, Plant?>>){
+        arrayList.forEach {
+            val coordinate = it.first
+            val plant = it.second
+            val tileBinding = ListItemTileBinding.inflate(layoutInflater, binding.gridlayout, true)
+            initializeTile(coordinate, plant, tileBinding)
+            initializeIcons(plant, tileBinding)
+        }
+    }
+
+    private fun initializeTile(coordinate: Coordinate, plant: Plant?, tileBinding: ListItemTileBinding) {
+        val tileSideLength = GridHelper.getTileSideLength()
+
+        if(plant != null || !plantablePlants.isNullOrEmpty()) //Only create listeners for tiles with plants or plantables
+            tileBinding.plantButton.setOnClickListener { _ -> navigate(coordinate, plant) }
+
+        tileBinding.plantButton.text = plant?.name ?: ""
+        tileBinding.plantButton.width = tileSideLength
+        tileBinding.plantButton.height = tileSideLength
+        tileBinding.plantButton.id = View.generateViewId()
+
+        bedViewModel.tileIds?.put(coordinate, tileBinding.plantButton.id)
+    }
+
+    private fun initializeIcons(plant: Plant?, tileBinding: ListItemTileBinding){
+
+        if(plant == null && !plantablePlants.isNullOrEmpty()){
+            binding.explanationTextView.text = getString(R.string.explanation_new_plants)
+            binding.explanationImageView.setImageResource(R.drawable.ic_flower)
+            tileBinding.iconView.setImageResource(R.drawable.ic_flower)
+            tileBinding.iconView.visibility = View.VISIBLE
+        }
+    }
+
+    private fun addOnMapChangedCallbacks(){
+        bedViewModel.plants?.addOnMapChangedCallback(BedCallback(requireView(), bedViewModel))
+        bedViewModel.plants?.addOnMapChangedCallback(IconCallback(requireView(), bedViewModel))
+    }
+
+    private fun navigate(coordinate: Coordinate, plant: Plant?) {
+        if(plant == null) {
+            requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantingOptions(coordinate, PlantablePredicate()))
+        } else {
             requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantInfo(coordinate, plant))
         }
     }

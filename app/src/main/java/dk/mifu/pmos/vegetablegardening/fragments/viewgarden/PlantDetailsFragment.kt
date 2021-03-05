@@ -26,8 +26,8 @@ class PlantDetailsFragment: Fragment() {
         binding.run {
             plantName.text          = plant.name
             plantCategory.text      = addString(titles?.get(1), plant.category)
-            plantEarliest.text      = addString(titles?.get(2), plant.earliest)
-            plantLatest.text        = addString(titles?.get(3), plant.latest)
+            plantEarliest.text      = addString(titles?.get(2), plant.earliest.toString())
+            plantLatest.text        = addString(titles?.get(3), plant.latest.toString())
             plantSowing.text        = addString(titles?.get(4), plant.sowing.toString())
             plantCropRotation.text  = addString(titles?.get(5), plant.cropRotation)
             plantQuantity.text      = addString(titles?.get(6), plant.quantity)
