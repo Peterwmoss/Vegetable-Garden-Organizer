@@ -10,7 +10,7 @@ import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 
-class IconCallback(private val view: View, private val bedViewModel: BedViewModel):  ObservableMap.OnMapChangedCallback<ObservableMap<Coordinate, Plant>, Coordinate, Plant>()  {
+class IconCallback(private val view: View, private val bedViewModel: BedViewModel):  BedPlantsChangedCallback()  {
     override fun onMapChanged(sender: ObservableMap<Coordinate, Plant>?, key: Coordinate?) {
         val id = bedViewModel.tileIds?.get(key)!!
         val associatedButton = view.findViewById<AppCompatButton>(id)
