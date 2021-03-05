@@ -34,6 +34,7 @@ class BedViewModel(application: Application) : AndroidViewModel(application) {
     var plantsToWater : MutableLiveData<MutableMap<Coordinate, Plant>> = MutableLiveData()
 
     fun setBed(bed: Bed){
+        plantsToWater.value = null
         val map = ObservableArrayMap<Coordinate, Plant>()
         bed.plants.forEach {
             map[it.key] = it.value
