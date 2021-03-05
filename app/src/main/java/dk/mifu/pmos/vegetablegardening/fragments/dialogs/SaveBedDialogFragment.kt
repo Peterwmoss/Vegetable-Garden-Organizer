@@ -1,4 +1,4 @@
-package dk.mifu.pmos.vegetablegardening.fragments.creategarden
+package dk.mifu.pmos.vegetablegardening.fragments.dialogs
 
 import android.app.Dialog
 import android.os.Bundle

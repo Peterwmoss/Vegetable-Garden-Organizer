@@ -7,7 +7,7 @@
 
     <dialog
         android:id="@+id/choosePlantFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.ChoosePlantDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.ChoosePlantDialogFragment"
         android:label="fragment_choose_plant"
         tools:layout="@layout/fragment_choose_plant" >
         <argument android:name="coordinate"
