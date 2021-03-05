@@ -1,35 +1,23 @@
 package dk.mifu.pmos.vegetablegardening.fragments.viewgarden
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
-import dk.mifu.pmos.vegetablegardening.helpers.weather.WeatherDataLocationService
-import dk.mifu.pmos.vegetablegardening.helpers.weather.WeatherData
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.IconCallback
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPredicate
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.PlantablePredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
-import kotlinx.coroutines.launch
-import java.util.*
 import kotlin.collections.ArrayList
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 
@@ -51,7 +39,7 @@ class BedOverviewFragment: Fragment() {
 
         plantablePlants = plantViewModel.plants.value
                 ?.filter(PlantablePredicate())
-                ?.filter(LocationPredicate(bedViewModel.location))
+                ?.filter(LocationPredicate(bedViewModel.bedLocation))
         return binding.root
     }
 

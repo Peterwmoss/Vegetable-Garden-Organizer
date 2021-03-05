@@ -12,7 +12,7 @@ import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.location.*
 
-class WeatherDataLocationService : Service() {
+class LocationService : Service() {
     private var startMode: Int = 0             // indicates how to behave if the service is killed
     private var binder: IBinder? = null        // interface for clients that bind
     private var allowRebind: Boolean = true   // indicates whether onRebind should be used
@@ -25,15 +25,6 @@ class WeatherDataLocationService : Service() {
         private const val FASTEST_INTERVAL = 1000L
     }
 
-    private fun sendLocation(location: Location) {
-        Log.d("sendLocation()", location.toString())
-        val intent = Intent("sendLocation")
-        val bundle = Bundle()
-        bundle.putParcelable("location", location)
-        intent.putExtra("location", bundle)
-        LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
-    }
-
     override fun onCreate() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -44,6 +35,15 @@ class WeatherDataLocationService : Service() {
                 }
             }
         }
+    }
+
+    private fun sendLocation(location: Location) {
+        Log.d("sendLocation()", location.toString())
+        val intent = Intent("sendLocation")
+        val bundle = Bundle()
+        bundle.putParcelable("location", location)
+        intent.putExtra("location", bundle)
+        LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

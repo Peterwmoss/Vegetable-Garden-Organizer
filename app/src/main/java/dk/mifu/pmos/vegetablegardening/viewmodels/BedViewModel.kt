@@ -11,11 +11,11 @@ import androidx.databinding.ObservableMap
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import dk.mifu.pmos.vegetablegardening.enums.Location
+import dk.mifu.pmos.vegetablegardening.enums.BedLocation
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateBedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.NeedsWaterPredicate
 import dk.mifu.pmos.vegetablegardening.helpers.weather.WeatherData
-import dk.mifu.pmos.vegetablegardening.helpers.weather.WeatherDataLocationService
+import dk.mifu.pmos.vegetablegardening.helpers.weather.LocationService
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
@@ -26,7 +26,7 @@ import kotlin.collections.HashMap
 
 class BedViewModel(application: Application) : AndroidViewModel(application) {
     var name : String? = null
-    var location : Location? = null
+    var bedLocation : BedLocation? = null
     var plants : ObservableMap<Coordinate, Plant>? = null
     var tileIds : MutableMap<Coordinate, Int>? = null
     var plantsToWater : MutableMap<Coordinate, Plant>? = null
@@ -38,17 +38,17 @@ class BedViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         name = bed.name
-        location = bed.location
+        bedLocation = bed.bedLocation
         plants = map
         tileIds = HashMap()
 
-        map.addOnMapChangedCallback(UpdateBedCallback(name!!, location!!, getApplication()))
+        map.addOnMapChangedCallback(UpdateBedCallback(name!!, bedLocation!!, getApplication()))
 
         getWeatherData()
     }
 
     private fun getWeatherData() {
-        getApplication<Application>().startService(Intent(getApplication(), WeatherDataLocationService::class.java))
+        getApplication<Application>().startService(Intent(getApplication(), LocationService::class.java))
         LocalBroadcastManager.getInstance(getApplication()).registerReceiver(WeatherDataReceiver(), IntentFilter("sendLocation"))
     }
 
@@ -65,7 +65,7 @@ class BedViewModel(application: Application) : AndroidViewModel(application) {
             override fun handleResponse(date: Date?) {
                 Log.d("handleResponse()", "date: $date")
                 if (date != null) { setPlantsToWater(date) }
-                getApplication<Application>().stopService(Intent(getApplication(), WeatherDataLocationService::class.java))
+                getApplication<Application>().stopService(Intent(getApplication(), LocationService::class.java))
             }
         }
 
