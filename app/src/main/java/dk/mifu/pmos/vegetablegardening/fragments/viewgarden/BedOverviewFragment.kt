@@ -77,8 +77,8 @@ class BedOverviewFragment: Fragment() {
         return Pair(column+1, row+1)
     }
 
-    private fun getTilesInOrder(): ArrayList<Pair<Coordinate, Plant?>> {
-        val orderedArrayList: ArrayList<Pair<Coordinate, Plant?>> = ArrayList()
+    private fun getTilesInOrder(): List<Pair<Coordinate, Plant?>> {
+        val orderedArrayList: MutableList<Pair<Coordinate, Plant?>> = mutableListOf()
         for(i in 0 until rows){
             for(j in 0 until columns){
                 val coordinate = Coordinate(j,i)
@@ -88,8 +88,8 @@ class BedOverviewFragment: Fragment() {
         return orderedArrayList
     }
 
-    private fun insertTilesInView(arrayList: ArrayList<Pair<Coordinate, Plant?>>){
-        arrayList.forEach {
+    private fun insertTilesInView(list: List<Pair<Coordinate, Plant?>>){
+        list.forEach {
             val coordinate = it.first
             val plant = it.second
             val tileBinding = ListItemTileBinding.inflate(layoutInflater, binding.gridlayout, true)
