@@ -116,10 +116,14 @@ class BedOverviewFragment: Fragment() {
         if(plant == null && plantablePlants) {
             tileBinding.iconView.setImageResource(R.drawable.ic_flower)
             tileBinding.iconView.visibility = View.VISIBLE
-        } else if(plant != null && bedViewModel.plantsToWater?.get(coordinate) != null){
-            tileBinding.iconView.setImageResource(R.drawable.ic_plus)
-            tileBinding.iconView.visibility = View.VISIBLE
         }
+
+        bedViewModel.plantsToWater.observe(viewLifecycleOwner, {
+            if(plant != null && it[coordinate] != null){
+                tileBinding.iconView.setImageResource(R.drawable.ic_plus)
+                tileBinding.iconView.visibility = View.VISIBLE
+            }
+        })
     }
 
     private fun addOnMapChangedCallbacks(){
@@ -141,9 +145,11 @@ class BedOverviewFragment: Fragment() {
             binding.plantableExplanationImageView.setImageResource(R.drawable.ic_flower)
         }
 
-        if(!bedViewModel.plantsToWater.isNullOrEmpty()){
-            binding.waterExplanationTextView.text = getString(R.string.explanation_check_water)
-            binding.waterExplanationImageView.setImageResource(R.drawable.ic_plus)
-        }
+        bedViewModel.plantsToWater.observe(viewLifecycleOwner, {
+            if(it.isNotEmpty()){
+                binding.waterExplanationTextView.text = getString(R.string.explanation_check_water)
+                binding.waterExplanationImageView.setImageResource(R.drawable.ic_plus)
+            }
+        })
     }
 }

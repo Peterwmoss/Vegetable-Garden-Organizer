@@ -2,6 +2,7 @@ package dk.mifu.pmos.vegetablegardening.helpers.callbacks
 
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.ObservableMap
@@ -15,6 +16,6 @@ class IconCallback(private val view: View, private val bedViewModel: BedViewMode
         val id = bedViewModel.tileIds?.get(key)!!
         val associatedButton = view.findViewById<AppCompatButton>(id)
         val layout = associatedButton.parent as FrameLayout
-        layout.findViewById<TextView>(R.id.icon_view).visibility = View.GONE
+        layout.findViewById<ImageView>(R.id.icon_view).visibility = View.GONE
     }
 }
