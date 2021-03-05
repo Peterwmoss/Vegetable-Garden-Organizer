@@ -18,8 +18,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/icon_view"
         android:elevation="@dimen/bring_on_top_of_button"
-        android:layout_marginStart="@dimen/spacing_small"
-        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_xsmall"
+        android:layout_marginTop="@dimen/spacing_xsmall"
         android:background="@null"
         android:visibility="gone"/>
 

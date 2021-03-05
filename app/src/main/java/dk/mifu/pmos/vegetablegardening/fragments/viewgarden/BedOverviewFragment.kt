@@ -119,8 +119,8 @@ class BedOverviewFragment: Fragment() {
         }
 
         bedViewModel.plantsToWater.observe(viewLifecycleOwner, {
-            if(plant != null && it[coordinate] != null){
-                tileBinding.iconView.setImageResource(R.drawable.ic_plus)
+            if(plant != null && it != null && it[coordinate] != null){
+                tileBinding.iconView.setImageResource(R.drawable.ic_water)
                 tileBinding.iconView.visibility = View.VISIBLE
             }
         })
@@ -146,9 +146,9 @@ class BedOverviewFragment: Fragment() {
         }
 
         bedViewModel.plantsToWater.observe(viewLifecycleOwner, {
-            if(it.isNotEmpty()){
+            if(!it.isNullOrEmpty()){
                 binding.waterExplanationTextView.text = getString(R.string.explanation_check_water)
-                binding.waterExplanationImageView.setImageResource(R.drawable.ic_plus)
+                binding.waterExplanationImageView.setImageResource(R.drawable.ic_water)
             }
         })
     }
