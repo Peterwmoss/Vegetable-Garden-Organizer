@@ -19,6 +19,7 @@ class LocationService : Service() {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
+    private lateinit var locationRequest: LocationRequest
 
     companion object {
         private const val UPDATE_INTERVAL = 5000L
@@ -47,8 +48,29 @@ class LocationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        startLocationUpdates()
+        super.onStartCommand(intent, flags, startId)
+        requestLocation()
         return startMode
+    }
+
+    private fun requestLocation() {
+        if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            return
+
+        locationRequest = LocationRequest.create()
+        locationRequest.apply {
+            priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+            interval = UPDATE_INTERVAL
+            fastestInterval = FASTEST_INTERVAL
+        }
+
+        fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+            if (location == null) {
+                startLocationUpdates()
+            } else {
+                sendLocation(location)
+            }
+        }
     }
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -70,14 +92,6 @@ class LocationService : Service() {
     private fun startLocationUpdates() {
         if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             return
-
-        val locationRequest = LocationRequest.create()
-        locationRequest.apply {
-            priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-            interval = UPDATE_INTERVAL
-            fastestInterval = FASTEST_INTERVAL
-        }
-
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
     }
 }

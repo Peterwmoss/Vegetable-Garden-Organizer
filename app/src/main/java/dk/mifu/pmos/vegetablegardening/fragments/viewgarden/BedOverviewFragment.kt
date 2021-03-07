@@ -18,12 +18,11 @@ import dk.mifu.pmos.vegetablegardening.helpers.predicates.PlantablePredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
-import kotlin.collections.ArrayList
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 
 class BedOverviewFragment: Fragment() {
     private lateinit var binding: FragmentBedOverviewBinding
-    private var plantablePlants: List<Plant>? = null
+    private var existsPlantablePlants = false
     private val bedViewModel: BedViewModel by activityViewModels()
     private val plantViewModel: PlantViewModel by activityViewModels()
     private var columns = 0
@@ -37,9 +36,10 @@ class BedOverviewFragment: Fragment() {
     ): View {
         binding = FragmentBedOverviewBinding.inflate(inflater, container, false)
 
-        plantablePlants = plantViewModel.plants.value
+        existsPlantablePlants = !plantViewModel.plants.value
                 ?.filter(PlantablePredicate())
                 ?.filter(LocationPredicate(bedViewModel.bedLocation))
+                .isNullOrEmpty()
         return binding.root
     }
 
@@ -58,6 +58,7 @@ class BedOverviewFragment: Fragment() {
 
         insertTilesInView(orderedArrayList)
         addOnMapChangedCallbacks()
+        setExplanationTextViews()
     }
 
     private fun sizeOfBed(): Pair<Int,Int> {
@@ -75,8 +76,8 @@ class BedOverviewFragment: Fragment() {
         return Pair(column+1, row+1)
     }
 
-    private fun getTilesInOrder(): ArrayList<Pair<Coordinate, Plant?>> {
-        val orderedArrayList: ArrayList<Pair<Coordinate, Plant?>> = ArrayList()
+    private fun getTilesInOrder(): List<Pair<Coordinate, Plant?>> {
+        val orderedArrayList: MutableList<Pair<Coordinate, Plant?>> = mutableListOf()
         for(i in 0 until rows){
             for(j in 0 until columns){
                 val coordinate = Coordinate(j,i)
@@ -86,20 +87,20 @@ class BedOverviewFragment: Fragment() {
         return orderedArrayList
     }
 
-    private fun insertTilesInView(arrayList: ArrayList<Pair<Coordinate, Plant?>>){
-        arrayList.forEach {
+    private fun insertTilesInView(list: List<Pair<Coordinate, Plant?>>){
+        list.forEach {
             val coordinate = it.first
             val plant = it.second
             val tileBinding = ListItemTileBinding.inflate(layoutInflater, binding.gridlayout, true)
             initializeTile(coordinate, plant, tileBinding)
-            initializeIcons(plant, tileBinding)
+            initializeIcons(coordinate, plant, tileBinding)
         }
     }
 
     private fun initializeTile(coordinate: Coordinate, plant: Plant?, tileBinding: ListItemTileBinding) {
         val tileSideLength = GridHelper.getTileSideLength()
 
-        if(plant != null || !plantablePlants.isNullOrEmpty()) //Only create listeners for tiles with plants or plantables
+        if(plant != null || existsPlantablePlants) //Only create listeners for tiles with plants or plantables
             tileBinding.plantButton.setOnClickListener { _ -> navigate(coordinate, plant) }
 
         tileBinding.plantButton.text = plant?.name ?: ""
@@ -110,14 +111,18 @@ class BedOverviewFragment: Fragment() {
         bedViewModel.tileIds?.put(coordinate, tileBinding.plantButton.id)
     }
 
-    private fun initializeIcons(plant: Plant?, tileBinding: ListItemTileBinding){
-
-        if(plant == null && !plantablePlants.isNullOrEmpty()){
-            binding.explanationTextView.text = getString(R.string.explanation_new_plants)
-            binding.explanationImageView.setImageResource(R.drawable.ic_flower)
+    private fun initializeIcons(coordinate: Coordinate, plant: Plant?, tileBinding: ListItemTileBinding){
+        if(plant == null && existsPlantablePlants) {
             tileBinding.iconView.setImageResource(R.drawable.ic_flower)
             tileBinding.iconView.visibility = View.VISIBLE
         }
+
+        bedViewModel.plantsToWater.observe(viewLifecycleOwner, {
+            if(plant != null && it != null && it[coordinate] != null){
+                tileBinding.iconView.setImageResource(R.drawable.ic_water)
+                tileBinding.iconView.visibility = View.VISIBLE
+            }
+        })
     }
 
     private fun addOnMapChangedCallbacks(){
@@ -131,5 +136,21 @@ class BedOverviewFragment: Fragment() {
         } else {
             requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantInfo(coordinate, plant))
         }
+    }
+
+    private fun setExplanationTextViews(){
+        if(existsPlantablePlants){
+            binding.plantableExplanationTextView.visibility = View.VISIBLE
+            binding.plantableExplanationTextView.text = getString(R.string.explanation_new_plants)
+            binding.plantableExplanationImageView.setImageResource(R.drawable.ic_flower)
+        }
+
+        bedViewModel.plantsToWater.observe(viewLifecycleOwner, {
+            if(!it.isNullOrEmpty()){
+                binding.waterExplanationTextView.visibility = View.VISIBLE
+                binding.waterExplanationTextView.text = getString(R.string.explanation_check_water)
+                binding.waterExplanationImageView.setImageResource(R.drawable.ic_water)
+            }
+        })
     }
 }

@@ -9,6 +9,8 @@ import android.util.Log
 import androidx.databinding.ObservableArrayMap
 import androidx.databinding.ObservableMap
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import dk.mifu.pmos.vegetablegardening.enums.BedLocation
@@ -29,9 +31,10 @@ class BedViewModel(application: Application) : AndroidViewModel(application) {
     var bedLocation : BedLocation? = null
     var plants : ObservableMap<Coordinate, Plant>? = null
     var tileIds : MutableMap<Coordinate, Int>? = null
-    var plantsToWater : MutableMap<Coordinate, Plant>? = null
+    var plantsToWater : MutableLiveData<MutableMap<Coordinate, Plant>> = MutableLiveData()
 
     fun setBed(bed: Bed){
+        plantsToWater.value = null
         val map = ObservableArrayMap<Coordinate, Plant>()
         bed.plants.forEach {
             map[it.key] = it.value
@@ -53,10 +56,11 @@ class BedViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun setPlantsToWater(date: Date) {
-        plantsToWater = HashMap()
+        val map = HashMap<Coordinate, Plant>()
         val filteredPlants = plants?.filterValues(NeedsWaterPredicate(date))
         if (filteredPlants != null) {
-            plantsToWater!!.putAll(filteredPlants)
+            map.putAll(filteredPlants)
+            plantsToWater.value = map
         }
     }
 
