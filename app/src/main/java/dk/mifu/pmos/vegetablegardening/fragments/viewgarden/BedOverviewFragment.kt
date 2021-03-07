@@ -18,12 +18,11 @@ import dk.mifu.pmos.vegetablegardening.helpers.predicates.PlantablePredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
-import kotlin.collections.ArrayList
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 
 class BedOverviewFragment: Fragment() {
     private lateinit var binding: FragmentBedOverviewBinding
-    private var plantablePlants = false
+    private var existsPlantablePlants = false
     private val bedViewModel: BedViewModel by activityViewModels()
     private val plantViewModel: PlantViewModel by activityViewModels()
     private var columns = 0
@@ -37,7 +36,7 @@ class BedOverviewFragment: Fragment() {
     ): View {
         binding = FragmentBedOverviewBinding.inflate(inflater, container, false)
 
-        plantablePlants = !plantViewModel.plants.value
+        existsPlantablePlants = !plantViewModel.plants.value
                 ?.filter(PlantablePredicate())
                 ?.filter(LocationPredicate(bedViewModel.bedLocation))
                 .isNullOrEmpty()
@@ -101,7 +100,7 @@ class BedOverviewFragment: Fragment() {
     private fun initializeTile(coordinate: Coordinate, plant: Plant?, tileBinding: ListItemTileBinding) {
         val tileSideLength = GridHelper.getTileSideLength()
 
-        if(plant != null || plantablePlants) //Only create listeners for tiles with plants or plantables
+        if(plant != null || existsPlantablePlants) //Only create listeners for tiles with plants or plantables
             tileBinding.plantButton.setOnClickListener { _ -> navigate(coordinate, plant) }
 
         tileBinding.plantButton.text = plant?.name ?: ""
@@ -113,7 +112,7 @@ class BedOverviewFragment: Fragment() {
     }
 
     private fun initializeIcons(coordinate: Coordinate, plant: Plant?, tileBinding: ListItemTileBinding){
-        if(plant == null && plantablePlants) {
+        if(plant == null && existsPlantablePlants) {
             tileBinding.iconView.setImageResource(R.drawable.ic_flower)
             tileBinding.iconView.visibility = View.VISIBLE
         }
@@ -140,7 +139,7 @@ class BedOverviewFragment: Fragment() {
     }
 
     private fun setExplanationTextViews(){
-        if(plantablePlants){
+        if(existsPlantablePlants){
             binding.plantableExplanationTextView.visibility = View.VISIBLE
             binding.plantableExplanationTextView.text = getString(R.string.explanation_new_plants)
             binding.plantableExplanationImageView.setImageResource(R.drawable.ic_flower)
