@@ -30,3 +30,4 @@ local.properties
 /app/.project
 /app/.settings
 /apikey.properties
+/.settings
