@@ -15,4 +15,5 @@
     <dimen name="grid_tile">50dp</dimen>
     <dimen name="line">2dp</dimen>
     <dimen name="bring_on_top_of_button">6dp</dimen>
+    <dimen name="text_view">350dp</dimen>
 </resources>
