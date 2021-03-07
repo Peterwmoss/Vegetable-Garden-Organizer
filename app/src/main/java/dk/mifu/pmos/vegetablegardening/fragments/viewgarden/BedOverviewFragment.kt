@@ -141,12 +141,14 @@ class BedOverviewFragment: Fragment() {
 
     private fun setExplanationTextViews(){
         if(plantablePlants){
+            binding.plantableExplanationTextView.visibility = View.VISIBLE
             binding.plantableExplanationTextView.text = getString(R.string.explanation_new_plants)
             binding.plantableExplanationImageView.setImageResource(R.drawable.ic_flower)
         }
 
         bedViewModel.plantsToWater.observe(viewLifecycleOwner, {
             if(!it.isNullOrEmpty()){
+                binding.waterExplanationTextView.visibility = View.VISIBLE
                 binding.waterExplanationTextView.text = getString(R.string.explanation_check_water)
                 binding.waterExplanationImageView.setImageResource(R.drawable.ic_water)
             }
