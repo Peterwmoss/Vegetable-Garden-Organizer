@@ -9,18 +9,17 @@ import android.util.Log
 import androidx.databinding.ObservableArrayMap
 import androidx.databinding.ObservableMap
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import dk.mifu.pmos.vegetablegardening.enums.BedLocation
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateBedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.NeedsWaterPredicate
-import dk.mifu.pmos.vegetablegardening.helpers.weather.WeatherData
 import dk.mifu.pmos.vegetablegardening.helpers.weather.LocationService
+import dk.mifu.pmos.vegetablegardening.helpers.weather.WeatherData
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
-import dk.mifu.pmos.vegetablegardening.models.Plant
+import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
@@ -29,13 +28,13 @@ import kotlin.collections.HashMap
 class BedViewModel(application: Application) : AndroidViewModel(application) {
     var name : String? = null
     var bedLocation : BedLocation? = null
-    var plants : ObservableMap<Coordinate, Plant>? = null
+    var plants : ObservableMap<Coordinate, MyPlant>? = null
     var tileIds : MutableMap<Coordinate, Int>? = null
-    var plantsToWater : MutableLiveData<MutableMap<Coordinate, Plant>> = MutableLiveData()
+    var plantsToWater : MutableLiveData<MutableMap<Coordinate, MyPlant>> = MutableLiveData()
 
     fun setBed(bed: Bed){
         plantsToWater.value = null
-        val map = ObservableArrayMap<Coordinate, Plant>()
+        val map = ObservableArrayMap<Coordinate, MyPlant>()
         bed.plants.forEach {
             map[it.key] = it.value
         }
@@ -56,7 +55,7 @@ class BedViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun setPlantsToWater(date: Date) {
-        val map = HashMap<Coordinate, Plant>()
+        val map = HashMap<Coordinate, MyPlant>()
         val filteredPlants = plants?.filterValues(NeedsWaterPredicate(date))
         if (filteredPlants != null) {
             map.putAll(filteredPlants)

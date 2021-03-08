@@ -10,13 +10,13 @@ import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
-import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
+import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.IconCallback
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPredicate
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.PlantablePredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
-import dk.mifu.pmos.vegetablegardening.models.Plant
+import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 
@@ -76,8 +76,8 @@ class BedOverviewFragment: Fragment() {
         return Pair(column+1, row+1)
     }
 
-    private fun getTilesInOrder(): List<Pair<Coordinate, Plant?>> {
-        val orderedArrayList: MutableList<Pair<Coordinate, Plant?>> = mutableListOf()
+    private fun getTilesInOrder(): List<Pair<Coordinate, MyPlant?>> {
+        val orderedArrayList: MutableList<Pair<Coordinate, MyPlant?>> = mutableListOf()
         for(i in 0 until rows){
             for(j in 0 until columns){
                 val coordinate = Coordinate(j,i)
@@ -87,7 +87,7 @@ class BedOverviewFragment: Fragment() {
         return orderedArrayList
     }
 
-    private fun insertTilesInView(list: List<Pair<Coordinate, Plant?>>){
+    private fun insertTilesInView(list: List<Pair<Coordinate, MyPlant?>>){
         list.forEach {
             val coordinate = it.first
             val plant = it.second
@@ -97,7 +97,7 @@ class BedOverviewFragment: Fragment() {
         }
     }
 
-    private fun initializeTile(coordinate: Coordinate, plant: Plant?, tileBinding: ListItemTileBinding) {
+    private fun initializeTile(coordinate: Coordinate, plant: MyPlant?, tileBinding: ListItemTileBinding) {
         val tileSideLength = GridHelper.getTileSideLength()
 
         if(plant != null || existsPlantablePlants) //Only create listeners for tiles with plants or plantables
@@ -111,7 +111,7 @@ class BedOverviewFragment: Fragment() {
         bedViewModel.tileIds?.put(coordinate, tileBinding.plantButton.id)
     }
 
-    private fun initializeIcons(coordinate: Coordinate, plant: Plant?, tileBinding: ListItemTileBinding){
+    private fun initializeIcons(coordinate: Coordinate, plant: MyPlant?, tileBinding: ListItemTileBinding){
         if(plant == null && existsPlantablePlants) {
             tileBinding.iconView.setImageResource(R.drawable.ic_flower)
             tileBinding.iconView.visibility = View.VISIBLE
@@ -130,7 +130,7 @@ class BedOverviewFragment: Fragment() {
         bedViewModel.plants?.addOnMapChangedCallback(IconCallback(requireView(), bedViewModel))
     }
 
-    private fun navigate(coordinate: Coordinate, plant: Plant?) {
+    private fun navigate(coordinate: Coordinate, plant: MyPlant?) {
         if(plant == null) {
             requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantingOptions(coordinate, PlantablePredicate()))
         } else {

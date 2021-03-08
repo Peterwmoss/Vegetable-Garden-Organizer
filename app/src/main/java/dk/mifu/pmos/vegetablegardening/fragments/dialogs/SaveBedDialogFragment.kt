@@ -15,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-class SaveBedDialogFragment() : DialogFragment() {
+class SaveBedDialogFragment : DialogFragment() {
     private val bed: BedViewModel by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
