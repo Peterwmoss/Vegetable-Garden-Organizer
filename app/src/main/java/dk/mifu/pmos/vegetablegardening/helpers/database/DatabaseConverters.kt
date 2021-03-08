@@ -6,7 +6,6 @@ import com.google.gson.reflect.TypeToken
 import dk.mifu.pmos.vegetablegardening.enums.BedLocation
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
-import dk.mifu.pmos.vegetablegardening.models.Plant
 import java.lang.reflect.Type
 
 class DatabaseConverters {

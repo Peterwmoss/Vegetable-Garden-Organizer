@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsDialogBinding
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
-import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import java.util.*
 

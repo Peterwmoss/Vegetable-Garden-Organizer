@@ -5,7 +5,6 @@ import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
-import dk.mifu.pmos.vegetablegardening.models.Plant
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap

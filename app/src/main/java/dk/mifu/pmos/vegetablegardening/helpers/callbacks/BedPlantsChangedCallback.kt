@@ -4,5 +4,4 @@ import androidx.databinding.ObservableMap
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
 
-abstract class BedPlantsChangedCallback: ObservableMap.OnMapChangedCallback<ObservableMap<Coordinate, MyPlant>, Coordinate, MyPlant>() {
-}
+abstract class BedPlantsChangedCallback: ObservableMap.OnMapChangedCallback<ObservableMap<Coordinate, MyPlant>, Coordinate, MyPlant>()

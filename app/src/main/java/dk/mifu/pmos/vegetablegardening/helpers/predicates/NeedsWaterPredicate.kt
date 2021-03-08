@@ -1,7 +1,6 @@
 package dk.mifu.pmos.vegetablegardening.helpers.predicates
 
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
-import dk.mifu.pmos.vegetablegardening.models.Plant
 import java.util.*
 
 class NeedsWaterPredicate(private val lastRainDate: Date): Predicate<MyPlant> {

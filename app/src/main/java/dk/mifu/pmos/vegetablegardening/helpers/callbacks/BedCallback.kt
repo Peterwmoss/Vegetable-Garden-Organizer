@@ -5,7 +5,6 @@ import android.widget.Button
 import androidx.databinding.ObservableMap
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
-import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 
 class BedCallback(private val view: View, private val bedViewModel: BedViewModel): BedPlantsChangedCallback() {
