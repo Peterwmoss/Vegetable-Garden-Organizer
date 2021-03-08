@@ -7,13 +7,14 @@ import dk.mifu.pmos.vegetablegardening.database.GardenRepository
 import dk.mifu.pmos.vegetablegardening.enums.BedLocation
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
+import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class UpdateBedCallback(private val name: String, private val bedLocation: BedLocation, private val application: Application): BedPlantsChangedCallback() {
-    override fun onMapChanged(sender: ObservableMap<Coordinate, Plant>?, key: Coordinate?) {
+    override fun onMapChanged(sender: ObservableMap<Coordinate, MyPlant>?, key: Coordinate?) {
         GlobalScope.launch(Dispatchers.IO) {
             val dao = AppDatabase.getDatabase(application).gardenDao()
             val repository = GardenRepository(dao)

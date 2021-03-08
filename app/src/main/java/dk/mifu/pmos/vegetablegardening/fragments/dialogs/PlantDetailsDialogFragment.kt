@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsDialogBinding
+import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import java.util.*
@@ -47,7 +48,7 @@ class PlantDetailsDialogFragment : DialogFragment() {
         }
     }
 
-    private fun navigateToPlantDetails(plant: Plant) {
+    private fun navigateToPlantDetails(plant: MyPlant) {
         findNavController().navigate(PlantDetailsDialogFragmentDirections.toPlantDetails(plant))
     }
 }

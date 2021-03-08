@@ -20,6 +20,7 @@ import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentChoosePlantBinding
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPredicate
+import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.util.*
@@ -89,7 +90,7 @@ class ChoosePlantDialogFragment : DialogFragment() {
 
         init {
             view.setOnClickListener {
-                bedViewModel.plants?.set(args.coordinate, plant)
+                bedViewModel.plants?.set(args.coordinate, MyPlant(plant.name))
                 navigateBack()
             }
         }

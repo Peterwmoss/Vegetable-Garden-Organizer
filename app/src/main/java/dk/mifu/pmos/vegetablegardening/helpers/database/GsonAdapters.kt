@@ -4,13 +4,14 @@ import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
+import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 
 class GsonAdapters {
-    class PlantMapAdapter: TypeAdapter<Map<Coordinate, Plant>>() {
+    class PlantMapAdapter: TypeAdapter<Map<Coordinate, MyPlant>>() {
         private val format = SimpleDateFormat("dd-MM-yyyy", Locale("da","DK"))
 
         private fun dateToString(date: Date?): String {
@@ -27,7 +28,7 @@ class GsonAdapters {
                 null
         }
 
-        override fun write(out: JsonWriter?, value: Map<Coordinate, Plant>?) {
+        override fun write(out: JsonWriter?, value: Map<Coordinate, MyPlant>?) {
             out!!.beginArray()
             value!!.forEach {
                 out.beginArray()
@@ -40,16 +41,6 @@ class GsonAdapters {
                 // Plant
                 out.beginObject()
                 out.name("name").value(it.value.name)
-                out.name("category").value(it.value.category)
-                out.name("earliest").value(dateToString(it.value.earliest))
-                out.name("latest").value(dateToString(it.value.latest))
-                out.name("sowing").value(it.value.sowing)
-                out.name("cropRotation").value(it.value.cropRotation)
-                out.name("quantity").value(it.value.quantity)
-                out.name("sowingDepth").value(it.value.sowingDepth)
-                out.name("distance").value(it.value.distance)
-                out.name("fertilizer").value(it.value.fertilizer)
-                out.name("harvest").value(it.value.harvest)
                 out.name("plantedDate").value(dateToString(it.value.plantedDate))
                 out.name("wateredDate").value(dateToString(it.value.wateredDate))
                 out.name("harvestedDate").value(dateToString(it.value.harvestedDate))
@@ -60,8 +51,8 @@ class GsonAdapters {
             out.endArray()
         }
 
-        override fun read(reader: JsonReader?): Map<Coordinate, Plant> {
-            val map = HashMap<Coordinate, Plant>()
+        override fun read(reader: JsonReader?): Map<Coordinate, MyPlant> {
+            val map = HashMap<Coordinate, MyPlant>()
 
             reader!!.beginArray()
             while (reader.hasNext()) {
@@ -69,16 +60,6 @@ class GsonAdapters {
                 var row = 0
 
                 var name = ""
-                var category: String? = null
-                var earliest: Date? = null
-                var latest: Date? = null
-                var sowing: Boolean? = null
-                var cropRotation: String? = null
-                var quantity: String? = null
-                var sowingDepth: String? = null
-                var distance: Int? = null
-                var fertilizer: String? = null
-                var harvest: String? = null
                 var plantedDate: Date? = null
                 var wateredDate: Date? = null
                 var harvestedDate: Date? = null
@@ -96,16 +77,6 @@ class GsonAdapters {
                 while (reader.hasNext()) {
                     when (reader.nextName()) {
                         "name" -> name = reader.nextString()
-                        "category" -> category = reader.nextString()
-                        "earliest" -> { earliest = stringToDate(reader.nextString()) }
-                        "latest" -> { latest = stringToDate(reader.nextString()) }
-                        "sowing" -> sowing = reader.nextBoolean()
-                        "cropRotation" -> cropRotation = reader.nextString()
-                        "quantity" -> quantity = reader.nextString()
-                        "sowingDepth" -> sowingDepth = reader.nextString()
-                        "distance" -> distance = reader.nextInt()
-                        "fertilizer" -> fertilizer = reader.nextString()
-                        "harvest" -> harvest = reader.nextString()
                         "plantedDate" -> { plantedDate = stringToDate(reader.nextString()) }
                         "wateredDate" -> { wateredDate = stringToDate(reader.nextString()) }
                         "harvestedDate" -> { harvestedDate = stringToDate(reader.nextString()) }
@@ -114,7 +85,7 @@ class GsonAdapters {
                 reader.endObject()
                 reader.endArray()
 
-                map[Coordinate(col, row)] = Plant(name, category, earliest, latest, sowing, cropRotation, quantity, sowingDepth, distance, fertilizer, harvest, plantedDate, wateredDate, harvestedDate)
+                map[Coordinate(col, row)] = MyPlant(name, plantedDate, wateredDate, harvestedDate)
             }
             reader.endArray()
 

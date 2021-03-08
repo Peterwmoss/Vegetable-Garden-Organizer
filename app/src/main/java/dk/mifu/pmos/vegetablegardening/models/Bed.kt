@@ -6,10 +6,10 @@ import androidx.room.PrimaryKey
 import dk.mifu.pmos.vegetablegardening.enums.BedLocation
 import dk.mifu.pmos.vegetablegardening.helpers.database.DatabaseConverters
 
-@Entity(tableName = "gardens")
+@Entity(tableName = "beds")
 @TypeConverters(DatabaseConverters::class)
 data class Bed (
         @PrimaryKey var name: String,
         val bedLocation: BedLocation,
-        val plants: Map<Coordinate, Plant> = HashMap(),
+        val plants: Map<Coordinate, MyPlant> = HashMap(),
 )
