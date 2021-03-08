@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
-import dk.mifu.pmos.vegetablegardening.enums.Location
+import dk.mifu.pmos.vegetablegardening.enums.BedLocation
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentSpecifyLocationBinding
 
 class SpecifyLocationFragment: Fragment() {
@@ -27,12 +27,12 @@ class SpecifyLocationFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.outdoorsButton.setOnClickListener { startCreateGridFragment(Location.Outdoors) }
-        binding.greenhouseButton.setOnClickListener{ startCreateGridFragment(Location.Greenhouse) }
+        binding.outdoorsButton.setOnClickListener { startCreateGridFragment(BedLocation.Outdoors) }
+        binding.greenhouseButton.setOnClickListener{ startCreateGridFragment(BedLocation.Greenhouse) }
     }
 
-    private fun startCreateGridFragment(location: Location){
-        bedViewModel.location = location
+    private fun startCreateGridFragment(bedLocation: BedLocation){
+        bedViewModel.bedLocation = bedLocation
         navigateToNextView()
     }
 

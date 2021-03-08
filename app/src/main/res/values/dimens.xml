@@ -5,6 +5,7 @@
     <dimen name="font_large">36sp</dimen>
     <dimen name="font_xlarge">54sp</dimen>
 
+    <dimen name="spacing_xsmall">5dp</dimen>
     <dimen name="spacing_small">10dp</dimen>
     <dimen name="spacing_medium">20dp</dimen>
     <dimen name="spacing_large">40dp</dimen>
@@ -13,4 +14,6 @@
     <dimen name="picture">200dp</dimen>
     <dimen name="grid_tile">50dp</dimen>
     <dimen name="line">2dp</dimen>
+    <dimen name="bring_on_top_of_button">6dp</dimen>
+    <dimen name="text_view">350dp</dimen>
 </resources>

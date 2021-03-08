@@ -9,7 +9,6 @@ Her noget om fragments og activities generelt i vores app. Måske også noget om
 \subsubsection{Datagrundlag}
 Årstidernes plantekalender \hyperlink{https://issuu.com/aarstiderne\_com/docs/aarstidernes-plante-og-saa-kalender}{https://issuu.com/aarstiderne\_com/docs/aarstidernes-plante-og-saa-kalender}
 
-
 Dataet er lagt ind i en \texttt{.csv}-fil, som læses ind i \texttt{PlantViewModel} via en \texttt{CSVReader}. På den måde er det nemt, hvis man skulle få mere data, eller at dataet ændrer sig. Hvis dataet ændrer sig meget drastisk, skal man kun rette på \texttt{Plant}-klassens felter - logikken er stadig den samme.
 
 \subsubsection{Datarepræsentation}
@@ -25,6 +24,9 @@ Planter er repræsenteret som en \texttt{Plant}, som blandt andet har et navn, s
 
 \subsubsection{XML}
 Her noget om constraintlayouts og vores beslutning om portrait only.
+
+\subsubsection{Prædikater}
+Her noget om vores Predicates
 
 \subsection{Opret et nyt bed}
 Den overordnede aktivitet til at oprette et nyt planteområde \texttt{CreateGardenActivity.kt} starter med at indsætte \texttt{SpecifyLocationFragment.kt}, som lader brugeren vælge et område til deres planter.
@@ -59,6 +61,16 @@ Når man trykker på et bestemt bed fra oversigten, vil man blive navigeret til 
 
 Fra dette GridView er det muligt at navigere sig videre og se detaljerne om den enkelte plante, så man ikke behøver at gå et andet sted hen for at finde informationer om sine planter.
 
+Hvis der er mulighed for at så nye planter ifølge årstiden, vil der komme et \texttt{TextView} med forklarende tekst samt et lille ikon på de tomme felter i bedet, hvor der er mulighed for at plante. Hvis man trykker på et felt med et sådant ikon, vil man blive mødt med samme mulighed for at vælge planter som da man oprettede haven, så man let kan plante en ny plante.
+
+På tilsvarende måde fortæller appen også, hvis det er lang tid siden, at dine planter er blevet vandet, enten ved regn eller selvvanding. Der vil komme et lille ikon på de planter, der skal tjekkes op på.
+
+Måden appen ved hvornår det har regnet er ved at hente data fra DMIs åbne API, så vi får et så præcists bud, på hvornår planten skal vandes, som muligt.
+
+\subsubsection{Lokation}
+
+Til at hente brugerens lokation har vi lavet en service, der kører når man bruger appen som sørger for at få en cirka-lokation på brugeren, så vi kan hente vejrdata for det område brugeren er i.
+
 \subsubsection{Detaljer om planten}
 
 Man kan se alt data, som er gemt om planten i et "detaljeview" ved at klikke på planten og i dialogboksen klikke på detaljer. Vi har gjort det i to steps for ikke at brugeren skulle blive bombaderet med informationer i den dialogboks som der kommer frem når man klikker på planten og blot vil vælge om man har vandet eller høstet fra planten.
@@ -74,5 +86,4 @@ For at gøre arbejdet med disse DAO'er lidt lettere for os har vi lavet et \text
 Selve databasen er en singleton-instans, så vi ikke behøver at lave en ny instans hver gang vi skal tilgå databasen, da det er en relativt omstændig process. Dette er også anbefalet af Google på deres Android developer side \hyperlink{https://developer.android.com/training/data-storage/room/#database}{https://developer.android.com/training/data-storage/room/#database}
 
 \subsubsection{Dynamisk data}
-
-% Læser fra en CVS-fil
+Her noget om viewmodels og csv-filen

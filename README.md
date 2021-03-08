@@ -1,5 +1,14 @@
 # Køkkenhave app
 
+## Vejledning 08/03-21
+
+* Mere fokus på brugertests - det skal måske fylde meget i rapporten
+* Vi kan bruge Jørgen som brugertest også
+* Lokation - måske noget med permissions
+* Send link til Jørgen med brug af lokation
+* Vil vi påtvinge brugeren at de skal bruge lokation? Nogle vil måske ikke dele med Google (En overvejlse der også måske kan komme med i rapporten). Det er både noget med hvor mange vi kan få til at bruge appen og det etiske.
+* Spørg Ann om hun har en regnmåler - man kunne undersøge om det stemmer overens med DMI.
+
 ## 22/02-21
 
 ### Agenda

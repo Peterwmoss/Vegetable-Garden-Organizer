@@ -29,3 +29,5 @@ local.properties
 /app/.classpath
 /app/.project
 /app/.settings
+/apikey.properties
+/.settings

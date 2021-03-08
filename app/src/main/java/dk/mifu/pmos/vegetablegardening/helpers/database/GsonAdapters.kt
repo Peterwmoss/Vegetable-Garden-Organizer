@@ -1,11 +1,10 @@
-package dk.mifu.pmos.vegetablegardening.helpers
+package dk.mifu.pmos.vegetablegardening.helpers.database
 
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.Plant
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
@@ -34,16 +33,16 @@ class GsonAdapters {
                 out.beginArray()
                 // Coordinate
                 out.beginObject()
-                out.name("col")?.value(it.key.col)
-                out.name("row")?.value(it.key.row)
+                out.name("col").value(it.key.col)
+                out.name("row").value(it.key.row)
                 out.endObject()
 
                 // Plant
                 out.beginObject()
                 out.name("name").value(it.value.name)
                 out.name("category").value(it.value.category)
-                out.name("earliest").value(it.value.earliest)
-                out.name("latest").value(it.value.latest)
+                out.name("earliest").value(dateToString(it.value.earliest))
+                out.name("latest").value(dateToString(it.value.latest))
                 out.name("sowing").value(it.value.sowing)
                 out.name("cropRotation").value(it.value.cropRotation)
                 out.name("quantity").value(it.value.quantity)
@@ -71,8 +70,8 @@ class GsonAdapters {
 
                 var name = ""
                 var category: String? = null
-                var earliest: String? = null
-                var latest: String? = null
+                var earliest: Date? = null
+                var latest: Date? = null
                 var sowing: Boolean? = null
                 var cropRotation: String? = null
                 var quantity: String? = null
@@ -98,8 +97,8 @@ class GsonAdapters {
                     when (reader.nextName()) {
                         "name" -> name = reader.nextString()
                         "category" -> category = reader.nextString()
-                        "earliest" -> earliest = reader.nextString()
-                        "latest" -> latest = reader.nextString()
+                        "earliest" -> { earliest = stringToDate(reader.nextString()) }
+                        "latest" -> { latest = stringToDate(reader.nextString()) }
                         "sowing" -> sowing = reader.nextBoolean()
                         "cropRotation" -> cropRotation = reader.nextString()
                         "quantity" -> quantity = reader.nextString()
