@@ -9,7 +9,6 @@ Her noget om fragments og activities generelt i vores app. Måske også noget om
 \subsubsection{Datagrundlag}
 Årstidernes plantekalender \hyperlink{https://issuu.com/aarstiderne\_com/docs/aarstidernes-plante-og-saa-kalender}{https://issuu.com/aarstiderne\_com/docs/aarstidernes-plante-og-saa-kalender}
 
-
 Dataet er lagt ind i en \texttt{.csv}-fil, som læses ind i \texttt{PlantViewModel} via en \texttt{CSVReader}. På den måde er det nemt, hvis man skulle få mere data, eller at dataet ændrer sig. Hvis dataet ændrer sig meget drastisk, skal man kun rette på \texttt{Plant}-klassens felter - logikken er stadig den samme.
 
 \subsubsection{Datarepræsentation}
@@ -65,6 +64,12 @@ Fra dette GridView er det muligt at navigere sig videre og se detaljerne om den 
 Hvis der er mulighed for at så nye planter ifølge årstiden, vil der komme et \texttt{TextView} med forklarende tekst samt et lille ikon på de tomme felter i bedet, hvor der er mulighed for at plante. Hvis man trykker på et felt med et sådant ikon, vil man blive mødt med samme mulighed for at vælge planter som da man oprettede haven, så man let kan plante en ny plante.
 
 På tilsvarende måde fortæller appen også, hvis det er lang tid siden, at dine planter er blevet vandet, enten ved regn eller selvvanding. Der vil komme et lille ikon på de planter, der skal tjekkes op på.
+
+Måden appen ved hvornår det har regnet er ved at hente data fra DMIs åbne API, så vi får et så præcists bud, på hvornår planten skal vandes, som muligt.
+
+\subsubsection{Lokation}
+
+Til at hente brugerens lokation har vi lavet en service, der kører når man bruger appen som sørger for at få en cirka-lokation på brugeren, så vi kan hente vejrdata for det område brugeren er i.
 
 \subsubsection{Detaljer om planten}
 
