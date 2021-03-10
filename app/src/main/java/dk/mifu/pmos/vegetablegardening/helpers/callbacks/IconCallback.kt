@@ -14,7 +14,12 @@ class IconCallback(private val view: View, private val bedViewModel: BedViewMode
     override fun onMapChanged(sender: ObservableMap<Coordinate, MyPlant>?, key: Coordinate?) {
         val id = bedViewModel.tileIds?.get(key)!!
         val associatedButton = view.findViewById<AppCompatButton>(id)
-        val layout = associatedButton.parent as FrameLayout
-        layout.findViewById<ImageView>(R.id.icon_view).visibility = View.GONE
+        if(associatedButton != null){
+            val layout = associatedButton.parent as FrameLayout
+            val imageView = layout.findViewById<ImageView>(R.id.icon_view)
+            if(imageView != null)
+                imageView.visibility = View.GONE
+        }
+
     }
 }
