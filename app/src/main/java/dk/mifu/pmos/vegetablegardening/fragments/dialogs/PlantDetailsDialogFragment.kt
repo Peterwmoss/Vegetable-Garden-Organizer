@@ -35,6 +35,7 @@ class PlantDetailsDialogFragment : DialogFragment() {
         binding.waterButton.setOnClickListener {
             args.plant.wateredDate = Date()
             bedViewModel.plants?.put(args.coordinate, args.plant)
+            bedViewModel.plantsToWater.value?.remove(args.coordinate)
         }
 
         binding.harvestButton.setOnClickListener {
