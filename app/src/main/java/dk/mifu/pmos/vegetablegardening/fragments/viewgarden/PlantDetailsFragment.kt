@@ -41,7 +41,7 @@ class PlantDetailsFragment: Fragment() {
         addTextInfoLine(titles?.get(8), plant?.quantity)
         addTextInfoLine(titles?.get(9), plant?.fertilizer)
         addTextInfoLine(titles?.get(10), plant?.harvest)
-        addTextInfoLine(getString(R.string.planted_date_text), formatDate(myPlant.plantedDate))
+        addTextInfoLine(getString(R.string.seasons_text), myPlant.seasons.toString())
         addTextInfoLine(getString(R.string.last_watered_text), formatDate(myPlant.wateredDate))
         addTextInfoLine(getString(R.string.harvested_text), formatDate(myPlant.harvestedDate))
 

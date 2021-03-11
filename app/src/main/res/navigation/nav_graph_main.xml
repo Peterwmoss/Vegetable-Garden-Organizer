@@ -55,8 +55,5 @@
         <argument
             android:name="predicate"
             app:argType="dk.mifu.pmos.vegetablegardening.helpers.predicates.Predicate" />
-        <argument
-            android:name="newPlant"
-            app:argType="boolean" />
     </dialog>
 </navigation>

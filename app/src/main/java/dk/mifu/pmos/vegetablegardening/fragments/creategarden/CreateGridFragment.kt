@@ -211,6 +211,6 @@ class CreateGridFragment : Fragment() {
     }
 
     private fun navigateToChoosePlantFragment(coordinate: Coordinate) {
-        requireView().findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(coordinate, AllPlantsPredicate(), false))
+        requireView().findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(coordinate, AllPlantsPredicate()))
     }
 }

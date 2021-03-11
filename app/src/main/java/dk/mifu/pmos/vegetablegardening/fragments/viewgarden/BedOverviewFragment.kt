@@ -132,7 +132,7 @@ class BedOverviewFragment: Fragment() {
 
     private fun navigate(coordinate: Coordinate, plant: MyPlant?) {
         if(plant == null) {
-            requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantingOptions(coordinate, PlantablePredicate(), true))
+            requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantingOptions(coordinate, PlantablePredicate()))
         } else {
             requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantInfo(coordinate, plant))
         }
