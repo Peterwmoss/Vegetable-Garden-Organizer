@@ -25,7 +25,7 @@ import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.util.*
 
-class ChoosePlantDialogFragment : DialogFragment() {
+class ChoosePlantDialogFragment() : DialogFragment() {
     private lateinit var binding: FragmentChoosePlantBinding
 
     private val plantViewModel: PlantViewModel by activityViewModels()
@@ -90,7 +90,11 @@ class ChoosePlantDialogFragment : DialogFragment() {
 
         init {
             view.setOnClickListener {
-                bedViewModel.plants?.set(args.coordinate, MyPlant(plant.name))
+                if(args.newPlant){
+                    bedViewModel.plants?.set(args.coordinate, MyPlant(plant.name, Date()))
+                } else {
+                    bedViewModel.plants?.set(args.coordinate, MyPlant(plant.name))
+                }
                 navigateBack()
             }
         }
