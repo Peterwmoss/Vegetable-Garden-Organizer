@@ -12,9 +12,9 @@ class AllPlantsPredicateTest {
     @Test
     fun invokeReturnsTrue() {
         val predicate = AllPlantsPredicate()
-        assertThat(predicate.invoke(Plant("Test")), `is`(true))
-        assertThat(predicate.invoke(MyPlant("Test")), `is`(true))
-        assertThat(predicate.invoke(true), `is`(true))
-        assertThat(predicate.invoke(false), `is`(true))
+        assertTrue(predicate.invoke(Plant("Test")))
+        assertTrue(predicate.invoke(MyPlant("Test")))
+        assertTrue(predicate.invoke(true))
+        assertTrue(predicate.invoke(false))
     }
 }

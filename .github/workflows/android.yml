@@ -10,7 +10,7 @@ on:
       - 'master'
 
 jobs:
-  build:
+  Build:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,7 +30,27 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
-  test:
+  UnitTests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+
+    - name: Add api-key file
+      run: echo ${{ secrets.APIKEY }} > apikey.properties
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build with Gradle
+      run: ./gradlew testDebugUnitTest --stacktrace
+
+  UnitTests:
     runs-on: macos-latest
 
     steps:
@@ -50,4 +70,4 @@ jobs:
       with:
         api-level: 29
         arch: x86_64
-        script: ./gradlew connectedDebugAndroidTest --no-daemon --stacktrace
+        script: adb shell am instrument -w -e runnerBuilder de.mannodermaus.junit5.AndroidJUnit5Builder   -e debug false dk.mifu.pmos.vegetablegardening.test/androidx.test.runner.AndroidJUnitRunner 
