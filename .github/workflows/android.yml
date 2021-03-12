@@ -50,7 +50,7 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew testDebugUnitTest --stacktrace
 
-  UnitTests:
+  InstrumentationTests:
     runs-on: macos-latest
 
     steps:
