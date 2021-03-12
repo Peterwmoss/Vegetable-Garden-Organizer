@@ -31,9 +31,8 @@ jobs:
       run: ./gradlew build
 
   test:
-    name: Instrumentation tests
     runs-on: macos-latest
-    timeout-minutes: 20
+
     strategy:
       matrix:
         api-level:
