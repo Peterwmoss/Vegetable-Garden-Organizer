@@ -33,12 +33,6 @@ jobs:
   test:
     runs-on: macos-latest
 
-    strategy:
-      matrix:
-        api-level:
-          - 23
-          - 29
-
     steps:
     - uses: actions/checkout@v2
 
@@ -54,6 +48,6 @@ jobs:
     - name: Instrumentation Tests
       uses: reactivecircus/android-emulator-runner@v2
       with:
-        api-level: ${{ matrix.api-level }}
+        api-level: 29
         arch: x86_64
-        script: ./gradlew connectedCheck --no-daemon --stacktrace
+        script: ./gradlew connectedDebugAndroidTest --no-daemon --stacktrace
