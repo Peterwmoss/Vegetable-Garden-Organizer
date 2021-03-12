@@ -51,7 +51,7 @@ class AppDatabaseTest {
     inner class CreateBedTest {
         private fun createBedNameParameters(): Iterable<Pair<Bed, String>> {
             return listOf(
-                    Pair(Bed("Test1", Outdoors, HashMap()), "Test1"),
+                    Pair(Bed("Test1", Outdoors, HashMap()), "Test2"),
                     Pair(Bed("Test2", Outdoors, HashMap()), "Test2"),
             )
         }
