@@ -26,7 +26,7 @@
 * Sort: note til plante
 * Separat notesbog til notater ang. leverandører, sorter og andet
 
-* PlantInfoDialog: Broccoli, Type, Hvornår er den sået, noter
+* PlantInfoDialog: Broccoli, Type, Hvornår er den sået (flere datoer?), noter
 
 * Lav selv underkategorier til planterne
 * Lav selv planter: navn, sort, hvornår kan den forkultiveres / plantes på friland, hvor dybt skal den sås, afstand mellem planter, lys, vand, gødning, forventet cirka høst-tidspunkt, temperatur, udendørs / drivhus / begge, jordtype (sur, ler, sand osv)
@@ -38,6 +38,14 @@
 * Genovervej billede for udendørs - skal måske ligne en køkkenhave mere end en have
 
 * Upload billede af frøpose til at opbygge data
+
+### Prioritering
+
+* Guide / forklarende overskrifter og tekst
+* = Tilføj egne planter og sorter
+* = Sådato, forkultivering, type, noter
+  * Notefelt kan evt. bruges til flere af tingene
+* Todo-lister og generelle noter
 
 ## Vejledning 08/03-21
 
