@@ -37,6 +37,8 @@
 * Flere områder som hver har flere bed
 * Genovervej billede for udendørs - skal måske ligne en køkkenhave mere end en have
 
+* Upload billede af frøpose til at opbygge data
+
 ## Vejledning 08/03-21
 
 * Mere fokus på brugertests - det skal måske fylde meget i rapporten
