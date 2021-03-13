@@ -1,5 +1,42 @@
 # Køkkenhave app
 
+## Feedback 13/03-21
+
+* Forklaring til hvad lokation skal bruges til
+  * Afviser lokation pr. default
+* Meget lille tekst i navigation (skal bruge briller)
+* Tror stadig at hver firkant er et bed...
+* Måske overvej minus så man kan gøre det til kun 1x1 eller lignende
+* Overskrift til CreateGrid med forklaring til hvad man skal
+* Måske noget guide-ish
+* Kunne fint finde ud af at gemme sit bed
+* Auto åben af tekstfelt til navn på bed skal ske
+* Vil gerne kunne placere sine bed i forhold til hinanden
+* Vil gerne kunne redigere bed (inkl. navn)
+* Mangler feedback når man trykker på vand og høst
+* Mangler forklaring i dialogboks med vand, høst og detaljer
+* Knapper mangler farver i PlantInfoDialog??
+* Måske indtaste hvor meget jeg har vandet
+* Hvornår sået og gødet
+* Sort på afgrøde - selv indtastet?
+* Forkultivering / frilandssåning + hvornår udplantet
+* Knap til såning + såning når man tilføjer planten
+
+* Såning: giver data om hvornår noget spirer og hvornår det giver afgrøder så man kan bruge det til næste sæson
+* Sort: note til plante
+* Separat notesbog til notater ang. leverandører, sorter og andet
+
+* PlantInfoDialog: Broccoli, Type, Hvornår er den sået, noter
+
+* Lav selv underkategorier til planterne
+* Lav selv planter: navn, sort, hvornår kan den forkultiveres / plantes på friland, hvor dybt skal den sås, afstand mellem planter, lys, vand, gødning, forventet cirka høst-tidspunkt, temperatur, udendørs / drivhus / begge, jordtype (sur, ler, sand osv)
+
+* Todo-liste for året / sæsonen, som kan inddeles / kategoriseres (så, forkultiver, gød, høst, indkøb osv.) - hvad og hvornår
+  * Evt. egne kategorier
+
+* Flere områder som hver har flere bed
+* Genovervej billede for udendørs - skal måske ligne en køkkenhave mere end en have
+
 ## Vejledning 08/03-21
 
 * Mere fokus på brugertests - det skal måske fylde meget i rapporten
