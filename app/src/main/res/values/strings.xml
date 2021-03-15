@@ -37,4 +37,6 @@
     <string name="garden_with_beds_text">Klik på et af dine bed eller opret et nyt på plus-knappen nede i hjørnet</string>
     <string name="choose_location_text">Vælg lokation</string>
     <string name="guide_create_grid_text">Udfyld dit bed ved at trykke på en firkant og vælg fra listen. Du kan ændre størrelsen på bedet ved plus- og minus-knapperne</string>
+    <string name="plant_details_dialog_title">Hvad har du foretaget dig?</string>
+    <string name="plants_details_dialog_guide_text">Her kan du bogføre, hvis du har vandet eller høstet din plante. Tryk på detaljer for at se mere om din plante.</string>
 </resources>
