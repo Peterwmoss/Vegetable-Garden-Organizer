@@ -18,6 +18,6 @@ interface GardenDao {
     @Update
     fun update(bed: Bed)
 
-    @Delete
-    fun delete(bed: Bed)
+    @Query("DELETE FROM beds where name LIKE (:name)")
+    fun delete(name: String)
 }

@@ -19,16 +19,14 @@ class GardenRepository(private val gardenDao: GardenDao) {
         }
     }
 
-    suspend fun deleteBed(bed: Bed) {
+    suspend fun deleteBed(name: String) {
         withContext(Dispatchers.IO) {
-            gardenDao.delete(bed)
+            gardenDao.delete(name)
         }
     }
 
-    suspend fun findBed(name: String) {
-        withContext(Dispatchers.IO) {
-            gardenDao.findByName(name)
-        }
+    fun findBed(name: String): Bed {
+        return gardenDao.findByName(name)
     }
 
     fun getAllBeds(): LiveData<List<Bed>> = gardenDao.getAll()

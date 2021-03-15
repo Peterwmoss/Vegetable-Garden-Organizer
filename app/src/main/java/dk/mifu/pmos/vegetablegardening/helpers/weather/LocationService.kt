@@ -5,6 +5,7 @@ import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.os.Binder
 import android.os.Bundle
 import android.os.IBinder
 import android.os.Looper
@@ -13,9 +14,9 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.location.*
 
 class LocationService : Service() {
-    private var startMode: Int = 0             // indicates how to behave if the service is killed
-    private var binder: IBinder? = null        // interface for clients that bind
-    private var allowRebind: Boolean = true   // indicates whether onRebind should be used
+    private var startMode: Int = 0
+    private var binder: IBinder? = LocationBinder()
+    private var allowRebind: Boolean = true
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
@@ -24,6 +25,10 @@ class LocationService : Service() {
     companion object {
         private const val UPDATE_INTERVAL = 5000L
         private const val FASTEST_INTERVAL = 1000L
+    }
+
+    inner class LocationBinder: Binder() {
+        fun getService(): LocationService = this@LocationService
     }
 
     override fun onCreate() {
@@ -48,7 +53,6 @@ class LocationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        super.onStartCommand(intent, flags, startId)
         requestLocation()
         return startMode
     }
@@ -73,6 +77,12 @@ class LocationService : Service() {
         }
     }
 
+    private fun startLocationUpdates() {
+        if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            return
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+    }
+
     override fun onBind(intent: Intent?): IBinder? {
         return binder
     }
@@ -81,17 +91,10 @@ class LocationService : Service() {
         return allowRebind
     }
 
-    override fun onRebind(intent: Intent?) {
-    }
+    override fun onRebind(intent: Intent?) { }
 
     override fun onDestroy() {
         super.onDestroy()
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
-    }
-
-    private fun startLocationUpdates() {
-        if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-            return
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
     }
 }
