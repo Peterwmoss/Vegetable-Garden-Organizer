@@ -33,4 +33,5 @@
     <string name="save">Gem</string>
     <string name="no_name_given_text">Indtast venligst et navn til dit bed</string>
     <string name="empty_garden_text">Du har ingen oprettede bed. Tryk på plus-knappen nede i hjørnet for at komme i gang og oprette dine bed</string>
+    <string name="garden_with_beds_text">Klik på et af dine bed eller opret et nyt på plus-knappen nede i hjørnet</string>
 </resources>
