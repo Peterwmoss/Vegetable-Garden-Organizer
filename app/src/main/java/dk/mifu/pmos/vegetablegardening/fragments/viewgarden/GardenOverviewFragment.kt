@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Constraints
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -48,6 +49,8 @@ class GardenOverviewFragment : Fragment() {
         binding.newLocationBtn.setOnClickListener {
             navigateToCreateBedActivity()
         }
+
+        (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.bed_text)
 
         return binding.root
     }

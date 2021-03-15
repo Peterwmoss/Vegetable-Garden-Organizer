@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.enums.BedLocation
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentSpecifyLocationBinding
@@ -29,6 +31,8 @@ class SpecifyLocationFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.outdoorsButton.setOnClickListener { startCreateGridFragment(BedLocation.Outdoors) }
         binding.greenhouseButton.setOnClickListener{ startCreateGridFragment(BedLocation.Greenhouse) }
+
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.choose_location_text)
     }
 
     private fun startCreateGridFragment(bedLocation: BedLocation){
