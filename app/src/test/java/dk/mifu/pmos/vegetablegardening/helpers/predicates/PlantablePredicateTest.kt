@@ -1,10 +1,9 @@
 package dk.mifu.pmos.vegetablegardening.helpers.predicates
 
 import dk.mifu.pmos.vegetablegardening.models.Plant
-import org.hamcrest.core.Is.`is`
-import org.junit.Assert.assertThat
-import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 
 import java.util.*
 
@@ -20,7 +19,7 @@ class PlantablePredicateTest {
                 earliest = changeDate(-1),
                 latest = changeDate(1))
 
-        assertThat(predicate.invoke(plant), `is`(true))
+        assertTrue(predicate.invoke(plant))
     }
 
     @Test
@@ -30,7 +29,7 @@ class PlantablePredicateTest {
                 earliest = changeDate(1),
                 latest = changeDate(2))
 
-        assertThat(predicate.invoke(plant), `is`(false))
+        assertFalse(predicate.invoke(plant))
     }
 
     @Test
@@ -40,7 +39,7 @@ class PlantablePredicateTest {
                 earliest = changeDate(-1),
                 latest = changeDate(-2))
 
-        assertThat(predicate.invoke(plant), `is`(false))
+        assertFalse(predicate.invoke(plant))
     }
 
     private fun changeDate(change: Int): Date {
