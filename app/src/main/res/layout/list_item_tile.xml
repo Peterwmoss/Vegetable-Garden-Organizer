@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/icon_view"
-        android:elevation="@dimen/bring_on_top_of_button"
+        android:elevation="@dimen/elevation_picture_on_button"
         android:layout_marginStart="@dimen/spacing_xsmall"
         android:layout_marginTop="@dimen/spacing_xsmall"
         android:background="@null"
