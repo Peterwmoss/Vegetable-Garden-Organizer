@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -45,7 +46,6 @@ class BedOverviewFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.bedTextView.text = bedViewModel.name
 
         val gridSize = sizeOfBed()
         columns = gridSize.first
@@ -59,6 +59,8 @@ class BedOverviewFragment: Fragment() {
         insertTilesInView(orderedArrayList)
         addOnMapChangedCallbacks()
         setExplanationTextViews()
+
+        (activity as AppCompatActivity).supportActionBar?.title = bedViewModel.name
     }
 
     private fun sizeOfBed(): Pair<Int,Int> {
