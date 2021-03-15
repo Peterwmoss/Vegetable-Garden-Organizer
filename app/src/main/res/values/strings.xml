@@ -32,4 +32,5 @@
     <string name="cancel">Annullér</string>
     <string name="save">Gem</string>
     <string name="no_name_given_text">Indtast venligst et navn til dit bed</string>
+    <string name="create_grid_title">Design dit bed</string>
 </resources>

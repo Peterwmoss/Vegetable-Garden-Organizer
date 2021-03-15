@@ -5,6 +5,7 @@
         <item name="theme">@style/OverlayStyle</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="actionBarItemBackground">@color/black</item>
+        <item name="elevation">@dimen/elevation_toolbar</item>
     </style>
     <style name="OverlayStyle" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="android:background">@null</item>

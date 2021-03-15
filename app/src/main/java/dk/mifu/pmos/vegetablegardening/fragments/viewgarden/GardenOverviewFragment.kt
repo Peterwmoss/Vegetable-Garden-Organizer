@@ -97,5 +97,6 @@ class GardenOverviewFragment : Fragment() {
 
     private fun navigateToBedOverviewFragment() {
         requireView().findNavController().navigate(GardenOverviewFragmentDirections.seeBedAction())
+        activity?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.actionbar)?.title = getString(R.string.create_grid_title)
     }
 }
