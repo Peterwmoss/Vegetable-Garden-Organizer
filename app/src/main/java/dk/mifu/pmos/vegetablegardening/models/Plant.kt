@@ -15,7 +15,4 @@ data class Plant (
         val distance: Int? = null,
         val fertilizer: String? = null,
         val harvest: String? = null,
-        var plantedDate: Date? = null,
-        var wateredDate: Date? = null,
-        var harvestedDate: Date? = null,
 ) : Serializable

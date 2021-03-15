@@ -1,7 +1,6 @@
 package dk.mifu.pmos.vegetablegardening.helpers.weather
 
 import android.content.Context
-import android.content.res.Resources
 import android.location.Location
 import android.util.Log
 import com.android.volley.toolbox.JsonObjectRequest

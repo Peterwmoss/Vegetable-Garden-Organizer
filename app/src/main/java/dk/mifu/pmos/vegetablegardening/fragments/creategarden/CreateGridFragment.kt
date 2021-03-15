@@ -97,7 +97,6 @@ class CreateGridFragment : Fragment() {
             if(columns==4){
                 binding.addColumnButton.visibility = View.GONE
                 changePlacementOfRemoveButton(
-                    full = true,
                     column = true,
                     buttonId = binding.removeColumnButton.id
                 )
@@ -112,7 +111,6 @@ class CreateGridFragment : Fragment() {
             if(height-(tileSideLength*rows)-GridHelper.buttonSideLength < tileSideLength){ //If there isn't enough room for a whole row more
                 binding.addRowButton.visibility = View.GONE
                 changePlacementOfRemoveButton(
-                    full = true,
                     column = false,
                     buttonId = binding.removeRowButton.id
                 )
@@ -127,7 +125,6 @@ class CreateGridFragment : Fragment() {
             if(binding.addColumnButton.visibility == View.GONE){
                 binding.addColumnButton.visibility = View.VISIBLE
                 changePlacementOfRemoveButton(
-                    full = false,
                     column = true,
                     buttonId = binding.removeColumnButton.id
                 )
@@ -142,7 +139,6 @@ class CreateGridFragment : Fragment() {
             if(binding.addRowButton.visibility == View.GONE){
                 binding.addRowButton.visibility = View.VISIBLE
                 changePlacementOfRemoveButton(
-                    full = false,
                     column = false,
                     buttonId = binding.removeRowButton.id
                 )
@@ -199,8 +195,7 @@ class CreateGridFragment : Fragment() {
         }
     }
 
-    private fun changePlacementOfRemoveButton(full: Boolean, column: Boolean, buttonId: Int){
-        val furthestTileId = bedViewModel.tileIds?.get(if (column) Coordinate(columns-1,0) else Coordinate(0, rows-1))
+    private fun changePlacementOfRemoveButton(column: Boolean, buttonId: Int){
         val constraintSet = ConstraintSet()
         constraintSet.apply {
             clone(binding.parentLayout)

@@ -6,10 +6,10 @@ import dk.mifu.pmos.vegetablegardening.models.Bed
 
 @Dao
 interface GardenDao {
-    @Query("SELECT * FROM gardens")
+    @Query("SELECT * FROM beds")
     fun getAll(): LiveData<List<Bed>>
 
-    @Query("SELECT * FROM gardens where name LIKE (:name) LIMIT 1")
+    @Query("SELECT * FROM beds where name LIKE (:name) LIMIT 1")
     fun findByName(name: String): Bed
 
     @Insert
@@ -18,6 +18,6 @@ interface GardenDao {
     @Update
     fun update(bed: Bed)
 
-    @Delete
-    fun delete(bed: Bed)
+    @Query("DELETE FROM beds where name LIKE (:name)")
+    fun delete(name: String)
 }
