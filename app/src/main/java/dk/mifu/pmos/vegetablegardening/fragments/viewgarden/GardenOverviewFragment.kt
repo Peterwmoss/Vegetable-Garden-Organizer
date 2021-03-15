@@ -42,6 +42,7 @@ class GardenOverviewFragment : Fragment() {
         repository?.getAllBeds()?.observe(viewLifecycleOwner, {
             val adapter = GardenOverviewAdapter(it)
             recyclerView.adapter = adapter
+            binding.emptyGardenTextView.visibility = if (adapter.itemCount == 0) View.VISIBLE else View.GONE
         })
 
         binding.newLocationBtn.setOnClickListener {
