@@ -10,6 +10,8 @@ import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 class BedCallback(private val view: View, private val bedViewModel: BedViewModel): BedPlantsChangedCallback() {
     override fun onMapChanged(sender: ObservableMap<Coordinate, MyPlant>?, key: Coordinate?) {
         val id = bedViewModel.tileIds?.get(key)!!
-        view.findViewById<Button>(id).text = bedViewModel.plants?.get(key)?.name
+        val button = view.findViewById<Button>(id)
+        if(button != null)
+            button.text = bedViewModel.plants?.get(key)?.name
     }
 }
