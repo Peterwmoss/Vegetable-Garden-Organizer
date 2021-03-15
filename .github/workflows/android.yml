@@ -70,4 +70,4 @@ jobs:
       with:
         api-level: 29
         arch: x86_64
-        script: ./gradlew build && adb shell am instrument -w -e runnerBuilder de.mannodermaus.junit5.AndroidJUnit5Builder   -e debug false dk.mifu.pmos.vegetablegardening.test/androidx.test.runner.AndroidJUnitRunner 
+        script: ./gradlew connectedDebugAndroidTest
