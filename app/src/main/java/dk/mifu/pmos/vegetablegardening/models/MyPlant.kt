@@ -5,7 +5,7 @@ import java.util.*
 
 data class MyPlant (
         val name: String,
-        var sort: String? = null,
+        var sort: String = "",
         var seasons: Int = 1,
         var wateredDate: Date? = null,
         var harvestedDate: Date? = null,

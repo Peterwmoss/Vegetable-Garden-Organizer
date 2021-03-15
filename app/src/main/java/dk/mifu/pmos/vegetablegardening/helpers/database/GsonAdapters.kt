@@ -67,7 +67,7 @@ class GsonAdapters {
                 var wateredDate: Date? = null
                 var harvestedDate: Date? = null
                 var plantedDate: Date? = null
-                var notes = ""
+                var notes: String? = null
 
                 reader.beginArray()
                 reader.beginObject()
