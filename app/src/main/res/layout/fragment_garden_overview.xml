@@ -9,20 +9,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/title_garden_text_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/bed_text"
-        android:textSize="@dimen/font_medium"
-        android:layout_marginTop="@dimen/spacing_small"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_garden_text_view"
         android:text="@string/empty_garden_text"
         android:fontFamily="@font/roboto"
         android:textSize="@dimen/font_small"

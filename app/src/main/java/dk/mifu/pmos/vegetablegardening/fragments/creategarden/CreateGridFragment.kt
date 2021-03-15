@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.ObservableArrayMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
 import dk.mifu.pmos.vegetablegardening.fragments.dialogs.SaveBedDialogFragment
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
@@ -57,6 +59,8 @@ class CreateGridFragment : Fragment() {
         setSaveBedListener()
 
         bedViewModel.plants?.addOnMapChangedCallback(BedCallback(requireView(), bedViewModel))
+
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.create_grid_title)
     }
 
     private fun setSaveBedListener() {
