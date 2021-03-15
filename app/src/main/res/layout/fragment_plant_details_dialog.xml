@@ -8,7 +8,25 @@
     android:layout_height="match_parent"
     tools:context=".fragments.dialogs.PlantDetailsDialogFragment">
 
-    <Button
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/title_plants_details_dialog"
+        android:text="@string/plant_details_dialog_title"
+        android:textSize="@dimen/font_medium"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/title_plants_details_dialog"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="@dimen/spacing_small"
+        android:id="@+id/explanatory_text_plants_details_dialog"
+        android:text="@string/plants_details_dialog_guide_text"/>
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/water_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -18,9 +36,9 @@
         android:backgroundTint="@color/blue"
         app:layout_constraintEnd_toStartOf="@+id/harvest_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/explanatory_text_plants_details_dialog" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/harvest_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -30,9 +48,9 @@
         android:backgroundTint="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/water_button"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/explanatory_text_plants_details_dialog" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/details_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

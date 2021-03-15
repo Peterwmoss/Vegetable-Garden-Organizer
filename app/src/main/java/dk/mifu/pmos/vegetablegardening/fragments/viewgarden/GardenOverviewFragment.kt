@@ -43,7 +43,7 @@ class GardenOverviewFragment : Fragment() {
         repository?.getAllBeds()?.observe(viewLifecycleOwner, {
             val adapter = GardenOverviewAdapter(it)
             recyclerView.adapter = adapter
-            binding.emptyGardenTextView.visibility = if (adapter.itemCount == 0) View.VISIBLE else View.GONE
+            setExplanatoryTextBasedOnItemCount(adapter)
         })
 
         binding.newLocationBtn.setOnClickListener {
@@ -53,6 +53,12 @@ class GardenOverviewFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.bed_text)
 
         return binding.root
+    }
+
+    private fun setExplanatoryTextBasedOnItemCount(adapter: RecyclerView.Adapter<ViewHolder>){
+        binding.gardenTextView.text =
+                if (adapter.itemCount == 0) resources.getString(R.string.empty_garden_text)
+                else resources.getString(R.string.garden_with_beds_text)
     }
 
     private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
