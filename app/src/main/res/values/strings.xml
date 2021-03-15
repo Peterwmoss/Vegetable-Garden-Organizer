@@ -36,4 +36,5 @@
     <string name="empty_garden_text">Du har ingen oprettede bed. Tryk på plus-knappen nede i hjørnet for at komme i gang og oprette dine bed</string>
     <string name="garden_with_beds_text">Klik på et af dine bed eller opret et nyt på plus-knappen nede i hjørnet</string>
     <string name="choose_location_text">Vælg lokation</string>
+    <string name="guide_create_grid_text">Udfyld dit bed ved at trykke på en firkant og vælg fra listen. Du kan ændre størrelsen på bedet ved plus- og minus-knapperne</string>
 </resources>

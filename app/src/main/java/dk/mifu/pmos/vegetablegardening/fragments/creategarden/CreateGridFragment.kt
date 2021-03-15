@@ -112,7 +112,7 @@ class CreateGridFragment : Fragment() {
 
         binding.addRowButton.setOnClickListener{
             addTiles(column = false)
-            if(height-(tileSideLength*rows)-GridHelper.buttonSideLength < tileSideLength){ //If there isn't enough room for a whole row more
+            if(GridHelper.remainingHeight(rows) < tileSideLength){ //If there isn't enough room for a whole row more
                 binding.addRowButton.visibility = View.GONE
                 changePlacementOfRemoveButton(
                     column = false,
@@ -190,7 +190,7 @@ class CreateGridFragment : Fragment() {
             clone(binding.parentLayout)
             if(column){
                 connect(binding.addColumnButton.id, START, tileId!!, END)
-                connect(binding.addColumnButton.id, TOP, binding.parentLayout.id, TOP)
+                connect(binding.addColumnButton.id, TOP, binding.createGridGuideTextView.id, BOTTOM)
             } else {
                 connect(binding.addRowButton.id, TOP, tileId!!, BOTTOM)
                 connect(binding.addRowButton.id, START, binding.parentLayout.id, START)

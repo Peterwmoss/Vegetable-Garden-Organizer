@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 class GridHelper {
     companion object {
         const val buttonSideLength = 160
+        const val toolBarSize = 160
 
         fun getTileSideLength(): Int {
             val width = Resources.getSystem().displayMetrics.widthPixels - buttonSideLength
@@ -18,6 +19,10 @@ class GridHelper {
 
         fun getHeightOfScreen(): Int {
             return Resources.getSystem().displayMetrics.heightPixels
+        }
+
+        fun remainingHeight(rows: Int): Int {
+            return getHeightOfScreen()-(getTileSideLength()*rows)-buttonSideLength-toolBarSize
         }
 
         const val START = ConstraintSet.START

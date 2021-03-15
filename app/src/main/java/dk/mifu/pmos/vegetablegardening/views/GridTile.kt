@@ -35,7 +35,7 @@ class GridTile(context: Context,
             else connect(id, START, binding.parentLayout.id, START)
 
             if(upperTileId!=null) connect(id, TOP, upperTileId, BOTTOM)
-            else connect(id, TOP, binding.parentLayout.id, TOP)
+            else connect(id, TOP, binding.createGridGuideTextView.id, BOTTOM)
 
             if(column) connect(binding.addColumnButton.id, START, id, END)
             else connect(binding.addRowButton.id, TOP, id, BOTTOM)

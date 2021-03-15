@@ -56,7 +56,7 @@ class GardenOverviewFragment : Fragment() {
     }
 
     private fun setExplanatoryTextBasedOnItemCount(adapter: RecyclerView.Adapter<ViewHolder>){
-        binding.emptyGardenTextView.text =
+        binding.gardenTextView.text =
                 if (adapter.itemCount == 0) resources.getString(R.string.empty_garden_text)
                 else resources.getString(R.string.garden_with_beds_text)
     }
