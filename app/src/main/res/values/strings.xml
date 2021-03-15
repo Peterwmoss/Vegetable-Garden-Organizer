@@ -9,7 +9,7 @@
     <string name="select_plant_text">Vælg plante</string>
     <string name="add_column_text">Tilføj kolonne</string>
     <string name="add_row_text">Tilføj række</string>
-    <string name="bed_button_text">Bed</string>
+    <string name="bed_text">Bed</string>
     <string name="plant_button_text">Planter</string>
     <string name="save_garden_text">Gem bed</string>
     <string name="name_your_garden">Navngiv dit bed</string>
@@ -32,4 +32,5 @@
     <string name="cancel">Annullér</string>
     <string name="save">Gem</string>
     <string name="no_name_given_text">Indtast venligst et navn til dit bed</string>
+    <string name="empty_garden_text">Du har ingen oprettede bed. Tryk på plus-knappen nede i hjørnet for at komme i gang og oprette dine bed</string>
 </resources>
