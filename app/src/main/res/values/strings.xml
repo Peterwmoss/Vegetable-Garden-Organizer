@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Køkkenhave</string>
-    <string name="createBed">Nyt bed</string>
+    <string name="create_bed">Nyt bed</string>
+    <string name="create_plant">Ny plante</string>
     <string name="create_location_text">Hvor er dit bed?</string>
     <string name="outdoors">Udendørs</string>
     <string name="indoors">Indendørs</string>
