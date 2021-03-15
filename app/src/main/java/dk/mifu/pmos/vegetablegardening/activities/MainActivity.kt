@@ -22,5 +22,6 @@ class MainActivity : AppCompatActivity() {
             requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), ALL_PERMISSIONS_RESULT)
 
         setContentView(view)
+        setSupportActionBar(binding.actionbar)
     }
 }

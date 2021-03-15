@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/green</item>
+        <item name="theme">@style/OverlayStyle</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="actionBarItemBackground">@color/black</item>
+    </style>
+    <style name="OverlayStyle" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:background">@null</item>
+    </style>
+</resources>
