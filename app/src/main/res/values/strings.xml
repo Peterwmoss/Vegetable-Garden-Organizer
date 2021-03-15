@@ -24,7 +24,12 @@
     <string name="missing_info">Ingen info</string>
     <string name="sow">Sås</string>
     <string name="plant">Plantes</string>
-    <string name="planted_date_text">Plantet</string>
+    <string name="seasons_text">Sæsoner med denne plante her</string>
     <string name="last_watered_text">Sidst vandet</string>
     <string name="harvested_text">Høstet</string>
+    <string name="name_hint_text">Navn</string>
+    <string name="name_bed_text">Navngiv dit bed</string>
+    <string name="cancel">Annullér</string>
+    <string name="save">Gem</string>
+    <string name="no_name_given_text">Indtast venligst et navn til dit bed</string>
 </resources>
