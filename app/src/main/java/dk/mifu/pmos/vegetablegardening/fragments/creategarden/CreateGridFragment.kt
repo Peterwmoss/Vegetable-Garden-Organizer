@@ -20,6 +20,7 @@ import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.START
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.TOP
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.BOTTOM
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.END
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.remainingHeight
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.AllPlantsPredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
@@ -112,7 +113,7 @@ class CreateGridFragment : Fragment() {
 
         binding.addRowButton.setOnClickListener{
             addTiles(column = false)
-            if(GridHelper.remainingHeight(rows) < tileSideLength){ //If there isn't enough room for a whole row more
+            if(remainingHeight(rows, requireContext(), binding.createGridGuideTextView) < tileSideLength){ //If there isn't enough room for a whole row more
                 binding.addRowButton.visibility = View.GONE
                 changePlacementOfRemoveButton(
                     column = false,

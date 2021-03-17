@@ -18,4 +18,5 @@
     <dimen name="grid_tile">50dp</dimen>
     <dimen name="line">2dp</dimen>
     <dimen name="text_view">350dp</dimen>
+    <dimen name="toolbar">56dp</dimen>
 </resources>
