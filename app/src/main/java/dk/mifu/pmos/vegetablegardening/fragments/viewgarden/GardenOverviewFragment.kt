@@ -45,7 +45,7 @@ class GardenOverviewFragment : Fragment() {
         })
 
         binding.newLocationBtn.setOnClickListener {
-            navigateToCreateBedActivity()
+            navigateToSpecifyLocationFragment()
         }
 
         return binding.root
@@ -101,7 +101,7 @@ class GardenOverviewFragment : Fragment() {
         }
     }
 
-    private fun navigateToCreateBedActivity() {
+    private fun navigateToSpecifyLocationFragment() {
         findNavController().navigate(GardenOverviewFragmentDirections.toSpecifyLocation())
     }
 
