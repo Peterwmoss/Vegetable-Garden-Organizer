@@ -1,6 +1,5 @@
 package dk.mifu.pmos.vegetablegardening.fragments.viewgarden
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,10 +12,10 @@ import androidx.constraintlayout.widget.Constraints
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
-import dk.mifu.pmos.vegetablegardening.activities.CreateBedActivity
 import dk.mifu.pmos.vegetablegardening.database.BedDao
 import dk.mifu.pmos.vegetablegardening.database.GardenRepository
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
@@ -105,11 +104,10 @@ class GardenOverviewFragment : Fragment() {
     }
 
     private fun navigateToCreateBedActivity() {
-        val createIntent = Intent(context, CreateBedActivity::class.java)
-        startActivity(createIntent)
+        findNavController().navigate(GardenOverviewFragmentDirections.toSpecifyLocation())
     }
 
     private fun navigateToBedOverviewFragment() {
-        requireView().findNavController().navigate(GardenOverviewFragmentDirections.seeBedAction())
+        findNavController().navigate(GardenOverviewFragmentDirections.seeBedAction())
     }
 }

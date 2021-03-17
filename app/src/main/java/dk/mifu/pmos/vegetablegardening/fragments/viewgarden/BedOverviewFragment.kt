@@ -60,6 +60,10 @@ class BedOverviewFragment: Fragment() {
         addOnMapChangedCallbacks()
         setExplanationTextViews()
 
+    }
+
+    override fun onStart() {
+        super.onStart()
         (activity as AppCompatActivity).supportActionBar?.title = bedViewModel.name
     }
 
@@ -121,7 +125,7 @@ class BedOverviewFragment: Fragment() {
 
         bedViewModel.plantsToWater.observe(viewLifecycleOwner, {
             if(plant != null && it != null && it[coordinate] != null){
-                tileBinding.iconView.setImageResource(R.drawable.ic_water)
+                tileBinding.iconView.setImageResource(R.drawable.water)
                 tileBinding.iconView.visibility = View.VISIBLE
             }
         })
@@ -151,7 +155,7 @@ class BedOverviewFragment: Fragment() {
             if(!it.isNullOrEmpty()){
                 binding.waterExplanationTextView.visibility = View.VISIBLE
                 binding.waterExplanationTextView.text = getString(R.string.explanation_check_water)
-                binding.waterExplanationImageView.setImageResource(R.drawable.ic_water)
+                binding.waterExplanationImageView.setImageResource(R.drawable.water)
             }
         })
     }

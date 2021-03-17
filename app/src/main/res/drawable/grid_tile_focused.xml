@@ -8,11 +8,11 @@
         android:height="@dimen/grid_tile"/>
 
     <solid
-        android:color="@color/beige"/>
+        android:color="@color/brown"/>
 
     <stroke
-        android:width="@dimen/spacing_small"
-        android:color="@color/salmon"/>
+        android:width="@dimen/line"
+        android:color="@color/white"/>
 
 
 </shape>

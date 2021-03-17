@@ -12,6 +12,9 @@
         <action
             android:id="@+id/see_bed_action"
             app:destination="@id/bedOverviewFragment" />
+        <action
+            android:id="@+id/toSpecifyLocation"
+            app:destination="@id/specifyLocationFragment" />
     </fragment>
     <fragment
         android:id="@+id/bedOverviewFragment"
@@ -84,5 +87,32 @@
         <argument
             android:name="coordinate"
             app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
+    </dialog>
+    <fragment
+        android:id="@+id/createGridFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.creategarden.CreateGridFragment"
+        android:label="CreateGridFragment" >
+        <action
+            android:id="@+id/choose_plant_action"
+            app:destination="@id/choosePlantFragment" />
+        <action
+            android:id="@+id/to_save_bed_dialog"
+            app:destination="@id/saveBedDialogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/specifyLocationFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.creategarden.SpecifyLocationFragment"
+        android:label="SpecifyLocationFragment" >
+        <action
+            android:id="@+id/next_action"
+            app:destination="@id/createGridFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/saveBedDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.SaveBedDialogFragment"
+        android:label="SaveBedDialogFragment">
+        <action
+            android:id="@+id/save_bed_action"
+            app:destination="@id/gardenOverviewFragment" />
     </dialog>
 </navigation>

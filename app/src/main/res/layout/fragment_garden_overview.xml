@@ -35,7 +35,6 @@
         android:contentDescription="@string/create_bed"
         android:src="@drawable/ic_plus"
         android:layout_margin="@dimen/spacing_medium"
-        style="@style/FloatingButtonStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
