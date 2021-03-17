@@ -54,8 +54,9 @@ class PlantDetailsFragment: Fragment() {
             if (myPlant.sort.isBlank()) {
                 binding.editSortButton.text = getString(R.string.add_sort_text)
             } else {
-                val sortData = addTextInfoLine(getString(R.string.sort), myPlant.sort)
-                bedViewModel.plants?.addOnMapChangedCallback(PlantDetailsViewUpdateCallback(args.coordinate!!, sortData, binding.editSortButton))
+                binding.editSortButton.text = getString(R.string.edit_sort_text)
+                val sortTextView = addTextInfoLine(getString(R.string.sort), myPlant.sort)
+                bedViewModel.plants?.addOnMapChangedCallback(PlantDetailsViewUpdateCallback(args.coordinate!!, sortTextView, binding.editSortButton))
             }
             binding.editSortButton.setOnClickListener {
                 findNavController().navigate(PlantDetailsFragmentDirections.editSort(myPlant, args.coordinate!!))
@@ -65,17 +66,12 @@ class PlantDetailsFragment: Fragment() {
         return binding.root
     }
 
-    private fun refreshUI() {
-        // TODO
-    }
-
     private fun addTextInfoLine(categoryText: String?, dataText: String?): TextView {
         val categoryParams = GridLayout.LayoutParams()
         categoryParams.setMargins(0,0, resources.getDimension(R.dimen.spacing_small).toInt(),0)
 
         val category = TextView(context)
         val data = TextView(context)
-        data.id = View.generateViewId()
 
         category.run {
             text = categoryText
