@@ -26,9 +26,7 @@ class BedOverviewFragment: Fragment() {
     private var existsPlantablePlants = false
     private val bedViewModel: BedViewModel by activityViewModels()
     private val plantViewModel: PlantViewModel by activityViewModels()
-    private var columns = 0
-    private var rows = 0
-
+    private var plantableTileSlots: Boolean = false
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -47,12 +45,8 @@ class BedOverviewFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val gridSize = sizeOfBed()
-        columns = gridSize.first
-        rows = gridSize.second
-
-        binding.gridlayout.columnCount = columns
-        binding.gridlayout.rowCount = rows
+        binding.gridlayout.columnCount = bedViewModel.columns
+        binding.gridlayout.rowCount = bedViewModel.rows
 
         val orderedArrayList = getTilesInOrder()
 
@@ -67,25 +61,10 @@ class BedOverviewFragment: Fragment() {
         (activity as AppCompatActivity).supportActionBar?.title = bedViewModel.name
     }
 
-    private fun sizeOfBed(): Pair<Int,Int> {
-        var column = 0
-        var row = 0
-
-        val map = bedViewModel.plants?.toMap()
-        map?.keys?.forEach {
-            val plantPosCol = it.col
-            val plantPosRow = it.row
-            if(plantPosCol > column) column = plantPosCol
-            if(plantPosRow > row) row = plantPosRow
-        }
-
-        return Pair(column+1, row+1)
-    }
-
     private fun getTilesInOrder(): List<Pair<Coordinate, MyPlant?>> {
         val orderedArrayList: MutableList<Pair<Coordinate, MyPlant?>> = mutableListOf()
-        for(i in 0 until rows){
-            for(j in 0 until columns){
+        for(i in 0 until bedViewModel.rows){
+            for(j in 0 until bedViewModel.columns){
                 val coordinate = Coordinate(j,i)
                 orderedArrayList.add(Pair(coordinate, bedViewModel.plants?.get(coordinate)))
             }
@@ -121,6 +100,7 @@ class BedOverviewFragment: Fragment() {
         if(plant == null && existsPlantablePlants) {
             tileBinding.iconView.setImageResource(R.drawable.ic_flower)
             tileBinding.iconView.visibility = View.VISIBLE
+            plantableTileSlots = true
         }
 
         bedViewModel.plantsToWater.observe(viewLifecycleOwner, {
@@ -136,16 +116,8 @@ class BedOverviewFragment: Fragment() {
         bedViewModel.plants?.addOnMapChangedCallback(IconCallback(requireView(), bedViewModel))
     }
 
-    private fun navigate(coordinate: Coordinate, plant: MyPlant?) {
-        if(plant == null) {
-            requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantingOptions(coordinate, PlantablePredicate()))
-        } else {
-            requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantInfo(coordinate, plant))
-        }
-    }
-
     private fun setExplanationTextViews(){
-        if(existsPlantablePlants){
+        if(existsPlantablePlants && plantableTileSlots){
             binding.plantableExplanationTextView.visibility = View.VISIBLE
             binding.plantableExplanationTextView.text = getString(R.string.explanation_new_plants)
             binding.plantableExplanationImageView.setImageResource(R.drawable.ic_flower)
@@ -158,5 +130,13 @@ class BedOverviewFragment: Fragment() {
                 binding.waterExplanationImageView.setImageResource(R.drawable.water)
             }
         })
+    }
+
+    private fun navigate(coordinate: Coordinate, plant: MyPlant?) {
+        if(plant == null) {
+            requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantingOptions(coordinate, PlantablePredicate()))
+        } else {
+            requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantInfo(coordinate, plant))
+        }
     }
 }

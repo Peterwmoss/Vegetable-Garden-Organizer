@@ -31,6 +31,8 @@ class BedViewModel(application: Application) : AndroidViewModel(application) {
     var plants : ObservableMap<Coordinate, MyPlant>? = null
     var tileIds : MutableMap<Coordinate, Int>? = null
     var plantsToWater : MutableLiveData<MutableMap<Coordinate, MyPlant>> = MutableLiveData()
+    var columns = 0
+    var rows = 0
 
     fun setBed(bed: Bed){
         plantsToWater.value = null
@@ -43,8 +45,10 @@ class BedViewModel(application: Application) : AndroidViewModel(application) {
         bedLocation = bed.bedLocation
         plants = map
         tileIds = HashMap()
+        columns = bed.columns
+        rows = bed.rows
 
-        map.addOnMapChangedCallback(UpdateBedCallback(name!!, bedLocation!!, getApplication()))
+        map.addOnMapChangedCallback(UpdateBedCallback(name!!, bedLocation!!, getApplication(), columns, rows))
 
         getWeatherData()
     }
