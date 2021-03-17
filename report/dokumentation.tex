@@ -74,6 +74,10 @@ Til at hente brugerens lokation har vi lavet en service, der kører når man bru
 
 Man kan se alt data, som er gemt om planten i et "detaljeview" ved at klikke på planten og i dialogboksen klikke på detaljer. Vi har gjort det i to steps for ikke at brugeren skulle blive bombaderet med informationer i den dialogboks som der kommer frem når man klikker på planten og blot vil vælge om man har vandet eller høstet fra planten.
 
+\subsection{Leksikon}
+
+Vi har lavet en oversigt over alle planter, som man kan navigere til ved brug af menuen i bunden af skærmen. Her kan man klikke på ``Planter'' og får vist en liste over planterne. Hvis man vælger en plante, kommer man videre ind og kan se alle informationer, som appen har, om denne plante.
+
 \subsection{Lagring af data}
 
 \subsubsection{Permanent data}
@@ -83,7 +87,3 @@ Til at tilgå vores data gør vi brug af DAO'er - Data Access Objects. Disse er 
 For at gøre arbejdet med disse DAO'er lidt lettere for os har vi lavet et \texttt{GardenRepository}, som laver en yderligere abstraktion for at vi kan kalde metoderne (såsom \texttt{updateGarden}, \texttt{insertGarden} osv.) asynkront, så vi ikke blokerer for UI- / Main-tråden mens vi lægger data i databasen.
 
 Selve databasen er en singleton-instans, så vi ikke behøver at lave en ny instans hver gang vi skal tilgå databasen, da det er en relativt omstændig process. Dette er også anbefalet af Google på deres Android developer side \hyperlink{https://developer.android.com/training/data-storage/room/#database}{https://developer.android.com/training/data-storage/room/#database}
-
-\subsection{Leksikon}
-
-Vi har lavet en oversigt over alle planter, som man kan navigere til ved brug af menuen i bunden af skærmen. Her kan man klikke på ``Planter'' og får vist en liste over planterne. Hvis man vælger en plante, kommer man videre ind og kan se alle informationer, som appen har, om denne plante.
