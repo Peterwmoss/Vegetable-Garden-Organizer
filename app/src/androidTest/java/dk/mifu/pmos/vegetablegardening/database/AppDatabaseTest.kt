@@ -89,6 +89,26 @@ class AppDatabaseTest {
                 Assertions.assertEquals(plants, byName.plants)
             }
         }
+
+        private fun createBedSizeParameters(): Iterable<Pair<Bed, Pair<Int, Int>>>{
+            return listOf(
+                    Pair(Bed("Test1", Greenhouse, columns = 0, rows = 0), Pair(0,0)),
+                    Pair(Bed("Test2", Greenhouse, columns = 1, rows = 0), Pair(1,0)),
+                    Pair(Bed("Test3", Greenhouse, columns = 0, rows = 1), Pair(0,1)),
+                    Pair(Bed("Test4", Greenhouse, columns = 1, rows = 1), Pair(1,1)),
+                    Pair(Bed("Test5", Greenhouse, columns = 2, rows = 1), Pair(2,1))
+            )
+        }
+
+        @TestFactory
+        fun createBedWithSizeTest() = createBedSizeParameters().map { (bed, size) ->
+            DynamicTest.dynamicTest("Create bed with columns and rows specified stores a bed with those columns and rows") {
+                bedDao.insert(bed)
+                val byName = bedDao.findByName(bed.name)
+                Assertions.assertEquals(size.first, byName.columns)
+                Assertions.assertEquals(size.second, byName.rows)
+            }
+        }
     }
 
     @Nested
@@ -134,6 +154,27 @@ class AppDatabaseTest {
                 val byName = bedDao.findByName(bed.name)
 
                 Assertions.assertEquals(newPlants, byName.plants)
+            }
+        }
+
+        private fun updateBedWithSizeParameters(): Iterable<Pair<Bed, Pair<Int, Int>>> {
+            return listOf(
+                    Pair(Bed("Test1", Greenhouse, columns = 0, rows = 0), Pair(1,1)),
+                    Pair(Bed("Test2", Greenhouse, columns = 2, rows = 1), Pair(1,0))
+            )
+        }
+
+        @TestFactory
+        fun updateBedWithSizeTest() = updateBedWithSizeParameters().map { (bed, newSize) ->
+            DynamicTest.dynamicTest("Update bed with new size updates the bed to have the new size") {
+                bedDao.insert(bed)
+                val newBed = Bed(bed.name, Greenhouse, columns = newSize.first, rows = newSize.second)
+
+                bedDao.update(newBed)
+                val byName = bedDao.findByName(bed.name)
+
+                Assertions.assertEquals(newSize.first, byName.columns)
+                Assertions.assertEquals(newSize.second, byName.rows)
             }
         }
     }
