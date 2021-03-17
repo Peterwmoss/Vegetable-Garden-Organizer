@@ -10,5 +10,5 @@
     <item
         android:icon="@null"
         android:id="@+id/lexiconFragment"
-        android:title="@string/plant_button_text" />
+        android:title="@string/plant_text" />
 </menu>
