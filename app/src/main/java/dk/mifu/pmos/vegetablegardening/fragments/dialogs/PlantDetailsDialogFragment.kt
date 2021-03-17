@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsDialogBinding
+import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
@@ -58,11 +59,11 @@ class PlantDetailsDialogFragment : DialogFragment() {
         binding.detailsButton.setOnClickListener {
             val myPlant = args.plant
             val plant = plantViewModel.plants.value?.first { plant -> plant.name == myPlant.name }
-            navigateToPlantDetails(plant!!, myPlant)
+            navigateToPlantDetails(plant!!, myPlant, args.coordinate)
         }
     }
 
-    private fun navigateToPlantDetails(plant: Plant, myPlant: MyPlant) {
-        findNavController().navigate(PlantDetailsDialogFragmentDirections.toPlantDetails(plant, myPlant))
+    private fun navigateToPlantDetails(plant: Plant, myPlant: MyPlant, coordinate: Coordinate) {
+        findNavController().navigate(PlantDetailsDialogFragmentDirections.toPlantDetails(plant, myPlant, coordinate))
     }
 }

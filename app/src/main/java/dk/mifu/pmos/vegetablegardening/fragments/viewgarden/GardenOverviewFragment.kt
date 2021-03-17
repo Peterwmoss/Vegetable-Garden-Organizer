@@ -34,7 +34,7 @@ class GardenOverviewFragment : Fragment() {
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentGardenOverviewBinding.inflate(inflater, container, false)
-        gardenDb = AppDatabase.getDatabase(requireContext()).gardenDao()
+        gardenDb = AppDatabase.getDatabase(requireContext()).bedDao()
         repository = GardenRepository(gardenDb!!)
 
         val recyclerView = binding.gardensRecyclerView

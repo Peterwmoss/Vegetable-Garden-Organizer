@@ -30,7 +30,7 @@ class AppDatabaseTest {
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
-        bedDao = db.gardenDao()
+        bedDao = db.bedDao()
     }
 
     @AfterEach

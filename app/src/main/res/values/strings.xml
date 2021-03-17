@@ -42,4 +42,8 @@
     <string name="plants_details_dialog_guide_text">Her kan du bogføre, hvis du har vandet eller høstet din plante. Tryk på detaljer for at se mere om din plante.</string>
     <string name="register_water_text">Registreret som vandet</string>
     <string name="register_harvest_text">Registreret som høstet</string>
+    <string name="edit_sort_text">Redigér sort</string>
+    <string name="add_sort_text">Tilføj sort</string>
+    <string name="sort">Sort</string>
+    <string name="gem_sort">Gem sort</string>
 </resources>

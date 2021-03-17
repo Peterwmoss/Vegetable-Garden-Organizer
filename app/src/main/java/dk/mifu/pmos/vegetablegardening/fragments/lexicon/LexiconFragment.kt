@@ -63,7 +63,7 @@ class LexiconFragment: Fragment() {
     private inner class ViewHolder(view: View) : PlantViewHolder(view) {
         init {
             view.setOnClickListener {
-                findNavController().navigate(LexiconFragmentDirections.toPlantDetails(plant, null))
+                findNavController().navigate(LexiconFragmentDirections.toPlantDetails(plant, null, null))
             }
         }
     }
