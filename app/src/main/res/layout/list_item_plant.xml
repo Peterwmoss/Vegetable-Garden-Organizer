@@ -6,7 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/spacing_medium"
-    android:layout_gravity="center">
+    android:clickable="true"
+    android:background="?android:selectableItemBackground"
+    android:layout_gravity="center"
+    android:focusable="true">
 
     <!-- TODO fix src -->
     <ImageView
@@ -24,6 +27,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/font_medium"
         android:fontFamily="@font/roboto"
+        android:background="@null"
         app:layout_constraintEnd_toStartOf="@+id/imageView2"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
