@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.ObservableArrayMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
 import dk.mifu.pmos.vegetablegardening.fragments.dialogs.SaveBedDialogFragment
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
@@ -18,6 +20,7 @@ import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.START
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.TOP
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.BOTTOM
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.END
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.remainingHeight
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.AllPlantsPredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
@@ -57,6 +60,8 @@ class CreateGridFragment : Fragment() {
         setSaveBedListener()
 
         bedViewModel.plants?.addOnMapChangedCallback(BedCallback(requireView(), bedViewModel))
+
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.create_grid_title)
     }
 
     private fun setSaveBedListener() {
@@ -108,7 +113,7 @@ class CreateGridFragment : Fragment() {
 
         binding.addRowButton.setOnClickListener{
             addTiles(column = false)
-            if(height-(tileSideLength*rows)-GridHelper.buttonSideLength < tileSideLength){ //If there isn't enough room for a whole row more
+            if(remainingHeight(rows, requireContext(), binding.createGridGuideTextView) < tileSideLength){ //If there isn't enough room for a whole row more
                 binding.addRowButton.visibility = View.GONE
                 changePlacementOfRemoveButton(
                     column = false,
@@ -186,7 +191,7 @@ class CreateGridFragment : Fragment() {
             clone(binding.parentLayout)
             if(column){
                 connect(binding.addColumnButton.id, START, tileId!!, END)
-                connect(binding.addColumnButton.id, TOP, binding.parentLayout.id, TOP)
+                connect(binding.addColumnButton.id, TOP, binding.createGridGuideTextView.id, BOTTOM)
             } else {
                 connect(binding.addRowButton.id, TOP, tileId!!, BOTTOM)
                 connect(binding.addRowButton.id, START, binding.parentLayout.id, START)

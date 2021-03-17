@@ -1,11 +1,22 @@
 package dk.mifu.pmos.vegetablegardening.helpers
 
+import android.content.Context
 import android.content.res.Resources
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintSet
+import dk.mifu.pmos.vegetablegardening.R
 
 class GridHelper {
     companion object {
-        const val buttonSideLength = 160
+        private const val buttonSideLength = 160
+
+        private fun textViewSize(textView: TextView): Int{
+            return textView.height
+        }
+
+        private fun toolBarSize(context: Context): Int {
+            return context.resources.getDimension(R.dimen.toolbar).toInt()
+        }
 
         fun getTileSideLength(): Int {
             val width = Resources.getSystem().displayMetrics.widthPixels - buttonSideLength
@@ -18,6 +29,14 @@ class GridHelper {
 
         fun getHeightOfScreen(): Int {
             return Resources.getSystem().displayMetrics.heightPixels
+        }
+
+        fun remainingHeight(rows: Int, context: Context, textView: TextView): Int {
+            return (getHeightOfScreen()
+                    -(getTileSideLength()*rows)
+                    -toolBarSize(context)
+                    -textViewSize(textView)
+                    -buttonSideLength)
         }
 
         const val START = ConstraintSet.START

@@ -11,9 +11,12 @@
     <dimen name="spacing_large">40dp</dimen>
     <dimen name="spacing_xlarge">80dp</dimen>
 
+    <dimen name="elevation_picture_on_button">6dp</dimen>
+    <dimen name="elevation_toolbar">4dp</dimen>
+
     <dimen name="picture">200dp</dimen>
     <dimen name="grid_tile">50dp</dimen>
     <dimen name="line">2dp</dimen>
-    <dimen name="bring_on_top_of_button">6dp</dimen>
     <dimen name="text_view">350dp</dimen>
+    <dimen name="toolbar">56dp</dimen>
 </resources>

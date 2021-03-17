@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsDialogBinding
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
@@ -32,6 +34,11 @@ class PlantDetailsDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        binding.plantDetailsDialogPlant.text = args.plant.name
+        if(args.plant.sort.isNotBlank()) {
+            binding.sort.visibility = View.VISIBLE
+            binding.sort.text = args.plant.sort
+        }
         setButtonListeners()
     }
 
@@ -40,11 +47,13 @@ class PlantDetailsDialogFragment : DialogFragment() {
             args.plant.wateredDate = Date()
             bedViewModel.plants?.put(args.coordinate, args.plant)
             bedViewModel.plantsToWater.value?.remove(args.coordinate)
+            Toast.makeText(context, getString(R.string.register_water_text), Toast.LENGTH_SHORT).show()
         }
 
         binding.harvestButton.setOnClickListener {
             args.plant.harvestedDate = Date()
             bedViewModel.plants?.put(args.coordinate, args.plant)
+            Toast.makeText(context, getString(R.string.register_harvest_text), Toast.LENGTH_SHORT).show()
         }
 
         binding.detailsButton.setOnClickListener {

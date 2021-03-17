@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".fragments.viewgarden.GardenOverviewFragment">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/bed_text"
+        android:textSize="@dimen/font_small"
+        android:paddingStart="@dimen/spacing_medium"
+        android:paddingEnd="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:id="@+id/garden_text_view"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/gardens_recycler_view"
         android:layout_width="match_parent"
@@ -13,7 +26,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/garden_text_view" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/new_location_btn"

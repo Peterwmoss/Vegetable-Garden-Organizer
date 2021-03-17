@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Constraints
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -42,13 +43,22 @@ class GardenOverviewFragment : Fragment() {
         repository?.getAllBeds()?.observe(viewLifecycleOwner, {
             val adapter = GardenOverviewAdapter(it)
             recyclerView.adapter = adapter
+            setExplanatoryTextBasedOnItemCount(adapter)
         })
 
         binding.newLocationBtn.setOnClickListener {
             navigateToCreateBedActivity()
         }
 
+        (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.bed_text)
+
         return binding.root
+    }
+
+    private fun setExplanatoryTextBasedOnItemCount(adapter: RecyclerView.Adapter<ViewHolder>){
+        binding.gardenTextView.text =
+                if (adapter.itemCount == 0) resources.getString(R.string.empty_garden_text)
+                else resources.getString(R.string.garden_with_beds_text)
     }
 
     private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
