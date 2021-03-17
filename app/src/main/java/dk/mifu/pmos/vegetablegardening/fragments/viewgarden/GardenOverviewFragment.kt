@@ -50,8 +50,6 @@ class GardenOverviewFragment : Fragment() {
             navigateToCreateBedActivity()
         }
 
-        (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.bed_text)
-
         return binding.root
     }
 
