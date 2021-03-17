@@ -1,14 +1,8 @@
 package dk.mifu.pmos.vegetablegardening.database
 
 import android.content.Context
-import androidx.arch.core.executor.ArchTaskExecutor
-import androidx.arch.core.executor.TaskExecutor
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LifecycleRegistry
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import dk.mifu.pmos.vegetablegardening.TestUtils
 import dk.mifu.pmos.vegetablegardening.TestUtils.InstantExecutorExtension
 import dk.mifu.pmos.vegetablegardening.TestUtils.TestLifeCycleOwner
 import dk.mifu.pmos.vegetablegardening.enums.BedLocation
@@ -17,15 +11,13 @@ import dk.mifu.pmos.vegetablegardening.enums.BedLocation.Outdoors
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.extension.*
 import java.io.IOException
 
 
 class AppDatabaseTest {
-    private lateinit var gardenDao: GardenDao
+    private lateinit var bedDao: BedDao
     private lateinit var db: AppDatabase
 
     companion object {
@@ -38,7 +30,7 @@ class AppDatabaseTest {
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
-        gardenDao = db.gardenDao()
+        bedDao = db.gardenDao()
     }
 
     @AfterEach
@@ -59,8 +51,8 @@ class AppDatabaseTest {
         @TestFactory
         fun createBedWithNameTest() = createBedNameParameters().map { (bed, name) ->
             DynamicTest.dynamicTest("Create bed with a name specified stores a bed with that name") {
-                gardenDao.insert(bed)
-                val byName = gardenDao.findByName(bed.name)
+                bedDao.insert(bed)
+                val byName = bedDao.findByName(bed.name)
                 Assertions.assertEquals(name, byName.name)
             }
         }
@@ -75,8 +67,8 @@ class AppDatabaseTest {
         @TestFactory
         fun createBedWithLocationTest() = createBedLocationParameters().map { (bed, location) ->
             DynamicTest.dynamicTest("Create bed with a location specified stores a bed with that location") {
-                gardenDao.insert(bed)
-                val byName = gardenDao.findByName(bed.name)
+                bedDao.insert(bed)
+                val byName = bedDao.findByName(bed.name)
                 Assertions.assertEquals(location, byName.bedLocation)
             }
         }
@@ -92,8 +84,8 @@ class AppDatabaseTest {
         @TestFactory
         fun createBedWithPlantsTest() = createBedPlantsParameters().map { (bed, plants) ->
             DynamicTest.dynamicTest("Create bed with plants specified stores a bed with those plants") {
-                gardenDao.insert(bed)
-                val byName = gardenDao.findByName(bed.name)
+                bedDao.insert(bed)
+                val byName = bedDao.findByName(bed.name)
                 Assertions.assertEquals(plants, byName.plants)
             }
         }
@@ -114,10 +106,10 @@ class AppDatabaseTest {
         fun updateBedWithLocationTest() = updateBedWithLocationParameters().map { (bed, newLocation) ->
             DynamicTest.dynamicTest("Update bed with new location updates the bed to have the new location") {
                 val newBed = Bed(bed.name, newLocation)
-                gardenDao.insert(bed)
+                bedDao.insert(bed)
 
-                gardenDao.update(newBed)
-                val byName = gardenDao.findByName(bed.name)
+                bedDao.update(newBed)
+                val byName = bedDao.findByName(bed.name)
 
                 Assertions.assertEquals(newLocation, byName.bedLocation)
             }
@@ -136,10 +128,10 @@ class AppDatabaseTest {
                 val map = bed.plants.toMutableMap()
                 map[pair1.first] = pair1.second
                 val newBed = Bed(bed.name, bed.bedLocation, map)
-                gardenDao.insert(bed)
+                bedDao.insert(bed)
 
-                gardenDao.update(newBed)
-                val byName = gardenDao.findByName(bed.name)
+                bedDao.update(newBed)
+                val byName = bedDao.findByName(bed.name)
 
                 Assertions.assertEquals(newPlants, byName.plants)
             }
@@ -154,10 +146,10 @@ class AppDatabaseTest {
         fun deleteBedTest() {
             val name = "Test1"
             val bed = Bed(name, Outdoors)
-            gardenDao.insert(bed)
+            bedDao.insert(bed)
 
-            gardenDao.delete(name)
-            val byName = gardenDao.findByName(name)
+            bedDao.delete(name)
+            val byName = bedDao.findByName(name)
 
             Assertions.assertNull(byName)
         }
@@ -168,15 +160,15 @@ class AppDatabaseTest {
             // Bed 1
             val name1 = "Test1"
             val bed1 = Bed(name1, Outdoors)
-            gardenDao.insert(bed1)
+            bedDao.insert(bed1)
             // Bed 2
             val name2 = "Test2"
             val bed2 = Bed(name2, Outdoors)
-            gardenDao.insert(bed2)
+            bedDao.insert(bed2)
 
             // Delete bed 1
-            gardenDao.delete(name1)
-            val byName = gardenDao.findByName(name2)
+            bedDao.delete(name1)
+            val byName = bedDao.findByName(name2)
 
             // Ensure bed 2 still in database
             Assertions.assertNotNull(byName)
@@ -188,10 +180,10 @@ class AppDatabaseTest {
             val nameToDelete = "Delete"
             val nameToKeep = "Keep"
             val bed = Bed(nameToKeep, Outdoors)
-            gardenDao.insert(bed)
+            bedDao.insert(bed)
 
-            gardenDao.delete(nameToDelete)
-            val byName = gardenDao.findByName(nameToKeep)
+            bedDao.delete(nameToDelete)
+            val byName = bedDao.findByName(nameToKeep)
 
             Assertions.assertNotNull(byName)
         }
@@ -205,9 +197,9 @@ class AppDatabaseTest {
         fun findBedThatExistsTest() {
             val name = "Test1"
             val bed = Bed(name, Outdoors)
-            gardenDao.insert(bed)
+            bedDao.insert(bed)
 
-            val byName = gardenDao.findByName(name)
+            val byName = bedDao.findByName(name)
 
             Assertions.assertNotNull(byName)
         }
@@ -215,7 +207,7 @@ class AppDatabaseTest {
         @Test
         @DisplayName("that does not exists returns null")
         fun findBedThatDoesNotExistTest() {
-            val byName = gardenDao.findByName("Test")
+            val byName = bedDao.findByName("Test")
 
             Assertions.assertNull(byName)
         }
@@ -228,7 +220,7 @@ class AppDatabaseTest {
         @Test
         @DisplayName("when empty returns empty list")
         fun getAllBedsEmptyTest() {
-            val beds = gardenDao.getAll()
+            val beds = bedDao.getAll()
 
             beds.observe(TestLifeCycleOwner(), {
                 Assertions.assertTrue(it.isEmpty())
@@ -240,9 +232,9 @@ class AppDatabaseTest {
         fun getAllBedsNotEmptyTest() {
             val name = "Test1"
             val bed = Bed(name, Outdoors)
-            gardenDao.insert(bed)
+            bedDao.insert(bed)
 
-            val beds = gardenDao.getAll()
+            val beds = bedDao.getAll()
 
             beds.observe(TestLifeCycleOwner(), {
                 Assertions.assertTrue(it.isNotEmpty())
@@ -254,13 +246,13 @@ class AppDatabaseTest {
         fun getAllBedsMultipleTest() {
             val name1 = "Test1"
             val bed1 = Bed(name1, Outdoors)
-            gardenDao.insert(bed1)
+            bedDao.insert(bed1)
 
             val name2 = "Test2"
             val bed2 = Bed(name2, Outdoors)
-            gardenDao.insert(bed2)
+            bedDao.insert(bed2)
 
-            val beds = gardenDao.getAll()
+            val beds = bedDao.getAll()
 
             beds.observe(TestLifeCycleOwner(), {
                 Assertions.assertEquals(2, it.size)
