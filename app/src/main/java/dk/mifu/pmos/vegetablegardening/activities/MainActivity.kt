@@ -48,8 +48,4 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    override fun onResume() {
-        super.onResume()
-        supportActionBar?.title = resources.getString(R.string.bed_text)
-    }
 }

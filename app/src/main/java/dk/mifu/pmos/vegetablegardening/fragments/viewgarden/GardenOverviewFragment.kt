@@ -53,6 +53,11 @@ class GardenOverviewFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.bed_text)
+    }
+
     private fun setExplanatoryTextBasedOnItemCount(adapter: RecyclerView.Adapter<ViewHolder>){
         binding.gardenTextView.text =
                 if (adapter.itemCount == 0) resources.getString(R.string.empty_garden_text)
