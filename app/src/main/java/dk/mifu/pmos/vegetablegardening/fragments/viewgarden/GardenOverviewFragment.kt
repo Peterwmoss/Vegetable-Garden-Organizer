@@ -1,6 +1,5 @@
 package dk.mifu.pmos.vegetablegardening.fragments.viewgarden
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Constraints
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -88,8 +86,8 @@ class GardenOverviewFragment : Fragment() {
             holder.bed = dataSet[position]
 
             when (dataSet[position].bedLocation) {
-                Outdoors -> holder.bedImage.setImageResource(R.drawable.outdoors_normal)
-                Greenhouse -> holder.bedImage.setImageResource(R.drawable.greenhouse_normal)
+                Outdoors -> holder.bedImage.setImageResource(R.drawable.outdoors)
+                Greenhouse -> holder.bedImage.setImageResource(R.drawable.greenhouse)
             }
 
             holder.bedImage.layoutParams = Constraints.LayoutParams(
