@@ -43,8 +43,8 @@ class AppDatabaseTest {
     inner class CreateBedTest {
         private fun createBedNameParameters(): Iterable<Pair<Bed, String>> {
             return listOf(
-                    Pair(Bed("Test1", Outdoors, HashMap()), "Test1"),
-                    Pair(Bed("Test2", Outdoors, HashMap()), "Test2"),
+                    Pair(Bed("Test1", Outdoors, HashMap(), columns = 0, rows = 0), "Test1"),
+                    Pair(Bed("Test2", Outdoors, HashMap(), columns = 0, rows = 0), "Test2"),
             )
         }
 
@@ -59,8 +59,8 @@ class AppDatabaseTest {
 
         private fun createBedLocationParameters(): Iterable<Pair<Bed, BedLocation>> {
             return listOf(
-                    Pair(Bed("Test1", Outdoors, HashMap()), Outdoors),
-                    Pair(Bed("Test2", Greenhouse, HashMap()), Greenhouse),
+                    Pair(Bed("Test1", Outdoors, HashMap(), columns = 0, rows = 0), Outdoors),
+                    Pair(Bed("Test2", Greenhouse, HashMap(), columns = 0, rows = 0), Greenhouse),
             )
         }
 
@@ -75,9 +75,9 @@ class AppDatabaseTest {
 
         private fun createBedPlantsParameters(): Iterable<Pair<Bed, Map<Coordinate, MyPlant>>> {
             return listOf(
-                    Pair(Bed("Test1", Greenhouse), HashMap()),
-                    Pair(Bed("Test2", Greenhouse, mapOf(pair1)), mapOf(pair1)),
-                    Pair(Bed("Test3", Greenhouse, mapOf(pair1, pair2)), mapOf(pair1, pair2)),
+                    Pair(Bed("Test1", Greenhouse, columns = 0, rows = 0), HashMap()),
+                    Pair(Bed("Test2", Greenhouse, mapOf(pair1), columns = 0, rows = 0), mapOf(pair1)),
+                    Pair(Bed("Test3", Greenhouse, mapOf(pair1, pair2), columns = 0, rows = 0), mapOf(pair1, pair2)),
             )
         }
 
@@ -95,17 +95,17 @@ class AppDatabaseTest {
     inner class UpdateBedTest {
         private fun updateBedWithLocationParameters(): Iterable<Pair<Bed, BedLocation>> {
             return listOf(
-                    Pair(Bed("Test1", Greenhouse), Greenhouse),
-                    Pair(Bed("Test2", Outdoors), Outdoors),
-                    Pair(Bed("Test3", Greenhouse), Outdoors),
-                    Pair(Bed("Test4", Outdoors), Greenhouse),
+                    Pair(Bed("Test1", Greenhouse, columns = 0, rows = 0), Greenhouse),
+                    Pair(Bed("Test2", Outdoors, columns = 0, rows = 0), Outdoors),
+                    Pair(Bed("Test3", Greenhouse, columns = 0, rows = 0), Outdoors),
+                    Pair(Bed("Test4", Outdoors, columns = 0, rows = 0), Greenhouse),
             )
         }
 
         @TestFactory
         fun updateBedWithLocationTest() = updateBedWithLocationParameters().map { (bed, newLocation) ->
             DynamicTest.dynamicTest("Update bed with new location updates the bed to have the new location") {
-                val newBed = Bed(bed.name, newLocation)
+                val newBed = Bed(bed.name, newLocation, columns = 0, rows = 0)
                 bedDao.insert(bed)
 
                 bedDao.update(newBed)
@@ -117,8 +117,8 @@ class AppDatabaseTest {
 
         private fun updateBedWithPlantsParameters(): Iterable<Pair<Bed, Map<Coordinate, MyPlant>>> {
             return listOf(
-                    Pair(Bed("Test1", Greenhouse), mapOf(pair1)),
-                    Pair(Bed("Test2", Greenhouse, mapOf(pair2)), mapOf(pair1, pair2)),
+                    Pair(Bed("Test1", Greenhouse, columns = 0, rows = 0), mapOf(pair1)),
+                    Pair(Bed("Test2", Greenhouse, mapOf(pair2), columns = 0, rows = 0), mapOf(pair1, pair2)),
             )
         }
 
@@ -127,7 +127,7 @@ class AppDatabaseTest {
             DynamicTest.dynamicTest("Update bed with new plants updates the bed to have the new plants") {
                 val map = bed.plants.toMutableMap()
                 map[pair1.first] = pair1.second
-                val newBed = Bed(bed.name, bed.bedLocation, map)
+                val newBed = Bed(bed.name, bed.bedLocation, map, columns = 0, rows = 0)
                 bedDao.insert(bed)
 
                 bedDao.update(newBed)
@@ -145,7 +145,7 @@ class AppDatabaseTest {
         @DisplayName("with name deletes bed from database")
         fun deleteBedTest() {
             val name = "Test1"
-            val bed = Bed(name, Outdoors)
+            val bed = Bed(name, Outdoors, columns = 0, rows = 0)
             bedDao.insert(bed)
 
             bedDao.delete(name)
@@ -159,11 +159,11 @@ class AppDatabaseTest {
         fun deleteBedDoesNotDeleteWrongTest() {
             // Bed 1
             val name1 = "Test1"
-            val bed1 = Bed(name1, Outdoors)
+            val bed1 = Bed(name1, Outdoors, columns = 0, rows = 0)
             bedDao.insert(bed1)
             // Bed 2
             val name2 = "Test2"
-            val bed2 = Bed(name2, Outdoors)
+            val bed2 = Bed(name2, Outdoors, columns = 0, rows = 0)
             bedDao.insert(bed2)
 
             // Delete bed 1
@@ -179,7 +179,7 @@ class AppDatabaseTest {
         fun deleteBedNoExistDoesNothingTest() {
             val nameToDelete = "Delete"
             val nameToKeep = "Keep"
-            val bed = Bed(nameToKeep, Outdoors)
+            val bed = Bed(nameToKeep, Outdoors, columns = 0, rows = 0)
             bedDao.insert(bed)
 
             bedDao.delete(nameToDelete)
@@ -196,7 +196,7 @@ class AppDatabaseTest {
         @DisplayName("that exists returns not null")
         fun findBedThatExistsTest() {
             val name = "Test1"
-            val bed = Bed(name, Outdoors)
+            val bed = Bed(name, Outdoors, columns = 0, rows = 0)
             bedDao.insert(bed)
 
             val byName = bedDao.findByName(name)
@@ -231,7 +231,7 @@ class AppDatabaseTest {
         @DisplayName("when not empty returns list with beds")
         fun getAllBedsNotEmptyTest() {
             val name = "Test1"
-            val bed = Bed(name, Outdoors)
+            val bed = Bed(name, Outdoors, columns = 0, rows = 0)
             bedDao.insert(bed)
 
             val beds = bedDao.getAll()
@@ -245,11 +245,11 @@ class AppDatabaseTest {
         @DisplayName("when multiple returns list with multiple beds")
         fun getAllBedsMultipleTest() {
             val name1 = "Test1"
-            val bed1 = Bed(name1, Outdoors)
+            val bed1 = Bed(name1, Outdoors, columns = 0, rows = 0)
             bedDao.insert(bed1)
 
             val name2 = "Test2"
-            val bed2 = Bed(name2, Outdoors)
+            val bed2 = Bed(name2, Outdoors, columns = 0, rows = 0)
             bedDao.insert(bed2)
 
             val beds = bedDao.getAll()
