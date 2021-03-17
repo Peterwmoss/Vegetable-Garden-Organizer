@@ -63,7 +63,7 @@ class SaveBedDialogFragment : DialogFragment() {
         bed.name = editText.text.toString()
         run {
             MainScope().launch(Dispatchers.IO) {
-                val dao = AppDatabase.getDatabase(requireContext()).gardenDao()
+                val dao = AppDatabase.getDatabase(requireContext()).bedDao()
                 val repository = GardenRepository(dao)
                 repository.insertBed(Bed(bed.name!!, bed.bedLocation!!, bed.plants!!.toMap()))
             }
