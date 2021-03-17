@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.GardenRepository
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
@@ -45,7 +46,7 @@ class SaveBedDialogFragment : DialogFragment() {
                     } else {
                         saveInDatabase(editText)
                         hideKeyboard(context)
-                        requireActivity().finish()
+                        findNavController().navigate(SaveBedDialogFragmentDirections.saveBedAction())
                     }
                 }
                 .setView(editText)

@@ -1,6 +1,5 @@
 package dk.mifu.pmos.vegetablegardening.fragments.viewgarden
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Constraints
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
-import dk.mifu.pmos.vegetablegardening.activities.CreateBedActivity
 import dk.mifu.pmos.vegetablegardening.database.BedDao
 import dk.mifu.pmos.vegetablegardening.database.GardenRepository
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
@@ -47,12 +45,15 @@ class GardenOverviewFragment : Fragment() {
         })
 
         binding.newLocationBtn.setOnClickListener {
-            navigateToCreateBedActivity()
+            navigateToSpecifyLocationFragment()
         }
 
-        (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.bed_text)
-
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.bed_text)
     }
 
     private fun setExplanatoryTextBasedOnItemCount(adapter: RecyclerView.Adapter<ViewHolder>){
@@ -85,8 +86,8 @@ class GardenOverviewFragment : Fragment() {
             holder.bed = dataSet[position]
 
             when (dataSet[position].bedLocation) {
-                Outdoors -> holder.bedImage.setImageResource(R.drawable.outdoors_normal)
-                Greenhouse -> holder.bedImage.setImageResource(R.drawable.greenhouse_normal)
+                Outdoors -> holder.bedImage.setImageResource(R.drawable.outdoors)
+                Greenhouse -> holder.bedImage.setImageResource(R.drawable.greenhouse)
             }
 
             holder.bedImage.layoutParams = Constraints.LayoutParams(
@@ -100,12 +101,11 @@ class GardenOverviewFragment : Fragment() {
         }
     }
 
-    private fun navigateToCreateBedActivity() {
-        val createIntent = Intent(context, CreateBedActivity::class.java)
-        startActivity(createIntent)
+    private fun navigateToSpecifyLocationFragment() {
+        findNavController().navigate(GardenOverviewFragmentDirections.toSpecifyLocation())
     }
 
     private fun navigateToBedOverviewFragment() {
-        requireView().findNavController().navigate(GardenOverviewFragmentDirections.seeBedAction())
+        findNavController().navigate(GardenOverviewFragmentDirections.seeBedAction())
     }
 }

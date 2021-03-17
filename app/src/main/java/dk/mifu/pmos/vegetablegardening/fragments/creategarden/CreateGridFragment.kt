@@ -11,6 +11,7 @@ import androidx.databinding.ObservableArrayMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
 import dk.mifu.pmos.vegetablegardening.fragments.dialogs.SaveBedDialogFragment
@@ -62,9 +63,7 @@ class CreateGridFragment : Fragment() {
 
     private fun setSaveBedListener() {
         binding.saveGardenButton.setOnClickListener {
-
-            val dialog = SaveBedDialogFragment()
-            dialog.show(childFragmentManager, SaveBedDialogFragment.TAG)
+            findNavController().navigate(CreateGridFragmentDirections.toSaveBedDialog())
         }
     }
 
@@ -213,6 +212,6 @@ class CreateGridFragment : Fragment() {
     }
 
     private fun navigateToChoosePlantFragment(coordinate: Coordinate) {
-        requireView().findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(coordinate, AllPlantsPredicate()))
+        findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(coordinate, AllPlantsPredicate()))
     }
 }
