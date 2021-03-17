@@ -1,4 +1,4 @@
-package dk.mifu.pmos.vegetablegardening.fragments.viewgarden
+package dk.mifu.pmos.vegetablegardening.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,26 +24,28 @@ class PlantDetailsFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPlantDetailsBinding.inflate(inflater, container, false)
 
-        val myPlant = args.plant
-        val plant = plantViewModel.plants.value?.first { plant -> plant.name == myPlant.name }
+        val myPlant = args.myplant
+        val plant = args.plant
         val titles = plantViewModel.categoryTitles.value
 
-        binding.plantName.text = myPlant.name
+        binding.plantName.text = plant.name
 
         binding.gridlayout.columnCount = 2
-        addTextInfoLine(titles?.get(1), plant?.category)
-        addTextInfoLine(titles?.get(2), formatDate(plant?.earliest))
-        addTextInfoLine(titles?.get(3), formatDate(plant?.latest))
-        addTextInfoLine(titles?.get(4), formatSowingBoolean(plant?.sowing))
-        addTextInfoLine(titles?.get(5), plant?.cropRotation)
-        addTextInfoLine(titles?.get(6), plant?.sowingDepth)
-        addTextInfoLine(titles?.get(7), plant?.distance.toString())
-        addTextInfoLine(titles?.get(8), plant?.quantity)
-        addTextInfoLine(titles?.get(9), plant?.fertilizer)
-        addTextInfoLine(titles?.get(10), plant?.harvest)
-        addTextInfoLine(getString(R.string.seasons_text), myPlant.seasons.toString())
-        addTextInfoLine(getString(R.string.last_watered_text), formatDate(myPlant.wateredDate))
-        addTextInfoLine(getString(R.string.harvested_text), formatDate(myPlant.harvestedDate))
+        addTextInfoLine(titles?.get(1), plant.category)
+        addTextInfoLine(titles?.get(2), formatDate(plant.earliest))
+        addTextInfoLine(titles?.get(3), formatDate(plant.latest))
+        addTextInfoLine(titles?.get(4), formatSowingBoolean(plant.sowing))
+        addTextInfoLine(titles?.get(5), plant.cropRotation)
+        addTextInfoLine(titles?.get(6), plant.sowingDepth)
+        addTextInfoLine(titles?.get(7), plant.distance.toString())
+        addTextInfoLine(titles?.get(8), plant.quantity)
+        addTextInfoLine(titles?.get(9), plant.fertilizer)
+        addTextInfoLine(titles?.get(10), plant.harvest)
+        if (myPlant != null) {
+            addTextInfoLine(getString(R.string.seasons_text), myPlant.seasons.toString())
+            addTextInfoLine(getString(R.string.last_watered_text), formatDate(myPlant.wateredDate))
+            addTextInfoLine(getString(R.string.harvested_text), formatDate(myPlant.harvestedDate))
+        }
 
         return binding.root
     }

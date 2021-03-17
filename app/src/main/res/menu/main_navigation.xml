@@ -2,6 +2,13 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/bed_text" />
-    <item android:title="@string/plant_button_text" />
+    <item
+        android:icon="@null"
+        android:id="@+id/gardenOverviewFragment"
+        android:title="@string/bed_text" />
+
+    <item
+        android:icon="@null"
+        android:id="@+id/lexiconFragment"
+        android:title="@string/plant_button_text" />
 </menu>

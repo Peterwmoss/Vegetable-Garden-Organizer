@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="FloatingButtonStyle">
+        <item name="android:backgroundTint">@color/salmon</item>
+        <item name="android:src">@drawable/ic_plus</item>
+    </style>
+</resources>
