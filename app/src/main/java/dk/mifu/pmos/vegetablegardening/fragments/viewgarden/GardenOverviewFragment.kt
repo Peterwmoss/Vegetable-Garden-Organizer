@@ -1,5 +1,6 @@
 package dk.mifu.pmos.vegetablegardening.fragments.viewgarden
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -51,6 +52,11 @@ class GardenOverviewFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.bed_text)
     }
 
     private fun setExplanatoryTextBasedOnItemCount(adapter: RecyclerView.Adapter<ViewHolder>){
