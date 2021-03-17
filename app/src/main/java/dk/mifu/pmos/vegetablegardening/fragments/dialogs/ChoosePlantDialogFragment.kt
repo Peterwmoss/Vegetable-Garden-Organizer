@@ -1,22 +1,14 @@
 package dk.mifu.pmos.vegetablegardening.fragments.dialogs
 
-import android.content.Context
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.EditText
-import android.widget.Filter
-import android.widget.Filterable
-import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentChoosePlantBinding
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPredicate
@@ -27,7 +19,6 @@ import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
-import java.util.*
 
 class ChoosePlantDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentChoosePlantBinding

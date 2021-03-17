@@ -11,5 +11,5 @@ import dk.mifu.pmos.vegetablegardening.helpers.database.DatabaseConverters
 data class Bed (
         @PrimaryKey var name: String,
         val bedLocation: BedLocation,
-        val plants: Map<Coordinate, MyPlant> = HashMap(),
+        val plants: MutableMap<Coordinate, MyPlant> = HashMap(),
 )

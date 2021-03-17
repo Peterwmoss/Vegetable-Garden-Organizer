@@ -33,6 +33,13 @@
         <argument android:name="myplant"
             app:argType="dk.mifu.pmos.vegetablegardening.models.MyPlant"
             app:nullable="true" />
+        <argument
+            android:name="coordinate"
+            app:nullable="true"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
+        <action
+            android:id="@+id/edit_sort"
+            app:destination="@id/editSortDialogFragment" />
     </fragment>
     <dialog
         android:id="@+id/plantDetailsDialogFragment"
@@ -67,4 +74,15 @@
             android:id="@+id/to_plant_details"
             app:destination="@id/plantDetails" />
     </fragment>
+    <dialog
+        android:id="@+id/editSortDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.EditSortDialogFragment"
+        android:label="EditSortDialogFragment" >
+        <argument
+            android:name="myPlant"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.MyPlant" />
+        <argument
+            android:name="coordinate"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
+    </dialog>
 </navigation>

@@ -33,4 +33,8 @@
     <string name="cancel">Annullér</string>
     <string name="save">Gem</string>
     <string name="no_name_given_text">Indtast venligst et navn til dit bed</string>
+    <string name="edit_sort_text">Redigér sort</string>
+    <string name="add_sort_text">Tilføj sort</string>
+    <string name="sort">Sort</string>
+    <string name="gem_sort">Gem sort</string>
 </resources>

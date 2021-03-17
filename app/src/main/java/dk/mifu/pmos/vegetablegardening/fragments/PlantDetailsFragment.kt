@@ -8,9 +8,12 @@ import android.widget.GridLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsBinding
+import dk.mifu.pmos.vegetablegardening.helpers.callbacks.PlantDetailsViewUpdateCallback
+import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -18,8 +21,10 @@ import java.util.*
 class PlantDetailsFragment: Fragment() {
     private val args: PlantDetailsFragmentArgs by navArgs()
     private val plantViewModel: PlantViewModel by activityViewModels()
+    private val bedViewModel: BedViewModel by activityViewModels()
 
     private lateinit var binding: FragmentPlantDetailsBinding
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPlantDetailsBinding.inflate(inflater, container, false)
@@ -45,17 +50,32 @@ class PlantDetailsFragment: Fragment() {
             addTextInfoLine(getString(R.string.seasons_text), myPlant.seasons.toString())
             addTextInfoLine(getString(R.string.last_watered_text), formatDate(myPlant.wateredDate))
             addTextInfoLine(getString(R.string.harvested_text), formatDate(myPlant.harvestedDate))
+            binding.editSortButton.visibility = View.VISIBLE
+            if (myPlant.sort.isBlank()) {
+                binding.editSortButton.text = getString(R.string.add_sort_text)
+            } else {
+                val sortData = addTextInfoLine(getString(R.string.sort), myPlant.sort)
+                bedViewModel.plants?.addOnMapChangedCallback(PlantDetailsViewUpdateCallback(args.coordinate!!, sortData, binding.editSortButton))
+            }
+            binding.editSortButton.setOnClickListener {
+                findNavController().navigate(PlantDetailsFragmentDirections.editSort(myPlant, args.coordinate!!))
+            }
         }
 
         return binding.root
     }
 
-    private fun addTextInfoLine(categoryText: String?, dataText: String?){
+    private fun refreshUI() {
+        // TODO
+    }
+
+    private fun addTextInfoLine(categoryText: String?, dataText: String?): TextView {
         val categoryParams = GridLayout.LayoutParams()
         categoryParams.setMargins(0,0, resources.getDimension(R.dimen.spacing_small).toInt(),0)
 
         val category = TextView(context)
         val data = TextView(context)
+        data.id = View.generateViewId()
 
         category.run {
             text = categoryText
@@ -68,6 +88,8 @@ class PlantDetailsFragment: Fragment() {
             addView(category)
             addView(data)
         }
+
+        return data
     }
 
     private fun formatDate(date: Date?): String {

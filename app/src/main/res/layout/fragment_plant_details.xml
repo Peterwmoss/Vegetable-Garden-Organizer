@@ -23,4 +23,14 @@
         android:id="@+id/gridlayout">
     </GridLayout>
 
+    <Button
+        android:id="@+id/edit_sort_button"
+        android:text="@string/edit_sort_text"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gridlayout" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
