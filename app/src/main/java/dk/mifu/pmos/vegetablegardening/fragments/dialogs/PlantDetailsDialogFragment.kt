@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsDialogBinding
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
+import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
+import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.util.*
 
 class PlantDetailsDialogFragment : DialogFragment() {
@@ -19,6 +21,7 @@ class PlantDetailsDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentPlantDetailsDialogBinding
 
     private val bedViewModel: BedViewModel by activityViewModels()
+    private val plantViewModel: PlantViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPlantDetailsDialogBinding.inflate(inflater, container, false)
@@ -44,11 +47,13 @@ class PlantDetailsDialogFragment : DialogFragment() {
         }
 
         binding.detailsButton.setOnClickListener {
-            navigateToPlantDetails(args.plant)
+            val myPlant = args.plant
+            val plant = plantViewModel.plants.value?.first { plant -> plant.name == myPlant.name }
+            navigateToPlantDetails(plant!!, myPlant)
         }
     }
 
-    private fun navigateToPlantDetails(plant: MyPlant) {
-        findNavController().navigate(PlantDetailsDialogFragmentDirections.toPlantDetails(plant))
+    private fun navigateToPlantDetails(plant: Plant, myPlant: MyPlant) {
+        findNavController().navigate(PlantDetailsDialogFragmentDirections.toPlantDetails(plant, myPlant))
     }
 }
