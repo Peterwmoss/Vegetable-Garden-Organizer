@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.activities.CreateBedActivity
-import dk.mifu.pmos.vegetablegardening.database.GardenDao
+import dk.mifu.pmos.vegetablegardening.database.BedDao
 import dk.mifu.pmos.vegetablegardening.database.GardenRepository
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentGardenOverviewBinding
@@ -28,7 +28,7 @@ class GardenOverviewFragment : Fragment() {
     private lateinit var binding: FragmentGardenOverviewBinding
 
     private val bedViewModel: BedViewModel by activityViewModels()
-    private var gardenDb: GardenDao? = null
+    private var gardenDb: BedDao? = null
     private var repository: GardenRepository? = null
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

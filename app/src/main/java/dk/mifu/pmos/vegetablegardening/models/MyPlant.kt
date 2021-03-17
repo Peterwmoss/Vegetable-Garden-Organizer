@@ -5,7 +5,10 @@ import java.util.*
 
 data class MyPlant (
         val name: String,
+        var sort: String = "",
         var seasons: Int = 1,
         var wateredDate: Date? = null,
         var harvestedDate: Date? = null,
+        var plantedDate: Date? = null,
+        var notes: String? = null,
 ) : Serializable
