@@ -5,7 +5,7 @@ import androidx.room.*
 import dk.mifu.pmos.vegetablegardening.models.Bed
 
 @Dao
-interface GardenDao {
+interface BedDao {
     @Query("SELECT * FROM beds")
     fun getAll(): LiveData<List<Bed>>
 

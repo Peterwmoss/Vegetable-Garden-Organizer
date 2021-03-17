@@ -40,9 +40,12 @@ class GsonAdapters {
                 // Plant
                 out.beginObject()
                 out.name("name").value(it.value.name)
+                out.name("sort").value(it.value.sort)
                 out.name("seasons").value(it.value.seasons)
                 out.name("wateredDate").value(dateToString(it.value.wateredDate))
                 out.name("harvestedDate").value(dateToString(it.value.harvestedDate))
+                out.name("plantedDate").value(dateToString(it.value.plantedDate))
+                out.name("notes").value(it.value.notes)
                 out.endObject()
 
                 out.endArray()
@@ -59,9 +62,12 @@ class GsonAdapters {
                 var row = 0
 
                 var name = ""
+                var sort = ""
                 var seasons = 0
                 var wateredDate: Date? = null
                 var harvestedDate: Date? = null
+                var plantedDate: Date? = null
+                var notes: String? = null
 
                 reader.beginArray()
                 reader.beginObject()
@@ -76,15 +82,18 @@ class GsonAdapters {
                 while (reader.hasNext()) {
                     when (reader.nextName()) {
                         "name" -> name = reader.nextString()
+                        "sort" -> sort = reader.nextString()
                         "seasons" -> { seasons = reader.nextInt() }
                         "wateredDate" -> { wateredDate = stringToDate(reader.nextString()) }
                         "harvestedDate" -> { harvestedDate = stringToDate(reader.nextString()) }
+                        "plantedDate" -> { plantedDate = stringToDate(reader.nextString()) }
+                        "notes" -> notes = reader.nextString()
                     }
                 }
                 reader.endObject()
                 reader.endArray()
 
-                map[Coordinate(col, row)] = MyPlant(name, seasons, wateredDate, harvestedDate)
+                map[Coordinate(col, row)] = MyPlant(name, sort, seasons, wateredDate, harvestedDate, plantedDate, notes)
             }
             reader.endArray()
 
