@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsBinding
-import dk.mifu.pmos.vegetablegardening.helpers.callbacks.PlantDetailsViewUpdateCallback
+import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateSortInViewCallback
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.text.SimpleDateFormat
@@ -66,10 +66,10 @@ class PlantDetailsFragment: Fragment() {
 
             if (myPlant.sort.isBlank()) {
                 editSortButton.text = getString(R.string.add_sort_text)
-                bedViewModel.plants?.addOnMapChangedCallback(PlantDetailsViewUpdateCallback(args.coordinate!!,getString(R.string.sort), myPlant.sort, ::addTextInfoLine, binding.editSortButton))
+                bedViewModel.plants?.addOnMapChangedCallback(UpdateSortInViewCallback(args.coordinate!!,getString(R.string.sort), myPlant.sort, ::addTextInfoLine, binding.editSortButton))
             } else {
                 editSortButton.text = getString(R.string.edit_sort_text)
-                bedViewModel.plants?.addOnMapChangedCallback(PlantDetailsViewUpdateCallback(args.coordinate!!, addTextInfoLine(getString(R.string.sort), myPlant.sort), binding.editSortButton))
+                bedViewModel.plants?.addOnMapChangedCallback(UpdateSortInViewCallback(args.coordinate!!, addTextInfoLine(getString(R.string.sort), myPlant.sort), binding.editSortButton))
             }
 
             binding.editSortButton.setOnClickListener {

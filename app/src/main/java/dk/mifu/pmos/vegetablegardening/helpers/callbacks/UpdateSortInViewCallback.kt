@@ -7,7 +7,7 @@ import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
 
-class PlantDetailsViewUpdateCallback() : BedPlantsChangedCallback() {
+class UpdateSortInViewCallback() : BedPlantsChangedCallback() {
     private lateinit var coordinate: Coordinate
     private lateinit var header: String
     private lateinit var data: String
