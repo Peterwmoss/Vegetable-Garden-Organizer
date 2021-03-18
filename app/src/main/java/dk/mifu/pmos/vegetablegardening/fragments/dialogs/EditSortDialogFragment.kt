@@ -31,6 +31,7 @@ class EditSortDialogFragment : DialogFragment(){
             val plantWithSort = args.myPlant
             plantWithSort.sort = binding.editSortEditText.text.toString()
             bedViewModel.plants?.put(args.coordinate, plantWithSort)
+            KeyboardHelper.hideKeyboard(context)
             dismiss()
         }
 

@@ -53,14 +53,19 @@ class PlantDetailsFragment: Fragment() {
             addTextInfoLine(getString(R.string.seasons_text), myPlant.seasons.toString())
             addTextInfoLine(getString(R.string.last_watered_text), formatDate(myPlant.wateredDate))
             addTextInfoLine(getString(R.string.harvested_text), formatDate(myPlant.harvestedDate))
-            binding.editSortButton.visibility = View.VISIBLE
+
+            val editSortButton = binding.editSortButton
+
+            editSortButton.visibility = View.VISIBLE
+
             if (myPlant.sort.isBlank()) {
-                binding.editSortButton.text = getString(R.string.add_sort_text)
+                editSortButton.text = getString(R.string.add_sort_text)
+                bedViewModel.plants?.addOnMapChangedCallback(PlantDetailsViewUpdateCallback(args.coordinate!!,getString(R.string.sort), myPlant.sort, ::addTextInfoLine, binding.editSortButton))
             } else {
-                binding.editSortButton.text = getString(R.string.edit_sort_text)
-                val sortTextView = addTextInfoLine(getString(R.string.sort), myPlant.sort)
-                bedViewModel.plants?.addOnMapChangedCallback(PlantDetailsViewUpdateCallback(args.coordinate!!, sortTextView, binding.editSortButton))
+                editSortButton.text = getString(R.string.edit_sort_text)
+                bedViewModel.plants?.addOnMapChangedCallback(PlantDetailsViewUpdateCallback(args.coordinate!!, addTextInfoLine(getString(R.string.sort), myPlant.sort), binding.editSortButton))
             }
+
             binding.editSortButton.setOnClickListener {
                 findNavController().navigate(PlantDetailsFragmentDirections.editSort(myPlant, args.coordinate!!))
             }
