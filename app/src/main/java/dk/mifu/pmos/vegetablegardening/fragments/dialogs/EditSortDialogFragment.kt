@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
@@ -13,7 +14,7 @@ import dk.mifu.pmos.vegetablegardening.databinding.FragmentEditSortDialogBinding
 import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 
-class EditSortDialogFragment : DialogFragment(){
+class EditSortDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentEditSortDialogBinding
 
     private val args: EditSortDialogFragmentArgs by navArgs()
@@ -40,8 +41,18 @@ class EditSortDialogFragment : DialogFragment(){
         return binding.root
     }
 
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity).supportActionBar?.title = bedViewModel.name
+    }
+
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
+        KeyboardHelper.hideKeyboard(context)
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
         KeyboardHelper.hideKeyboard(context)
     }
 

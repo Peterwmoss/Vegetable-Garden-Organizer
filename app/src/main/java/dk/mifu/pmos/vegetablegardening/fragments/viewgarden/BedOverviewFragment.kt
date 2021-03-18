@@ -1,13 +1,12 @@
 package dk.mifu.pmos.vegetablegardening.fragments.viewgarden
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import com.google.android.material.appbar.MaterialToolbar
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
@@ -27,6 +26,15 @@ class BedOverviewFragment: Fragment() {
     private val bedViewModel: BedViewModel by activityViewModels()
     private val plantViewModel: PlantViewModel by activityViewModels()
     private var plantableTileSlots: Boolean = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar, menu)
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -53,7 +61,6 @@ class BedOverviewFragment: Fragment() {
         insertTilesInView(orderedArrayList)
         addOnMapChangedCallbacks()
         setExplanationTextViews()
-
     }
 
     override fun onStart() {
