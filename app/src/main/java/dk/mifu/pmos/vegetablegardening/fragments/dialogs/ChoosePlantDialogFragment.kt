@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
@@ -49,7 +50,6 @@ class ChoosePlantDialogFragment : DialogFragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -61,6 +61,11 @@ class ChoosePlantDialogFragment : DialogFragment() {
         dialog!!.window!!.attributes = params
 
         binding.searchPlantEdittext.requestFocus()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity).supportActionBar?.title = bedViewModel.name
     }
 
     private inner class ViewHolder(view: View) : PlantViewHolder(view) {

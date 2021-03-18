@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -40,6 +41,11 @@ class PlantDetailsDialogFragment : DialogFragment() {
             binding.sort.text = args.plant.sort
         }
         setButtonListeners()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity).supportActionBar?.title = bedViewModel.name
     }
 
     private fun setButtonListeners() {

@@ -1,9 +1,7 @@
 package dk.mifu.pmos.vegetablegardening.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsBinding
-import dk.mifu.pmos.vegetablegardening.helpers.callbacks.PlantDetailsViewUpdateCallback
+import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateSortInViewCallback
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.text.SimpleDateFormat
@@ -26,6 +24,14 @@ class PlantDetailsFragment: Fragment() {
 
     private lateinit var binding: FragmentPlantDetailsBinding
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar, menu)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPlantDetailsBinding.inflate(inflater, container, false)
@@ -44,23 +50,28 @@ class PlantDetailsFragment: Fragment() {
         addTextInfoLine(titles?.get(3), formatDate(plant.latest))
         addTextInfoLine(titles?.get(4), formatSowingBoolean(plant.sowing))
         addTextInfoLine(titles?.get(5), plant.cropRotation)
-        addTextInfoLine(titles?.get(6), plant.sowingDepth)
-        addTextInfoLine(titles?.get(7), plant.distance.toString())
-        addTextInfoLine(titles?.get(8), plant.quantity)
+        addTextInfoLine(titles?.get(6), plant.quantity)
+        addTextInfoLine(titles?.get(7), plant.sowingDepth)
+        addTextInfoLine(titles?.get(8), plant.distance.toString())
         addTextInfoLine(titles?.get(9), plant.fertilizer)
         addTextInfoLine(titles?.get(10), plant.harvest)
         if (myPlant != null) {
             addTextInfoLine(getString(R.string.seasons_text), myPlant.seasons.toString())
             addTextInfoLine(getString(R.string.last_watered_text), formatDate(myPlant.wateredDate))
             addTextInfoLine(getString(R.string.harvested_text), formatDate(myPlant.harvestedDate))
-            binding.editSortButton.visibility = View.VISIBLE
+
+            val editSortButton = binding.editSortButton
+
+            editSortButton.visibility = View.VISIBLE
+
             if (myPlant.sort.isBlank()) {
-                binding.editSortButton.text = getString(R.string.add_sort_text)
+                editSortButton.text = getString(R.string.add_sort_text)
+                bedViewModel.plants?.addOnMapChangedCallback(UpdateSortInViewCallback(args.coordinate!!,getString(R.string.sort), myPlant.sort, ::addTextInfoLine, binding.editSortButton))
             } else {
-                binding.editSortButton.text = getString(R.string.edit_sort_text)
-                val sortTextView = addTextInfoLine(getString(R.string.sort), myPlant.sort)
-                bedViewModel.plants?.addOnMapChangedCallback(PlantDetailsViewUpdateCallback(args.coordinate!!, sortTextView, binding.editSortButton))
+                editSortButton.text = getString(R.string.edit_sort_text)
+                bedViewModel.plants?.addOnMapChangedCallback(UpdateSortInViewCallback(args.coordinate!!, addTextInfoLine(getString(R.string.sort), myPlant.sort), binding.editSortButton))
             }
+
             binding.editSortButton.setOnClickListener {
                 findNavController().navigate(PlantDetailsFragmentDirections.editSort(myPlant, args.coordinate!!))
             }

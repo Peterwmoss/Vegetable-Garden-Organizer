@@ -11,10 +11,11 @@
         android:layout_height="wrap_content"
         android:theme="@style/Theme.VegetableGardening.AppBarOverlay">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar_main"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar"
+            app:menu="@menu/toolbar"
             style="@style/ToolbarStyle"
             app:popupTheme="@style/Theme.VegetableGardening.PopupOverlay"
             />
