@@ -24,6 +24,7 @@ import dk.mifu.pmos.vegetablegardening.helpers.predicates.AllPlantsPredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.views.GridTile
+import dk.mifu.pmos.vegetablegardening.views.Tooltip
 
 class CreateGridFragment : Fragment() {
     private lateinit var binding: FragmentCreateGridBinding
@@ -40,6 +41,17 @@ class CreateGridFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.tooltip -> {
+                Tooltip.newTooltip(requireContext(), getString(R.string.guide_create_grid_text), requireView().rootView.findViewById(R.id.tooltip))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -116,7 +128,7 @@ class CreateGridFragment : Fragment() {
 
         binding.addRowButton.setOnClickListener{
             addTiles(column = false)
-            if(remainingHeight(bedViewModel.rows, requireContext(), binding.createGridGuideTextView) < tileSideLength){ //If there isn't enough room for a whole row more
+            if(remainingHeight(bedViewModel.rows, requireContext()) < tileSideLength){ //If there isn't enough room for a whole row more
                 binding.addRowButton.visibility = View.GONE
                 changePlacementOfRemoveButton(
                     column = false,
@@ -194,7 +206,7 @@ class CreateGridFragment : Fragment() {
             clone(binding.parentLayout)
             if(column){
                 connect(binding.addColumnButton.id, START, tileId!!, END)
-                connect(binding.addColumnButton.id, TOP, binding.createGridGuideTextView.id, BOTTOM)
+                connect(binding.addColumnButton.id, TOP, binding.parentLayout.id, TOP)
             } else {
                 connect(binding.addRowButton.id, TOP, tileId!!, BOTTOM)
                 connect(binding.addRowButton.id, START, binding.parentLayout.id, START)

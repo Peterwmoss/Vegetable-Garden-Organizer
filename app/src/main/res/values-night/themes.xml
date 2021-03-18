@@ -28,8 +28,8 @@
     </style>
 
     <style name="AcceptButtonStyle" parent="ButtonStyle">
-        <item name="backgroundTint">?attr/colorPrimaryVariant</item>
-        <item name="background">?attr/colorPrimaryVariant</item>
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="background">?attr/colorPrimary</item>
     </style>
 
     <style name="SpecialButtonStyle" parent="ButtonStyle">

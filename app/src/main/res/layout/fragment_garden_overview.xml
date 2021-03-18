@@ -7,16 +7,17 @@
     tools:context=".fragments.viewgarden.GardenOverviewFragment">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/bed_text"
-        android:textSize="@dimen/font_small"
-        android:paddingStart="@dimen/spacing_medium"
-        android:paddingEnd="@dimen/spacing_medium"
-        android:layout_marginTop="@dimen/spacing_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/empty_garden_text"
+        android:visibility="gone"
+        android:padding="@dimen/spacing_small"
+        android:textSize="@dimen/font_medium"
+        android:textAlignment="center"
         android:id="@+id/garden_text_view"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -26,7 +27,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/garden_text_view" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/new_location_btn"
