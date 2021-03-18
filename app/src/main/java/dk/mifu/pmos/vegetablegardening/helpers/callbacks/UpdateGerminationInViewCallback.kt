@@ -8,20 +8,20 @@ import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
 
-class UpdateSortInViewCallback(
+class UpdateGerminationInViewCallback(
         private val coordinate: Coordinate,
         private val textView: TextView,
         private val button: Button,
-        private val context: Context
-) : BedPlantsChangedCallback() {
+        private val textViewFunction: (Boolean?) -> String
+    ) : BedPlantsChangedCallback() {
 
     override fun onMapChanged(sender: ObservableMap<Coordinate, MyPlant>?, key: Coordinate?) {
         if (key != coordinate) return
 
         val myPlant = sender!![key]!!
-        textView.text = myPlant.sort ?: context.getString(R.string.missing_info)
+        textView.text = textViewFunction(myPlant.germinated)
 
-        if (myPlant.sort == null) button.setText(R.string.add_sort_text)
-        else button.setText(R.string.edit_sort_text)
+        if(myPlant.germinated == null) button.setText(R.string.add_germination_text)
+        else button.setText(R.string.edit_germination_text)
     }
 }

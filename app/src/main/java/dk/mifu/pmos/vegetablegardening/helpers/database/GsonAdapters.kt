@@ -46,6 +46,7 @@ class GsonAdapters {
                 out.name("harvestedDate").value(dateToString(it.value.harvestedDate))
                 out.name("plantedDate").value(dateToString(it.value.plantedDate))
                 out.name("notes").value(it.value.notes)
+                out.name("germinated").value(it.value.germinated)
                 out.endObject()
 
                 out.endArray()
@@ -62,12 +63,13 @@ class GsonAdapters {
                 var row = 0
 
                 var name = ""
-                var sort = ""
+                var sort: String? = null
                 var seasons = 0
                 var wateredDate: Date? = null
                 var harvestedDate: Date? = null
                 var plantedDate: Date? = null
                 var notes: String? = null
+                var germinated: Boolean? = null
 
                 reader.beginArray()
                 reader.beginObject()
@@ -88,12 +90,13 @@ class GsonAdapters {
                         "harvestedDate" -> { harvestedDate = stringToDate(reader.nextString()) }
                         "plantedDate" -> { plantedDate = stringToDate(reader.nextString()) }
                         "notes" -> notes = reader.nextString()
+                        "germinated" -> germinated = reader.nextBoolean()
                     }
                 }
                 reader.endObject()
                 reader.endArray()
 
-                map[Coordinate(col, row)] = MyPlant(name, sort, seasons, wateredDate, harvestedDate, plantedDate, notes)
+                map[Coordinate(col, row)] = MyPlant(name, sort, seasons, wateredDate, harvestedDate, plantedDate, notes, germinated)
             }
             reader.endArray()
 

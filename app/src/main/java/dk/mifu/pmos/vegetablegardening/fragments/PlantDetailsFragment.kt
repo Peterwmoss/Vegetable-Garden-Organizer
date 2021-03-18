@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsBinding
+import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateGerminationInViewCallback
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateSortInViewCallback
+import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.text.SimpleDateFormat
@@ -43,8 +45,8 @@ class PlantDetailsFragment: Fragment() {
         val titles = plantViewModel.categoryTitles.value
 
         binding.plantName.text = plant.name
-
         binding.gridlayout.columnCount = 2
+
         addTextInfoLine(titles?.get(1), plant.category)
         addTextInfoLine(titles?.get(2), formatDate(plant.earliest))
         addTextInfoLine(titles?.get(3), formatDate(plant.latest))
@@ -55,29 +57,53 @@ class PlantDetailsFragment: Fragment() {
         addTextInfoLine(titles?.get(8), plant.distance.toString())
         addTextInfoLine(titles?.get(9), plant.fertilizer)
         addTextInfoLine(titles?.get(10), plant.harvest)
+
         if (myPlant != null) {
             addTextInfoLine(getString(R.string.seasons_text), myPlant.seasons.toString())
             addTextInfoLine(getString(R.string.last_watered_text), formatDate(myPlant.wateredDate))
             addTextInfoLine(getString(R.string.harvested_text), formatDate(myPlant.harvestedDate))
+            val sortTextView = addTextInfoLine(getString(R.string.sort), formatSort(myPlant.sort))
+            val germinationTextView = addTextInfoLine(getString(R.string.germinated_boolean_text), formatGerminationBoolean(myPlant.germinated))
 
-            val editSortButton = binding.editSortButton
+            updateSort(myPlant, sortTextView)
+            updateGermination(myPlant, germinationTextView)
+            setListeners(myPlant)
+        }
+        return binding.root
+    }
 
-            editSortButton.visibility = View.VISIBLE
+    private fun updateSort(p: MyPlant, v: TextView) {
+        val editSortButton = binding.editSortButton
+        editSortButton.visibility = View.VISIBLE
 
-            if (myPlant.sort.isBlank()) {
-                editSortButton.text = getString(R.string.add_sort_text)
-                bedViewModel.plants?.addOnMapChangedCallback(UpdateSortInViewCallback(args.coordinate!!,getString(R.string.sort), myPlant.sort, ::addTextInfoLine, binding.editSortButton))
-            } else {
-                editSortButton.text = getString(R.string.edit_sort_text)
-                bedViewModel.plants?.addOnMapChangedCallback(UpdateSortInViewCallback(args.coordinate!!, addTextInfoLine(getString(R.string.sort), myPlant.sort), binding.editSortButton))
-            }
+        if (p.sort == null) editSortButton.text = getString(R.string.add_sort_text)
+        else editSortButton.text = getString(R.string.edit_sort_text)
 
-            binding.editSortButton.setOnClickListener {
-                findNavController().navigate(PlantDetailsFragmentDirections.editSort(myPlant, args.coordinate!!))
-            }
+        bedViewModel.plants?.addOnMapChangedCallback(
+                UpdateSortInViewCallback(args.coordinate!!, v, binding.editSortButton, requireContext())
+        )
+    }
+
+    private fun updateGermination(p: MyPlant, v: TextView){
+        val setGerminationButton = binding.setGerminationButton
+        setGerminationButton.visibility = View.VISIBLE
+
+        if(p.germinated == null) setGerminationButton.text = getString(R.string.add_germination_text)
+        else setGerminationButton.text = getString(R.string.edit_germination_text)
+
+        bedViewModel.plants?.addOnMapChangedCallback(
+                UpdateGerminationInViewCallback(args.coordinate!!, v, binding.setGerminationButton, ::formatGerminationBoolean)
+        )
+    }
+
+    private fun setListeners(myPlant: MyPlant) {
+        binding.editSortButton.setOnClickListener {
+            findNavController().navigate(PlantDetailsFragmentDirections.editSort(myPlant, args.coordinate!!))
         }
 
-        return binding.root
+        binding.setGerminationButton.setOnClickListener {
+            findNavController().navigate(PlantDetailsFragmentDirections.setGermination(myPlant, args.coordinate!!))
+        }
     }
 
     private fun addTextInfoLine(categoryText: String?, dataText: String?): TextView {
@@ -116,5 +142,18 @@ class PlantDetailsFragment: Fragment() {
         } else {
             getString(R.string.missing_info)
         }
+    }
+
+    private fun formatGerminationBoolean(germinated: Boolean?): String {
+        return if(germinated != null){
+            if(germinated) requireContext().getString(R.string.germinated_true_text)
+            else requireContext().getString(R.string.germinated_false_text)
+        } else {
+            requireContext().getString(R.string.missing_info)
+        }
+    }
+
+    private fun formatSort(sort: String?): String {
+        return sort ?: getString(R.string.missing_info)
     }
 }
