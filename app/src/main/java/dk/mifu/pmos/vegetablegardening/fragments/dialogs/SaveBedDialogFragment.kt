@@ -1,10 +1,8 @@
 package dk.mifu.pmos.vegetablegardening.fragments.dialogs
 
 import android.app.Dialog
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -23,7 +21,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class SaveBedDialogFragment : DialogFragment() {
-    private val bed: BedViewModel by activityViewModels()
+    private val bedViewModel: BedViewModel by activityViewModels()
 
     companion object {
         const val TAG = "SaveBedDialog"
@@ -61,12 +59,12 @@ class SaveBedDialogFragment : DialogFragment() {
     }
 
     private fun saveInDatabase(editText: EditText) {
-        bed.name = editText.text.toString()
+        bedViewModel.name = editText.text.toString()
         run {
             MainScope().launch(Dispatchers.IO) {
                 val dao = AppDatabase.getDatabase(requireContext()).bedDao()
                 val repository = GardenRepository(dao)
-                repository.insertBed(Bed(bed.name!!, bed.bedLocation!!, bed.plants!!.toMap()))
+                repository.insertBed(Bed(bedViewModel.name!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
             }
         }
     }

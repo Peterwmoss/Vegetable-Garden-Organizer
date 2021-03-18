@@ -12,4 +12,6 @@ data class Bed (
         @PrimaryKey var name: String,
         val bedLocation: BedLocation,
         val plants: Map<Coordinate, MyPlant> = HashMap(),
+        val columns: Int,
+        val rows: Int
 )
