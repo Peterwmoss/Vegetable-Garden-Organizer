@@ -146,10 +146,10 @@ class PlantDetailsFragment: Fragment() {
 
     private fun formatGerminationBoolean(germinated: Boolean?): String {
         return if(germinated != null){
-            if(germinated) getString(R.string.germinated_true_text)
-            else getString(R.string.germinated_false_text)
+            if(germinated) requireContext().getString(R.string.germinated_true_text)
+            else requireContext().getString(R.string.germinated_false_text)
         } else {
-            getString(R.string.missing_info)
+            requireContext().getString(R.string.missing_info)
         }
     }
 

@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
-import dk.mifu.pmos.vegetablegardening.databinding.FragmentEditSortDialogBinding
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentSetGerminationDialogBinding
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 
@@ -21,14 +20,16 @@ class SetGerminationDialogFragment: DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSetGerminationDialogBinding.inflate(inflater, container, false)
 
+        val myPlant = args.myPlant
+        binding.germinationSwitch.isChecked = myPlant.germinated ?: false
+
         binding.cancelGerminationButton.setOnClickListener {
             dialog?.cancel()
         }
 
         binding.saveGerminationButton.setOnClickListener {
-            val plant = args.myPlant
-            plant.germinated = binding.germinationSwitch.isChecked
-            bedViewModel.plants?.put(args.coordinate, plant)
+            myPlant.germinated = binding.germinationSwitch.isChecked
+            bedViewModel.plants?.put(args.coordinate, myPlant)
             dismiss()
         }
 
