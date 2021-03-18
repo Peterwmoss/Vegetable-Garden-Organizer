@@ -47,4 +47,5 @@
     <string name="sort">Sort</string>
     <string name="gem_sort">Gem sort</string>
     <string name="lexicon">Leksikon</string>
+    <string name="help_text">Hjælp</string>
 </resources>
