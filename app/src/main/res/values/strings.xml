@@ -47,6 +47,8 @@
     <string name="plant">Plantes</string>
     <string name="number_of_seasons">Sæsoner med denne plante her</string>
     <string name="details">Detaljer</string>
+    <string name="registered_water">Registreret som vandet</string>
+    <string name="registered_harvest">Registreret som høstet</string>
 
     <!-- Plant Germination -->
     <string name="germinated">Forspiret</string>
@@ -69,9 +71,6 @@
     <!-- Locations -->
     <string name="location_outdoors">Udendørs</string>
     <string name="location_greenhouse">Drivhus</string>
-
-    <string name="registered_water">Registreret som vandet</string>
-    <string name="registered_harvest">Registreret som høstet</string>
 
     <!-- Lexicon -->
     <string name="search">Søg</string>

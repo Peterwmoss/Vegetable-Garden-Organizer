@@ -53,6 +53,16 @@ class BedViewModel(application: Application) : AndroidViewModel(application) {
         getWeatherData()
     }
 
+    fun clear() {
+        name = null
+        bedLocation = null
+        plants = null
+        tileIds = null
+        plantsToWater = MutableLiveData()
+        columns = 0
+        rows = 0
+    }
+
     private fun getWeatherData() {
         getApplication<Application>().startService(Intent(getApplication(), LocationService::class.java))
         LocalBroadcastManager.getInstance(getApplication()).registerReceiver(WeatherDataReceiver(), IntentFilter("sendLocation"))

@@ -77,6 +77,7 @@ class GardenOverviewFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.bed)
+        bedViewModel.clear()
     }
 
     private fun setExplanatoryTextBasedOnItemCount(){
