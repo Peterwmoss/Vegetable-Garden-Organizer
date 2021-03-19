@@ -45,7 +45,6 @@
     <string name="edit_sort_text">Redigér sort</string>
     <string name="add_sort_text">Tilføj sort</string>
     <string name="sort">Sort</string>
-    <string name="gem_sort">Gem sort</string>
     <string name="lexicon">Leksikon</string>
     <string name="help_text">Hjælp</string>
 </resources>

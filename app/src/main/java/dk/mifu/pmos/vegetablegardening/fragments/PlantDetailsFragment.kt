@@ -14,6 +14,7 @@ import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsBinding
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateSortInViewCallback
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
+import dk.mifu.pmos.vegetablegardening.views.Tooltip
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,6 +32,16 @@ class PlantDetailsFragment: Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.tooltip -> {
+                Tooltip.newTooltip(requireContext(), getString(R.string.guide_create_grid_text), requireView().rootView.findViewById(R.id.tooltip))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

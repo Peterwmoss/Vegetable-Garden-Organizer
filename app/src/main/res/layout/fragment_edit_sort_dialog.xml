@@ -42,7 +42,7 @@
 
     <Button
         android:id="@+id/save_sort_button"
-        android:text="@string/gem_sort"
+        android:text="@string/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/AcceptButtonStyle"
