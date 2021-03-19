@@ -8,38 +8,75 @@
     android:layout_height="match_parent"
     tools:context=".fragments.dialogs.PlantDetailsDialogFragment">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/plant_details_dialog_plant"
+        android:textSize="@dimen/font_large"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/plant_details_dialog_plant"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/sort"
+        android:textSize="@dimen/font_small"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/sort"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/title_plants_details_dialog"
+        android:text="@string/title_dialog_plant_details"
+        android:textSize="@dimen/font_medium"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/title_plants_details_dialog"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="@dimen/spacing_small"
+        android:id="@+id/explanatory_text_plants_details_dialog"
+        android:text="@string/guide_dialog_plant_details"/>
+
     <Button
         android:id="@+id/water_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/spacing_small"
-        android:text="@string/water_text"
-        android:textSize="@dimen/font_small"
-        android:backgroundTint="@color/blue"
+        android:text="@string/water"
+        style="@style/SpecialButtonStyle"
         app:layout_constraintEnd_toStartOf="@+id/harvest_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/explanatory_text_plants_details_dialog" />
 
     <Button
         android:id="@+id/harvest_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_small"
-        android:text="@string/harvest_text"
-        android:textSize="@dimen/font_small"
-        android:backgroundTint="@color/green"
+        android:text="@string/harvest"
+        style="@style/SpecialButtonStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/water_button"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/explanatory_text_plants_details_dialog" />
 
     <Button
         android:id="@+id/details_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
-        android:text="@string/details_text"
-        android:textSize="@dimen/font_small"
-        android:backgroundTint="@color/beige"
+        android:text="@string/details"
+        style="@style/ButtonStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/water_button" />

@@ -12,6 +12,9 @@
         <action
             android:id="@+id/see_bed_action"
             app:destination="@id/bedOverviewFragment" />
+        <action
+            android:id="@+id/toSpecifyLocation"
+            app:destination="@id/specifyLocationFragment" />
     </fragment>
     <fragment
         android:id="@+id/bedOverviewFragment"
@@ -26,10 +29,23 @@
     </fragment>
     <fragment
         android:id="@+id/plantDetails"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.viewgarden.PlantDetailsFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.PlantDetailsFragment"
         android:label="PlantDetails" >
         <argument android:name="plant"
-            app:argType="dk.mifu.pmos.vegetablegardening.models.MyPlant" />
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Plant" />
+        <argument android:name="myplant"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.MyPlant"
+            app:nullable="true" />
+        <argument
+            android:name="coordinate"
+            app:nullable="true"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
+        <action
+            android:id="@+id/edit_sort"
+            app:destination="@id/editSortDialogFragment" />
+        <action
+            android:id="@+id/set_germination"
+            app:destination="@id/setGerminationDialogFragment"/>
     </fragment>
     <dialog
         android:id="@+id/plantDetailsDialogFragment"
@@ -55,5 +71,62 @@
         <argument
             android:name="predicate"
             app:argType="dk.mifu.pmos.vegetablegardening.helpers.predicates.Predicate" />
+    </dialog>
+    <fragment
+        android:id="@+id/lexiconFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.lexicon.LexiconFragment"
+        android:label="LexiconFragment" >
+        <action
+            android:id="@+id/to_plant_details"
+            app:destination="@id/plantDetails" />
+    </fragment>
+    <dialog
+        android:id="@+id/editSortDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.EditSortDialogFragment"
+        android:label="EditSortDialogFragment" >
+        <argument
+            android:name="myPlant"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.MyPlant" />
+        <argument
+            android:name="coordinate"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
+    </dialog>
+    <dialog
+        android:id="@+id/setGerminationDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.SetGerminationDialogFragment"
+        android:label="SetGerminationDialogFragment">
+        <argument
+            android:name="myPlant"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.MyPlant" />
+        <argument
+            android:name="coordinate"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
+    </dialog>
+    <fragment
+        android:id="@+id/createGridFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.creategarden.CreateGridFragment"
+        android:label="CreateGridFragment" >
+        <action
+            android:id="@+id/choose_plant_action"
+            app:destination="@id/choosePlantFragment" />
+        <action
+            android:id="@+id/to_save_bed_dialog"
+            app:destination="@id/saveBedDialogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/specifyLocationFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.creategarden.SpecifyLocationFragment"
+        android:label="SpecifyLocationFragment" >
+        <action
+            android:id="@+id/next_action"
+            app:destination="@id/createGridFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/saveBedDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.SaveBedDialogFragment"
+        android:label="SaveBedDialogFragment">
+        <action
+            android:id="@+id/save_bed_action"
+            app:destination="@id/gardenOverviewFragment" />
     </dialog>
 </navigation>

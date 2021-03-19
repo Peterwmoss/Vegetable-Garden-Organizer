@@ -5,22 +5,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bed_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:fontFamily="@font/roboto"
-        android:textSize="@dimen/font_medium"
-        />
-
-    <TextView
         android:layout_width="@dimen/text_view"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/plantable_explanation_image_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bed_text_view"
+        app:layout_constraintTop_toTopOf="parent"
         android:fontFamily="@font/roboto"
         android:textSize="@dimen/font_small"
         android:id="@+id/plantable_explanation_text_view"
@@ -32,7 +21,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@id/plantable_explanation_text_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bed_text_view"
+        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/plantable_explanation_image_view"
         android:layout_marginTop="@dimen/spacing_small"
         android:layout_marginStart="@dimen/spacing_small"/>

@@ -1,21 +1,18 @@
 package dk.mifu.pmos.vegetablegardening.fragments.viewgarden
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Constraints
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
-import dk.mifu.pmos.vegetablegardening.activities.CreateBedActivity
-import dk.mifu.pmos.vegetablegardening.database.GardenDao
+import dk.mifu.pmos.vegetablegardening.database.BedDao
 import dk.mifu.pmos.vegetablegardening.database.GardenRepository
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentGardenOverviewBinding
@@ -23,32 +20,69 @@ import dk.mifu.pmos.vegetablegardening.enums.BedLocation.Greenhouse
 import dk.mifu.pmos.vegetablegardening.enums.BedLocation.Outdoors
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
+import dk.mifu.pmos.vegetablegardening.views.Tooltip
 
 class GardenOverviewFragment : Fragment() {
     private lateinit var binding: FragmentGardenOverviewBinding
 
     private val bedViewModel: BedViewModel by activityViewModels()
-    private var gardenDb: GardenDao? = null
+    private var gardenDb: BedDao? = null
     private var repository: GardenRepository? = null
+
+    private lateinit var adapter: GardenOverviewAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.tooltip -> {
+                if (adapter.itemCount == 0)
+                    Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_empty_garden), requireView().rootView.findViewById(R.id.tooltip))
+                else
+                    Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_garden_with_beds), requireView().rootView.findViewById(R.id.tooltip))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentGardenOverviewBinding.inflate(inflater, container, false)
-        gardenDb = AppDatabase.getDatabase(requireContext()).gardenDao()
+        gardenDb = AppDatabase.getDatabase(requireContext()).bedDao()
         repository = GardenRepository(gardenDb!!)
 
         val recyclerView = binding.gardensRecyclerView
 
         recyclerView.layoutManager = GridLayoutManager(context, 2)
         repository?.getAllBeds()?.observe(viewLifecycleOwner, {
-            val adapter = GardenOverviewAdapter(it)
+            adapter = GardenOverviewAdapter(it)
             recyclerView.adapter = adapter
+            setExplanatoryTextBasedOnItemCount()
         })
 
         binding.newLocationBtn.setOnClickListener {
-            navigateToCreateBedActivity()
+            navigateToSpecifyLocationFragment()
         }
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.bed)
+        bedViewModel.clear()
+    }
+
+    private fun setExplanatoryTextBasedOnItemCount(){
+        if (adapter.itemCount == 0)
+            binding.gardenTextView.visibility = View.VISIBLE
     }
 
     private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -75,8 +109,8 @@ class GardenOverviewFragment : Fragment() {
             holder.bed = dataSet[position]
 
             when (dataSet[position].bedLocation) {
-                Outdoors -> holder.bedImage.setImageResource(R.drawable.outdoors_normal)
-                Greenhouse -> holder.bedImage.setImageResource(R.drawable.greenhouse_normal)
+                Outdoors -> holder.bedImage.setImageResource(R.drawable.outdoors)
+                Greenhouse -> holder.bedImage.setImageResource(R.drawable.greenhouse)
             }
 
             holder.bedImage.layoutParams = Constraints.LayoutParams(
@@ -90,12 +124,11 @@ class GardenOverviewFragment : Fragment() {
         }
     }
 
-    private fun navigateToCreateBedActivity() {
-        val createIntent = Intent(context, CreateBedActivity::class.java)
-        startActivity(createIntent)
+    private fun navigateToSpecifyLocationFragment() {
+        findNavController().navigate(GardenOverviewFragmentDirections.toSpecifyLocation())
     }
 
     private fun navigateToBedOverviewFragment() {
-        requireView().findNavController().navigate(GardenOverviewFragmentDirections.seeBedAction())
+        findNavController().navigate(GardenOverviewFragmentDirections.seeBedAction())
     }
 }

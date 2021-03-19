@@ -1,27 +1,28 @@
 package dk.mifu.pmos.vegetablegardening.fragments.creategarden
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.ObservableArrayMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
-import dk.mifu.pmos.vegetablegardening.fragments.dialogs.SaveBedDialogFragment
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.START
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.TOP
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.BOTTOM
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.END
+import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.remainingHeight
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.AllPlantsPredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.views.GridTile
+import dk.mifu.pmos.vegetablegardening.views.Tooltip
 
 class CreateGridFragment : Fragment() {
     private lateinit var binding: FragmentCreateGridBinding
@@ -31,9 +32,24 @@ class CreateGridFragment : Fragment() {
     private var height = 0
     private var tileSideLength = 0
 
-    //Initial number of grid tiles
-    private var columns = 1
-    private var rows = 1
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.tooltip -> {
+                Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_create_grid), requireView().rootView.findViewById(R.id.tooltip))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -57,13 +73,13 @@ class CreateGridFragment : Fragment() {
         setSaveBedListener()
 
         bedViewModel.plants?.addOnMapChangedCallback(BedCallback(requireView(), bedViewModel))
+
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.toolbar_create_grid)
     }
 
     private fun setSaveBedListener() {
         binding.saveGardenButton.setOnClickListener {
-
-            val dialog = SaveBedDialogFragment()
-            dialog.show(childFragmentManager, SaveBedDialogFragment.TAG)
+            findNavController().navigate(CreateGridFragmentDirections.toSaveBedDialog())
         }
     }
 
@@ -86,7 +102,8 @@ class CreateGridFragment : Fragment() {
         bedViewModel.tileIds?.set(coordinate2, initialTile2.id)
         initialTile2.snapToGrid(null,initialTile1.id,false)
 
-        rows++
+        bedViewModel.columns = 1
+        bedViewModel.rows = 2
 
         addTiles(column = true)
     }
@@ -94,7 +111,7 @@ class CreateGridFragment : Fragment() {
     private fun setListeners() {
         binding.addColumnButton.setOnClickListener{
             addTiles(column = true)
-            if(columns==4){
+            if(bedViewModel.columns==4){
                 binding.addColumnButton.visibility = View.GONE
                 changePlacementOfRemoveButton(
                     column = true,
@@ -108,7 +125,7 @@ class CreateGridFragment : Fragment() {
 
         binding.addRowButton.setOnClickListener{
             addTiles(column = false)
-            if(height-(tileSideLength*rows)-GridHelper.buttonSideLength < tileSideLength){ //If there isn't enough room for a whole row more
+            if(remainingHeight(bedViewModel.rows, requireContext()) < tileSideLength){ //If there isn't enough room for a whole row more
                 binding.addRowButton.visibility = View.GONE
                 changePlacementOfRemoveButton(
                     column = false,
@@ -129,7 +146,7 @@ class CreateGridFragment : Fragment() {
                     buttonId = binding.removeColumnButton.id
                 )
             }
-            if(columns==2){
+            if(bedViewModel.columns==2){
                 binding.removeColumnButton.visibility = View.GONE
             }
         }
@@ -144,43 +161,43 @@ class CreateGridFragment : Fragment() {
                 )
             }
 
-            if(rows==2){
+            if(bedViewModel.rows==2){
                 binding.removeRowButton.visibility = View.GONE
             }
         }
     }
 
     private fun removeTiles(column: Boolean) {
-        for (i in 0 until if (column) rows else columns) {
-            val coordinate = if (column) Coordinate(columns-1, i) else Coordinate(i, rows-1)
+        for (i in 0 until if (column) bedViewModel.rows else bedViewModel.columns) {
+            val coordinate = if (column) Coordinate(bedViewModel.columns-1, i) else Coordinate(i, bedViewModel.rows-1)
             val gridTileId = bedViewModel.tileIds?.get(coordinate)
             val gridTile = requireView().findViewById<Button>(gridTileId!!)
             binding.parentLayout.removeView(gridTile)
 
             bedViewModel.tileIds?.remove(coordinate)
         }
-        if (column) columns-- else rows--
+        if (column) bedViewModel.columns-- else bedViewModel.rows--
         snapButtonsToRestOfGrid(column)
     }
 
     private fun addTiles(column: Boolean) {
-        for (i in 0 until if (column) rows else columns) {
-            val coordinate = if (column) Coordinate(columns, i) else Coordinate(i, rows)
+        for (i in 0 until if (column) bedViewModel.rows else bedViewModel.columns) {
+            val coordinate = if (column) Coordinate(bedViewModel.columns, i) else Coordinate(i, bedViewModel.rows)
             val gridTile = GridTile(requireContext(), gridTileListener(coordinate), binding)
             binding.parentLayout.addView(gridTile)
 
             bedViewModel.tileIds?.set(coordinate, gridTile.id) //Update garden with new tile
 
-            val prevTileId = bedViewModel.tileIds?.get(if (column) Coordinate(columns-1, i) else Coordinate(i-1, rows))
-            val upperTileId = bedViewModel.tileIds?.get(if (column) Coordinate(columns, i - 1) else Coordinate(i, rows - 1))
+            val prevTileId = bedViewModel.tileIds?.get(if (column) Coordinate(bedViewModel.columns-1, i) else Coordinate(i-1, bedViewModel.rows))
+            val upperTileId = bedViewModel.tileIds?.get(if (column) Coordinate(bedViewModel.columns, i - 1) else Coordinate(i, bedViewModel.rows - 1))
             gridTile.snapToGrid(prevTileId, upperTileId, column)
         }
-        if (column) columns++ else rows++
+        if (column) bedViewModel.columns++ else bedViewModel.rows++
         snapButtonsToRestOfGrid(column)
     }
 
     private fun snapButtonsToRestOfGrid(column: Boolean) {
-        val tileId = bedViewModel.tileIds?.get(if (column) Coordinate(columns-1, 0) else Coordinate(0, rows-1))
+        val tileId = bedViewModel.tileIds?.get(if (column) Coordinate(bedViewModel.columns-1, 0) else Coordinate(0, bedViewModel.rows-1))
         val constraintSet = ConstraintSet()
         constraintSet.apply {
             clone(binding.parentLayout)
@@ -211,6 +228,6 @@ class CreateGridFragment : Fragment() {
     }
 
     private fun navigateToChoosePlantFragment(coordinate: Coordinate) {
-        requireView().findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(coordinate, AllPlantsPredicate()))
+        findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(coordinate, AllPlantsPredicate()))
     }
 }

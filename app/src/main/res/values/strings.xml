@@ -1,35 +1,85 @@
 <resources>
     <string name="app_name">Køkkenhave</string>
-    <string name="createBed">Nyt bed</string>
-    <string name="create_location_text">Hvor er dit bed?</string>
-    <string name="outdoors">Udendørs</string>
-    <string name="indoors">Indendørs</string>
-    <string name="greenhouse">Drivhus</string>
-    <string name="search_text">Søg</string>
-    <string name="select_plant_text">Vælg plante</string>
-    <string name="add_column_text">Tilføj kolonne</string>
-    <string name="add_row_text">Tilføj række</string>
-    <string name="bed_button_text">Bed</string>
-    <string name="plant_button_text">Planter</string>
-    <string name="save_garden_text">Gem bed</string>
-    <string name="name_your_garden">Navngiv dit bed</string>
-    <string name="harvest_text">Høst</string>
-    <string name="water_text">Vand</string>
-    <string name="details_text">Detaljer</string>
-    <string name="no_plantables_text">Der er ingen planter, der kan plantes i øjeblikket</string>
+
+    <!-- Toolbar -->
+    <string name="toolbar_location">Vælg lokation</string>
+    <string name="toolbar_create_grid">Design dit bed</string>
+
+    <!-- Guides -->
+    <string name="help">Hjælp</string>
+    <string name="guide_dialog_plant_details">Her kan du bogføre, hvis du har vandet eller høstet din plante.\nTryk på detaljer for at se mere om din plante.</string>
+    <string name="guide_plantable_plants">Der er i øjeblikket mulighed for at plante/så i dit bed!</string>
+    <string name="guide_no_plantable_plants">Der er ingen planter, der kan plantes i øjeblikket</string>
+    <string name="guide_check_water">Baseret på vejret i dit område, kan det være, dine planter har brug for vand</string>
+
+    <!-- Tooltips -->
+    <string name="tooltip_garden_with_beds">Klik på et af dine bed eller opret et nyt på plus-knappen nede i hjørnet</string>
+    <string name="tooltip_create_grid">Udfyld dit bed ved at trykke på en firkant og vælg fra listen.\n\nDu kan ændre størrelsen på bedet ved plus- og minus-knapperne.</string>
+    <string name="tooltip_empty_garden">Du har ikke oprettet nogen bed.\n\nTryk på plus-knappen nede i hjørnet for at komme i gang og oprette dine bed.</string>
+    <string name="tooltip_bed_overview">Her kan du se de planter, som er plantet i dit bed.\n\nKlik på en plante for at flere informationer om planten.</string>
+    <string name="tooltip_plant_details_planted">Her kan du se alle informationer om din plante.\n\nDu kan ændre om planten er forspiret og hvilken sort, der er plantet her.</string>
+    <string name="tooltip_plant_details_not_planted">Her kan du se alle informationer om den valgte plante.</string>
+    <string name="tooltip_lexicon">Her kan du se alle planter, som er oprettet.\n\nVælg en plante for at se flere informationer om planten.\n\nDu kan også lave en ny plante ved at klikke på plus-knappen nede i hjørnet.</string>
+
+    <!-- Titles -->
+    <string name="title_location">Hvor er dit bed?</string>
+    <string name="title_dialog_germination">Er denne plante blevet forspiret?</string>
+    <string name="title_dialog_plant_details">Hvad har du foretaget dig?</string>
+
+    <!-- Grid -->
+    <string name="add_column">Tilføj kolonne</string>
+    <string name="add_row">Tilføj række</string>
+
+    <!-- Plants -->
+    <string name="select_plant">Vælg plante</string>
+    <string name="plants">Planter</string>
     <string name="plantable_pants">Plantbare planter</string>
-    <string name="explanation_new_plants">Der er i øjeblikket mulighed for at plante/så i dit bed!</string>
-    <string name="weather_api_url">https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?%1$s</string>
-    <string name="explanation_check_water">Baseret på vejret i dit område, kan det være, dine planter har brug for vand</string>
+    <string name="harvest">Høst</string>
+    <string name="water">Vand</string>
+    <string name="new_plant">Ny plante</string>
+
+    <!-- Plant Details -->
+    <string name="name">Navn</string>
     <string name="missing_info">Ingen info</string>
+    <string name="harvested">Høstet</string>
+    <string name="last_watered">Sidst vandet</string>
     <string name="sow">Sås</string>
     <string name="plant">Plantes</string>
-    <string name="seasons_text">Sæsoner med denne plante her</string>
-    <string name="last_watered_text">Sidst vandet</string>
-    <string name="harvested_text">Høstet</string>
-    <string name="name_hint_text">Navn</string>
-    <string name="name_bed_text">Navngiv dit bed</string>
+    <string name="number_of_seasons">Sæsoner med denne plante her</string>
+    <string name="details">Detaljer</string>
+    <string name="registered_water">Registreret som vandet</string>
+    <string name="registered_harvest">Registreret som høstet</string>
+
+    <!-- Plant Germination -->
+    <string name="germinated">Forspiret</string>
+    <string name="not_germinated">Ikke forspiret</string>
+    <string name="set_germination_status">Sæt forspiring</string>
+    <string name="edit_germination_status">Ændr forspiring</string>
+
+    <!-- Plant Sort -->
+    <string name="sort">Sort</string>
+    <string name="edit_sort">Redigér sort</string>
+    <string name="add_sort">Tilføj sort</string>
+
+    <!-- Beds -->
+    <string name="bed">Bed</string>
+    <string name="new_bed">Nyt bed</string>
+    <string name="save_bed">Gem bed</string>
+    <string name="name_your_bed">Navngiv dit bed</string>
+    <string name="no_bed_name_given">Indtast venligst et navn til dit bed</string>
+
+    <!-- Locations -->
+    <string name="location_outdoors">Udendørs</string>
+    <string name="location_greenhouse">Drivhus</string>
+
+    <!-- Lexicon -->
+    <string name="search">Søg</string>
+    <string name="lexicon">Leksikon</string>
+
+    <!-- Weather -->
+    <string name="weather_api_url">https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?%1$s</string>
+
+    <!-- General Dialogs -->
     <string name="cancel">Annullér</string>
     <string name="save">Gem</string>
-    <string name="no_name_given_text">Indtast venligst et navn til dit bed</string>
 </resources>

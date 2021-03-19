@@ -58,7 +58,7 @@ Hvert bed har det ikon tilknyttet som angiver hvilken lokation brugeren valgte a
 \subsubsection{Bed}
 Når man trykker på et bestemt bed fra oversigten, vil man blive navigeret til \texttt{BedOverviewFragment}. Den løber alle planter igennem gemt i \texttt{BedViewModel}, som holder styr på det nuværende bed. I løkken tilføjes planterne til et array, så de er placeret i den rigtige røkkefølge og derefter er let at sætte ind i et simpelt \texttt{GridView}, da et \texttt{ObservableMap} i sig selv ikke er sorteret.
 
-Fra dette GridView er det muligt at navigere sig videre og se detaljerne om den enkelte plante, så man ikke behøver at gå et andet sted hen for at finde informationer om sine planter.
+Fra dette GridView er det muligt at navigere sig videre og se detaljerne om den enkelte plante, så man ikke behøver at gå et andet sted hen for at finde informationer om sine planter. Under detaljerne af den enkelte plante, er der også mulighed for at tilpasse den efter brugerens behov. De kan tilføje en sort til planten eller notere, om den har været forspireret ved at trykke på den tilsvarende knap. Hver knap åbner en dialog-boks.
 
 Hvis der er mulighed for at så nye planter ifølge årstiden, vil der komme et \texttt{TextView} med forklarende tekst samt et lille ikon på de tomme felter i bedet, hvor der er mulighed for at plante. Hvis man trykker på et felt med et sådant ikon, vil man blive mødt med samme mulighed for at vælge planter som da man oprettede haven, så man let kan plante en ny plante.
 
@@ -74,6 +74,10 @@ Til at hente brugerens lokation har vi lavet en service, der kører når man bru
 
 Man kan se alt data, som er gemt om planten i et "detaljeview" ved at klikke på planten og i dialogboksen klikke på detaljer. Vi har gjort det i to steps for ikke at brugeren skulle blive bombaderet med informationer i den dialogboks som der kommer frem når man klikker på planten og blot vil vælge om man har vandet eller høstet fra planten.
 
+\subsection{Leksikon}
+
+Vi har lavet en oversigt over alle planter, som man kan navigere til ved brug af menuen i bunden af skærmen. Her kan man klikke på ``Planter'' og får vist en liste over planterne. Hvis man vælger en plante, kommer man videre ind og kan se alle informationer, som appen har, om denne plante.
+
 \subsection{Lagring af data}
 
 \subsubsection{Permanent data}
@@ -83,6 +87,3 @@ Til at tilgå vores data gør vi brug af DAO'er - Data Access Objects. Disse er 
 For at gøre arbejdet med disse DAO'er lidt lettere for os har vi lavet et \texttt{GardenRepository}, som laver en yderligere abstraktion for at vi kan kalde metoderne (såsom \texttt{updateGarden}, \texttt{insertGarden} osv.) asynkront, så vi ikke blokerer for UI- / Main-tråden mens vi lægger data i databasen.
 
 Selve databasen er en singleton-instans, så vi ikke behøver at lave en ny instans hver gang vi skal tilgå databasen, da det er en relativt omstændig process. Dette er også anbefalet af Google på deres Android developer side \hyperlink{https://developer.android.com/training/data-storage/room/#database}{https://developer.android.com/training/data-storage/room/#database}
-
-\subsubsection{Dynamisk data}
-Her noget om viewmodels og csv-filen

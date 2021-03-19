@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="green">#3F8D6B</color>
-    <color name="salmon">#FDB887</color>
-    <color name="beige">#C57D59</color>
-    <color name="black">#0D0A07</color>
-    <color name="white">#FDFFD6</color>
-    <color name="blue">#8DE2D6</color>
-    <color name="yellow">#FFF370</color>
+    <color name="dark_green">#00663f</color>
+    <color name="light_green">#2fac66</color>
+    <color name="blue">#87cce3</color>
+    <color name="brown">#876a49</color>
+    <color name="orange">#f9b233</color>
+    <color name="yellow">#ffdd27</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 </resources>

@@ -1,14 +1,8 @@
 package dk.mifu.pmos.vegetablegardening.database
 
 import android.content.Context
-import androidx.arch.core.executor.ArchTaskExecutor
-import androidx.arch.core.executor.TaskExecutor
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LifecycleRegistry
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import dk.mifu.pmos.vegetablegardening.TestUtils
 import dk.mifu.pmos.vegetablegardening.TestUtils.InstantExecutorExtension
 import dk.mifu.pmos.vegetablegardening.TestUtils.TestLifeCycleOwner
 import dk.mifu.pmos.vegetablegardening.enums.BedLocation
@@ -17,15 +11,13 @@ import dk.mifu.pmos.vegetablegardening.enums.BedLocation.Outdoors
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.extension.*
 import java.io.IOException
 
 
 class AppDatabaseTest {
-    private lateinit var gardenDao: GardenDao
+    private lateinit var bedDao: BedDao
     private lateinit var db: AppDatabase
 
     companion object {
@@ -38,7 +30,7 @@ class AppDatabaseTest {
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
-        gardenDao = db.gardenDao()
+        bedDao = db.bedDao()
     }
 
     @AfterEach
@@ -51,50 +43,70 @@ class AppDatabaseTest {
     inner class CreateBedTest {
         private fun createBedNameParameters(): Iterable<Pair<Bed, String>> {
             return listOf(
-                    Pair(Bed("Test1", Outdoors, HashMap()), "Test2"),
-                    Pair(Bed("Test2", Outdoors, HashMap()), "Test2"),
+                    Pair(Bed("Test1", Outdoors, HashMap(), columns = 0, rows = 0), "Test1"),
+                    Pair(Bed("Test2", Outdoors, HashMap(), columns = 0, rows = 0), "Test2"),
             )
         }
 
         @TestFactory
         fun createBedWithNameTest() = createBedNameParameters().map { (bed, name) ->
             DynamicTest.dynamicTest("Create bed with a name specified stores a bed with that name") {
-                gardenDao.insert(bed)
-                val byName = gardenDao.findByName(bed.name)
+                bedDao.insert(bed)
+                val byName = bedDao.findByName(bed.name)
                 Assertions.assertEquals(name, byName.name)
             }
         }
 
         private fun createBedLocationParameters(): Iterable<Pair<Bed, BedLocation>> {
             return listOf(
-                    Pair(Bed("Test1", Outdoors, HashMap()), Outdoors),
-                    Pair(Bed("Test2", Greenhouse, HashMap()), Greenhouse),
+                    Pair(Bed("Test1", Outdoors, HashMap(), columns = 0, rows = 0), Outdoors),
+                    Pair(Bed("Test2", Greenhouse, HashMap(), columns = 0, rows = 0), Greenhouse),
             )
         }
 
         @TestFactory
         fun createBedWithLocationTest() = createBedLocationParameters().map { (bed, location) ->
             DynamicTest.dynamicTest("Create bed with a location specified stores a bed with that location") {
-                gardenDao.insert(bed)
-                val byName = gardenDao.findByName(bed.name)
+                bedDao.insert(bed)
+                val byName = bedDao.findByName(bed.name)
                 Assertions.assertEquals(location, byName.bedLocation)
             }
         }
 
         private fun createBedPlantsParameters(): Iterable<Pair<Bed, Map<Coordinate, MyPlant>>> {
             return listOf(
-                    Pair(Bed("Test1", Greenhouse), HashMap()),
-                    Pair(Bed("Test2", Greenhouse, mapOf(pair1)), mapOf(pair1)),
-                    Pair(Bed("Test3", Greenhouse, mapOf(pair1, pair2)), mapOf(pair1, pair2)),
+                    Pair(Bed("Test1", Greenhouse, columns = 0, rows = 0), HashMap()),
+                    Pair(Bed("Test2", Greenhouse, mapOf(pair1), columns = 0, rows = 0), mapOf(pair1)),
+                    Pair(Bed("Test3", Greenhouse, mapOf(pair1, pair2), columns = 0, rows = 0), mapOf(pair1, pair2)),
             )
         }
 
         @TestFactory
         fun createBedWithPlantsTest() = createBedPlantsParameters().map { (bed, plants) ->
             DynamicTest.dynamicTest("Create bed with plants specified stores a bed with those plants") {
-                gardenDao.insert(bed)
-                val byName = gardenDao.findByName(bed.name)
+                bedDao.insert(bed)
+                val byName = bedDao.findByName(bed.name)
                 Assertions.assertEquals(plants, byName.plants)
+            }
+        }
+
+        private fun createBedSizeParameters(): Iterable<Pair<Bed, Pair<Int, Int>>>{
+            return listOf(
+                    Pair(Bed("Test1", Greenhouse, columns = 0, rows = 0), Pair(0,0)),
+                    Pair(Bed("Test2", Greenhouse, columns = 1, rows = 0), Pair(1,0)),
+                    Pair(Bed("Test3", Greenhouse, columns = 0, rows = 1), Pair(0,1)),
+                    Pair(Bed("Test4", Greenhouse, columns = 1, rows = 1), Pair(1,1)),
+                    Pair(Bed("Test5", Greenhouse, columns = 2, rows = 1), Pair(2,1))
+            )
+        }
+
+        @TestFactory
+        fun createBedWithSizeTest() = createBedSizeParameters().map { (bed, size) ->
+            DynamicTest.dynamicTest("Create bed with columns and rows specified stores a bed with those columns and rows") {
+                bedDao.insert(bed)
+                val byName = bedDao.findByName(bed.name)
+                Assertions.assertEquals(size.first, byName.columns)
+                Assertions.assertEquals(size.second, byName.rows)
             }
         }
     }
@@ -103,21 +115,21 @@ class AppDatabaseTest {
     inner class UpdateBedTest {
         private fun updateBedWithLocationParameters(): Iterable<Pair<Bed, BedLocation>> {
             return listOf(
-                    Pair(Bed("Test1", Greenhouse), Greenhouse),
-                    Pair(Bed("Test2", Outdoors), Outdoors),
-                    Pair(Bed("Test3", Greenhouse), Outdoors),
-                    Pair(Bed("Test4", Outdoors), Greenhouse),
+                    Pair(Bed("Test1", Greenhouse, columns = 0, rows = 0), Greenhouse),
+                    Pair(Bed("Test2", Outdoors, columns = 0, rows = 0), Outdoors),
+                    Pair(Bed("Test3", Greenhouse, columns = 0, rows = 0), Outdoors),
+                    Pair(Bed("Test4", Outdoors, columns = 0, rows = 0), Greenhouse),
             )
         }
 
         @TestFactory
         fun updateBedWithLocationTest() = updateBedWithLocationParameters().map { (bed, newLocation) ->
             DynamicTest.dynamicTest("Update bed with new location updates the bed to have the new location") {
-                val newBed = Bed(bed.name, newLocation)
-                gardenDao.insert(bed)
+                val newBed = Bed(bed.name, newLocation, columns = 0, rows = 0)
+                bedDao.insert(bed)
 
-                gardenDao.update(newBed)
-                val byName = gardenDao.findByName(bed.name)
+                bedDao.update(newBed)
+                val byName = bedDao.findByName(bed.name)
 
                 Assertions.assertEquals(newLocation, byName.bedLocation)
             }
@@ -125,8 +137,8 @@ class AppDatabaseTest {
 
         private fun updateBedWithPlantsParameters(): Iterable<Pair<Bed, Map<Coordinate, MyPlant>>> {
             return listOf(
-                    Pair(Bed("Test1", Greenhouse), mapOf(pair1)),
-                    Pair(Bed("Test2", Greenhouse, mapOf(pair2)), mapOf(pair1, pair2)),
+                    Pair(Bed("Test1", Greenhouse, columns = 0, rows = 0), mapOf(pair1)),
+                    Pair(Bed("Test2", Greenhouse, mapOf(pair2), columns = 0, rows = 0), mapOf(pair1, pair2)),
             )
         }
 
@@ -135,13 +147,34 @@ class AppDatabaseTest {
             DynamicTest.dynamicTest("Update bed with new plants updates the bed to have the new plants") {
                 val map = bed.plants.toMutableMap()
                 map[pair1.first] = pair1.second
-                val newBed = Bed(bed.name, bed.bedLocation, map)
-                gardenDao.insert(bed)
+                val newBed = Bed(bed.name, bed.bedLocation, map, columns = 0, rows = 0)
+                bedDao.insert(bed)
 
-                gardenDao.update(newBed)
-                val byName = gardenDao.findByName(bed.name)
+                bedDao.update(newBed)
+                val byName = bedDao.findByName(bed.name)
 
                 Assertions.assertEquals(newPlants, byName.plants)
+            }
+        }
+
+        private fun updateBedWithSizeParameters(): Iterable<Pair<Bed, Pair<Int, Int>>> {
+            return listOf(
+                    Pair(Bed("Test1", Greenhouse, columns = 0, rows = 0), Pair(1,1)),
+                    Pair(Bed("Test2", Greenhouse, columns = 2, rows = 1), Pair(1,0))
+            )
+        }
+
+        @TestFactory
+        fun updateBedWithSizeTest() = updateBedWithSizeParameters().map { (bed, newSize) ->
+            DynamicTest.dynamicTest("Update bed with new size updates the bed to have the new size") {
+                bedDao.insert(bed)
+                val newBed = Bed(bed.name, Greenhouse, columns = newSize.first, rows = newSize.second)
+
+                bedDao.update(newBed)
+                val byName = bedDao.findByName(bed.name)
+
+                Assertions.assertEquals(newSize.first, byName.columns)
+                Assertions.assertEquals(newSize.second, byName.rows)
             }
         }
     }
@@ -153,11 +186,11 @@ class AppDatabaseTest {
         @DisplayName("with name deletes bed from database")
         fun deleteBedTest() {
             val name = "Test1"
-            val bed = Bed(name, Outdoors)
-            gardenDao.insert(bed)
+            val bed = Bed(name, Outdoors, columns = 0, rows = 0)
+            bedDao.insert(bed)
 
-            gardenDao.delete(name)
-            val byName = gardenDao.findByName(name)
+            bedDao.delete(name)
+            val byName = bedDao.findByName(name)
 
             Assertions.assertNull(byName)
         }
@@ -167,16 +200,16 @@ class AppDatabaseTest {
         fun deleteBedDoesNotDeleteWrongTest() {
             // Bed 1
             val name1 = "Test1"
-            val bed1 = Bed(name1, Outdoors)
-            gardenDao.insert(bed1)
+            val bed1 = Bed(name1, Outdoors, columns = 0, rows = 0)
+            bedDao.insert(bed1)
             // Bed 2
             val name2 = "Test2"
-            val bed2 = Bed(name2, Outdoors)
-            gardenDao.insert(bed2)
+            val bed2 = Bed(name2, Outdoors, columns = 0, rows = 0)
+            bedDao.insert(bed2)
 
             // Delete bed 1
-            gardenDao.delete(name1)
-            val byName = gardenDao.findByName(name2)
+            bedDao.delete(name1)
+            val byName = bedDao.findByName(name2)
 
             // Ensure bed 2 still in database
             Assertions.assertNotNull(byName)
@@ -187,11 +220,11 @@ class AppDatabaseTest {
         fun deleteBedNoExistDoesNothingTest() {
             val nameToDelete = "Delete"
             val nameToKeep = "Keep"
-            val bed = Bed(nameToKeep, Outdoors)
-            gardenDao.insert(bed)
+            val bed = Bed(nameToKeep, Outdoors, columns = 0, rows = 0)
+            bedDao.insert(bed)
 
-            gardenDao.delete(nameToDelete)
-            val byName = gardenDao.findByName(nameToKeep)
+            bedDao.delete(nameToDelete)
+            val byName = bedDao.findByName(nameToKeep)
 
             Assertions.assertNotNull(byName)
         }
@@ -204,10 +237,10 @@ class AppDatabaseTest {
         @DisplayName("that exists returns not null")
         fun findBedThatExistsTest() {
             val name = "Test1"
-            val bed = Bed(name, Outdoors)
-            gardenDao.insert(bed)
+            val bed = Bed(name, Outdoors, columns = 0, rows = 0)
+            bedDao.insert(bed)
 
-            val byName = gardenDao.findByName(name)
+            val byName = bedDao.findByName(name)
 
             Assertions.assertNotNull(byName)
         }
@@ -215,7 +248,7 @@ class AppDatabaseTest {
         @Test
         @DisplayName("that does not exists returns null")
         fun findBedThatDoesNotExistTest() {
-            val byName = gardenDao.findByName("Test")
+            val byName = bedDao.findByName("Test")
 
             Assertions.assertNull(byName)
         }
@@ -228,7 +261,7 @@ class AppDatabaseTest {
         @Test
         @DisplayName("when empty returns empty list")
         fun getAllBedsEmptyTest() {
-            val beds = gardenDao.getAll()
+            val beds = bedDao.getAll()
 
             beds.observe(TestLifeCycleOwner(), {
                 Assertions.assertTrue(it.isEmpty())
@@ -239,10 +272,10 @@ class AppDatabaseTest {
         @DisplayName("when not empty returns list with beds")
         fun getAllBedsNotEmptyTest() {
             val name = "Test1"
-            val bed = Bed(name, Outdoors)
-            gardenDao.insert(bed)
+            val bed = Bed(name, Outdoors, columns = 0, rows = 0)
+            bedDao.insert(bed)
 
-            val beds = gardenDao.getAll()
+            val beds = bedDao.getAll()
 
             beds.observe(TestLifeCycleOwner(), {
                 Assertions.assertTrue(it.isNotEmpty())
@@ -253,14 +286,14 @@ class AppDatabaseTest {
         @DisplayName("when multiple returns list with multiple beds")
         fun getAllBedsMultipleTest() {
             val name1 = "Test1"
-            val bed1 = Bed(name1, Outdoors)
-            gardenDao.insert(bed1)
+            val bed1 = Bed(name1, Outdoors, columns = 0, rows = 0)
+            bedDao.insert(bed1)
 
             val name2 = "Test2"
-            val bed2 = Bed(name2, Outdoors)
-            gardenDao.insert(bed2)
+            val bed2 = Bed(name2, Outdoors, columns = 0, rows = 0)
+            bedDao.insert(bed2)
 
-            val beds = gardenDao.getAll()
+            val beds = bedDao.getAll()
 
             beds.observe(TestLifeCycleOwner(), {
                 Assertions.assertEquals(2, it.size)

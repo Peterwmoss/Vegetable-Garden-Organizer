@@ -12,12 +12,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class UpdateBedCallback(private val name: String, private val bedLocation: BedLocation, private val application: Application): BedPlantsChangedCallback() {
+class UpdateBedCallback(
+        private val name: String,
+        private val bedLocation: BedLocation,
+        private val application: Application,
+        private val columns: Int,
+        private val rows: Int): BedPlantsChangedCallback() {
     override fun onMapChanged(sender: ObservableMap<Coordinate, MyPlant>?, key: Coordinate?) {
         GlobalScope.launch(Dispatchers.IO) {
-            val dao = AppDatabase.getDatabase(application).gardenDao()
+            val dao = AppDatabase.getDatabase(application).bedDao()
             val repository = GardenRepository(dao)
-            repository.updateBed(Bed(name, bedLocation, sender!!))
+            repository.updateBed(Bed(name, bedLocation, sender!!, columns, rows))
         }
     }
 }
