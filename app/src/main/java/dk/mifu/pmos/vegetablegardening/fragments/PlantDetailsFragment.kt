@@ -74,7 +74,7 @@ class PlantDetailsFragment: Fragment() {
             addTextInfoLine(getString(R.string.last_watered_text), formatDate(myPlant.wateredDate))
             addTextInfoLine(getString(R.string.harvested_text), formatDate(myPlant.harvestedDate))
             val sortTextView = addTextInfoLine(getString(R.string.sort), formatSort(myPlant.sort))
-            val germinationTextView = addTextInfoLine(getString(R.string.germinated_boolean_text), formatGerminationBoolean(myPlant.germinated))
+            val germinationTextView = addTextInfoLine(getString(R.string.germinated_true_text), formatGerminationBoolean(myPlant.germinated))
 
             updateSort(myPlant, sortTextView)
             updateGermination(myPlant, germinationTextView)
