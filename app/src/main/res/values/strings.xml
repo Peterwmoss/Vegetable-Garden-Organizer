@@ -4,6 +4,7 @@
     <!-- Toolbar -->
     <string name="toolbar_location">Vælg lokation</string>
     <string name="toolbar_create_grid">Design dit bed</string>
+    <string name="toolbar_edit_grid">Redigér dit bed</string>
 
     <!-- Guides -->
     <string name="help">Hjælp</string>

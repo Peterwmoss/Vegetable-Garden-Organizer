@@ -2,16 +2,19 @@ package dk.mifu.pmos.vegetablegardening.fragments.viewgarden
 
 import android.os.Bundle
 import android.view.*
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
-import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
+import dk.mifu.pmos.vegetablegardening.helpers.grid.GridBuilder
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.IconCallback
+import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateBedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPredicate
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.PlantablePredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
@@ -27,6 +30,10 @@ class BedOverviewFragment: Fragment() {
     private val plantViewModel: PlantViewModel by activityViewModels()
     private var plantableTileSlots: Boolean = false
 
+    private var saveChangesCallback: UpdateBedCallback? = null
+    private var updateGridViewCallback: BedCallback? = null
+    private var updateIconsCallback: IconCallback? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -40,6 +47,10 @@ class BedOverviewFragment: Fragment() {
         return when (item.itemId) {
             R.id.tooltip -> {
                 Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_bed_overview), requireView().rootView.findViewById(R.id.tooltip))
+                true
+            }
+            R.id.edit -> {
+                findNavController().navigate(BedOverviewFragmentDirections.editBedAction())
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -63,74 +74,33 @@ class BedOverviewFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.gridlayout.columnCount = bedViewModel.columns
-        binding.gridlayout.rowCount = bedViewModel.rows
+        val helper = BedOverviewGridBuilder()
+        helper.updateGridSizeFromViewModel()
+        helper.insertTilesInView()
 
-        val orderedArrayList = getTilesInOrder()
-
-        insertTilesInView(orderedArrayList)
-        addOnMapChangedCallbacks()
         setExplanationTextViews()
+
+        saveChangesCallback =
+                UpdateBedCallback(
+                        bedViewModel.name!!,
+                        bedViewModel.bedLocation!!,
+                        requireContext(),
+                        bedViewModel.columns,
+                        bedViewModel.rows)
+
+        updateGridViewCallback = BedCallback(requireView(), bedViewModel)
+        updateIconsCallback = IconCallback(requireView(), bedViewModel)
     }
 
     override fun onStart() {
         super.onStart()
         (activity as AppCompatActivity).supportActionBar?.title = bedViewModel.name
+        addOnMapChangedCallbacks()
     }
 
-    private fun getTilesInOrder(): List<Pair<Coordinate, MyPlant?>> {
-        val orderedArrayList: MutableList<Pair<Coordinate, MyPlant?>> = mutableListOf()
-        for(i in 0 until bedViewModel.rows){
-            for(j in 0 until bedViewModel.columns){
-                val coordinate = Coordinate(j,i)
-                orderedArrayList.add(Pair(coordinate, bedViewModel.plants?.get(coordinate)))
-            }
-        }
-        return orderedArrayList
-    }
-
-    private fun insertTilesInView(list: List<Pair<Coordinate, MyPlant?>>){
-        list.forEach {
-            val coordinate = it.first
-            val plant = it.second
-            val tileBinding = ListItemTileBinding.inflate(layoutInflater, binding.gridlayout, true)
-            initializeTile(coordinate, plant, tileBinding)
-            initializeIcons(coordinate, plant, tileBinding)
-        }
-    }
-
-    private fun initializeTile(coordinate: Coordinate, plant: MyPlant?, tileBinding: ListItemTileBinding) {
-        val tileSideLength = GridHelper.getTileSideLength()
-
-        if(plant != null || existsPlantablePlants) //Only create listeners for tiles with plants or plantables
-            tileBinding.plantButton.setOnClickListener { _ -> navigate(coordinate, plant) }
-
-        tileBinding.plantButton.text = plant?.name ?: ""
-        tileBinding.plantButton.width = tileSideLength
-        tileBinding.plantButton.height = tileSideLength
-        tileBinding.plantButton.id = View.generateViewId()
-
-        bedViewModel.tileIds?.put(coordinate, tileBinding.plantButton.id)
-    }
-
-    private fun initializeIcons(coordinate: Coordinate, plant: MyPlant?, tileBinding: ListItemTileBinding){
-        if(plant == null && existsPlantablePlants) {
-            tileBinding.iconView.setImageResource(R.drawable.ic_flower)
-            tileBinding.iconView.visibility = View.VISIBLE
-            plantableTileSlots = true
-        }
-
-        bedViewModel.plantsToWater.observe(viewLifecycleOwner, {
-            if(plant != null && it != null && it[coordinate] != null){
-                tileBinding.iconView.setImageResource(R.drawable.water)
-                tileBinding.iconView.visibility = View.VISIBLE
-            }
-        })
-    }
-
-    private fun addOnMapChangedCallbacks(){
-        bedViewModel.plants?.addOnMapChangedCallback(BedCallback(requireView(), bedViewModel))
-        bedViewModel.plants?.addOnMapChangedCallback(IconCallback(requireView(), bedViewModel))
+    override fun onPause() {
+        super.onPause()
+        removeOnMapChangedCallbacks()
     }
 
     private fun setExplanationTextViews(){
@@ -154,6 +124,48 @@ class BedOverviewFragment: Fragment() {
             requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantingOptions(coordinate, PlantablePredicate()))
         } else {
             requireView().findNavController().navigate(BedOverviewFragmentDirections.showPlantInfo(coordinate, plant))
+        }
+    }
+
+    private fun addOnMapChangedCallbacks(){
+        bedViewModel.plants?.addOnMapChangedCallback(updateGridViewCallback)
+        bedViewModel.plants?.addOnMapChangedCallback(updateIconsCallback)
+        bedViewModel.plants?.addOnMapChangedCallback(saveChangesCallback)
+    }
+
+    private fun removeOnMapChangedCallbacks(){
+        bedViewModel.plants?.removeOnMapChangedCallback(updateGridViewCallback)
+        bedViewModel.plants?.removeOnMapChangedCallback(updateIconsCallback)
+        bedViewModel.plants?.removeOnMapChangedCallback(saveChangesCallback)
+    }
+
+    private inner class BedOverviewGridBuilder : GridBuilder(bedViewModel, layoutInflater, binding.gridlayout, findNavController()) {
+        override fun initializeTile(coordinate: Coordinate, plant: MyPlant?, tileBinding: ListItemTileBinding) {
+            if(plant != null || existsPlantablePlants) //Only create listeners for tiles with plants or plantables
+                tileBinding.plantButton.setOnClickListener { _ -> navigate(coordinate, plant) }
+
+            tileBinding.plantButton.text = plant?.name ?: ""
+            val tileSideLength = getTileSideLength()
+            val params = FrameLayout.LayoutParams(tileSideLength, tileSideLength)
+            tileBinding.plantButton.layoutParams = params
+            tileBinding.plantButton.id = View.generateViewId()
+
+            bedViewModel.tileIds?.put(coordinate, tileBinding.plantButton.id)
+        }
+
+        override fun initializeIcon(coordinate: Coordinate, plant: MyPlant?, tileBinding: ListItemTileBinding) {
+            if(plant == null && existsPlantablePlants) {
+                tileBinding.iconView.setImageResource(R.drawable.ic_flower)
+                tileBinding.iconView.visibility = View.VISIBLE
+                plantableTileSlots = true
+            }
+
+            bedViewModel.plantsToWater.observe(viewLifecycleOwner, {
+                if(plant != null && it != null && it[coordinate] != null){
+                    tileBinding.iconView.setImageResource(R.drawable.water)
+                    tileBinding.iconView.visibility = View.VISIBLE
+                }
+            })
         }
     }
 }
