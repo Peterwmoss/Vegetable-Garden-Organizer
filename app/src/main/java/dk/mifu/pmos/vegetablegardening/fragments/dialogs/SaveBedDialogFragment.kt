@@ -59,12 +59,10 @@ class SaveBedDialogFragment : DialogFragment() {
 
     private fun saveInDatabase(editText: EditText) {
         bedViewModel.name = editText.text.toString()
-        run {
-            MainScope().launch(Dispatchers.IO) {
-                val dao = AppDatabase.getDatabase(requireContext()).bedDao()
-                val repository = GardenRepository(dao)
-                repository.insertBed(Bed(bedViewModel.name!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
-            }
+        MainScope().launch(Dispatchers.IO) {
+            val dao = AppDatabase.getDatabase(requireContext()).bedDao()
+            val repository = GardenRepository(dao)
+            repository.insertBed(Bed(bedViewModel.name!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
         }
     }
 }
