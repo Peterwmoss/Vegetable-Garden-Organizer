@@ -42,7 +42,7 @@ class PlantDetailsFragment: Fragment() {
                 if (args.myplant == null)
                     Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_plant_details_not_planted), requireView().rootView.findViewById(R.id.tooltip))
                 else
-                    Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_plant_details_not_planted), requireView().rootView.findViewById(R.id.tooltip))
+                    Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_plant_details_planted), requireView().rootView.findViewById(R.id.tooltip))
                 true
             }
             else -> super.onOptionsItemSelected(item)
