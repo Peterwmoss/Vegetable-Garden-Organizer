@@ -14,12 +14,12 @@
 
     <!-- Tooltips -->
     <string name="tooltip_garden_with_beds">Klik på et af dine bed eller opret et nyt på plus-knappen nede i hjørnet</string>
-    <string name="tooltip_create_grid">Udfyld dit bed ved at trykke på en firkant og vælg fra listen.\nDu kan ændre størrelsen på bedet ved plus- og minus-knapperne.</string>
+    <string name="tooltip_create_grid">Udfyld dit bed ved at trykke på en firkant og vælg fra listen.\n\nDu kan ændre størrelsen på bedet ved plus- og minus-knapperne.</string>
     <string name="tooltip_empty_garden">Du har ikke oprettet nogen bed.\n\nTryk på plus-knappen nede i hjørnet for at komme i gang og oprette dine bed.</string>
-    <string name="tooltip_bed_overview">Her kan du se de planter, som er plantet i dit bed.\nKlik på en plante for at flere informationer om planten.</string>
-    <string name="tooltip_plant_details_planted">Her kan du se alle informationer om din plante.\nDu kan ændre om planten er forspiret og hvilken sort, der er plantet her.</string>
+    <string name="tooltip_bed_overview">Her kan du se de planter, som er plantet i dit bed.\n\nKlik på en plante for at flere informationer om planten.</string>
+    <string name="tooltip_plant_details_planted">Her kan du se alle informationer om din plante.\n\nDu kan ændre om planten er forspiret og hvilken sort, der er plantet her.</string>
     <string name="tooltip_plant_details_not_planted">Her kan du se alle informationer om den valgte plante.</string>
-    <string name="tooltip_lexicon">Her kan du se alle planter, som er oprettet.\nVælg en plante for at se flere informationer om planten.\nDu kan også lave en ny plante ved at klikke på plus-knappen nede i hjørnet.</string>
+    <string name="tooltip_lexicon">Her kan du se alle planter, som er oprettet.\n\nVælg en plante for at se flere informationer om planten.\n\nDu kan også lave en ny plante ved at klikke på plus-knappen nede i hjørnet.</string>
 
     <!-- Titles -->
     <string name="title_location">Hvor er dit bed?</string>
