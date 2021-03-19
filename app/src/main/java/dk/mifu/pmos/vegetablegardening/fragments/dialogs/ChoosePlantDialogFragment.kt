@@ -65,7 +65,11 @@ class ChoosePlantDialogFragment : DialogFragment() {
 
     override fun onStop() {
         super.onStop()
-        (activity as AppCompatActivity).supportActionBar?.title = bedViewModel.name
+        if (bedViewModel.name.isNullOrBlank()) {
+            (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.toolbar_create_grid)
+        } else {
+            (activity as AppCompatActivity).supportActionBar?.title = bedViewModel.name
+        }
     }
 
     private inner class ViewHolder(view: View) : PlantViewHolder(view) {

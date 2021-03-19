@@ -53,13 +53,13 @@ class PlantDetailsDialogFragment : DialogFragment() {
             args.plant.wateredDate = Date()
             bedViewModel.plants?.put(args.coordinate, args.plant)
             bedViewModel.plantsToWater.value?.remove(args.coordinate)
-            Toast.makeText(context, getString(R.string.register_water_text), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(R.string.registered_water), Toast.LENGTH_SHORT).show()
         }
 
         binding.harvestButton.setOnClickListener {
             args.plant.harvestedDate = Date()
             bedViewModel.plants?.put(args.coordinate, args.plant)
-            Toast.makeText(context, getString(R.string.register_harvest_text), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(R.string.registered_harvest), Toast.LENGTH_SHORT).show()
         }
 
         binding.detailsButton.setOnClickListener {

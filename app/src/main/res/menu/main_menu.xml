@@ -7,7 +7,7 @@
         <item
             android:icon="@drawable/bed"
             android:id="@+id/gardenOverviewFragment"
-            android:title="@string/bed_text" />
+            android:title="@string/bed" />
 
         <item
             android:icon="@drawable/lexicon"

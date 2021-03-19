@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
-import com.google.android.material.appbar.MaterialToolbar
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
@@ -19,6 +18,7 @@ import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
+import dk.mifu.pmos.vegetablegardening.views.Tooltip
 
 class BedOverviewFragment: Fragment() {
     private lateinit var binding: FragmentBedOverviewBinding
@@ -34,6 +34,16 @@ class BedOverviewFragment: Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.tooltip -> {
+                Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_bed_overview), requireView().rootView.findViewById(R.id.tooltip))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onCreateView(
@@ -126,14 +136,14 @@ class BedOverviewFragment: Fragment() {
     private fun setExplanationTextViews(){
         if(existsPlantablePlants && plantableTileSlots){
             binding.plantableExplanationTextView.visibility = View.VISIBLE
-            binding.plantableExplanationTextView.text = getString(R.string.explanation_new_plants)
+            binding.plantableExplanationTextView.text = getString(R.string.guide_plantable_plants)
             binding.plantableExplanationImageView.setImageResource(R.drawable.ic_flower)
         }
 
         bedViewModel.plantsToWater.observe(viewLifecycleOwner, {
             if(!it.isNullOrEmpty()){
                 binding.waterExplanationTextView.visibility = View.VISIBLE
-                binding.waterExplanationTextView.text = getString(R.string.explanation_check_water)
+                binding.waterExplanationTextView.text = getString(R.string.guide_check_water)
                 binding.waterExplanationImageView.setImageResource(R.drawable.water)
             }
         })

@@ -16,15 +16,6 @@ class SpecifyLocationFragment: Fragment() {
 
     private val bedViewModel: BedViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar, menu)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,7 +30,7 @@ class SpecifyLocationFragment: Fragment() {
         binding.outdoorsButton.setOnClickListener { startCreateGridFragment(BedLocation.Outdoors) }
         binding.greenhouseButton.setOnClickListener{ startCreateGridFragment(BedLocation.Greenhouse) }
 
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.choose_location_text)
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.toolbar_location)
     }
 
     private fun startCreateGridFragment(bedLocation: BedLocation){

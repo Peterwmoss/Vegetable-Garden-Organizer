@@ -20,15 +20,16 @@
     </style>
 
     <style name="ButtonStyle">
-        <item name="backgroundTint">@color/orange</item>
-        <item name="background">@color/orange</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="backgroundTint">?attr/colorSecondary</item>
+        <item name="background">?attr/colorSecondary</item>
+        <item name="android:textColor">?attr/colorOnSecondary</item>
         <item name="android:textSize">@dimen/font_small</item>
+        <item name="android:fontFamily">@font/roboto</item>
     </style>
 
     <style name="AcceptButtonStyle" parent="ButtonStyle">
-        <item name="backgroundTint">@color/dark_green</item>
-        <item name="background">@color/dark_green</item>
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="background">?attr/colorPrimary</item>
     </style>
 
     <style name="SpecialButtonStyle" parent="ButtonStyle">

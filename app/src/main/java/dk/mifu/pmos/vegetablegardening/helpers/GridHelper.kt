@@ -10,10 +10,6 @@ class GridHelper {
     companion object {
         private const val buttonSideLength = 160
 
-        private fun textViewSize(textView: TextView): Int{
-            return textView.height
-        }
-
         private fun toolBarSize(context: Context): Int {
             return context.resources.getDimension(R.dimen.toolbar).toInt()
         }
@@ -31,11 +27,10 @@ class GridHelper {
             return Resources.getSystem().displayMetrics.heightPixels
         }
 
-        fun remainingHeight(rows: Int, context: Context, textView: TextView): Int {
+        fun remainingHeight(rows: Int, context: Context): Int {
             return (getHeightOfScreen()
                     -(getTileSideLength()*rows)
                     -toolBarSize(context)
-                    -textViewSize(textView)
                     -buttonSideLength)
         }
 

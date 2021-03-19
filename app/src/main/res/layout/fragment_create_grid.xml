@@ -1,69 +1,67 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/parent_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/parent_layout"
+        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:padding="@dimen/spacing_medium"
-        android:id="@+id/create_grid_guide_text_view"
-        android:text="@string/guide_create_grid_text"/>
+        android:layout_height="wrap_content">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_column_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/add_column_text"
-        android:layout_margin="@dimen/spacing_small"
-        app:layout_constraintTop_toBottomOf="@id/create_grid_guide_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/ic_plus"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_column_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/add_column"
+            android:layout_margin="@dimen/spacing_small"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_plus"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_row_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/add_row_text"
-        android:layout_margin="@dimen/spacing_small"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/ic_plus"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_row_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/add_row"
+            android:layout_margin="@dimen/spacing_small"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_plus"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/remove_column_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/add_column_text"
-        android:layout_marginTop="@dimen/spacing_small"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/add_column_button"
-        app:layout_constraintStart_toStartOf="@id/add_column_button"
-        android:src="@drawable/ic_minus"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/remove_column_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/add_column"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/add_column_button"
+            app:layout_constraintStart_toStartOf="@id/add_column_button"
+            android:src="@drawable/ic_minus"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/remove_row_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/add_column_text"
-        android:layout_marginStart="@dimen/spacing_small"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="@id/add_row_button"
-        app:layout_constraintStart_toEndOf="@id/add_row_button"
-        android:src="@drawable/ic_minus"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/remove_row_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/add_column"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="@id/add_row_button"
+            app:layout_constraintStart_toEndOf="@id/add_row_button"
+            android:src="@drawable/ic_minus"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/save_garden_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/save_garden_text"
+        android:contentDescription="@string/save_bed"
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_margin="@dimen/spacing_small"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:src="@drawable/ic_save"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

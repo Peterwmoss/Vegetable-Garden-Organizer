@@ -4,7 +4,10 @@ import android.view.View
 import android.widget.Button
 import androidx.databinding.ObservableMap
 import androidx.navigation.findNavController
+import dk.mifu.pmos.vegetablegardening.R
+import dk.mifu.pmos.vegetablegardening.fragments.creategarden.CreateGridFragmentDirections
 import dk.mifu.pmos.vegetablegardening.fragments.viewgarden.BedOverviewFragmentDirections
+import dk.mifu.pmos.vegetablegardening.helpers.predicates.AllPlantsPredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
@@ -19,8 +22,12 @@ class BedCallback(
         if(button != null){
             val plant = bedViewModel.plants?.get(key)
             button.text = plant?.name
-            button.setOnClickListener { _ ->
-                view.findNavController().navigate(BedOverviewFragmentDirections.showPlantInfo(key!!, plant!!))
+
+            button.setOnClickListener {
+                if (view.findNavController().currentDestination?.id == R.id.bedOverviewFragment)
+                    view.findNavController().navigate(BedOverviewFragmentDirections.showPlantInfo(key!!, plant!!))
+                else
+                    view.findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(key!!, AllPlantsPredicate()))
             }
         }
     }

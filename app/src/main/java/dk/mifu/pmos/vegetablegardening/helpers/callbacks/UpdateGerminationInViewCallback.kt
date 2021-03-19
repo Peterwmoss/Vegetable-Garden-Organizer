@@ -1,6 +1,5 @@
 package dk.mifu.pmos.vegetablegardening.helpers.callbacks
 
-import android.content.Context
 import android.widget.Button
 import android.widget.TextView
 import androidx.databinding.ObservableMap
@@ -21,7 +20,7 @@ class UpdateGerminationInViewCallback(
         val myPlant = sender!![key]!!
         textView.text = textViewFunction(myPlant.germinated)
 
-        if(myPlant.germinated == null) button.setText(R.string.add_germination_text)
-        else button.setText(R.string.edit_germination_text)
+        if(myPlant.germinated == null) button.setText(R.string.set_germination_status)
+        else button.setText(R.string.edit_germination_status)
     }
 }

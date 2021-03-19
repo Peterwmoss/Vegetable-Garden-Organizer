@@ -20,6 +20,7 @@ import dk.mifu.pmos.vegetablegardening.enums.BedLocation.Greenhouse
 import dk.mifu.pmos.vegetablegardening.enums.BedLocation.Outdoors
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
+import dk.mifu.pmos.vegetablegardening.views.Tooltip
 
 class GardenOverviewFragment : Fragment() {
     private lateinit var binding: FragmentGardenOverviewBinding
@@ -28,6 +29,8 @@ class GardenOverviewFragment : Fragment() {
     private var gardenDb: BedDao? = null
     private var repository: GardenRepository? = null
 
+    private lateinit var adapter: GardenOverviewAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -35,6 +38,19 @@ class GardenOverviewFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.tooltip -> {
+                if (adapter.itemCount == 0)
+                    Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_empty_garden), requireView().rootView.findViewById(R.id.tooltip))
+                else
+                    Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_garden_with_beds), requireView().rootView.findViewById(R.id.tooltip))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -46,9 +62,9 @@ class GardenOverviewFragment : Fragment() {
 
         recyclerView.layoutManager = GridLayoutManager(context, 2)
         repository?.getAllBeds()?.observe(viewLifecycleOwner, {
-            val adapter = GardenOverviewAdapter(it)
+            adapter = GardenOverviewAdapter(it)
             recyclerView.adapter = adapter
-            setExplanatoryTextBasedOnItemCount(adapter)
+            setExplanatoryTextBasedOnItemCount()
         })
 
         binding.newLocationBtn.setOnClickListener {
@@ -60,13 +76,13 @@ class GardenOverviewFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.bed_text)
+        (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.bed)
+        bedViewModel.clear()
     }
 
-    private fun setExplanatoryTextBasedOnItemCount(adapter: RecyclerView.Adapter<ViewHolder>){
-        binding.gardenTextView.text =
-                if (adapter.itemCount == 0) resources.getString(R.string.empty_garden_text)
-                else resources.getString(R.string.garden_with_beds_text)
+    private fun setExplanatoryTextBasedOnItemCount(){
+        if (adapter.itemCount == 0)
+            binding.gardenTextView.visibility = View.VISIBLE
     }
 
     private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
