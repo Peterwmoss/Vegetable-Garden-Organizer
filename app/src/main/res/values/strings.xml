@@ -47,4 +47,10 @@
     <string name="sort">Sort</string>
     <string name="lexicon">Leksikon</string>
     <string name="help_text">Hjælp</string>
+    <string name="germination_text">Er denne plante blevet forspiret?</string>
+    <string name="germinated_boolean_text">Forspiret</string>
+    <string name="germinated_true_text">Forspiret</string>
+    <string name="germinated_false_text">Ikke forspiret</string>
+    <string name="add_germination_text">Sæt forspiring</string>
+    <string name="edit_germination_text">Ændr forspiring</string>
 </resources>

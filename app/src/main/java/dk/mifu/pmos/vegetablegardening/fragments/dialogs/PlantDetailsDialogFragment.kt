@@ -36,7 +36,7 @@ class PlantDetailsDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
         binding.plantDetailsDialogPlant.text = args.plant.name
-        if(args.plant.sort.isNotBlank()) {
+        if(args.plant.sort != null) {
             binding.sort.visibility = View.VISIBLE
             binding.sort.text = args.plant.sort
         }
