@@ -58,7 +58,7 @@ Hvert bed har det ikon tilknyttet som angiver hvilken lokation brugeren valgte a
 \subsubsection{Bed}
 Når man trykker på et bestemt bed fra oversigten, vil man blive navigeret til \texttt{BedOverviewFragment}. Den løber alle planter igennem gemt i \texttt{BedViewModel}, som holder styr på det nuværende bed. I løkken tilføjes planterne til et array, så de er placeret i den rigtige røkkefølge og derefter er let at sætte ind i et simpelt \texttt{GridView}, da et \texttt{ObservableMap} i sig selv ikke er sorteret.
 
-Fra dette GridView er det muligt at navigere sig videre og se detaljerne om den enkelte plante, så man ikke behøver at gå et andet sted hen for at finde informationer om sine planter.
+Fra dette GridView er det muligt at navigere sig videre og se detaljerne om den enkelte plante, så man ikke behøver at gå et andet sted hen for at finde informationer om sine planter. Under detaljerne af den enkelte plante, er der også mulighed for at tilpasse den efter brugerens behov. De kan tilføje en sort til planten eller notere, om den har været forspireret ved at trykke på den tilsvarende knap. Hver knap åbner en dialog-boks.
 
 Hvis der er mulighed for at så nye planter ifølge årstiden, vil der komme et \texttt{TextView} med forklarende tekst samt et lille ikon på de tomme felter i bedet, hvor der er mulighed for at plante. Hvis man trykker på et felt med et sådant ikon, vil man blive mødt med samme mulighed for at vælge planter som da man oprettede haven, så man let kan plante en ny plante.
 
