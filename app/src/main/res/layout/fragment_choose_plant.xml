@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_small"
         android:fontFamily="@font/roboto"
-        android:hint="@string/search_text"
+        android:hint="@string/search"
         android:iconifiedByDefault="false"
         android:textSize="@dimen/font_medium"
         android:lines="1"

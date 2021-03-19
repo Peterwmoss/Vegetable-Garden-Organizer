@@ -30,7 +30,7 @@ class SpecifyLocationFragment: Fragment() {
         binding.outdoorsButton.setOnClickListener { startCreateGridFragment(BedLocation.Outdoors) }
         binding.greenhouseButton.setOnClickListener{ startCreateGridFragment(BedLocation.Greenhouse) }
 
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.choose_location_text)
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.toolbar_location)
     }
 
     private fun startCreateGridFragment(bedLocation: BedLocation){

@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/create_location_text"
+        android:text="@string/title_location"
         android:textSize="@dimen/font_medium"
         android:fontFamily="@font/roboto"
         android:id="@+id/specify_location_text_view"
@@ -39,7 +39,7 @@
         android:id="@+id/outdoors_text_view"
         android:textSize="@dimen/font_medium"
         android:fontFamily="@font/roboto"
-        android:text="@string/outdoors"/>
+        android:text="@string/location_outdoors"/>
 
     <ImageButton
         app:layout_constraintStart_toStartOf="parent"
@@ -61,5 +61,5 @@
         app:layout_constraintTop_toBottomOf="@id/greenhouse_button"
         android:textSize="@dimen/font_medium"
         android:fontFamily="@font/roboto"
-        android:text="@string/greenhouse"/>
+        android:text="@string/location_greenhouse"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

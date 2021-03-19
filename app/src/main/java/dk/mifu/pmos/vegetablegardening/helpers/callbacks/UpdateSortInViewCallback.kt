@@ -21,7 +21,7 @@ class UpdateSortInViewCallback(
         val myPlant = sender!![key]!!
         textView.text = myPlant.sort ?: context.getString(R.string.missing_info)
 
-        if (myPlant.sort == null) button.setText(R.string.add_sort_text)
-        else button.setText(R.string.edit_sort_text)
+        if (myPlant.sort == null) button.setText(R.string.add_sort)
+        else button.setText(R.string.edit_sort)
     }
 }

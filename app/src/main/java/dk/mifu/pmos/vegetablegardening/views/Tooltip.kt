@@ -14,7 +14,7 @@ class Tooltip {
                 setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
                 setWidth(300)
                 setBackgroundColorResource(R.color.dark_green)
-                setAutoDismissDuration(6000L)
+                setAutoDismissDuration(10000L)
                 setText(text)
                 setTextSize(18f)
                 setPadding(10)

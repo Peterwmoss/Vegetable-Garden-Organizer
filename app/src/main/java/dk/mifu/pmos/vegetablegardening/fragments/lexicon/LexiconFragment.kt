@@ -1,32 +1,20 @@
 package dk.mifu.pmos.vegetablegardening.fragments.lexicon
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.Filter
-import android.widget.Filterable
-import android.widget.TextView
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentLexiconBinding
 import dk.mifu.pmos.vegetablegardening.helpers.recyclerviews.PlantAdapter
 import dk.mifu.pmos.vegetablegardening.helpers.recyclerviews.PlantViewHolder
 import dk.mifu.pmos.vegetablegardening.helpers.search.PlantFilter
-import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
+import dk.mifu.pmos.vegetablegardening.views.Tooltip
 import java.util.*
 
 class LexiconFragment: Fragment() {
@@ -34,6 +22,25 @@ class LexiconFragment: Fragment() {
 
     private val plantViewModel: PlantViewModel by activityViewModels()
     private var adapter : Adapter? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.tooltip -> {
+                Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_lexicon), requireView().rootView.findViewById(R.id.tooltip))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentLexiconBinding.inflate(inflater, container, false)
@@ -52,7 +59,7 @@ class LexiconFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.plant_text)
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.plants)
     }
 
     override fun onResume() {

@@ -8,11 +8,9 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.ObservableArrayMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
-import dk.mifu.pmos.vegetablegardening.fragments.dialogs.SaveBedDialogFragment
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper
 import dk.mifu.pmos.vegetablegardening.helpers.GridHelper.Companion.START
@@ -46,7 +44,7 @@ class CreateGridFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.tooltip -> {
-                Tooltip.newTooltip(requireContext(), getString(R.string.guide_create_grid_text), requireView().rootView.findViewById(R.id.tooltip))
+                Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_create_grid), requireView().rootView.findViewById(R.id.tooltip))
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -76,7 +74,7 @@ class CreateGridFragment : Fragment() {
 
         bedViewModel.plants?.addOnMapChangedCallback(BedCallback(requireView(), bedViewModel))
 
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.create_grid_title)
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.toolbar_create_grid)
     }
 
     private fun setSaveBedListener() {

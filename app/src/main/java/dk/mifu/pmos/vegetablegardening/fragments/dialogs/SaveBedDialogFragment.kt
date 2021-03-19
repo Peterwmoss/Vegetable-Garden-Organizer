@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.setPadding
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -29,23 +30,21 @@ class SaveBedDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val editText = EditText(requireContext())
-        editText.hint = getString(R.string.name_hint_text)
+        editText.hint = getString(R.string.name)
         editText.requestFocus()
         showKeyboard(context)
 
         val builder = AlertDialog.Builder(requireActivity())
-        return builder.setTitle(getString(R.string.name_bed_text))
+        return builder.setTitle(getString(R.string.name_your_bed))
                 .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
                     dialog.cancel()
-                    hideKeyboard(context)
                 }
                 .setPositiveButton(getString(R.string.save)) { _, _ ->
                     val text = editText.text.toString()
                     if (text.isEmpty()) {
-                        Toast.makeText(requireActivity(), getString(R.string.no_name_given_text), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireActivity(), getString(R.string.no_bed_name_given), Toast.LENGTH_SHORT).show()
                     } else {
                         saveInDatabase(editText)
-                        hideKeyboard(context)
                         findNavController().navigate(SaveBedDialogFragmentDirections.saveBedAction())
                     }
                 }
@@ -53,8 +52,8 @@ class SaveBedDialogFragment : DialogFragment() {
                 .create()
     }
 
-    override fun onCancel(dialog: DialogInterface) {
-        super.onCancel(dialog)
+    override fun onPause() {
+        super.onPause()
         hideKeyboard(context)
     }
 

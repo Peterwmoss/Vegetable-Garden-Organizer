@@ -44,9 +44,9 @@ class GardenOverviewFragment : Fragment() {
         return when (item.itemId) {
             R.id.tooltip -> {
                 if (adapter.itemCount == 0)
-                    Tooltip.newTooltip(requireContext(), getString(R.string.empty_garden_text), requireView().rootView.findViewById(R.id.tooltip))
+                    Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_empty_garden), requireView().rootView.findViewById(R.id.tooltip))
                 else
-                    Tooltip.newTooltip(requireContext(), getString(R.string.garden_with_beds_text), requireView().rootView.findViewById(R.id.tooltip))
+                    Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_garden_with_beds), requireView().rootView.findViewById(R.id.tooltip))
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -76,7 +76,7 @@ class GardenOverviewFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.bed_text)
+        (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.bed)
     }
 
     private fun setExplanatoryTextBasedOnItemCount(){

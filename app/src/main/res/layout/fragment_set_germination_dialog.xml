@@ -12,12 +12,12 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="@dimen/font_medium"
         android:id="@+id/set_germination_text_view"
-        android:text="@string/germination_text"/>
+        android:text="@string/title_dialog_germination"/>
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/germinated_true_text"
+        android:text="@string/germinated"
         android:textSize="@dimen/font_small"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
