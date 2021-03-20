@@ -38,6 +38,7 @@
     <string name="harvest">Høst</string>
     <string name="water">Vand</string>
     <string name="new_plant">Ny plante</string>
+    <string name="remove_plant">Fjern plante</string>
 
     <!-- Plant Details -->
     <string name="name">Navn</string>
