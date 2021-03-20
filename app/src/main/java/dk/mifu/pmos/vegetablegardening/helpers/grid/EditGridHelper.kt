@@ -10,11 +10,17 @@ import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 
-open class EditGridBuilder(
-            bedViewModel: BedViewModel,
-            layoutInflater: LayoutInflater,
-            grid: GridLayout,
-            navController: NavController) : GridBuilder(bedViewModel, layoutInflater, grid, navController) {
+open class EditGridHelper protected constructor(
+        bedViewModel: BedViewModel,
+        layoutInflater: LayoutInflater,
+        grid: GridLayout,
+        navController: NavController): GridHelper(bedViewModel, layoutInflater, grid, navController) {
+    open class Builder : GridHelper.Builder() {
+        override fun build(): GridHelper {
+            return EditGridHelper(bedViewModel!!, layoutInflater!!, grid!!, navController!!)
+        }
+    }
+
     override fun initializeTile(coordinate: Coordinate, plant: MyPlant?, tileBinding: ListItemTileBinding) {
         tileBinding.plantButton.text = plant?.name ?: ""
         val tileSideLength = getTileSideLength()
