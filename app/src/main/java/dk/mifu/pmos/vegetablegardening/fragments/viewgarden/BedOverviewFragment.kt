@@ -99,7 +99,7 @@ class BedOverviewFragment: Fragment() {
                 val repository = GardenRepository(dao)
                 return@async repository.findBed(bedViewModel.name!!)
             }
-            bedViewModel.setBed(def.await())
+            bedViewModel.setBed(def.await()!!)
             addOnMapChangedCallbacks()
             builder.updateGridSizeFromViewModel()
             builder.insertTilesInView()

@@ -12,6 +12,8 @@
     <string name="guide_plantable_plants">Der er i øjeblikket mulighed for at plante/så i dit bed!</string>
     <string name="guide_no_plantable_plants">Der er ingen planter, der kan plantes i øjeblikket</string>
     <string name="guide_check_water">Baseret på vejret i dit område, kan det være, dine planter har brug for vand</string>
+    <string name="guide_no_bed_name_given">Indtast venligst et navn til dit bed</string>
+    <string name="guide_bed_already_exists">Et bed med dette navn findes allerede. Vælg venligst et nyt navn til dit bed.</string>
 
     <!-- Tooltips -->
     <string name="tooltip_garden_with_beds">Klik på et af dine bed eller opret et nyt på plus-knappen nede i hjørnet</string>
@@ -26,6 +28,7 @@
     <string name="title_location">Hvor er dit bed?</string>
     <string name="title_dialog_germination">Er denne plante blevet forspiret?</string>
     <string name="title_dialog_plant_details">Hvad har du foretaget dig?</string>
+    <string name="title_dialog_save_bed">Navngiv dit bed</string>
 
     <!-- Grid -->
     <string name="add_column">Tilføj kolonne</string>
@@ -66,9 +69,6 @@
     <!-- Beds -->
     <string name="bed">Bed</string>
     <string name="new_bed">Nyt bed</string>
-    <string name="save_bed">Gem bed</string>
-    <string name="name_your_bed">Navngiv dit bed</string>
-    <string name="no_bed_name_given">Indtast venligst et navn til dit bed</string>
 
     <!-- Locations -->
     <string name="location_outdoors">Udendørs</string>

@@ -7,7 +7,6 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.ObservableArrayMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
@@ -18,7 +17,6 @@ import dk.mifu.pmos.vegetablegardening.helpers.grid.EditGridBuilder
 import dk.mifu.pmos.vegetablegardening.helpers.grid.EmptyGridBuilder
 import dk.mifu.pmos.vegetablegardening.helpers.grid.GridBuilder
 import dk.mifu.pmos.vegetablegardening.helpers.grid.GridBuilder.Companion.remainingHeight
-import dk.mifu.pmos.vegetablegardening.helpers.navigation.DestinationChangedListeners
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
@@ -39,7 +37,6 @@ class CreateGridFragment : Fragment() {
 
     private var tileSideLength = GridBuilder.getTileSideLength()
     private var callback: BedCallback? = null
-    private var destinationChangedListener: NavController.OnDestinationChangedListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +73,6 @@ class CreateGridFragment : Fragment() {
         setSaveBedListener()
 
         callback = BedCallback(requireView(), bedViewModel)
-        destinationChangedListener = DestinationChangedListeners.reloadBedFromDatabaseListener(bedViewModel, requireContext())
     }
 
     override fun onStart() {

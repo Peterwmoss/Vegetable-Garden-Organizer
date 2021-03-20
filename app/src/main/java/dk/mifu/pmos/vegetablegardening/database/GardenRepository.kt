@@ -25,7 +25,7 @@ class GardenRepository(private val bedDao: BedDao) {
         }
     }
 
-    fun findBed(name: String): Bed {
+    fun findBed(name: String): Bed? {
         return bedDao.findByName(name)
     }
 
