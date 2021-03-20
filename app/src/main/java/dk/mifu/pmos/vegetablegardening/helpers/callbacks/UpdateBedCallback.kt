@@ -1,6 +1,5 @@
 package dk.mifu.pmos.vegetablegardening.helpers.callbacks
 
-import android.app.Application
 import android.content.Context
 import androidx.databinding.ObservableMap
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase

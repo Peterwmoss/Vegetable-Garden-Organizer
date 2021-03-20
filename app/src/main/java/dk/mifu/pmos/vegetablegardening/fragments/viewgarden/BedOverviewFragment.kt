@@ -5,27 +5,28 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.R
+import dk.mifu.pmos.vegetablegardening.database.AppDatabase
+import dk.mifu.pmos.vegetablegardening.database.GardenRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.IconCallback
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateBedCallback
-import dk.mifu.pmos.vegetablegardening.helpers.grid.BedOverviewGridHelper
-import dk.mifu.pmos.vegetablegardening.helpers.predicates.PlantablePredicate
-import dk.mifu.pmos.vegetablegardening.models.Coordinate
-import dk.mifu.pmos.vegetablegardening.models.MyPlant
+import dk.mifu.pmos.vegetablegardening.helpers.grid.BedOverviewGridBuilder
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import dk.mifu.pmos.vegetablegardening.views.Tooltip
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class BedOverviewFragment: Fragment() {
     private lateinit var binding: FragmentBedOverviewBinding
-    private var existsPlantablePlants = false
+
     private val bedViewModel: BedViewModel by activityViewModels()
     private val plantViewModel: PlantViewModel by activityViewModels()
-    private var plantableTileSlots: Boolean = false
 
     private var saveChangesCallback: UpdateBedCallback? = null
     private var updateGridViewCallback: BedCallback? = null
@@ -67,18 +68,17 @@ class BedOverviewFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val helper = BedOverviewGridHelper.Builder()
-                .setContext(requireContext())
-                .setPlantViewModel(plantViewModel)
-                .setBinding(binding)
-                .setBedViewModel(bedViewModel)
-                .setNavController(findNavController())
-                .setLayoutInflater(layoutInflater)
-                .setGridLayout(binding.gridlayout)
-                .setLifecycleOwner(viewLifecycleOwner)
-                .build()
-        helper.updateGridSizeFromViewModel()
-        helper.insertTilesInView()
+        val builder = BedOverviewGridBuilder(
+                bedViewModel = bedViewModel,
+                plantViewModel = plantViewModel,
+                layoutInflater = layoutInflater,
+                grid = binding.gridlayout,
+                navController = findNavController(),
+                lifecycleOwner = viewLifecycleOwner,
+                context = requireContext(),
+                binding = binding)
+
+        loadBedFromDatabase(builder)
 
         saveChangesCallback =
                 UpdateBedCallback(
@@ -90,6 +90,21 @@ class BedOverviewFragment: Fragment() {
 
         updateGridViewCallback = BedCallback(requireView(), bedViewModel)
         updateIconsCallback = IconCallback(requireView(), bedViewModel)
+    }
+
+    private fun loadBedFromDatabase(builder: BedOverviewGridBuilder) {
+        MainScope().launch(Dispatchers.Main) {
+            val def = async(Dispatchers.IO) {
+                val dao = AppDatabase.getDatabase(requireContext()).bedDao()
+                val repository = GardenRepository(dao)
+                return@async repository.findBed(bedViewModel.name!!)
+            }
+            bedViewModel.setBed(def.await())
+            addOnMapChangedCallbacks()
+            builder.updateGridSizeFromViewModel()
+            builder.insertTilesInView()
+            builder.setExplanationTextViews()
+        }
     }
 
     override fun onStart() {

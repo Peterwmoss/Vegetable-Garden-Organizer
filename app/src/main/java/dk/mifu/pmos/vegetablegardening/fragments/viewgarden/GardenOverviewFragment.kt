@@ -88,11 +88,11 @@ class GardenOverviewFragment : Fragment() {
     private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val bedImage: ImageButton = view.findViewById(R.id.bed_image_button)
         val bedName: TextView = view.findViewById(R.id.bed_name_text)
-        var bed: Bed? = null
+        lateinit var bed: Bed
 
         init {
             bedImage.setOnClickListener {
-                bedViewModel.setBed(bed!!)
+                bedViewModel.setBed(bed)
                 navigateToBedOverviewFragment()
             }
         }

@@ -7,16 +7,18 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.ObservableArrayMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.database.GardenRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreateGridBinding
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
-import dk.mifu.pmos.vegetablegardening.helpers.grid.EditGridHelper
-import dk.mifu.pmos.vegetablegardening.helpers.grid.EmptyGridHelper
-import dk.mifu.pmos.vegetablegardening.helpers.grid.GridHelper
-import dk.mifu.pmos.vegetablegardening.helpers.grid.GridHelper.Companion.remainingHeight
+import dk.mifu.pmos.vegetablegardening.helpers.grid.EditGridBuilder
+import dk.mifu.pmos.vegetablegardening.helpers.grid.EmptyGridBuilder
+import dk.mifu.pmos.vegetablegardening.helpers.grid.GridBuilder
+import dk.mifu.pmos.vegetablegardening.helpers.grid.GridBuilder.Companion.remainingHeight
+import dk.mifu.pmos.vegetablegardening.helpers.navigation.DestinationChangedListeners
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
@@ -28,14 +30,16 @@ import kotlinx.coroutines.launch
 class CreateGridFragment : Fragment() {
     companion object {
         private const val MAX_COLUMNS = 4
+        private const val MIN_SIZE = 1
     }
 
     private lateinit var binding: FragmentCreateGridBinding
 
     private val bedViewModel: BedViewModel by activityViewModels()
 
-    private var tileSideLength = GridHelper.getTileSideLength()
+    private var tileSideLength = GridBuilder.getTileSideLength()
     private var callback: BedCallback? = null
+    private var destinationChangedListener: NavController.OnDestinationChangedListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +76,12 @@ class CreateGridFragment : Fragment() {
         setSaveBedListener()
 
         callback = BedCallback(requireView(), bedViewModel)
+        destinationChangedListener = DestinationChangedListeners.reloadBedFromDatabaseListener(bedViewModel, requireContext())
+    }
+
+    override fun onStart() {
+        super.onStart()
+        bedViewModel.plants?.addOnMapChangedCallback(callback)
     }
 
     private fun initializeGrid() {
@@ -84,48 +94,57 @@ class CreateGridFragment : Fragment() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        bedViewModel.plants?.addOnMapChangedCallback(callback)
-    }
-
     private fun initNewGrid() {
         bedViewModel.plants = ObservableArrayMap()
 
         bedViewModel.columns = 2
         bedViewModel.rows = 2
 
-        val builder = EmptyGridHelper.Builder()
-                .setBedViewModel(bedViewModel)
-                .setLayoutInflater(layoutInflater)
-                .setGridLayout(binding.gridlayout)
-                .setNavController(findNavController())
-                .build()
+        val builder = EmptyGridBuilder(
+            bedViewModel = bedViewModel,
+            layoutInflater = layoutInflater,
+            grid = binding.gridlayout,
+            navController = findNavController())
         builder.updateGridSizeFromViewModel()
+        builder.createEmptyGrid()
     }
 
     private fun loadCurrentGrid() {
-        val helper = EditGridHelper.Builder()
-                .setBedViewModel(bedViewModel)
-                .setLayoutInflater(layoutInflater)
-                .setGridLayout(binding.gridlayout)
-                .setNavController(findNavController())
-                .build()
-        helper.updateGridSizeFromViewModel()
-        helper.insertTilesInView()
+        val builder = EditGridBuilder(
+                bedViewModel = bedViewModel,
+                layoutInflater = layoutInflater,
+                grid = binding.gridlayout,
+                navController = findNavController())
+        builder.updateGridSizeFromViewModel()
+        builder.insertTilesInView()
         updateButtonVisibility()
     }
 
     private fun updateButtonVisibility() {
+        if (bedViewModel.columns > MIN_SIZE)
+            binding.removeColumnButton.visibility = View.VISIBLE
+        else
+            binding.removeColumnButton.visibility = View.GONE
+        if (bedViewModel.rows > MIN_SIZE)
+            binding.removeRowButton.visibility = View.VISIBLE
+        else
+            binding.removeRowButton.visibility = View.GONE
+
         if (bedViewModel.columns == MAX_COLUMNS) {
             binding.addColumnButton.visibility = View.GONE
             binding.removeColumnButton.visibility = View.VISIBLE
             adjustPlacementOfGrid(full = true, column = true)
+        } else {
+            binding.addColumnButton.visibility = View.VISIBLE
+            adjustPlacementOfGrid(full = false, column = true)
         }
         if (remainingHeight(bedViewModel.rows, requireContext()) < tileSideLength) {
             binding.addRowButton.visibility = View.GONE
             binding.removeRowButton.visibility = View.VISIBLE
             adjustPlacementOfGrid(full = true, column = false)
+        } else {
+            binding.addRowButton.visibility = View.VISIBLE
+            adjustPlacementOfGrid(full = false, column = false)
         }
     }
 
@@ -150,22 +169,12 @@ class CreateGridFragment : Fragment() {
 
         addButton.setOnClickListener{
             changeTiles(add = true, column = false)
-            if (remainingHeight(bedViewModel.rows, requireContext()) < tileSideLength) { //If there isn't enough room for a whole row more
-                adjustPlacementOfGrid(full = true, column = false)
-                addButton.visibility = View.GONE
-            }
-            removeButton.visibility = View.VISIBLE
+            updateButtonVisibility()
         }
 
         removeButton.setOnClickListener{
             changeTiles(add = false, column = false)
-            if (addButton.visibility == View.GONE) {
-                adjustPlacementOfGrid(full = false, column = false)
-                addButton.visibility = View.VISIBLE
-            }
-            if (bedViewModel.rows==2) {
-                removeButton.visibility = View.GONE
-            }
+            updateButtonVisibility()
         }
     }
 
@@ -175,22 +184,12 @@ class CreateGridFragment : Fragment() {
 
         addButton.setOnClickListener{
             changeTiles(add = true, column = true)
-            if (bedViewModel.columns== MAX_COLUMNS) {
-                adjustPlacementOfGrid(full = true, column = true)
-                addButton.visibility = View.GONE
-            }
-            removeButton.visibility = View.VISIBLE
+            updateButtonVisibility()
         }
 
         removeButton.setOnClickListener{
             changeTiles(add = false, column = true)
-            if (addButton.visibility == View.GONE) {
-                adjustPlacementOfGrid(full = false, column = true)
-                addButton.visibility = View.VISIBLE
-            }
-            if (bedViewModel.columns==2) {
-                removeButton.visibility = View.GONE
-            }
+            updateButtonVisibility()
         }
     }
 
@@ -226,15 +225,14 @@ class CreateGridFragment : Fragment() {
             if (add) bedViewModel.rows++ else bedViewModel.rows--
         }
 
-        val helper = EditGridHelper.Builder()
-                .setBedViewModel(bedViewModel)
-                .setLayoutInflater(layoutInflater)
-                .setGridLayout(gridLayout)
-                .setNavController(findNavController())
-                .build()
-        helper.updateGridSizeFromViewModel()
+        val builder = EditGridBuilder(
+                bedViewModel = bedViewModel,
+                layoutInflater = layoutInflater,
+                grid = binding.gridlayout,
+                navController = findNavController())
+        builder.updateGridSizeFromViewModel()
         updatePlantsInViewModel(add, column)
-        helper.insertTilesInView()
+        builder.insertTilesInView()
         bedViewModel.plants?.addOnMapChangedCallback(callback)
     }
 

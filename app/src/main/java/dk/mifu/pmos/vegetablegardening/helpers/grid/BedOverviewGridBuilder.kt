@@ -18,65 +18,24 @@ import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 
-class BedOverviewGridHelper private constructor(
+class BedOverviewGridBuilder(
         bedViewModel: BedViewModel,
         plantViewModel: PlantViewModel,
         layoutInflater: LayoutInflater,
         grid: GridLayout,
         navController: NavController,
-        lifecycleOwner: LifecycleOwner,
-        context: Context,
-        binding: FragmentBedOverviewBinding) : GridHelper(bedViewModel, layoutInflater, grid, navController) {
-
-    private val plantViewModel: PlantViewModel
-    private val lifecycleOwner: LifecycleOwner
-    private val context: Context
-    private val binding: FragmentBedOverviewBinding
-
+        private val lifecycleOwner: LifecycleOwner,
+        private val context: Context,
+        private val binding: FragmentBedOverviewBinding
+) : GridBuilder(bedViewModel, layoutInflater, grid, navController) {
     private var existsPlantablePlants = false
     private var plantableTileSlots = false
 
     init {
-        this.plantViewModel = plantViewModel
-        this.lifecycleOwner = lifecycleOwner
-        this.context = context
-        this.binding = binding
         existsPlantablePlants = !plantViewModel.plants.value
                 ?.filter(PlantablePredicate())
                 ?.filter(LocationPredicate(bedViewModel.bedLocation))
                 .isNullOrEmpty()
-
-        setExplanationTextViews()
-    }
-
-    class Builder : GridHelper.Builder() {
-        private var plantViewModel: PlantViewModel? = null
-        private var lifecycleOwner: LifecycleOwner? = null
-        private var context: Context? = null
-        private var binding: FragmentBedOverviewBinding? = null
-
-        fun setPlantViewModel(plantViewModel: PlantViewModel) = apply { this.plantViewModel = plantViewModel }
-        fun setLifecycleOwner(lifecycleOwner: LifecycleOwner) = apply { this.lifecycleOwner = lifecycleOwner }
-        fun setContext(context: Context) = apply { this.context = context }
-        fun setBinding(binding: FragmentBedOverviewBinding) = apply { this.binding = binding }
-
-        // Allow for arbitrary order of applying parameters
-        override fun setBedViewModel(bedViewModel: BedViewModel) = apply { this.bedViewModel = bedViewModel }
-        override fun setLayoutInflater(layoutInflater: LayoutInflater) = apply { this.layoutInflater = layoutInflater }
-        override fun setGridLayout(grid: GridLayout) = apply { this.grid = grid }
-        override fun setNavController(navController: NavController) = apply { this.navController = navController }
-
-        override fun build(): BedOverviewGridHelper {
-            return BedOverviewGridHelper(
-                    bedViewModel!!,
-                    plantViewModel!!,
-                    layoutInflater!!,
-                    grid!!,
-                    navController!!,
-                    lifecycleOwner!!,
-                    context!!,
-                    binding!!)
-        }
     }
 
     override fun initializeIcon(coordinate: Coordinate, plant: MyPlant?, tileBinding: ListItemTileBinding) {
@@ -107,7 +66,7 @@ class BedOverviewGridHelper private constructor(
         bedViewModel.tileIds?.put(coordinate, tileBinding.plantButton.id)
     }
 
-    private fun setExplanationTextViews() {
+    fun setExplanationTextViews() {
         if(existsPlantablePlants && plantableTileSlots){
             binding.plantableExplanationTextView.visibility = View.VISIBLE
             binding.plantableExplanationTextView.text = context.getString(R.string.guide_plantable_plants)

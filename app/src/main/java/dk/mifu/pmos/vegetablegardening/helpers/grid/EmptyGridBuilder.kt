@@ -7,25 +7,20 @@ import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 
-class EmptyGridHelper private constructor(
+class EmptyGridBuilder(
         bedViewModel: BedViewModel,
         layoutInflater: LayoutInflater,
         grid: GridLayout,
-        navController: NavController) : EditGridHelper(bedViewModel, layoutInflater, grid, navController) {
+        navController: NavController
+) : EditGridBuilder(bedViewModel, layoutInflater, grid, navController) {
 
-    init {
+    fun createEmptyGrid() {
         for (i in 0 until bedViewModel.rows) {
             for (j in 0 until bedViewModel.columns) {
                 val coordinate = Coordinate(j,i)
                 val tileBinding = ListItemTileBinding.inflate(layoutInflater, grid, true)
                 initializeTile(coordinate, null, tileBinding)
             }
-        }
-    }
-
-    class Builder : EditGridHelper.Builder() {
-        override fun build(): GridHelper {
-            return EmptyGridHelper(bedViewModel!!, layoutInflater!!, grid!!, navController!!)
         }
     }
 }
