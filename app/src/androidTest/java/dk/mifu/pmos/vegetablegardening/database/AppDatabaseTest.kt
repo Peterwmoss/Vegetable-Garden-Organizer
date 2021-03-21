@@ -53,7 +53,7 @@ class AppDatabaseTest {
             DynamicTest.dynamicTest("Create bed with a name specified stores a bed with that name") {
                 bedDao.insert(bed)
                 val byName = bedDao.findByName(bed.name)
-                Assertions.assertEquals(name, byName.name)
+                Assertions.assertEquals(name, byName!!.name)
             }
         }
 
@@ -69,7 +69,7 @@ class AppDatabaseTest {
             DynamicTest.dynamicTest("Create bed with a location specified stores a bed with that location") {
                 bedDao.insert(bed)
                 val byName = bedDao.findByName(bed.name)
-                Assertions.assertEquals(location, byName.bedLocation)
+                Assertions.assertEquals(location, byName!!.bedLocation)
             }
         }
 
@@ -86,7 +86,7 @@ class AppDatabaseTest {
             DynamicTest.dynamicTest("Create bed with plants specified stores a bed with those plants") {
                 bedDao.insert(bed)
                 val byName = bedDao.findByName(bed.name)
-                Assertions.assertEquals(plants, byName.plants)
+                Assertions.assertEquals(plants, byName!!.plants)
             }
         }
 
@@ -105,8 +105,8 @@ class AppDatabaseTest {
             DynamicTest.dynamicTest("Create bed with columns and rows specified stores a bed with those columns and rows") {
                 bedDao.insert(bed)
                 val byName = bedDao.findByName(bed.name)
-                Assertions.assertEquals(size.first, byName.columns)
-                Assertions.assertEquals(size.second, byName.rows)
+                Assertions.assertEquals(size.first, byName!!.columns)
+                Assertions.assertEquals(size.second, byName!!.rows)
             }
         }
     }
@@ -131,7 +131,7 @@ class AppDatabaseTest {
                 bedDao.update(newBed)
                 val byName = bedDao.findByName(bed.name)
 
-                Assertions.assertEquals(newLocation, byName.bedLocation)
+                Assertions.assertEquals(newLocation, byName!!.bedLocation)
             }
         }
 
@@ -153,7 +153,7 @@ class AppDatabaseTest {
                 bedDao.update(newBed)
                 val byName = bedDao.findByName(bed.name)
 
-                Assertions.assertEquals(newPlants, byName.plants)
+                Assertions.assertEquals(newPlants, byName!!.plants)
             }
         }
 
@@ -173,8 +173,8 @@ class AppDatabaseTest {
                 bedDao.update(newBed)
                 val byName = bedDao.findByName(bed.name)
 
-                Assertions.assertEquals(newSize.first, byName.columns)
-                Assertions.assertEquals(newSize.second, byName.rows)
+                Assertions.assertEquals(newSize.first, byName!!.columns)
+                Assertions.assertEquals(newSize.second, byName!!.rows)
             }
         }
     }
