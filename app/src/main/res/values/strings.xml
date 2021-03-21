@@ -29,6 +29,7 @@
     <string name="title_dialog_germination">Er denne plante blevet forspiret?</string>
     <string name="title_dialog_plant_details">Hvad har du foretaget dig?</string>
     <string name="title_dialog_save_bed">Navngiv dit bed</string>
+    <string name="title_dialog_delete_bed_confirmation">Bekræft sletning af bed</string>
 
     <!-- Grid -->
     <string name="add_column">Tilføj kolonne</string>
@@ -52,8 +53,11 @@
     <string name="plant">Plantes</string>
     <string name="number_of_seasons">Sæsoner med denne plante her</string>
     <string name="details">Detaljer</string>
-    <string name="registered_water">Registreret som vandet</string>
-    <string name="registered_harvest">Registreret som høstet</string>
+
+    <!-- Toasts -->
+    <string name="toast_registered_water">Registreret som vandet</string>
+    <string name="toast_registered_harvest">Registreret som høstet</string>
+    <string name="toast_bed_deleted">Bedet er slettet</string>
 
     <!-- Plant Germination -->
     <string name="germinated">Forspiret</string>
@@ -84,4 +88,5 @@
     <!-- General Dialogs -->
     <string name="cancel">Annullér</string>
     <string name="save">Gem</string>
+    <string name="delete">Slet</string>
 </resources>

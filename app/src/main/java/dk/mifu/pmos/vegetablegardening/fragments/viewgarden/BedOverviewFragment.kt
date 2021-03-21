@@ -2,9 +2,11 @@ package dk.mifu.pmos.vegetablegardening.fragments.viewgarden
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
@@ -14,6 +16,11 @@ import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.IconCallback
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateBedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.grid.BedOverviewGridBuilder
+import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPredicate
+import dk.mifu.pmos.vegetablegardening.helpers.predicates.PlantablePredicate
+import dk.mifu.pmos.vegetablegardening.models.Bed
+import dk.mifu.pmos.vegetablegardening.models.Coordinate
+import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import dk.mifu.pmos.vegetablegardening.views.Tooltip
@@ -49,6 +56,10 @@ class BedOverviewFragment: Fragment() {
             }
             R.id.edit -> {
                 findNavController().navigate(BedOverviewFragmentDirections.editBedAction())
+                true
+            }
+            R.id.delete -> {
+                findNavController().navigate(BedOverviewFragmentDirections.deleteBedAction())
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -124,7 +135,7 @@ class BedOverviewFragment: Fragment() {
         bedViewModel.plants?.addOnMapChangedCallback(saveChangesCallback)
     }
 
-    private fun removeOnMapChangedCallbacks(){
+    private fun removeOnMapChangedCallbacks() {
         bedViewModel.plants?.removeOnMapChangedCallback(updateGridViewCallback)
         bedViewModel.plants?.removeOnMapChangedCallback(updateIconsCallback)
         bedViewModel.plants?.removeOnMapChangedCallback(saveChangesCallback)
