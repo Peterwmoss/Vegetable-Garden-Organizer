@@ -1,6 +1,7 @@
 package dk.mifu.pmos.vegetablegardening.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,9 +32,14 @@ class NewSeasonFragment: Fragment() {
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.toolbar_new_season)
 
         binding.saveSeasonButton.setOnClickListener {
-            val year = binding.year.text.toString().toInt()
-            handleSave(year)
-            seasonViewModel.currentSeason = MutableLiveData(year)
+            if(binding.year.text.isNotBlank()){
+                val year = binding.year.text.toString().toInt()
+                handleSave(year)
+                seasonViewModel.currentSeason = MutableLiveData(year)
+            } else {
+                Toast.makeText(context, "Indtast venligst et årstal", Toast.LENGTH_LONG).show()
+            }
+
         }
 
         return binding.root
