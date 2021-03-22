@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout = binding.drawerLayout
         navController = findNavController(R.id.nav_host_fragment)
 
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.gardenOverviewFragment, R.id.lexiconFragment), drawerLayout)
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.gardenOverviewFragment, R.id.lexiconFragment, R.id.newSeasonFragment), drawerLayout)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
 

@@ -11,13 +11,17 @@
             android:title="@string/lexicon" />
 
         <item
-            android:icon="@drawable/bed"
             android:id="@+id/gardenOverviewFragment"
             android:title="@string/beds">
             <menu>
                 <group android:checkableBehavior="single"/>
             </menu>
         </item>
+
+        <item
+            android:id="@+id/newSeasonFragment"
+            android:icon="@drawable/ic_plus"
+            android:title="@string/new_season"/>
     </group>
 
 

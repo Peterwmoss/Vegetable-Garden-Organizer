@@ -4,6 +4,7 @@
     <!-- Toolbar -->
     <string name="toolbar_location">Vælg lokation</string>
     <string name="toolbar_create_grid">Design dit bed</string>
+    <string name="toolbar_new_season">Opret en ny sæson</string>
 
     <!-- Guides -->
     <string name="help">Hjælp</string>
@@ -82,4 +83,8 @@
     <!-- General Dialogs -->
     <string name="cancel">Annullér</string>
     <string name="save">Gem</string>
+
+    <!-- New season -->
+    <string name="new_season">Ny sæson</string>
+    <string name="year">Årstal</string>
 </resources>

@@ -129,4 +129,8 @@
             android:id="@+id/save_bed_action"
             app:destination="@id/gardenOverviewFragment" />
     </dialog>
+    <fragment
+        android:id="@+id/newSeasonFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.NewSeasonFragment"
+        android:label="NewSeasonFragment"/>
 </navigation>
