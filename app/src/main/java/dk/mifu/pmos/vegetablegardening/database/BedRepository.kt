@@ -5,7 +5,7 @@ import dk.mifu.pmos.vegetablegardening.models.Bed
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class GardenRepository(private val bedDao: BedDao) {
+class BedRepository(private val bedDao: BedDao) {
 
     suspend fun insertBed(bed: Bed) {
         withContext(Dispatchers.IO) {

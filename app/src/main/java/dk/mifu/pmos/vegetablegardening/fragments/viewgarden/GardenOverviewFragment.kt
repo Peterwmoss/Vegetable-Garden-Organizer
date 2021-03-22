@@ -13,21 +13,24 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.BedDao
-import dk.mifu.pmos.vegetablegardening.database.GardenRepository
+import dk.mifu.pmos.vegetablegardening.database.BedRepository
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentGardenOverviewBinding
 import dk.mifu.pmos.vegetablegardening.enums.BedLocation.Greenhouse
 import dk.mifu.pmos.vegetablegardening.enums.BedLocation.Outdoors
+import dk.mifu.pmos.vegetablegardening.helpers.predicates.CurrentSeasonPredicate
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
+import dk.mifu.pmos.vegetablegardening.viewmodels.SeasonViewModel
 import dk.mifu.pmos.vegetablegardening.views.Tooltip
 
 class GardenOverviewFragment : Fragment() {
     private lateinit var binding: FragmentGardenOverviewBinding
 
     private val bedViewModel: BedViewModel by activityViewModels()
+    private val seasonViewModel: SeasonViewModel by activityViewModels()
     private var gardenDb: BedDao? = null
-    private var repository: GardenRepository? = null
+    private var repository: BedRepository? = null
 
     private lateinit var adapter: GardenOverviewAdapter
 
@@ -56,13 +59,13 @@ class GardenOverviewFragment : Fragment() {
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentGardenOverviewBinding.inflate(inflater, container, false)
         gardenDb = AppDatabase.getDatabase(requireContext()).bedDao()
-        repository = GardenRepository(gardenDb!!)
+        repository = BedRepository(gardenDb!!)
 
         val recyclerView = binding.gardensRecyclerView
 
         recyclerView.layoutManager = GridLayoutManager(context, 2)
         repository?.getAllBeds()?.observe(viewLifecycleOwner, {
-            adapter = GardenOverviewAdapter(it)
+            adapter = GardenOverviewAdapter(it.filter(CurrentSeasonPredicate(seasonViewModel)))
             recyclerView.adapter = adapter
             setExplanatoryTextBasedOnItemCount()
         })

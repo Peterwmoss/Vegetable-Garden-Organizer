@@ -27,6 +27,7 @@ import kotlin.collections.HashMap
 
 class BedViewModel(application: Application) : AndroidViewModel(application) {
     var name : String? = null
+    var season: Int? = null
     var bedLocation : BedLocation? = null
     var plants : ObservableMap<Coordinate, MyPlant>? = null
     var tileIds : MutableMap<Coordinate, Int>? = null
@@ -42,13 +43,14 @@ class BedViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         name = bed.name
+        season = bed.season
         bedLocation = bed.bedLocation
         plants = map
         tileIds = HashMap()
         columns = bed.columns
         rows = bed.rows
 
-        map.addOnMapChangedCallback(UpdateBedCallback(name!!, bedLocation!!, getApplication(), columns, rows))
+        map.addOnMapChangedCallback(UpdateBedCallback(name!!, season!!, bedLocation!!, getApplication(), columns, rows))
 
         getWeatherData()
     }

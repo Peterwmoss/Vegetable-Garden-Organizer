@@ -1,28 +1,28 @@
 package dk.mifu.pmos.vegetablegardening.fragments.dialogs
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.setPadding
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.R
-import dk.mifu.pmos.vegetablegardening.database.GardenRepository
+import dk.mifu.pmos.vegetablegardening.database.BedRepository
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.hideKeyboard
 import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.showKeyboard
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
+import dk.mifu.pmos.vegetablegardening.viewmodels.SeasonViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class SaveBedDialogFragment : DialogFragment() {
     private val bedViewModel: BedViewModel by activityViewModels()
+    private val seasonViewModel: SeasonViewModel by activityViewModels()
 
     companion object {
         const val TAG = "SaveBedDialog"
@@ -62,8 +62,8 @@ class SaveBedDialogFragment : DialogFragment() {
         run {
             MainScope().launch(Dispatchers.IO) {
                 val dao = AppDatabase.getDatabase(requireContext()).bedDao()
-                val repository = GardenRepository(dao)
-                repository.insertBed(Bed(bedViewModel.name!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
+                val repository = BedRepository(dao)
+                repository.insertBed(Bed(bedViewModel.name!!, seasonViewModel.currentSeason!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
             }
         }
     }
