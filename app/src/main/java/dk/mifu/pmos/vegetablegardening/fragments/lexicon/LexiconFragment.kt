@@ -15,7 +15,6 @@ import dk.mifu.pmos.vegetablegardening.helpers.search.PlantFilter
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import dk.mifu.pmos.vegetablegardening.views.Tooltip
-import java.util.*
 
 class LexiconFragment: Fragment() {
     private lateinit var binding: FragmentLexiconBinding
@@ -29,7 +28,7 @@ class LexiconFragment: Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar, menu)
+        inflater.inflate(R.menu.toolbar_default, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

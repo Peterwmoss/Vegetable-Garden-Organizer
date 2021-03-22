@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:padding="@dimen/spacing_xsmall"
+        android:textSize="@dimen/font_medium"
+        android:text="@string/title_dialog_delete_bed_confirmation"
+        android:id="@+id/delete_bed_title"
+        android:textAlignment="center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:text="@string/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/AcceptButtonStyle"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/delete_bed_button"
+        app:layout_constraintTop_toBottomOf="@id/delete_bed_title"/>
+
+    <Button
+        android:id="@+id/delete_bed_button"
+        android:text="@string/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/ButtonStyle"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_small"
+        app:layout_constraintStart_toEndOf="@id/cancel_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/delete_bed_title"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

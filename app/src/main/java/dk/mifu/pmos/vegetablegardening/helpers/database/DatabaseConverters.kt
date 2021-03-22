@@ -9,7 +9,7 @@ import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import java.lang.reflect.Type
 
 class DatabaseConverters {
-    private val plantMapType : Type = object : TypeToken<Map<Coordinate, MyPlant>>(){}.type
+    private val plantMapType : Type = object : TypeToken<Map<Coordinate, MyPlant?>>(){}.type
     private val gson = GsonBuilder().registerTypeAdapter(plantMapType, GsonAdapters.PlantMapAdapter()).create()
 
     @TypeConverter

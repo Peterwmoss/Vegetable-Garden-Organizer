@@ -1,55 +1,84 @@
 package dk.mifu.pmos.vegetablegardening.fragments.dialogs
 
-import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
-import android.widget.EditText
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.core.view.setPadding
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavOptions
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.R
-import dk.mifu.pmos.vegetablegardening.database.GardenRepository
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
+import dk.mifu.pmos.vegetablegardening.database.GardenRepository
+import dk.mifu.pmos.vegetablegardening.databinding.FragmentSaveBedDialogBinding
 import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.hideKeyboard
 import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.showKeyboard
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class SaveBedDialogFragment : DialogFragment() {
+
+    private lateinit var binding: FragmentSaveBedDialogBinding
+
     private val bedViewModel: BedViewModel by activityViewModels()
 
-    companion object {
-        const val TAG = "SaveBedDialog"
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = FragmentSaveBedDialogBinding.inflate(inflater, container, false)
+
+        if (!bedViewModel.name.isNullOrBlank()) {
+            binding.bedNameEditText.setText(bedViewModel.name)
+        }
+
+        return binding.root
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val editText = EditText(requireContext())
-        editText.hint = getString(R.string.name)
-        editText.requestFocus()
-        showKeyboard(context)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
 
-        val builder = AlertDialog.Builder(requireActivity())
-        return builder.setTitle(getString(R.string.name_your_bed))
-                .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
-                    dialog.cancel()
-                }
-                .setPositiveButton(getString(R.string.save)) { _, _ ->
-                    val text = editText.text.toString()
-                    if (text.isEmpty()) {
-                        Toast.makeText(requireActivity(), getString(R.string.no_bed_name_given), Toast.LENGTH_SHORT).show()
-                    } else {
-                        saveInDatabase(editText)
+        binding.cancelSaveBedButton.setOnClickListener {
+            dialog?.cancel()
+        }
+
+        binding.saveBedButton.setOnClickListener {
+            val name = binding.bedNameEditText.text.toString()
+            if (bedViewModel.name.isNullOrBlank()) {
+                MainScope().launch {
+                    val exists = async { exists(name) }
+                    if (!exists.await()) {
+                        saveInDatabase(name)
                         findNavController().navigate(SaveBedDialogFragmentDirections.saveBedAction())
+                    } else
+                        Toast.makeText(requireContext(), getString(R.string.guide_bed_already_exists), Toast.LENGTH_LONG).show()
+                }
+            } else {
+                MainScope().launch(Dispatchers.IO) {
+                    val dao = AppDatabase.getDatabase(requireContext()).bedDao()
+                    val repository = GardenRepository(dao)
+                    if (name != bedViewModel.name) {
+                        deleteOldFromDatabase()
+                        saveInDatabase(name)
+                    } else {
+                        repository.updateBed(Bed(bedViewModel.name!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
                     }
                 }
-                .setView(editText)
-                .create()
+                val navOptions = NavOptions.Builder().setPopUpTo(R.id.bedOverviewFragment, true).build()
+                findNavController().navigate(R.id.bedOverviewFragment, null, navOptions)
+            }
+        }
+
+        binding.bedNameEditText.requestFocus()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        showKeyboard(context)
     }
 
     override fun onPause() {
@@ -57,14 +86,34 @@ class SaveBedDialogFragment : DialogFragment() {
         hideKeyboard(context)
     }
 
-    private fun saveInDatabase(editText: EditText) {
-        bedViewModel.name = editText.text.toString()
-        run {
-            MainScope().launch(Dispatchers.IO) {
-                val dao = AppDatabase.getDatabase(requireContext()).bedDao()
-                val repository = GardenRepository(dao)
-                repository.insertBed(Bed(bedViewModel.name!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
-            }
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.toolbar_create_grid)
+    }
+
+    private suspend fun exists(name: String) : Boolean {
+        return withContext(Dispatchers.IO) {
+            val dao = AppDatabase.getDatabase(requireContext()).bedDao()
+            val repository = GardenRepository(dao)
+            val bed = repository.findBed(name)
+            return@withContext bed != null
+        }
+    }
+
+    private suspend fun saveInDatabase(name: String) {
+        bedViewModel.name = name
+        withContext(Dispatchers.IO) {
+            val dao = AppDatabase.getDatabase(requireContext()).bedDao()
+            val repository = GardenRepository(dao)
+            repository.insertBed(Bed(bedViewModel.name!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
+        }
+    }
+
+    private suspend fun deleteOldFromDatabase() {
+        withContext(Dispatchers.IO) {
+            val dao = AppDatabase.getDatabase(requireContext()).bedDao()
+            val repository = GardenRepository(dao)
+            repository.deleteBed(bedViewModel.name!!)
         }
     }
 }
