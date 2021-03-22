@@ -68,11 +68,11 @@ abstract class GridBuilder(
             return width shr 2 //Divide by 4
         }
 
-        fun getWidthOfScreen(): Int {
+        private fun getWidthOfScreen(): Int {
             return Resources.getSystem().displayMetrics.widthPixels
         }
 
-        fun getHeightOfScreen(): Int {
+        private fun getHeightOfScreen(): Int {
             return Resources.getSystem().displayMetrics.heightPixels
         }
 

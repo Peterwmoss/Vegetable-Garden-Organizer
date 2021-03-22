@@ -14,9 +14,11 @@ class EmptyGridBuilder(
         navController: NavController
 ) : EditGridBuilder(bedViewModel, layoutInflater, grid, navController) {
 
-    fun createEmptyGrid() {
-        for (i in 0 until bedViewModel.rows) {
-            for (j in 0 until bedViewModel.columns) {
+    fun createEmptyGrid(size: Int = 2) {
+        bedViewModel.rows = size
+        bedViewModel.columns = size
+        for (i in 0 until size) {
+            for (j in 0 until size) {
                 val coordinate = Coordinate(j,i)
                 val tileBinding = ListItemTileBinding.inflate(layoutInflater, grid, true)
                 initializeTile(coordinate, null, tileBinding)

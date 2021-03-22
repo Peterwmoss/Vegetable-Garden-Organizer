@@ -93,16 +93,13 @@ class CreateGridFragment : Fragment() {
     private fun initNewGrid() {
         bedViewModel.plants = ObservableArrayMap()
 
-        bedViewModel.columns = 2
-        bedViewModel.rows = 2
-
         val builder = EmptyGridBuilder(
             bedViewModel = bedViewModel,
             layoutInflater = layoutInflater,
             grid = binding.gridlayout,
             navController = findNavController())
-        builder.updateGridSizeFromViewModel()
         builder.createEmptyGrid()
+        builder.updateGridSizeFromViewModel()
     }
 
     private fun loadCurrentGrid() {
