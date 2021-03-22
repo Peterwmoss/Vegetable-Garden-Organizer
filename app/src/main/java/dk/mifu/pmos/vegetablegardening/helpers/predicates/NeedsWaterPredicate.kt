@@ -3,8 +3,10 @@ package dk.mifu.pmos.vegetablegardening.helpers.predicates
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import java.util.*
 
-class NeedsWaterPredicate(private val lastRainDate: Date): Predicate<MyPlant> {
-    override fun invoke(plant: MyPlant): Boolean {
+class NeedsWaterPredicate(private val lastRainDate: Date): Predicate<MyPlant?> {
+    override fun invoke(plant: MyPlant?): Boolean {
+        if (plant == null)
+            return false
         val wateredDate = plant.wateredDate
         val today = Date().time
         return if (wateredDate != null) {
