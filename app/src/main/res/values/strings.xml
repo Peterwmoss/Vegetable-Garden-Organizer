@@ -62,7 +62,7 @@
     <string name="add_sort">Tilføj sort</string>
 
     <!-- Beds -->
-    <string name="bed">Bed</string>
+    <string name="beds">Bede</string>
     <string name="new_bed">Nyt bed</string>
     <string name="save_bed">Gem bed</string>
     <string name="name_your_bed">Navngiv dit bed</string>

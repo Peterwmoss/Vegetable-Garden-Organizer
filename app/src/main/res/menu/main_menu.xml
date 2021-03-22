@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item
-            android:icon="@drawable/bed"
-            android:id="@+id/gardenOverviewFragment"
-            android:title="@string/bed" />
-
-        <item
             android:icon="@drawable/lexicon"
             android:id="@+id/lexiconFragment"
             android:title="@string/lexicon" />
+
+        <item
+            android:icon="@drawable/bed"
+            android:id="@+id/gardenOverviewFragment"
+            android:title="@string/beds">
+            <menu>
+                <group android:checkableBehavior="single"/>
+            </menu>
+        </item>
     </group>
+
+
 </menu>

@@ -10,14 +10,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.menu.MenuItemImpl
 import androidx.appcompat.widget.MenuPopupWindow
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.view.MenuCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.*
 import com.google.android.material.appbar.MaterialToolbar
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
@@ -32,6 +31,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
     private val seasonViewModel: SeasonViewModel by viewModels()
 
     companion object {
@@ -50,13 +50,11 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val drawerLayout = binding.drawerLayout
-        val navigationView = binding.navigationView
-        val navController = findNavController(R.id.nav_host_fragment)
+        navController = findNavController(R.id.nav_host_fragment)
 
         appBarConfiguration = AppBarConfiguration(setOf(R.id.gardenOverviewFragment, R.id.lexiconFragment), drawerLayout)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navigationView.setupWithNavController(navController)
 
         setUpSeasonsInDrawer()
     }
@@ -67,19 +65,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpSeasonsInDrawer(){
-        val seasonsMenu = binding.navigationView.menu.addSubMenu("Sæsoner")
+        val seasonsMenu = binding.navigationView.menu.getItem(1).subMenu
         val dao = AppDatabase.getDatabase(this).seasonDao()
         val seasons = SeasonRepository(dao).getAllSeasons()
 
         seasons.observe(this, { list ->
             list.forEach {
                 val item = seasonsMenu.add(it.season.toString())
+                item.icon = ContextCompat.getDrawable(this, R.drawable.bed)
                 item.setOnMenuItemClickListener {
+                    item.isChecked = true
                     seasonViewModel.currentSeason.value = item.title.toString().toInt()
-                    return@setOnMenuItemClickListener true
+                    findNavController(R.id.nav_host_fragment).navigate(R.id.gardenOverviewFragment)
+                    return@setOnMenuItemClickListener false
                 }
             }
+            binding.navigationView.invalidate()
+            setUpNavigation()
         })
+    }
+
+    private fun setUpNavigation(){
+        binding.navigationView.setupWithNavController(navController)
     }
 
 }

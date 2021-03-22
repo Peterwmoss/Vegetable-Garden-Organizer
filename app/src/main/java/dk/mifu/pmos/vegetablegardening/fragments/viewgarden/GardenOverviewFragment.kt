@@ -81,7 +81,7 @@ class GardenOverviewFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.bed)
+        (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.beds)
         bedViewModel.clear()
     }
 
