@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavOptions
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
@@ -28,6 +30,11 @@ class SaveBedDialogFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSaveBedDialogBinding.inflate(inflater, container, false)
+
+        if (!bedViewModel.name.isNullOrBlank()) {
+            binding.bedNameEditText.setText(bedViewModel.name)
+        }
+
         return binding.root
     }
 
@@ -41,13 +48,28 @@ class SaveBedDialogFragment : DialogFragment() {
 
         binding.saveBedButton.setOnClickListener {
             val name = binding.bedNameEditText.text.toString()
-            MainScope().launch {
-                val exists = async { exists(name) }
-                if (!exists.await()) {
-                    saveInDatabase(name)
-                    findNavController().navigate(SaveBedDialogFragmentDirections.saveBedAction())
-                } else
-                    Toast.makeText(requireContext(), getString(R.string.guide_bed_already_exists), Toast.LENGTH_LONG).show()
+            if (bedViewModel.name.isNullOrBlank()) {
+                MainScope().launch {
+                    val exists = async { exists(name) }
+                    if (!exists.await()) {
+                        saveInDatabase(name)
+                        findNavController().navigate(SaveBedDialogFragmentDirections.saveBedAction())
+                    } else
+                        Toast.makeText(requireContext(), getString(R.string.guide_bed_already_exists), Toast.LENGTH_LONG).show()
+                }
+            } else {
+                MainScope().launch(Dispatchers.IO) {
+                    val dao = AppDatabase.getDatabase(requireContext()).bedDao()
+                    val repository = GardenRepository(dao)
+                    if (name != bedViewModel.name) {
+                        deleteOldFromDatabase()
+                        saveInDatabase(name)
+                    } else {
+                        repository.updateBed(Bed(bedViewModel.name!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
+                    }
+                }
+                val navOptions = NavOptions.Builder().setPopUpTo(R.id.bedOverviewFragment, true).build()
+                findNavController().navigate(R.id.bedOverviewFragment, null, navOptions)
             }
         }
 
@@ -84,6 +106,14 @@ class SaveBedDialogFragment : DialogFragment() {
             val dao = AppDatabase.getDatabase(requireContext()).bedDao()
             val repository = GardenRepository(dao)
             repository.insertBed(Bed(bedViewModel.name!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
+        }
+    }
+
+    private suspend fun deleteOldFromDatabase() {
+        withContext(Dispatchers.IO) {
+            val dao = AppDatabase.getDatabase(requireContext()).bedDao()
+            val repository = GardenRepository(dao)
+            repository.deleteBed(bedViewModel.name!!)
         }
     }
 }

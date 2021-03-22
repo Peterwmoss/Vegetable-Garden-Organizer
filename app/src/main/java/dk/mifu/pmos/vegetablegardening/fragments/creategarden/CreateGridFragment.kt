@@ -143,16 +143,7 @@ class CreateGridFragment : Fragment() {
 
     private fun setSaveBedListener() {
         binding.saveGardenButton.setOnClickListener {
-            if (bedViewModel.name.isNullOrBlank()) {
-                findNavController().navigate(CreateGridFragmentDirections.toSaveBedDialog())
-            } else {
-                MainScope().launch(Dispatchers.IO) {
-                    val dao = AppDatabase.getDatabase(requireContext()).bedDao()
-                    val repository = GardenRepository(dao)
-                    repository.updateBed(Bed(bedViewModel.name!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
-                }
-                findNavController().navigateUp()
-            }
+            findNavController().navigate(CreateGridFragmentDirections.toSaveBedDialog())
         }
     }
 
