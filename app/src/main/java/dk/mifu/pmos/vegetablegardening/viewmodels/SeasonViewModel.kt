@@ -2,6 +2,8 @@ package dk.mifu.pmos.vegetablegardening.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.database.SeasonRepository
@@ -11,7 +13,7 @@ import kotlinx.coroutines.runBlocking
 import java.util.*
 
 class SeasonViewModel(application: Application): AndroidViewModel(application) {
-    var currentSeason: Int? = null
+    var currentSeason: MutableLiveData<Int>
 
     init {
         runBlocking(Dispatchers.IO) {
@@ -21,9 +23,9 @@ class SeasonViewModel(application: Application): AndroidViewModel(application) {
             currentSeason = if (latestSeason == null) {
                 val year = Calendar.getInstance().get(Calendar.YEAR)
                 repository.insertSeason(year)
-                year
+                MutableLiveData(year)
             } else {
-                latestSeason
+                MutableLiveData(latestSeason)
             }
         }
     }

@@ -63,7 +63,7 @@ class SaveBedDialogFragment : DialogFragment() {
             MainScope().launch(Dispatchers.IO) {
                 val dao = AppDatabase.getDatabase(requireContext()).bedDao()
                 val repository = BedRepository(dao)
-                repository.insertBed(Bed(bedViewModel.name!!, seasonViewModel.currentSeason!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
+                repository.insertBed(Bed(bedViewModel.name!!, seasonViewModel.currentSeason.value!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
             }
         }
     }

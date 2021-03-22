@@ -73,7 +73,11 @@ class MainActivity : AppCompatActivity() {
 
         seasons.observe(this, { list ->
             list.forEach {
-                seasonsMenu.add(it.season.toString())
+                val item = seasonsMenu.add(it.season.toString())
+                item.setOnMenuItemClickListener {
+                    seasonViewModel.currentSeason.value = item.title.toString().toInt()
+                    return@setOnMenuItemClickListener true
+                }
             }
         })
     }

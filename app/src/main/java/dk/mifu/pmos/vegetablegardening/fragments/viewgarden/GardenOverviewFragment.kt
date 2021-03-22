@@ -64,10 +64,12 @@ class GardenOverviewFragment : Fragment() {
         val recyclerView = binding.gardensRecyclerView
 
         recyclerView.layoutManager = GridLayoutManager(context, 2)
-        repository?.getAllBeds()?.observe(viewLifecycleOwner, {
-            adapter = GardenOverviewAdapter(it.filter(CurrentSeasonPredicate(seasonViewModel)))
-            recyclerView.adapter = adapter
-            setExplanatoryTextBasedOnItemCount()
+        repository?.getAllBeds()?.observe(viewLifecycleOwner, { list ->
+            seasonViewModel.currentSeason.observe(viewLifecycleOwner, {
+                adapter = GardenOverviewAdapter(list.filter(CurrentSeasonPredicate(it)))
+                recyclerView.adapter = adapter
+                setExplanatoryTextBasedOnItemCount()
+            })
         })
 
         binding.newLocationBtn.setOnClickListener {
