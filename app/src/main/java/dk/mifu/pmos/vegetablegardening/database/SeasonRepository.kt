@@ -15,4 +15,6 @@ class SeasonRepository(private val seasonDao: SeasonDao) {
     }
 
     fun getLatestSeason(): Int? = seasonDao.getLatestSeason()
+
+    fun getSeason(year: Int): Int? = seasonDao.findByName(year)?.season
 }

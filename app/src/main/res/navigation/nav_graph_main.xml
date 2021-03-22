@@ -132,5 +132,9 @@
     <fragment
         android:id="@+id/newSeasonFragment"
         android:name="dk.mifu.pmos.vegetablegardening.fragments.NewSeasonFragment"
-        android:label="NewSeasonFragment"/>
+        android:label="NewSeasonFragment" >
+        <action
+            android:id="@+id/navigate_to_beds"
+            app:destination="@id/gardenOverviewFragment"/>
+    </fragment>
 </navigation>

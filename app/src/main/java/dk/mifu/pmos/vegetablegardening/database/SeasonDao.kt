@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.Season
 
 @Dao
@@ -17,4 +18,7 @@ interface SeasonDao {
 
     @Query("SELECT MAX(season) FROM seasons")
     fun getLatestSeason(): Int?
+
+    @Query("SELECT * FROM seasons where season = (:year) LIMIT 1")
+    fun findByName(year: Int): Season?
 }

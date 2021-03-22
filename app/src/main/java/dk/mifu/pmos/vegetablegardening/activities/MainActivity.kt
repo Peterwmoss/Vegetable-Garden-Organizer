@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.SubMenu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.menu.MenuItemImpl
@@ -70,11 +71,12 @@ class MainActivity : AppCompatActivity() {
         val seasons = SeasonRepository(dao).getAllSeasons()
 
         seasons.observe(this, { list ->
-            list.forEach {
+            seasonsMenu.clear()
+
+            list.sortedByDescending { it.season }.forEach {
                 val item = seasonsMenu.add(it.season.toString())
                 item.icon = ContextCompat.getDrawable(this, R.drawable.bed)
                 item.setOnMenuItemClickListener {
-                    item.isChecked = true
                     seasonViewModel.currentSeason.value = item.title.toString().toInt()
                     findNavController(R.id.nav_host_fragment).navigate(R.id.gardenOverviewFragment)
                     return@setOnMenuItemClickListener false

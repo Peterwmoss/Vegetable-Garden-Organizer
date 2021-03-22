@@ -87,4 +87,5 @@
     <!-- New season -->
     <string name="new_season">Ny sæson</string>
     <string name="year">Årstal</string>
+    <string name="already_exists_season">Der findes allerede en sæson med dette årstal</string>
 </resources>
