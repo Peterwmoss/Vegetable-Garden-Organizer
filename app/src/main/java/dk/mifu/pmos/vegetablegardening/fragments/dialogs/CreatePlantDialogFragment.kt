@@ -1,20 +1,21 @@
 package dk.mifu.pmos.vegetablegardening.fragments.dialogs
 
 import android.app.DatePickerDialog
-import android.app.Dialog
 import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.R
+import dk.mifu.pmos.vegetablegardening.database.AppDatabase
+import dk.mifu.pmos.vegetablegardening.database.GardenRepository
+import dk.mifu.pmos.vegetablegardening.database.PlantRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreatePlantDialogBinding
+import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.Plant
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -49,7 +50,14 @@ class CreatePlantDialogFragment : DialogFragment() {
                 plant.fertilizer = binding.plantFertilizer.text.toString()
                 plant.harvest = binding.plantHarvest.text.toString()
 
-                dismiss()
+                MainScope().launch(Dispatchers.IO) {
+                    val exists = async { exists(name) }
+                    if (!exists.await()) {
+                        saveInDatabase()
+                        dismiss()
+                    } else
+                        Toast.makeText(requireContext(), getString(R.string.guide_plant_already_exists), Toast.LENGTH_LONG).show()
+                }
             }
         }
 
@@ -63,6 +71,23 @@ class CreatePlantDialogFragment : DialogFragment() {
     override fun onStop() {
         super.onStop()
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.plants)
+    }
+
+    private suspend fun exists(name: String) : Boolean {
+        return withContext(Dispatchers.IO) {
+            val dao = AppDatabase.getDatabase(requireContext()).plantDao()
+            val repository = PlantRepository(dao)
+            val plant = repository.findPlant(name)
+            return@withContext plant != null
+        }
+    }
+
+    private suspend fun saveInDatabase() {
+        withContext(Dispatchers.IO) {
+            val dao = AppDatabase.getDatabase(requireContext()).plantDao()
+            val repository = PlantRepository(dao)
+            repository.insertPlant(plant)
+        }
     }
 
     private fun setDatePickerListeners() {

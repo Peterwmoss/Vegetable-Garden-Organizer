@@ -5,9 +5,12 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dk.mifu.pmos.vegetablegardening.R
+import dk.mifu.pmos.vegetablegardening.database.AppDatabase
+import dk.mifu.pmos.vegetablegardening.database.PlantRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentLexiconBinding
 import dk.mifu.pmos.vegetablegardening.helpers.recyclerviews.PlantAdapter
 import dk.mifu.pmos.vegetablegardening.helpers.recyclerviews.PlantViewHolder
@@ -15,6 +18,7 @@ import dk.mifu.pmos.vegetablegardening.helpers.search.PlantFilter
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import dk.mifu.pmos.vegetablegardening.views.Tooltip
+import kotlinx.coroutines.*
 
 class LexiconFragment: Fragment() {
     private lateinit var binding: FragmentLexiconBinding
@@ -45,12 +49,17 @@ class LexiconFragment: Fragment() {
         binding = FragmentLexiconBinding.inflate(inflater, container, false)
 
         binding.searchPlantEdittext.setText("")
-        plantViewModel.plants.observe(viewLifecycleOwner, {
-            val recyclerView = binding.lexiconRecyclerView
-            recyclerView.layoutManager = LinearLayoutManager(context)
-            adapter = Adapter(it)
-            recyclerView.adapter = adapter
-            PlantFilter.setupSearch(adapter, binding.searchPlantEdittext)
+        plantViewModel.plants.observe(viewLifecycleOwner, { plants ->
+            MainScope().launch(Dispatchers.Main) {
+                getUserPlants().observe(viewLifecycleOwner, { userPlants ->
+                    userPlants.addAll(plants)
+                    val recyclerView = binding.lexiconRecyclerView
+                    recyclerView.layoutManager = LinearLayoutManager(context)
+                    adapter = Adapter(userPlants)
+                    recyclerView.adapter = adapter
+                    PlantFilter.setupSearch(adapter, binding.searchPlantEdittext)
+                })
+            }
         })
 
         binding.newPlantBtn.setOnClickListener {
@@ -58,6 +67,14 @@ class LexiconFragment: Fragment() {
         }
 
         return binding.root
+    }
+
+    private suspend fun getUserPlants(): LiveData<MutableList<Plant>> {
+        return withContext(Dispatchers.IO) {
+            val dao = AppDatabase.getDatabase(requireContext()).plantDao()
+            val repository = PlantRepository(dao)
+            return@withContext repository.getAllPlants()
+        }
     }
 
     override fun onStart() {

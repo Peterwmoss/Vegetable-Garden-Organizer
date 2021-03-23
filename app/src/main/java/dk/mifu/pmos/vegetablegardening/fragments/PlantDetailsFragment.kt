@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsBinding
+import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateGerminationInViewCallback
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateSortInViewCallback
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
@@ -88,6 +89,11 @@ class PlantDetailsFragment: Fragment() {
             setListeners(myPlant)
         }
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        KeyboardHelper.hideKeyboard(context)
     }
 
     private fun updateSort(p: MyPlant, v: TextView) {

@@ -10,10 +10,10 @@ import dk.mifu.pmos.vegetablegardening.models.Plant
 @Dao
 interface PlantDao {
     @Query("SELECT * FROM plants")
-    fun getAll(): LiveData<List<Plant>>
+    fun getAll(): LiveData<MutableList<Plant>>
 
     @Query("SELECT * FROM plants where name LIKE (:name) LIMIT 1")
-    fun findByName(name: String): Plant
+    fun findByName(name: String): Plant?
 
     @Insert
     fun insert(plant: Plant)
