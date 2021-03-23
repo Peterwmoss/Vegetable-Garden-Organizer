@@ -37,6 +37,7 @@
     <string name="harvest">Høst</string>
     <string name="water">Vand</string>
     <string name="new_plant">Ny plante</string>
+    <string name="no_plant_name_given">Et navn er påkrævet for at lave en plante</string>
 
     <!-- Plant Details -->
     <string name="name">Navn</string>

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.fragment.app.DialogFragment
@@ -30,15 +31,24 @@ class CreatePlantDialogFragment : DialogFragment() {
         binding.plantSowingText.setAdapter(adapter)
 
         binding.savePlantButton.setOnClickListener {
-            plant.name = binding.plantName.text.toString()
-            plant.category = binding.plantCategory.text.toString()
-            plant.sowing = binding.plantSowingText.text.toString() == "Sås"
-            plant.cropRotation = binding.plantCropRotation.text.toString()
-            plant.quantity = binding.plantName.text.toString()
-            plant.sowingDepth = "${binding.plantName.text}cm"
-            plant.distance = binding.plantName.text.toString().toInt()
-            plant.fertilizer = binding.plantName.text.toString()
-            plant.harvest = binding.plantName.text.toString()
+            val name = binding.plantName.text.toString()
+
+            if (name.isBlank()) {
+                binding.plantName.requestFocus()
+                binding.plantName.error = getString(R.string.no_plant_name_given)
+            } else {
+                plant.name = name
+                plant.category = binding.plantCategory.text.toString()
+                plant.sowing = binding.plantSowingText.text.toString() == "Sås"
+                plant.cropRotation = binding.plantCropRotation.text.toString()
+                plant.quantity = binding.plantQuantity.text.toString()
+                plant.sowingDepth = "${binding.plantSowingDepth.text}cm"
+                plant.distance = binding.plantDistance.text.toString().toIntOrNull()
+                plant.fertilizer = binding.plantFertilizer.text.toString()
+                plant.harvest = binding.plantHarvest.text.toString()
+
+                dismiss()
+            }
         }
 
         binding.cancelButton.setOnClickListener {

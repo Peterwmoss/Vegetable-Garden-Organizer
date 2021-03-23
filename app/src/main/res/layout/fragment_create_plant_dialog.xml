@@ -20,6 +20,14 @@
             android:padding="@dimen/spacing_small"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/new_plant_text"
+                android:text="@string/new_plant"
+                android:textSize="@dimen/font_medium"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
