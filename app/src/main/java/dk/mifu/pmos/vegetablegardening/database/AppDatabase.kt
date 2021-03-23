@@ -5,8 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import dk.mifu.pmos.vegetablegardening.models.Bed
+import dk.mifu.pmos.vegetablegardening.models.Plant
 
-@Database(entities = [Bed::class], version = 1)
+@Database(entities = [Bed::class, Plant::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun bedDao(): BedDao
     abstract fun plantDao(): PlantDao
