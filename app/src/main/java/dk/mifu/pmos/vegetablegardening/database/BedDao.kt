@@ -10,7 +10,7 @@ interface BedDao {
     fun getAll(): LiveData<List<Bed>>
 
     @Query("SELECT * FROM beds where name LIKE (:name) LIMIT 1")
-    fun findByName(name: String): Bed
+    fun findByName(name: String): Bed?
 
     @Insert
     fun insert(bed: Bed)

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/edit"
+        android:title="@string/help"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_edit"/>
+
+    <item
+        android:id="@+id/delete"
+        android:title="@string/help"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_delete"/>
+
+    <item
+        android:id="@+id/tooltip"
+        android:title="@string/help"
+        app:showAsAction="always"
+        android:icon="@drawable/questionmark"/>
+</menu>

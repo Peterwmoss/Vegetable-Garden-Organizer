@@ -26,6 +26,12 @@
         <action
             android:id="@+id/show_planting_options"
             app:destination="@id/choosePlantFragment"/>
+        <action
+            android:id="@+id/edit_bed_action"
+            app:destination="@id/createGridFragment" />
+        <action
+            android:id="@+id/delete_bed_action"
+            app:destination="@id/deleteBedConfirmationDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/plantDetails"
@@ -136,4 +142,8 @@
         android:id="@+id/createPlantDialogFragment"
         android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.CreatePlantDialogFragment"
         android:label="CreatePlantDialogFragment" />
+    <dialog
+        android:id="@+id/deleteBedConfirmationDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.DeleteBedConfirmationDialogFragment"
+        android:label="DeleteBedConfirmationDialogFragment" />
 </navigation>

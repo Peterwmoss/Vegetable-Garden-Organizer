@@ -48,8 +48,6 @@ class BedViewModel(application: Application) : AndroidViewModel(application) {
         columns = bed.columns
         rows = bed.rows
 
-        map.addOnMapChangedCallback(UpdateBedCallback(name!!, bedLocation!!, getApplication(), columns, rows))
-
         getWeatherData()
     }
 

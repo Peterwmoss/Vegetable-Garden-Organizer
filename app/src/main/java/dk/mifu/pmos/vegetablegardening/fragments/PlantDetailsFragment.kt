@@ -33,7 +33,7 @@ class PlantDetailsFragment: Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar, menu)
+        inflater.inflate(R.menu.toolbar_default, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
