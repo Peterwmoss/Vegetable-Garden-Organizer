@@ -13,6 +13,8 @@ import androidx.fragment.app.DialogFragment
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreatePlantDialogBinding
 import dk.mifu.pmos.vegetablegardening.models.Plant
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 

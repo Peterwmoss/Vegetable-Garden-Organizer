@@ -9,6 +9,7 @@ import dk.mifu.pmos.vegetablegardening.models.Bed
 @Database(entities = [Bed::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun bedDao(): BedDao
+    abstract fun plantDao(): PlantDao
 
     companion object {
         @Volatile
