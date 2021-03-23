@@ -54,11 +54,15 @@ class LexiconFragment: Fragment() {
             PlantFilter.setupSearch(adapter, binding.searchPlantEdittext)
         })
 
+        binding.newPlantBtn.setOnClickListener {
+            findNavController().navigate(LexiconFragmentDirections.newPlantAction())
+        }
+
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onStart() {
+        super.onStart()
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.plants)
     }
 
