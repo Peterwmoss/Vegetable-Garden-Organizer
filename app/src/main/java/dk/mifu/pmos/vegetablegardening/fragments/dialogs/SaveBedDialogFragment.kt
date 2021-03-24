@@ -1,32 +1,25 @@
 package dk.mifu.pmos.vegetablegardening.fragments.dialogs
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavOptions
-import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.R
-import dk.mifu.pmos.vegetablegardening.database.BedRepository
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
-import dk.mifu.pmos.vegetablegardening.database.GardenRepository
+import dk.mifu.pmos.vegetablegardening.database.BedRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentSaveBedDialogBinding
 import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.hideKeyboard
 import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.showKeyboard
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.SeasonViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.*
 
 class SaveBedDialogFragment : DialogFragment() {
@@ -68,12 +61,12 @@ class SaveBedDialogFragment : DialogFragment() {
             } else {
                 MainScope().launch(Dispatchers.IO) {
                     val dao = AppDatabase.getDatabase(requireContext()).bedDao()
-                    val repository = GardenRepository(dao)
+                    val repository = BedRepository(dao)
                     if (name != bedViewModel.name) {
                         deleteOldFromDatabase()
                         saveInDatabase(name)
                     } else {
-                        repository.updateBed(Bed(bedViewModel.name!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
+                        repository.updateBed(Bed(bedViewModel.name!!, seasonViewModel.currentSeason.value!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
                     }
                 }
                 val navOptions = NavOptions.Builder().setPopUpTo(R.id.bedOverviewFragment, true).build()
