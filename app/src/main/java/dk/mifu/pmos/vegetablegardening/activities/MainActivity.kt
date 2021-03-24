@@ -71,12 +71,12 @@ class MainActivity : AppCompatActivity() {
         val seasons = SeasonRepository(dao).getAllSeasons()
 
         seasons.observe(this, { list ->
-            seasonsMenu.clear()
+            seasonsMenu?.clear()
 
             list.sortedByDescending { it.season }.forEach {
-                val item = seasonsMenu.add(it.season.toString())
-                item.icon = ContextCompat.getDrawable(this, R.drawable.bed)
-                item.setOnMenuItemClickListener {
+                val item = seasonsMenu?.add(it.season.toString())
+                item?.icon = ContextCompat.getDrawable(this, R.drawable.bed)
+                item?.setOnMenuItemClickListener {
                     seasonViewModel.currentSeason.value = item.title.toString().toInt()
                     findNavController(R.id.nav_host_fragment).navigate(R.id.gardenOverviewFragment)
                     return@setOnMenuItemClickListener false

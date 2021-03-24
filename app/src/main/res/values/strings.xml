@@ -92,8 +92,9 @@
     <string name="save">Gem</string>
     <string name="delete">Slet</string>
 
-    <!-- New season -->
+    <!-- Crop rotation -->
     <string name="new_season">Ny sæson</string>
     <string name="year">Årstal</string>
     <string name="already_exists_season">Der findes allerede en sæson med dette årstal</string>
+    <string name="crop_rotation">Sædskifte</string>
 </resources>

@@ -1,7 +1,6 @@
-package dk.mifu.pmos.vegetablegardening.fragments
+package dk.mifu.pmos.vegetablegardening.fragments.croprotation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity

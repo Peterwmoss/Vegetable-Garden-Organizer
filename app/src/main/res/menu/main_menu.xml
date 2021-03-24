@@ -11,6 +11,11 @@
             android:title="@string/lexicon" />
 
         <item
+            android:icon="@drawable/crop_rotation"
+            android:id="@+id/cropRotationFragment"
+            android:title="@string/crop_rotation"/>
+
+        <item
             android:id="@+id/gardenOverviewFragment"
             android:title="@string/beds">
             <menu>
