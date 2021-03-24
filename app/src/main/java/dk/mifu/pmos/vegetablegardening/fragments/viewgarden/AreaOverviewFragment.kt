@@ -54,12 +54,14 @@ class AreaOverviewFragment : Fragment() {
                     override fun onMove(recyclerView: RecyclerView,
                                         viewHolder: RecyclerView.ViewHolder,
                                         target: RecyclerView.ViewHolder): Boolean {
+                        viewHolder as ViewHolder
 
                         val from = viewHolder.adapterPosition
                         val to = target.adapterPosition
+                        val bed = viewHolder.bed
 
                         adapter.notifyItemMoved(from, to)
-                        adapter.moveItem(from, to)
+                        adapter.moveItem(bed, from, to)
 
                         return true
                     }
@@ -172,7 +174,7 @@ class AreaOverviewFragment : Fragment() {
             return dataSet.size
         }
 
-        fun moveItem(from: Int, to: Int) {
+        fun moveItem(bed: Bed, from: Int, to: Int) {
             if(from > to) { //Move left
                 updatedBeds.forEachIndexed { index, b ->
                     if(b.order in to until from){
@@ -189,14 +191,11 @@ class AreaOverviewFragment : Fragment() {
                 }
             }
 
-            val bed = dataSet[from]
             bed.order = to
             updatedBeds.forEachIndexed { index, b ->
                 if(b.name == bed.name)
                     updatedBeds[index] = bed
             }
-
-            updatedBeds
         }
     }
 
