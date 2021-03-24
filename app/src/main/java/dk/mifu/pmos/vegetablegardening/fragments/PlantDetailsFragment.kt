@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsBinding
-import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateGerminationInViewCallback
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateSortInViewCallback
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
@@ -34,7 +33,12 @@ class PlantDetailsFragment: Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar_default, menu)
+        plantViewModel.plants.observe(viewLifecycleOwner, {
+            if (it.contains(args.plant))
+                inflater.inflate(R.menu.toolbar_default, menu)
+            else
+                inflater.inflate(R.menu.toolbar_editable, menu)
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -44,6 +48,14 @@ class PlantDetailsFragment: Fragment() {
                     Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_plant_details_not_planted), requireView().rootView.findViewById(R.id.tooltip))
                 else
                     Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_plant_details_planted), requireView().rootView.findViewById(R.id.tooltip))
+                true
+            }
+            R.id.edit -> {
+                findNavController().navigate(PlantDetailsFragmentDirections.editPlant().setPlant(args.plant))
+                true
+            }
+            R.id.delete -> {
+                findNavController().navigate(PlantDetailsFragmentDirections.deletePlantAction(args.plant))
                 true
             }
             else -> super.onOptionsItemSelected(item)
