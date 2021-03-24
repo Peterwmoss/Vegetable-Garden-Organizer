@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentEditSortDialogBinding
 import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper
 import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.hideKeyboard
+import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.showKeyboard
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 
 class EditSortDialogFragment : DialogFragment() {
@@ -36,10 +37,14 @@ class EditSortDialogFragment : DialogFragment() {
             dismiss()
         }
 
-        binding.editSortEditText.requestFocus()
-        KeyboardHelper.showKeyboard(context)
-
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.editSortEditText.post {
+            showKeyboard(context, binding.editSortEditText)
+        }
     }
 
     override fun onStop() {
@@ -49,7 +54,7 @@ class EditSortDialogFragment : DialogFragment() {
 
     override fun onPause() {
         super.onPause()
-        hideKeyboard(context)
+        hideKeyboard(context, binding.editSortEditText)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

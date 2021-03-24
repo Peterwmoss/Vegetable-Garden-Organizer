@@ -91,11 +91,6 @@ class PlantDetailsFragment: Fragment() {
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
-        KeyboardHelper.hideKeyboard(context)
-    }
-
     private fun updateSort(p: MyPlant, v: TextView) {
         val editSortButton = binding.editSortButton
         editSortButton.visibility = View.VISIBLE
