@@ -15,7 +15,7 @@
             android:id="@+id/toolbar_main"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar"
-            app:menu="@menu/toolbar"
+            app:menu="@menu/toolbar_default"
             style="@style/ToolbarStyle"
             app:popupTheme="@style/Theme.VegetableGardening.PopupOverlay"
             />

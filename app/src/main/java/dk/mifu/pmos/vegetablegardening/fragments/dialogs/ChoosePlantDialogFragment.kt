@@ -47,6 +47,11 @@ class ChoosePlantDialogFragment : DialogFragment() {
             PlantFilter.setupSearch(adapter, binding.searchPlantEdittext)
         })
 
+        binding.clearPlantButton.setOnClickListener {
+            bedViewModel.plants?.remove(args.coordinate)
+            dismiss()
+        }
+
         return binding.root
     }
 
