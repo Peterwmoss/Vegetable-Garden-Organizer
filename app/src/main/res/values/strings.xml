@@ -24,6 +24,7 @@
     <string name="tooltip_plant_details_planted">Her kan du se alle informationer om din plante.\n\nDu kan ændre om planten er forspiret og hvilken sort, der er plantet her.</string>
     <string name="tooltip_plant_details_not_planted">Her kan du se alle informationer om den valgte plante.</string>
     <string name="tooltip_lexicon">Her kan du se alle planter, som er oprettet.\n\nVælg en plante for at se flere informationer om planten.\n\nDu kan også lave en ny plante ved at klikke på plus-knappen nede i hjørnet.</string>
+    <string name="tooltip_new_season">Her kan du lave en ny sæson.\n\n Det kan hjælpe appen med at holde styr på sædskifteintervaller\n\n Du kan også bruge det til selv at kigge på dine bedes historikker.</string>
 
     <!-- Titles -->
     <string name="title_location">Hvor er dit bed?</string>

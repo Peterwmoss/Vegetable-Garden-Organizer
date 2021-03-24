@@ -2,9 +2,7 @@ package dk.mifu.pmos.vegetablegardening.fragments
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -17,6 +15,7 @@ import dk.mifu.pmos.vegetablegardening.database.SeasonRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentNewSeasonBinding
 import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper
 import dk.mifu.pmos.vegetablegardening.viewmodels.SeasonViewModel
+import dk.mifu.pmos.vegetablegardening.views.Tooltip
 import kotlinx.coroutines.*
 
 class NewSeasonFragment: Fragment() {
@@ -45,9 +44,28 @@ class NewSeasonFragment: Fragment() {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onStop() {
         super.onStop()
         KeyboardHelper.hideKeyboard(context)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_default, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.tooltip -> {
+                Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_new_season), requireView().rootView.findViewById(R.id.tooltip))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun handleSave(year: Int) {
