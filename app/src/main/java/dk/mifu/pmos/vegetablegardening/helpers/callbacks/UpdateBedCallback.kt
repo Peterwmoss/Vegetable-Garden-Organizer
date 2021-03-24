@@ -18,12 +18,13 @@ class UpdateBedCallback(
         private val bedLocation: BedLocation,
         private val context: Context,
         private val columns: Int,
-        private val rows: Int): BedPlantsChangedCallback() {
+        private val rows: Int,
+        private val order: Int): BedPlantsChangedCallback() {
     override fun onMapChanged(sender: ObservableMap<Coordinate, MyPlant>?, key: Coordinate?) {
         GlobalScope.launch(Dispatchers.IO) {
             val dao = AppDatabase.getDatabase(context).bedDao()
             val repository = BedRepository(dao)
-            repository.updateBed(Bed(name, season, bedLocation, sender!!, columns, rows))
+            repository.updateBed(Bed(name, season, bedLocation, sender!!, columns, rows, order))
         }
     }
 }

@@ -66,7 +66,7 @@ class SaveBedDialogFragment : DialogFragment() {
                         deleteOldFromDatabase()
                         saveInDatabase(name)
                     } else {
-                        repository.updateBed(Bed(bedViewModel.name!!, seasonViewModel.currentSeason.value!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
+                        repository.updateBed(Bed(bedViewModel.name!!, seasonViewModel.currentSeason.value!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows, bedViewModel.order))
                     }
                 }
                 val navOptions = NavOptions.Builder().setPopUpTo(R.id.bedOverviewFragment, true).build()
@@ -106,7 +106,17 @@ class SaveBedDialogFragment : DialogFragment() {
         withContext(Dispatchers.IO) {
             val dao = AppDatabase.getDatabase(requireContext()).bedDao()
             val repository = BedRepository(dao)
-            repository.insertBed(Bed(bedViewModel.name!!, seasonViewModel.currentSeason.value!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
+            val order = repository.findOrder(bedViewModel.bedLocation!!, seasonViewModel.currentSeason.value!!)
+            if(order != null)
+                bedViewModel.order = order+1
+            repository.insertBed(
+                    Bed(bedViewModel.name!!,
+                        seasonViewModel.currentSeason.value!!,
+                        bedViewModel.bedLocation!!,
+                        bedViewModel.plants!!.toMap(),
+                        bedViewModel.columns,
+                        bedViewModel.rows,
+                        bedViewModel.order))
         }
     }
 

@@ -12,8 +12,9 @@ import dk.mifu.pmos.vegetablegardening.helpers.database.DatabaseConverters
 data class Bed (
         var name: String,
         var season: Int,
-        val bedLocation: BedLocation,
-        val plants: Map<Coordinate, MyPlant> = HashMap(),
-        val columns: Int,
-        val rows: Int
+        var bedLocation: BedLocation,
+        var plants: Map<Coordinate, MyPlant> = HashMap(),
+        var columns: Int,
+        var rows: Int,
+        var order: Int
 )

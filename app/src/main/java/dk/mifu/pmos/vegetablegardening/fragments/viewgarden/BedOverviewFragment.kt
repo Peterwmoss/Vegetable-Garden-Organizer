@@ -93,7 +93,8 @@ class BedOverviewFragment: Fragment() {
                         bedViewModel.bedLocation!!,
                         requireContext(),
                         bedViewModel.columns,
-                        bedViewModel.rows)
+                        bedViewModel.rows,
+                        bedViewModel.order)
 
         updateGridViewCallback = BedCallback(requireView(), bedViewModel)
         updateIconsCallback = IconCallback(requireView(), bedViewModel)
