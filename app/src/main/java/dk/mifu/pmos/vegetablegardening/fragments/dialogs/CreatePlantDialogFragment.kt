@@ -7,7 +7,9 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.database.GardenRepository
@@ -22,55 +24,129 @@ import java.util.*
 class CreatePlantDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentCreatePlantDialogBinding
 
+    private val args: CreatePlantDialogFragmentArgs by navArgs()
+
     private var plant: Plant = Plant("")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCreatePlantDialogBinding.inflate(inflater, container, false)
 
+        setDataFromArgs()
         setDatePickerListeners()
+        addOptionsToPlantSowing()
+        setSaveButtonListener()
+        setCancelButtonListener()
 
-        val list = listOf("Plantes", "Sås")
-        val adapter = ArrayAdapter(requireContext(), R.layout.list_item_plant_sowing, list)
-        binding.plantSowingText.setAdapter(adapter)
+        return binding.root
+    }
 
-        binding.savePlantButton.setOnClickListener {
-            val name = binding.plantName.text.toString()
-
-            if (name.isBlank()) {
-                binding.plantName.requestFocus()
-                binding.plantName.error = getString(R.string.no_plant_name_given)
-            } else {
-                plant.name = name
-                plant.category = binding.plantCategory.text.toString()
-                plant.sowing = binding.plantSowingText.text.toString() == "Sås"
-                plant.cropRotation = binding.plantCropRotation.text.toString()
-                plant.quantity = binding.plantQuantity.text.toString()
-                plant.sowingDepth = "${binding.plantSowingDepth.text}cm"
-                plant.distance = binding.plantDistance.text.toString().toIntOrNull()
-                plant.fertilizer = binding.plantFertilizer.text.toString()
-                plant.harvest = binding.plantHarvest.text.toString()
-
-                MainScope().launch(Dispatchers.IO) {
-                    val exists = async { exists(name) }
-                    if (!exists.await()) {
-                        saveInDatabase()
-                        dismiss()
-                    } else
-                        Toast.makeText(requireContext(), getString(R.string.guide_plant_already_exists), Toast.LENGTH_LONG).show()
-                }
-            }
+    private fun setDataFromArgs() {
+        val argPlant = args.plant
+        if (argPlant != null) {
+            plant = argPlant
+            updateViewFromPlant()
         }
+    }
 
+    private fun updateViewFromPlant() {
+        binding.plantName.setText(plant.name)
+        binding.plantCategory.setText(plant.category)
+        if (plant.earliest != null)
+            binding.plantEarliestText.text = formatDate(plant.earliest!!)
+        if (plant.latest != null)
+            binding.plantLatestText.text = formatDate(plant.latest!!)
+        if (plant.sowing != null)
+            binding.plantSowingText.setText(if (plant.sowing!!) "Sås" else "Plantes")
+        binding.plantCropRotation.setText(plant.cropRotation)
+        binding.plantQuantity.setText(plant.quantity)
+        binding.plantSowingDepth.setText(plant.sowingDepth)
+        binding.plantDistance.setText(if (plant.distance == null) "0" else plant.distance!!.toString())
+        binding.plantFertilizer.setText(plant.fertilizer)
+        binding.plantHarvest.setText(plant.harvest)
+    }
+
+    private fun setCancelButtonListener() {
         binding.cancelButton.setOnClickListener {
             dialog?.cancel()
         }
+    }
 
-        return binding.root
+    private fun addOptionsToPlantSowing() {
+        val list = listOf("Plantes", "Sås")
+        val adapter = ArrayAdapter(requireContext(), R.layout.list_item_plant_sowing, list)
+        binding.plantSowingText.setAdapter(adapter)
+    }
+
+    private fun setSaveButtonListener() {
+        binding.savePlantButton.setOnClickListener {
+            val name = binding.plantName.text.toString()
+
+            when {
+                name.isBlank() -> {
+                    binding.plantName.requestFocus()
+                    binding.plantName.error = getString(R.string.no_plant_name_given)
+                }
+                else -> {
+                    plant.name = name
+                    plant.category = binding.plantCategory.text.toString()
+                    plant.sowing = binding.plantSowingText.text.toString() == "Sås"
+                    plant.cropRotation = binding.plantCropRotation.text.toString()
+                    plant.quantity = binding.plantQuantity.text.toString()
+                    plant.sowingDepth = "${binding.plantSowingDepth.text}"
+                    plant.distance = binding.plantDistance.text.toString().toIntOrNull()
+                    plant.fertilizer = binding.plantFertilizer.text.toString()
+                    plant.harvest = binding.plantHarvest.text.toString()
+
+                    if (args.plant == null) {
+                        MainScope().launch(Dispatchers.IO) {
+                            val exists = async { exists(name) }
+                            if (!exists.await()) {
+                                saveInDatabase()
+                                dismiss()
+                            } else
+                                Toast.makeText(requireContext(), getString(R.string.guide_plant_already_exists), Toast.LENGTH_LONG).show()
+                        }
+                    } else {
+                        MainScope().launch(Dispatchers.IO) {
+                            val dao = AppDatabase.getDatabase(requireContext()).plantDao()
+                            val repository = PlantRepository(dao)
+                            if (name != args.plant!!.name) {
+                                deleteOldFromDatabase()
+                                saveInDatabase()
+                            } else {
+                                repository.updatePlant(plant)
+                            }
+                        }
+                        val navOptions = NavOptions.Builder().setPopUpTo(R.id.lexiconFragment, true).build()
+                        findNavController().navigate(R.id.lexiconFragment, null, navOptions)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val params = dialog!!.window!!.attributes
+
+        params.width = WindowManager.LayoutParams.MATCH_PARENT
+        params.height = WindowManager.LayoutParams.MATCH_PARENT
+
+        dialog!!.window!!.attributes = params
     }
 
     override fun onStop() {
         super.onStop()
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.plants)
+    }
+
+    private suspend fun deleteOldFromDatabase() {
+        withContext(Dispatchers.IO) {
+            val dao = AppDatabase.getDatabase(requireContext()).plantDao()
+            val repository = PlantRepository(dao)
+            repository.deletePlant(plant.name)
+        }
     }
 
     private suspend fun exists(name: String) : Boolean {
@@ -123,17 +199,5 @@ class CreatePlantDialogFragment : DialogFragment() {
         val pattern = "dd. MMMM"
         val simpleDateFormat = SimpleDateFormat(pattern, Locale("da", "DK"))
         return simpleDateFormat.format(date)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val params = dialog!!.window!!.attributes
-
-        params.width = WindowManager.LayoutParams.MATCH_PARENT
-        params.height = WindowManager.LayoutParams.MATCH_PARENT
-
-        dialog!!.window!!.attributes = params
-
     }
 }

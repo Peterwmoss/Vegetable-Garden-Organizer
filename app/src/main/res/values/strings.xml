@@ -31,6 +31,7 @@
     <string name="title_dialog_plant_details">Hvad har du foretaget dig?</string>
     <string name="title_dialog_save_bed">Navngiv dit bed</string>
     <string name="title_dialog_delete_bed_confirmation">Bekræft sletning af bed</string>
+    <string name="title_dialog_delete_plant_confirmation">Bekræft sletning af plante</string>
 
     <!-- Grid -->
     <string name="add_column">Tilføj kolonne</string>
@@ -60,6 +61,7 @@
     <string name="toast_registered_water">Registreret som vandet</string>
     <string name="toast_registered_harvest">Registreret som høstet</string>
     <string name="toast_bed_deleted">Bedet er slettet</string>
+    <string name="toast_plant_deleted">Planten er slettet</string>
 
     <!-- Plant Germination -->
     <string name="germinated">Forspiret</string>
