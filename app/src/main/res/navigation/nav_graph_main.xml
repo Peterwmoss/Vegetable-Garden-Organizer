@@ -5,16 +5,19 @@
     android:id="@+id/nav_graph_main"
     app:startDestination="@id/gardenOverviewFragment">
     <fragment
-        android:id="@+id/gardenOverviewFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.viewgarden.GardenOverviewFragment"
+        android:id="@+id/areaOverviewFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.viewgarden.AreaOverviewFragment"
         android:label="fragment_garden_overview"
-        tools:layout="@layout/fragment_garden_overview">
+        tools:layout="@layout/fragment_area_overview">
         <action
             android:id="@+id/see_bed_action"
             app:destination="@id/bedOverviewFragment" />
         <action
-            android:id="@+id/toSpecifyLocation"
-            app:destination="@id/specifyLocationFragment" />
+            android:id="@+id/to_create_grid"
+            app:destination="@id/createGridFragment" />
+        <argument
+            android:name="Location"
+            app:argType="dk.mifu.pmos.vegetablegardening.enums.BedLocation" />
     </fragment>
     <fragment
         android:id="@+id/bedOverviewFragment"
@@ -119,14 +122,6 @@
             android:id="@+id/to_save_bed_dialog"
             app:destination="@id/saveBedDialogFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/specifyLocationFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.creategarden.SpecifyLocationFragment"
-        android:label="SpecifyLocationFragment" >
-        <action
-            android:id="@+id/next_action"
-            app:destination="@id/createGridFragment" />
-    </fragment>
     <dialog
         android:id="@+id/saveBedDialogFragment"
         android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.SaveBedDialogFragment"
@@ -145,11 +140,19 @@
         android:name="dk.mifu.pmos.vegetablegardening.fragments.croprotation.NewSeasonFragment"
         android:label="NewSeasonFragment" >
         <action
-            android:id="@+id/navigate_to_beds"
+            android:id="@+id/navigate_to_garden"
             app:destination="@id/gardenOverviewFragment"/>
     </fragment>
     <fragment
         android:id="@+id/cropRotationFragment"
         android:name="dk.mifu.pmos.vegetablegardening.fragments.croprotation.CropRotationFragment"
         android:label="CropRotationFragment"/>
+    <fragment
+        android:id="@+id/gardenOverviewFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.viewgarden.GardenOverviewFragment"
+        android:label="GardenOverviewFragment">
+        <action
+            android:id="@+id/see_area_action"
+            app:destination="@id/areaOverviewFragment"/>
+    </fragment>
 </navigation>

@@ -47,7 +47,7 @@ class CropRotationFragment: Fragment() {
 
     private inner class CropRotationAdapter(): RecyclerView.Adapter<CropRotationFragment.ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CropRotationFragment.ViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_garden, parent, false)
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_bed, parent, false)
             return ViewHolder(view)
         }
 

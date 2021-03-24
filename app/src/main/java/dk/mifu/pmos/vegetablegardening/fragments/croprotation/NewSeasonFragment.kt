@@ -72,7 +72,7 @@ class NewSeasonFragment: Fragment() {
             val exists = async { exists(year) }
             if(!exists.await()){
                 saveInDatabase(year)
-                findNavController().navigate(NewSeasonFragmentDirections.navigateToBeds())
+                findNavController().navigate(NewSeasonFragmentDirections.navigateToGarden())
             } else {
                 Toast.makeText(context, getString(R.string.already_exists_season), Toast.LENGTH_LONG).show()
             }
