@@ -26,8 +26,8 @@ class DatabaseConverters {
     fun toPlantMap(value: String): Map<Coordinate, MyPlant> = gson.fromJson(value, plantMapType)
 
     @TypeConverter
-    fun fromDate(value: Date?): String = gson.toJson(value)
+    fun fromDate(value: Date?): Long = value?.time ?: -1
 
     @TypeConverter
-    fun toDate(value: String) : Date? = gson.fromJson(value, Date::class.java)
+    fun toDate(value: Long) : Date? = if (value == -1L) null else Date(value)
 }
