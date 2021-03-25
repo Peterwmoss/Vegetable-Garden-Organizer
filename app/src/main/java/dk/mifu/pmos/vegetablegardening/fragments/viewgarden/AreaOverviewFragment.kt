@@ -2,9 +2,6 @@ package dk.mifu.pmos.vegetablegardening.fragments.viewgarden
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.appcompat.widget.AppCompatButton
@@ -23,9 +20,7 @@ import dk.mifu.pmos.vegetablegardening.database.BedRepository
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentAreaOverviewBinding
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.CurrentSeasonPredicate
-import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationBedPredicate
 import dk.mifu.pmos.vegetablegardening.models.Bed
-import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.SeasonViewModel
 import dk.mifu.pmos.vegetablegardening.views.Tooltip
@@ -40,7 +35,7 @@ class AreaOverviewFragment : Fragment() {
 
     private val bedViewModel: BedViewModel by activityViewModels()
     private val seasonViewModel: SeasonViewModel by activityViewModels()
-    private var gardenDb: BedDao? = null
+    private var bedDao: BedDao? = null
     private var repository: BedRepository? = null
     private val args: AreaOverviewFragmentArgs by navArgs()
 
@@ -97,8 +92,8 @@ class AreaOverviewFragment : Fragment() {
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentAreaOverviewBinding.inflate(inflater, container, false)
-        gardenDb = AppDatabase.getDatabase(requireContext()).bedDao()
-        repository = BedRepository(gardenDb!!)
+        bedDao = AppDatabase.getDatabase(requireContext()).bedDao()
+        repository = BedRepository(bedDao!!)
 
         val recyclerView = binding.gardensRecyclerView
         itemTouchHelper.attachToRecyclerView(recyclerView)
@@ -109,16 +104,18 @@ class AreaOverviewFragment : Fragment() {
             navigateToSpecifyLocationFragment()
         }
 
-        val observer = { list: List<Bed> -> seasonViewModel.currentSeason.observe(viewLifecycleOwner, { currentSeason ->
+
+
+        val observer = { list: List<Bed> ->
+            seasonViewModel.currentSeason.observe(viewLifecycleOwner, { currentSeason ->
             adapter = AreaOverviewAdapter(
-                    list.filter(CurrentSeasonPredicate(currentSeason))
-                        .filter(LocationBedPredicate(args.location)))
+                    list.filter(CurrentSeasonPredicate(currentSeason)))
                     updatedBeds = list.toMutableList()
             recyclerView.adapter = adapter
             setExplanatoryTextBasedOnItemCount()
         })}
 
-        repository?.getAllBeds()?.observe(viewLifecycleOwner, observer)
+        repository?.findBedsWithLocation(args.location)?.observe(viewLifecycleOwner, observer)
 
         return binding.root
     }

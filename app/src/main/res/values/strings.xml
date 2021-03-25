@@ -61,6 +61,7 @@
     <string name="toast_registered_water">Registreret som vandet</string>
     <string name="toast_registered_harvest">Registreret som høstet</string>
     <string name="toast_bed_deleted">Bedet er slettet</string>
+    <string name="toast_missing_year">Indtast venligst et årstal</string>
 
     <!-- Plant Germination -->
     <string name="germinated">Forspiret</string>

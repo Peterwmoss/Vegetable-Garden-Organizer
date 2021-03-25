@@ -128,7 +128,7 @@
         android:label="SaveBedDialogFragment">
         <action
             android:id="@+id/save_bed_action"
-            app:destination="@id/gardenOverviewFragment" />
+            app:destination="@id/areaOverviewFragment" />
     </dialog>
     <dialog
         android:id="@+id/deleteBedConfirmationDialogFragment"

@@ -27,8 +27,12 @@ class BedRepository(private val bedDao: BedDao) {
         }
     }
 
-    fun findBed(name: String): Bed? {
+    fun findBedByName(name: String): Bed? {
         return bedDao.findByName(name)
+    }
+
+    fun findBedByPrimaryKeys(name: String, season: Int): Bed? {
+        return bedDao.findByPrimaryKeys(name, season)
     }
 
     fun getAllBeds(): LiveData<List<Bed>> = bedDao.getAll()
@@ -37,5 +41,13 @@ class BedRepository(private val bedDao: BedDao) {
         return withContext(Dispatchers.IO){
             return@withContext bedDao.findOrder(location.toString(), season)
         }
+    }
+
+    fun findBedsWithLocation(location: BedLocation): LiveData<List<Bed>>{
+        return bedDao.findBedsWithLocation(location.toString())
+    }
+
+    fun findBedsWithSeason(season: Int): List<Bed>{
+        return bedDao.findBedsWithSeason(season)
     }
 }

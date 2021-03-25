@@ -105,7 +105,7 @@ class BedOverviewFragment: Fragment() {
             val def = async(Dispatchers.IO) {
                 val dao = AppDatabase.getDatabase(requireContext()).bedDao()
                 val repository = BedRepository(dao)
-                return@async repository.findBed(bedViewModel.name!!)
+                return@async repository.findBedByPrimaryKeys(bedViewModel.name!!, seasonViewModel.currentSeason.value!!)
             }
             bedViewModel.setBed(def.await()!!)
             addOnMapChangedCallbacks()

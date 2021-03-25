@@ -54,7 +54,7 @@ class SaveBedDialogFragment : DialogFragment() {
                     val exists = async { exists(name) }
                     if (!exists.await()) {
                         saveInDatabase(name)
-                        findNavController().navigate(SaveBedDialogFragmentDirections.saveBedAction())
+                        findNavController().navigate(SaveBedDialogFragmentDirections.saveBedAction(bedViewModel.bedLocation!!))
                     } else
                         Toast.makeText(requireContext(), getString(R.string.guide_bed_already_exists), Toast.LENGTH_LONG).show()
                 }
@@ -96,7 +96,7 @@ class SaveBedDialogFragment : DialogFragment() {
         return withContext(Dispatchers.IO) {
             val dao = AppDatabase.getDatabase(requireContext()).bedDao()
             val repository = BedRepository(dao)
-            val bed = repository.findBed(name)
+            val bed = repository.findBedByName(name)
             return@withContext bed != null
         }
     }

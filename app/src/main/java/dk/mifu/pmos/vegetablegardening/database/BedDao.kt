@@ -14,6 +14,9 @@ interface BedDao {
     @Query("SELECT * FROM beds where name LIKE (:name) LIMIT 1")
     fun findByName(name: String): Bed?
 
+    @Query("SELECT * FROM beds where name LIKE (:name) AND season = (:season) LIMIT 1")
+    fun findByPrimaryKeys(name: String, season: Int): Bed?
+
     @Insert
     fun insert(bed: Bed)
 
@@ -25,4 +28,10 @@ interface BedDao {
 
     @Query("SELECT MAX(`order`) FROM beds where bedLocation LIKE (:location) AND season = (:season)")
     fun findOrder(location: String, season: Int): Int?
+
+    @Query("SELECT * FROM beds where bedLocation LIKE (:location)")
+    fun findBedsWithLocation(location: String): LiveData<List<Bed>>
+
+    @Query("SELECT * FROM beds where season = (:season)")
+    fun findBedsWithSeason(season: Int): List<Bed>
 }

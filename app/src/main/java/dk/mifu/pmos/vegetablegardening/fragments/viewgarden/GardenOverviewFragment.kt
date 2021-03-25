@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentGardenOverviewBinding
 import dk.mifu.pmos.vegetablegardening.enums.BedLocation
+import dk.mifu.pmos.vegetablegardening.viewmodels.SeasonViewModel
 import dk.mifu.pmos.vegetablegardening.views.Tooltip
 
 class GardenOverviewFragment: Fragment() {
     private lateinit var binding: FragmentGardenOverviewBinding
+    private val seasonViewModel: SeasonViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +54,6 @@ class GardenOverviewFragment: Fragment() {
 
     override fun onStart() {
         super.onStart()
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.beds)
+        (activity as AppCompatActivity).supportActionBar?.title = seasonViewModel.currentSeason.value.toString() + " - bede"
     }
 }
