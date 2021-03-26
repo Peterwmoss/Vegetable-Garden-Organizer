@@ -59,7 +59,7 @@ class NewSeasonFragment: Fragment() {
 
     override fun onStop() {
         super.onStop()
-        KeyboardHelper.hideKeyboard(context)
+        KeyboardHelper.hideKeyboard(context, binding.year)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

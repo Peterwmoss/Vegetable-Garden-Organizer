@@ -16,6 +16,7 @@
     <string name="guide_check_water">Baseret på vejret i dit område, kan det være, dine planter har brug for vand</string>
     <string name="guide_no_bed_name_given">Indtast venligst et navn til dit bed</string>
     <string name="guide_bed_already_exists">Et bed med dette navn findes allerede. Vælg venligst et nyt navn til dit bed.</string>
+    <string name="guide_plant_already_exists">En plante med dette navn findes allerede. Vælg venligst et nyt navn til din plante.</string>
     <string name="guide_crop_rotation">Appen holder styr på sædeskifteintervaller på følgende måde:\n\n Når du har flere bed i et område, f.eks. i dit drivhus, kan du lave om på deres rækkefølge ved at holde inde på et bed og trække i det.\n\n Appen holder styr på hvor mange sæsoner et bed med et bestemt navn har været på samme plads.\n\n Eksempel: Når  dine ærter ikke længere skal være det samme sted, kan du blot flytte \"Ærtebed\" til dit nye sted - smart!</string>
     <string name="guide_empty_garden">Du kan bruge appen til at holde styr på dine bede eller forskellige områder i din køkkenhave eller drivhus.\n\nTryk på plus-knappen nede i hjørnet for at komme i gang og oprette dine bed.</string>
 
@@ -35,6 +36,7 @@
     <string name="title_dialog_plant_details">Hvad har du foretaget dig?</string>
     <string name="title_dialog_save_bed">Navngiv dit bed</string>
     <string name="title_dialog_delete_bed_confirmation">Bekræft sletning af bed</string>
+    <string name="title_dialog_delete_plant_confirmation">Bekræft sletning af plante</string>
 
     <!-- Grid -->
     <string name="add_column">Tilføj kolonne</string>
@@ -47,6 +49,7 @@
     <string name="harvest">Høst</string>
     <string name="water">Vand</string>
     <string name="new_plant">Ny plante</string>
+    <string name="no_plant_name_given">Et navn er påkrævet for at lave en plante</string>
     <string name="remove_plant">Fjern plante</string>
 
     <!-- Plant Details -->
@@ -63,6 +66,7 @@
     <string name="toast_registered_water">Registreret som vandet</string>
     <string name="toast_registered_harvest">Registreret som høstet</string>
     <string name="toast_bed_deleted">Bedet er slettet</string>
+    <string name="toast_plant_deleted">Planten er slettet</string>
     <string name="toast_missing_year">Indtast venligst et årstal</string>
 
     <!-- Plant Germination -->

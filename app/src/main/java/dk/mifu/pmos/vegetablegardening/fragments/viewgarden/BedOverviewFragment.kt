@@ -40,7 +40,7 @@ class BedOverviewFragment: Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar_bed_overview, menu)
+        inflater.inflate(R.menu.toolbar_editable, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

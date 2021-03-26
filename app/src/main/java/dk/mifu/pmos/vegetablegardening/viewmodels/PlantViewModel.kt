@@ -10,7 +10,7 @@ import com.opencsv.CSVReader
 import com.opencsv.CSVReaderBuilder
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.models.Plant
-import java.io.*
+import java.io.InputStreamReader
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,18 +18,19 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     val categoryTitles: LiveData<List<String>> by lazy {
         loadCategoryTitles()
     }
-    val plants: LiveData<MutableList<Plant>> by lazy {
+    val plants: LiveData<List<Plant>> by lazy {
         loadPlants()
     }
+    var userPlants: LiveData<MutableList<Plant>> = MutableLiveData()
 
-    private fun loadPlants(): LiveData<MutableList<Plant>> {
+    private fun loadPlants(): LiveData<List<Plant>> {
         val data = createReader(1)?.readAll()
 
-        val plants: MutableLiveData<MutableList<Plant>> = MutableLiveData()
-        plants.value = mutableListOf()
+        val plants: MutableLiveData<List<Plant>> = MutableLiveData()
+        val list: MutableList<Plant> = mutableListOf()
 
         data?.forEach { plant ->
-            plants.value?.add(
+            list.add(
                     Plant(
                             name = plant[0],
                             category = plant[1],
@@ -45,6 +46,8 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
                     )
             )
         }
+
+        plants.value = list
 
         return plants
     }

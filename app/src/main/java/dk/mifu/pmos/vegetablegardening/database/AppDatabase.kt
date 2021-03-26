@@ -6,10 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.Season
+import dk.mifu.pmos.vegetablegardening.models.Plant
 
-@Database(entities = [Bed::class, Season::class], version = 1)
+@Database(entities = [Bed::class, Season::class, Plant::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun bedDao(): BedDao
+    abstract fun plantDao(): PlantDao
     abstract fun seasonDao(): SeasonDao
 
     companion object {

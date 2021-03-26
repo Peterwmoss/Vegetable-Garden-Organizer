@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/spacing_small"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/new_plant_text"
+                android:text="@string/new_plant"
+                android:textSize="@dimen/font_medium"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/plant_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/name"
+                    android:autofillHints=""
+                    android:inputType="textCapWords" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/plant_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Kategori"
+                    android:autofillHints=""
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:inputType="textCapWords" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_small"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/plant_earliest"
+                    android:layout_width="185dp"
+                    android:layout_height="wrap_content"
+                    android:text="Tidligste så-dato"
+                    style="@style/ButtonStyle"/>
+
+                <TextView
+                    android:id="@+id/plant_earliest_text"
+                    android:textSize="@dimen/font_small"
+                    android:layout_marginStart="@dimen/spacing_medium"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:text="Ingen info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_small"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/plant_latest"
+                    android:layout_width="185dp"
+                    android:layout_height="wrap_content"
+                    android:text="Seneste så-dato"
+                    style="@style/ButtonStyle"/>
+
+                <TextView
+                    android:id="@+id/plant_latest_text"
+                    android:textSize="@dimen/font_small"
+                    android:layout_marginStart="@dimen/spacing_medium"
+                    android:text="Ingen info"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                android:id="@+id/plant_sowing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Sås eller plantes?">
+                <AutoCompleteTextView
+                    android:id="@+id/plant_sowing_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:inputType="none"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/plant_crop_rotation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Sædskifterotation i antal år"
+                    android:autofillHints=""
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/plant_quantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Antal frø pr. meter række"
+                    android:autofillHints=""
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/plant_sowing_depth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Sådybde"
+                    android:autofillHints=""
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/plant_distance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Afstand mellem rækker i cm"
+                    android:autofillHints=""
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/plant_fertilizer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Gødningsnivau"
+                    android:autofillHints=""
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:inputType="textCapWords" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/plant_harvest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Forventet høst pr. række"
+                    android:autofillHints=""
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:inputType="textCapWords" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/cancel_button"
+                    style="@style/ButtonStyle"
+                    android:text="@string/cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="@dimen/spacing_small"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/save_plant_button"
+                    style="@style/AcceptButtonStyle"
+                    android:text="@string/save"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="@dimen/spacing_small"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

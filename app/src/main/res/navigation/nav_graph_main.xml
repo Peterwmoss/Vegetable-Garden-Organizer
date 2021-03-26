@@ -55,6 +55,12 @@
         <action
             android:id="@+id/set_germination"
             app:destination="@id/setGerminationDialogFragment"/>
+        <action
+            android:id="@+id/edit_plant"
+            app:destination="@id/createPlantDialogFragment"/>
+        <action
+            android:id="@+id/delete_plant_action"
+            app:destination="@id/deletePlantConfirmationDialogFragment" />
     </fragment>
     <dialog
         android:id="@+id/plantDetailsDialogFragment"
@@ -88,6 +94,9 @@
         <action
             android:id="@+id/to_plant_details"
             app:destination="@id/plantDetails" />
+        <action
+            android:id="@+id/new_plant_action"
+            app:destination="@id/createPlantDialogFragment" />
     </fragment>
     <dialog
         android:id="@+id/editSortDialogFragment"
@@ -131,9 +140,26 @@
             app:destination="@id/areaOverviewFragment" />
     </dialog>
     <dialog
+        android:id="@+id/createPlantDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.CustomPlantDialogFragment"
+        android:label="CreatePlantDialogFragment">
+        <argument
+            android:name="plant"
+            app:nullable="true"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Plant"
+            android:defaultValue="@null" />
+    </dialog>
+    <dialog
         android:id="@+id/deleteBedConfirmationDialogFragment"
         android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.DeleteBedConfirmationDialogFragment"
-        android:label="DeleteBedConfirmationDialogFragment" >
+        android:label="DeleteBedConfirmationDialogFragment" />
+    <dialog
+        android:id="@+id/deletePlantConfirmationDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.DeletePlantConfirmationDialogFragment"
+        android:label="DeletePlantConfirmationDialogFragment">
+        <argument
+            android:name="plant"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Plant"/>
     </dialog>
     <fragment
         android:id="@+id/newSeasonFragment"
