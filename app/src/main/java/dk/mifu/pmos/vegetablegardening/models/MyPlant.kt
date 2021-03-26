@@ -11,5 +11,5 @@ data class MyPlant (
         var harvestedDate: Date? = null,
         var plantedDate: Date? = null,
         var notes: String? = null,
-        var germinated: Boolean? = null
+        var germinated: Date? = null
 ) : Serializable

@@ -1,4 +1,4 @@
-package dk.mifu.pmos.vegetablegardening.fragments
+package dk.mifu.pmos.vegetablegardening.fragments.lexicon
 
 import android.os.Bundle
 import android.view.*
@@ -11,9 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsBinding
-import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateGerminationInViewCallback
-import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateSortInViewCallback
-import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import dk.mifu.pmos.vegetablegardening.views.Tooltip
@@ -44,10 +41,7 @@ class PlantDetailsFragment: Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.tooltip -> {
-                if (args.myplant == null)
-                    Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_plant_details_not_planted), requireView().rootView.findViewById(R.id.tooltip))
-                else
-                    Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_plant_details_planted), requireView().rootView.findViewById(R.id.tooltip))
+                Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_plant_details_not_planted), requireView().rootView.findViewById(R.id.tooltip))
                 true
             }
             R.id.edit -> {
@@ -65,15 +59,10 @@ class PlantDetailsFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPlantDetailsBinding.inflate(inflater, container, false)
 
-        val myPlant = args.myplant
         val plant = args.plant
         val titles = plantViewModel.categoryTitles.value
 
-        if (bedViewModel.name.isNullOrBlank()) {
-            (activity as AppCompatActivity).supportActionBar?.title = plant.name
-        } else {
-            (activity as AppCompatActivity).supportActionBar?.title = bedViewModel.name
-        }
+        (activity as AppCompatActivity).supportActionBar?.title = plant.name
 
         binding.plantName.text = plant.name
         binding.gridlayout.columnCount = 2
@@ -89,55 +78,10 @@ class PlantDetailsFragment: Fragment() {
         addTextInfoLine(titles?.get(9), plant.fertilizer)
         addTextInfoLine(titles?.get(10), plant.harvest)
 
-        if (myPlant != null) {
-            addTextInfoLine(getString(R.string.number_of_seasons), myPlant.seasons.toString())
-            addTextInfoLine(getString(R.string.last_watered), formatDate(myPlant.wateredDate))
-            addTextInfoLine(getString(R.string.harvested), formatDate(myPlant.harvestedDate))
-            val sortTextView = addTextInfoLine(getString(R.string.sort), formatSort(myPlant.sort))
-            val germinationTextView = addTextInfoLine(getString(R.string.germinated), formatGerminationBoolean(myPlant.germinated))
-
-            updateSort(myPlant, sortTextView)
-            updateGermination(myPlant, germinationTextView)
-            setListeners(myPlant)
-        }
         return binding.root
     }
 
-    private fun updateSort(p: MyPlant, v: TextView) {
-        val editSortButton = binding.editSortButton
-        editSortButton.visibility = View.VISIBLE
-
-        if (p.sort == null) editSortButton.text = getString(R.string.add_sort)
-        else editSortButton.text = getString(R.string.edit_sort)
-
-        bedViewModel.plants?.addOnMapChangedCallback(
-                UpdateSortInViewCallback(args.coordinate!!, v, binding.editSortButton, requireContext())
-        )
-    }
-
-    private fun updateGermination(p: MyPlant, v: TextView){
-        val setGerminationButton = binding.setGerminationButton
-        setGerminationButton.visibility = View.VISIBLE
-
-        if(p.germinated == null) setGerminationButton.text = getString(R.string.set_germination_status)
-        else setGerminationButton.text = getString(R.string.edit_germination_status)
-
-        bedViewModel.plants?.addOnMapChangedCallback(
-                UpdateGerminationInViewCallback(args.coordinate!!, v, binding.setGerminationButton, ::formatGerminationBoolean)
-        )
-    }
-
-    private fun setListeners(myPlant: MyPlant) {
-        binding.editSortButton.setOnClickListener {
-            findNavController().navigate(PlantDetailsFragmentDirections.editSort(myPlant, args.coordinate!!))
-        }
-
-        binding.setGerminationButton.setOnClickListener {
-            findNavController().navigate(PlantDetailsFragmentDirections.setGermination(myPlant, args.coordinate!!))
-        }
-    }
-
-    private fun addTextInfoLine(categoryText: String?, dataText: String?): TextView {
+    private fun addTextInfoLine(categoryText: String?, dataText: String?) {
         val categoryParams = GridLayout.LayoutParams()
         categoryParams.setMargins(0,0, resources.getDimension(R.dimen.spacing_small).toInt(),0)
 
@@ -155,8 +99,6 @@ class PlantDetailsFragment: Fragment() {
             addView(category)
             addView(data)
         }
-
-        return data
     }
 
     private fun formatDate(date: Date?): String {
@@ -173,18 +115,5 @@ class PlantDetailsFragment: Fragment() {
         } else {
             getString(R.string.missing_info)
         }
-    }
-
-    private fun formatGerminationBoolean(germinated: Boolean?): String {
-        return if(germinated != null){
-            if(germinated) requireContext().getString(R.string.germinated)
-            else requireContext().getString(R.string.not_germinated)
-        } else {
-            requireContext().getString(R.string.missing_info)
-        }
-    }
-
-    private fun formatSort(sort: String?): String {
-        return sort ?: getString(R.string.missing_info)
     }
 }
