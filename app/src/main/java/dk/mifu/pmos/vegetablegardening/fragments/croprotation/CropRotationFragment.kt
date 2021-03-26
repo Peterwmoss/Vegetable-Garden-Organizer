@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
@@ -39,7 +39,8 @@ class CropRotationFragment: Fragment() {
         repository = BedRepository(bedDao)
 
         val recyclerView = binding.cropRotationRecyclerView
-        recyclerView.layoutManager = GridLayoutManager(context, 1)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
         MainScope().launch(Dispatchers.IO) {
             adapter = CropRotationAdapter(
                     repository.findBedsWithSeason(seasonViewModel.currentSeason.value!!)
@@ -56,8 +57,8 @@ class CropRotationFragment: Fragment() {
     }
 
     private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var bedName: TextView = view.findViewById(R.id.bed_name_crop_rotation)
-        var seasons: TextView = view.findViewById(R.id.seasons_croprotation)
+        val bedName: TextView = view.findViewById(R.id.bed_name_crop_rotation)
+        val seasons: TextView = view.findViewById(R.id.seasons_croprotation)
     }
 
     private inner class CropRotationAdapter(private val dataSet: List<Bed>): RecyclerView.Adapter<CropRotationFragment.ViewHolder>() {
@@ -69,10 +70,10 @@ class CropRotationFragment: Fragment() {
         override fun onBindViewHolder(holder: CropRotationFragment.ViewHolder, position: Int) {
             val bed = dataSet[position]
             holder.bedName.text = bed.name
+            val plants = plantViewModel.plants.value
 
             MainScope().launch {
-                val plants = plantViewModel.plants.value
-                holder.seasons.text = withContext(Dispatchers.Default) { findNumberOfSeasonsWithBedHere(bed, plants) }
+                holder.seasons.text = findNumberOfSeasonsWithBedPlacedHere(bed, plants!!)
             }
         }
 
@@ -80,7 +81,8 @@ class CropRotationFragment: Fragment() {
             return dataSet.size
         }
 
-        private fun findNumberOfSeasonsWithBedHere(bed: Bed,  plants: List<Plant>?): String {
+        private suspend fun findNumberOfSeasonsWithBedPlacedHere(bed: Bed, plants: List<Plant>): String {
+            return withContext(Dispatchers.IO){
                 val earlierVersionsOfBed = repository.findBedsByName(bed.name)
                 var yearsInSameSpot = 0
                 earlierVersionsOfBed.forEach {
@@ -88,18 +90,24 @@ class CropRotationFragment: Fragment() {
                     else return@forEach
                 }
 
-            return if(plants.isNullOrEmpty()){
-                getString(R.string.seasons_bed_without_plants)
-            } else {
-                getString(R.string.seasons_bed_with_plants, yearsInSameSpot, findMinCropInterval(bed, plants))
+                val minCropInterval = findMinCropInterval(bed, plants)
+                return@withContext if(minCropInterval == 0){
+                    getString(R.string.seasons_bed_without_plants)
+                } else {
+                    getString(R.string.seasons_bed_with_plants, yearsInSameSpot, minCropInterval)
+                }
             }
         }
 
         private fun findMinCropInterval(bed: Bed, plants: List<Plant>): Int {
             var lowestInterval = Int.MAX_VALUE
-            bed.plants.forEach{
+            val bedPlants = bed.plants.values
+
+            if(bedPlants.isEmpty()) return 0
+
+            bed.plants.values.forEach{
                 val plant = plants.find {
-                    plant -> plant.name == it.value.name
+                    plant -> plant.name == it.name
                 }
 
                 if(plant != null){
