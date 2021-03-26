@@ -54,7 +54,10 @@ class SaveBedDialogFragment : DialogFragment() {
                     val exists = async { exists(name) }
                     if (!exists.await()) {
                         saveInDatabase(name)
-                        findNavController().navigate(SaveBedDialogFragmentDirections.saveBedAction(bedViewModel.bedLocation!!))
+                        val navOptions = NavOptions.Builder().setPopUpTo(R.id.areaOverviewFragment, true).build()
+                        val bundle = Bundle()
+                        bundle.putSerializable("Location", bedViewModel.bedLocation!!)
+                        findNavController().navigate(R.id.areaOverviewFragment, bundle, navOptions)
                     } else
                         Toast.makeText(requireContext(), getString(R.string.guide_bed_already_exists), Toast.LENGTH_LONG).show()
                 }
