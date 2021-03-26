@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@string/tooltip_empty_garden"
+        android:text="@string/guide_empty_garden"
         android:visibility="gone"
         android:padding="@dimen/spacing_small"
         android:textSize="@dimen/font_medium"

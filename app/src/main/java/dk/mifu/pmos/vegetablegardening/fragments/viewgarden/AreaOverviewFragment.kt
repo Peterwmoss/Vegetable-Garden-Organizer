@@ -81,9 +81,9 @@ class AreaOverviewFragment : Fragment() {
         return when (item.itemId) {
             R.id.tooltip -> {
                 if (adapter.itemCount == 0)
-                    Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_empty_garden), requireView().rootView.findViewById(R.id.tooltip))
+                    Tooltip.newTooltip(requireContext(), getString(R.string.guide_empty_garden), requireView().rootView.findViewById(R.id.tooltip))
                 else
-                    Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_garden_with_beds), requireView().rootView.findViewById(R.id.tooltip))
+                    Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_area_overview), requireView().rootView.findViewById(R.id.tooltip))
                 true
             }
             else -> super.onOptionsItemSelected(item)

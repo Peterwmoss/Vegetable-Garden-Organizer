@@ -28,7 +28,7 @@ class GardenOverviewFragment: Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.tooltip -> {
-                Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_area_overview), requireView().rootView.findViewById(R.id.tooltip))
+                Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_garden_overview), requireView().rootView.findViewById(R.id.tooltip))
                 true
             }
             else -> super.onOptionsItemSelected(item)

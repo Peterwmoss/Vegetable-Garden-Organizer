@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
@@ -54,6 +55,18 @@ class CropRotationFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.crop_rotation)
+        setButtonListener()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.toolbar_crop_rotation)
+    }
+
+    private fun setButtonListener(){
+        binding.guideCropRotation.setOnClickListener {
+            findNavController().navigate(CropRotationFragmentDirections.navigateToGuide())
+        }
     }
 
     private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
