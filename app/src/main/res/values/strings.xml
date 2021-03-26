@@ -99,4 +99,6 @@
     <string name="year">Årstal</string>
     <string name="already_exists_season">Der findes allerede en sæson med dette årstal</string>
     <string name="crop_rotation">Sædskifte</string>
+    <string name="seasons_bed_with_plants">%1$d / %2$d år</string>
+    <string name="seasons_bed_without_plants">Tomt bed</string>
 </resources>

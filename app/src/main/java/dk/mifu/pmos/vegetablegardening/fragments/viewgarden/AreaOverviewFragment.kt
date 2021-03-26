@@ -104,8 +104,6 @@ class AreaOverviewFragment : Fragment() {
             navigateToSpecifyLocationFragment()
         }
 
-
-
         val observer = { list: List<Bed> ->
             seasonViewModel.currentSeason.observe(viewLifecycleOwner, { currentSeason ->
             adapter = AreaOverviewAdapter(

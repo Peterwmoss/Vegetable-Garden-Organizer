@@ -96,7 +96,7 @@ class SaveBedDialogFragment : DialogFragment() {
         return withContext(Dispatchers.IO) {
             val dao = AppDatabase.getDatabase(requireContext()).bedDao()
             val repository = BedRepository(dao)
-            val bed = repository.findBedByName(name)
+            val bed = repository.findBedByPrimaryKeys(name, seasonViewModel.currentSeason.value!!)
             return@withContext bed != null
         }
     }

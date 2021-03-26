@@ -3,7 +3,6 @@ package dk.mifu.pmos.vegetablegardening.database
 import androidx.lifecycle.LiveData
 import dk.mifu.pmos.vegetablegardening.enums.BedLocation
 import dk.mifu.pmos.vegetablegardening.models.Bed
-import dk.mifu.pmos.vegetablegardening.models.Season
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -27,8 +26,8 @@ class BedRepository(private val bedDao: BedDao) {
         }
     }
 
-    fun findBedByName(name: String): Bed? {
-        return bedDao.findByName(name)
+    fun findBedsByName(name: String): List<Bed> {
+        return bedDao.findBedsByName(name)
     }
 
     fun findBedByPrimaryKeys(name: String, season: Int): Bed? {
