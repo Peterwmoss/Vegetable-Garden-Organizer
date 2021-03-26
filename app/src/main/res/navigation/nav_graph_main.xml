@@ -146,7 +146,7 @@
     </dialog>
     <dialog
         android:id="@+id/createPlantDialogFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.CreatePlantDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.CustomPlantDialogFragment"
         android:label="CreatePlantDialogFragment">
         <argument
             android:name="plant"

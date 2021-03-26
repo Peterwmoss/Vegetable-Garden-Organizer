@@ -12,24 +12,22 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
-import dk.mifu.pmos.vegetablegardening.database.GardenRepository
 import dk.mifu.pmos.vegetablegardening.database.PlantRepository
-import dk.mifu.pmos.vegetablegardening.databinding.FragmentCreatePlantDialogBinding
-import dk.mifu.pmos.vegetablegardening.models.Bed
+import dk.mifu.pmos.vegetablegardening.databinding.FragmentCustomPlantDialogBinding
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CreatePlantDialogFragment : DialogFragment() {
-    private lateinit var binding: FragmentCreatePlantDialogBinding
+class CustomPlantDialogFragment : DialogFragment() {
+    private lateinit var binding: FragmentCustomPlantDialogBinding
 
-    private val args: CreatePlantDialogFragmentArgs by navArgs()
+    private val args: CustomPlantDialogFragmentArgs by navArgs()
 
     private var plant: Plant = Plant("")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentCreatePlantDialogBinding.inflate(inflater, container, false)
+        binding = FragmentCustomPlantDialogBinding.inflate(inflater, container, false)
 
         setDataFromArgs()
         setDatePickerListeners()
@@ -92,7 +90,7 @@ class CreatePlantDialogFragment : DialogFragment() {
                     plant.sowing = binding.plantSowingText.text.toString() == "Sås"
                     plant.cropRotation = binding.plantCropRotation.text.toString()
                     plant.quantity = binding.plantQuantity.text.toString()
-                    plant.sowingDepth = "${binding.plantSowingDepth.text}"
+                    plant.sowingDepth = binding.plantSowingDepth.text.toString()
                     plant.distance = binding.plantDistance.text.toString().toIntOrNull()
                     plant.fertilizer = binding.plantFertilizer.text.toString()
                     plant.harvest = binding.plantHarvest.text.toString()
