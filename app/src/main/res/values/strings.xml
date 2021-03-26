@@ -14,6 +14,7 @@
     <string name="guide_check_water">Baseret på vejret i dit område, kan det være, dine planter har brug for vand</string>
     <string name="guide_no_bed_name_given">Indtast venligst et navn til dit bed</string>
     <string name="guide_bed_already_exists">Et bed med dette navn findes allerede. Vælg venligst et nyt navn til dit bed.</string>
+    <string name="guide_plant_already_exists">En plante med dette navn findes allerede. Vælg venligst et nyt navn til din plante.</string>
 
     <!-- Tooltips -->
     <string name="tooltip_garden_with_beds">Klik på et af dine bed eller opret et nyt på plus-knappen nede i hjørnet</string>
@@ -30,6 +31,7 @@
     <string name="title_dialog_plant_details">Hvad har du foretaget dig?</string>
     <string name="title_dialog_save_bed">Navngiv dit bed</string>
     <string name="title_dialog_delete_bed_confirmation">Bekræft sletning af bed</string>
+    <string name="title_dialog_delete_plant_confirmation">Bekræft sletning af plante</string>
 
     <!-- Grid -->
     <string name="add_column">Tilføj kolonne</string>
@@ -42,6 +44,7 @@
     <string name="harvest">Høst</string>
     <string name="water">Vand</string>
     <string name="new_plant">Ny plante</string>
+    <string name="no_plant_name_given">Et navn er påkrævet for at lave en plante</string>
     <string name="remove_plant">Fjern plante</string>
 
     <!-- Plant Details -->
@@ -58,6 +61,7 @@
     <string name="toast_registered_water">Registreret som vandet</string>
     <string name="toast_registered_harvest">Registreret som høstet</string>
     <string name="toast_bed_deleted">Bedet er slettet</string>
+    <string name="toast_plant_deleted">Planten er slettet</string>
 
     <!-- Plant Germination -->
     <string name="germinated">Forspiret</string>

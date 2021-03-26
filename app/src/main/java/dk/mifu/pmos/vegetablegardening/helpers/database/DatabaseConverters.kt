@@ -7,6 +7,7 @@ import dk.mifu.pmos.vegetablegardening.enums.BedLocation
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import java.lang.reflect.Type
+import java.util.*
 
 class DatabaseConverters {
     private val plantMapType : Type = object : TypeToken<Map<Coordinate, MyPlant?>>(){}.type
@@ -23,4 +24,10 @@ class DatabaseConverters {
 
     @TypeConverter
     fun toPlantMap(value: String): Map<Coordinate, MyPlant> = gson.fromJson(value, plantMapType)
+
+    @TypeConverter
+    fun fromDate(value: Date?): Long = value?.time ?: -1
+
+    @TypeConverter
+    fun toDate(value: Long) : Date? = if (value == -1L) null else Date(value)
 }

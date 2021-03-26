@@ -1,6 +1,7 @@
 package dk.mifu.pmos.vegetablegardening.fragments.dialogs
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,18 +73,18 @@ class SaveBedDialogFragment : DialogFragment() {
                 findNavController().navigate(R.id.bedOverviewFragment, null, navOptions)
             }
         }
-
-        binding.bedNameEditText.requestFocus()
     }
 
-    override fun onStart() {
-        super.onStart()
-        showKeyboard(context)
+    override fun onResume() {
+        super.onResume()
+        binding.bedNameEditText.post {
+            showKeyboard(requireContext(), binding.bedNameEditText)
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        hideKeyboard(context)
+        hideKeyboard(requireContext(), binding.bedNameEditText)
     }
 
     override fun onStop() {
