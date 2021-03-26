@@ -146,7 +146,11 @@
     <fragment
         android:id="@+id/cropRotationFragment"
         android:name="dk.mifu.pmos.vegetablegardening.fragments.croprotation.CropRotationFragment"
-        android:label="CropRotationFragment"/>
+        android:label="CropRotationFragment">
+        <action
+            android:id="@+id/navigate_to_guide"
+            app:destination="@id/cropRotationGuideDialogFragment"/>
+    </fragment>
     <fragment
         android:id="@+id/gardenOverviewFragment"
         android:name="dk.mifu.pmos.vegetablegardening.fragments.viewgarden.GardenOverviewFragment"
@@ -155,4 +159,8 @@
             android:id="@+id/see_area_action"
             app:destination="@id/areaOverviewFragment"/>
     </fragment>
+    <dialog
+        android:id="@+id/cropRotationGuideDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.CropRotationGuideDialogFragment"
+        android:label="CropRotationGuideDialogFragment"/>
 </navigation>

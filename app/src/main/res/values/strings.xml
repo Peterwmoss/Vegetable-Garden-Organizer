@@ -6,6 +6,7 @@
     <string name="toolbar_create_grid">Design dit bed</string>
     <string name="toolbar_new_season">Opret en ny sæson</string>
     <string name="toolbar_edit_grid">Redigér dit bed</string>
+    <string name="toolbar_crop_rotation">Status for kommende sædeskifte</string>
 
     <!-- Guides -->
     <string name="help">Hjælp</string>
@@ -15,6 +16,7 @@
     <string name="guide_check_water">Baseret på vejret i dit område, kan det være, dine planter har brug for vand</string>
     <string name="guide_no_bed_name_given">Indtast venligst et navn til dit bed</string>
     <string name="guide_bed_already_exists">Et bed med dette navn findes allerede. Vælg venligst et nyt navn til dit bed.</string>
+    <string name="guide_crop_rotation">Appen holder styr på sædeskifteintervaller på følgende måde:\n\n Når du har flere bed i et område, f.eks. i dit drivhus, kan du lave om på deres rækkefølge ved at holde inde på et bed og trække i det.\n\n Appen holder styr på hvor mange sæsoner et bed med et bestemt navn har været på samme plads.\n\n Eksempel: Når  dine ærter ikke længere skal være det samme sted, kan du blot flytte \"Ærtebed\" til dit nye sted - smart!</string>
 
     <!-- Tooltips -->
     <string name="tooltip_garden_with_beds">Klik på et af dine bed eller opret et nyt på plus-knappen nede i hjørnet</string>
@@ -93,6 +95,7 @@
     <string name="cancel">Annullér</string>
     <string name="save">Gem</string>
     <string name="delete">Slet</string>
+    <string name="close">Luk</string>
 
     <!-- Crop rotation -->
     <string name="new_season">Ny sæson</string>
@@ -101,4 +104,5 @@
     <string name="crop_rotation">Sædskifte</string>
     <string name="seasons_bed_with_plants">%1$d / %2$d år</string>
     <string name="seasons_bed_without_plants">Tomt bed</string>
+    <string name="crop_rotation_button">Sådan holder appen styr på sædeskifteinterval</string>
 </resources>
