@@ -57,11 +57,6 @@ class NewSeasonFragment: Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onStop() {
-        super.onStop()
-        KeyboardHelper.hideKeyboard(context, binding.year)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_default, menu)
     }

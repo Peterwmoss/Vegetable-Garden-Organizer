@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
@@ -55,6 +56,7 @@ class LexiconFragment: Fragment() {
                 getUserPlants().observe(viewLifecycleOwner, { userPlants ->
                     userPlants.addAll(plants)
                     val recyclerView = binding.lexiconRecyclerView
+                    recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
                     recyclerView.layoutManager = LinearLayoutManager(context)
                     adapter = Adapter(userPlants)
                     recyclerView.adapter = adapter
@@ -78,11 +80,6 @@ class LexiconFragment: Fragment() {
     override fun onResume() {
         super.onResume()
         binding.searchPlantEdittext.setText("")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        KeyboardHelper.hideKeyboard(requireContext(), binding.searchPlantEdittext)
     }
 
     private suspend fun getUserPlants(): LiveData<MutableList<Plant>> {

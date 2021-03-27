@@ -1,7 +1,6 @@
 package dk.mifu.pmos.vegetablegardening.fragments.dialogs
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.database.BedRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentSaveBedDialogBinding
-import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.hideKeyboard
 import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.showKeyboard
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
@@ -81,14 +79,7 @@ class SaveBedDialogFragment : DialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        binding.bedNameEditText.post {
-            showKeyboard(requireContext(), binding.bedNameEditText)
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        hideKeyboard(requireContext(), binding.bedNameEditText)
+        showKeyboard(requireContext(), binding.bedNameEditText)
     }
 
     override fun onStop() {
