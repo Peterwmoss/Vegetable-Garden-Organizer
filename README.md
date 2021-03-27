@@ -1,5 +1,20 @@
 # Køkkenhave app
 
+## Vejledning 22/3-21
+
+* Se udkast til rapport efter påske
+* Tag gerne kontakt til DMI, hvis deres API forbliver nede
+* Husk tooltips og andre store ændringer i rapporten
+* Prioritér notesfelt
+* Behøver ikke følge brugerens prioritering 100% - bare skriv ned
+
+## Feedback 22/3-21
+
+* Starttekst: indforstået begreb "Bed", forklar bed eller appen generelt
+* Hjælpe med mærkelige former, hvis ikke faconen passer, hvad så? Ellers tænker de måske "det kan jeg ikke bruge til noget"
+* Klar definition af et bed
+* Hvor mange niveauer kan det underindeles i?
+
 ## Feedback 13/03-21
 
 * Forklaring til hvad lokation skal bruges til
