@@ -13,6 +13,7 @@ import org.junit.jupiter.api.*
 import org.junit.jupiter.api.extension.ExtendWith
 import java.io.IOException
 
+
 class BedDatabaseTest {
     private lateinit var bedDao: BedDao
     private lateinit var db: AppDatabase
@@ -28,6 +29,7 @@ class BedDatabaseTest {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
         db.seasonDao().insert(Season(2021))
+        db.seasonDao().insert(Season(2018))
         bedDao = db.bedDao()
     }
 
@@ -38,6 +40,7 @@ class BedDatabaseTest {
     }
 
     @Nested
+    @DisplayName("Create bed")
     inner class CreateBedTest {
         private fun createBedNameParameters(): Iterable<Pair<Bed, String>> {
             return listOf(
@@ -90,11 +93,11 @@ class BedDatabaseTest {
 
         private fun createBedSizeParameters(): Iterable<Pair<Bed, Pair<Int, Int>>>{
             return listOf(
-                    Pair(Bed("Test1", 2021, BedLocation.Greenhouse, columns = 0, rows = 0, order = 0), Pair(0,0)),
-                    Pair(Bed("Test2", 2021, BedLocation.Greenhouse, columns = 1, rows = 0, order = 0), Pair(1,0)),
-                    Pair(Bed("Test3", 2021, BedLocation.Greenhouse, columns = 0, rows = 1, order = 0), Pair(0,1)),
-                    Pair(Bed("Test4", 2021, BedLocation.Greenhouse, columns = 1, rows = 1, order = 0), Pair(1,1)),
-                    Pair(Bed("Test5", 2021, BedLocation.Greenhouse, columns = 2, rows = 1, order = 0), Pair(2,1))
+                    Pair(Bed("Test1", 2021, BedLocation.Greenhouse, columns = 0, rows = 0, order = 0), Pair(0, 0)),
+                    Pair(Bed("Test2", 2021, BedLocation.Greenhouse, columns = 1, rows = 0, order = 0), Pair(1, 0)),
+                    Pair(Bed("Test3", 2021, BedLocation.Greenhouse, columns = 0, rows = 1, order = 0), Pair(0, 1)),
+                    Pair(Bed("Test4", 2021, BedLocation.Greenhouse, columns = 1, rows = 1, order = 0), Pair(1, 1)),
+                    Pair(Bed("Test5", 2021, BedLocation.Greenhouse, columns = 2, rows = 1, order = 0), Pair(2, 1))
             )
         }
 
@@ -107,9 +110,49 @@ class BedDatabaseTest {
                 Assertions.assertEquals(size.second, byName.rows)
             }
         }
+
+        private fun createBedSeasonParameters(): Iterable<Pair<Bed, Int>> {
+            return listOf(
+                    Pair(Bed("Test1", 2021, BedLocation.Outdoors, HashMap(), columns = 0, rows = 0, 0), 2021),
+                    Pair(Bed("Test2", 2018, BedLocation.Greenhouse, HashMap(), columns = 0, rows = 0, 1), 2018),
+            )
+        }
+
+        @TestFactory
+        fun createBedWithSeasonTest() = createBedSeasonParameters().map { (bed, season) ->
+            DynamicTest.dynamicTest("Create bed with a season specified stores a bed with that season") {
+                bedDao.insert(bed)
+                val byName = bedDao.findByPrimaryKeys(bed.name, bed.season)
+                Assertions.assertEquals(season, byName!!.season)
+            }
+        }
+
+        private fun createBedOrderParameters(): Iterable<Pair<Bed, Int>> {
+            return listOf(
+                    Pair(Bed("Test1", 2021, BedLocation.Outdoors, HashMap(), columns = 0, rows = 0, 0), 0),
+                    Pair(Bed("Test2", 2021, BedLocation.Greenhouse, HashMap(), columns = 0, rows = 0, 1), 1),
+            )
+        }
+
+        @TestFactory
+        fun createBedWithOrderTest() = createBedOrderParameters().map { (bed, order) ->
+            DynamicTest.dynamicTest("Create bed with a order specified stores a bed with that order") {
+                bedDao.insert(bed)
+                val byName = bedDao.findByPrimaryKeys(bed.name, bed.season)
+                Assertions.assertEquals(order, byName!!.order)
+            }
+        }
+
+        @Test
+        @DisplayName("Exceptiontest")
+        fun createBedWithNonExistentSeasonFailsTest() {
+            val bed = Bed("Test", 1, BedLocation.Outdoors, columns = 0, rows = 0, order = 0)
+            Assertions.assertThrows(Exception::class.java) { bedDao.insert(bed) }
+        }
     }
 
     @Nested
+    @DisplayName("Update bed")
     inner class UpdateBedTest {
         private fun updateBedWithLocationParameters(): Iterable<Pair<Bed, BedLocation>> {
             return listOf(
@@ -157,8 +200,8 @@ class BedDatabaseTest {
 
         private fun updateBedWithSizeParameters(): Iterable<Pair<Bed, Pair<Int, Int>>> {
             return listOf(
-                    Pair(Bed("Test1", 2021, BedLocation.Greenhouse, columns = 0, rows = 0, order = 0), Pair(1,1)),
-                    Pair(Bed("Test2", 2021, BedLocation.Greenhouse, columns = 2, rows = 1, order = 0), Pair(1,0))
+                    Pair(Bed("Test1", 2021, BedLocation.Greenhouse, columns = 0, rows = 0, order = 0), Pair(1, 1)),
+                    Pair(Bed("Test2", 2021, BedLocation.Greenhouse, columns = 2, rows = 1, order = 0), Pair(1, 0))
             )
         }
 
@@ -173,6 +216,26 @@ class BedDatabaseTest {
 
                 Assertions.assertEquals(newSize.first, byName!!.columns)
                 Assertions.assertEquals(newSize.second, byName.rows)
+            }
+        }
+
+        private fun updateBedWithOrderParameters(): Iterable<Pair<Bed, Int>> {
+            return listOf(
+                    Pair(Bed("Test1", 2021, BedLocation.Greenhouse, columns = 0, rows = 0, order = 0), 1),
+                    Pair(Bed("Test2", 2018, BedLocation.Greenhouse, columns = 2, rows = 1, order = 0), 2)
+            )
+        }
+
+        @TestFactory
+        fun updateBedWithOrderTest() = updateBedWithOrderParameters().map { (bed, newOrder) ->
+            DynamicTest.dynamicTest("Update bed with new order updates the bed to have the new order") {
+                bedDao.insert(bed)
+                val newBed = Bed(bed.name, bed.season, BedLocation.Greenhouse, columns = 0, rows = 0, order = newOrder)
+
+                bedDao.update(newBed)
+                val byName = bedDao.findByPrimaryKeys(bed.name, bed.season)
+
+                Assertions.assertEquals(newOrder, byName!!.order)
             }
         }
     }
