@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
@@ -26,7 +27,7 @@ class CropRotationFragment: Fragment() {
     private lateinit var binding: FragmentCropRotationBinding
     private lateinit var adapter: CropRotationAdapter
     private lateinit var repository: BedRepository
-    private lateinit var bedDao: BedDao
+
     private val plantViewModel: PlantViewModel by activityViewModels()
     private val seasonViewModel: SeasonViewModel by activityViewModels()
 
@@ -36,10 +37,11 @@ class CropRotationFragment: Fragment() {
             savedInstanceState: Bundle?
     ): View {
         binding = FragmentCropRotationBinding.inflate(inflater, container, false)
-        bedDao = AppDatabase.getDatabase(requireContext()).bedDao()
+        val bedDao = AppDatabase.getDatabase(requireContext()).bedDao()
         repository = BedRepository(bedDao)
 
         val recyclerView = binding.cropRotationRecyclerView
+        recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         MainScope().launch(Dispatchers.IO) {
