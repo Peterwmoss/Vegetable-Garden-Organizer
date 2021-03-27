@@ -1,6 +1,6 @@
 # Køkkenhave app
 
-## Vejledning 22/3-21
+## Vejledning 22/03-21
 
 * Se udkast til rapport efter påske
 * Tag gerne kontakt til DMI, hvis deres API forbliver nede
@@ -8,12 +8,25 @@
 * Prioritér notesfelt
 * Behøver ikke følge brugerens prioritering 100% - bare skriv ned
 
-## Feedback 22/3-21
+## Feedback 22/03-21
 
 * Starttekst: indforstået begreb "Bed", forklar bed eller appen generelt
 * Hjælpe med mærkelige former, hvis ikke faconen passer, hvad så? Ellers tænker de måske "det kan jeg ikke bruge til noget"
 * Klar definition af et bed
 * Hvor mange niveauer kan det underindeles i?
+
+## Feedback 21/03-21
+
+* 5 rækker
+* Nye planter skal tydeliggøres
+  * Bare en oversigt måske, over hvilke du kan plante
+  * Hvad der er sæson for, skal ikke plantes direkte, evt. skriv i leksikon
+  * Skal måske sammenkobles med redigér bed og så bare med en form for markering
+* PlantDetails er forvirrende med alt den anden information
+  * Forskellige slags info skal skilled ad - bare link til leksikon
+* Bed -> bede
+* Hvornår er en plante forspirret skal være muligt at indtaste
+* Layout med lokation på lille skærm skal tilpasses, så teksten kommer på skærmen
 
 ## Feedback 13/03-21
 
