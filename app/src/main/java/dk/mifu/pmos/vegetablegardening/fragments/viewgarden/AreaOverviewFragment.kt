@@ -35,35 +35,32 @@ class AreaOverviewFragment : Fragment() {
 
     private val bedViewModel: BedViewModel by activityViewModels()
     private val seasonViewModel: SeasonViewModel by activityViewModels()
-    private var bedDao: BedDao? = null
     private var repository: BedRepository? = null
     private val args: AreaOverviewFragmentArgs by navArgs()
 
-    private val itemTouchHelper by lazy {
-        val simpleItemTouchCallback =
-                object : ItemTouchHelper.SimpleCallback(
-                        UP or
-                        DOWN or
-                        START or
-                        END, 0) {
-                    override fun onMove(recyclerView: RecyclerView,
-                                        viewHolder: RecyclerView.ViewHolder,
-                                        target: RecyclerView.ViewHolder): Boolean {
+    private val bedDragHelper by lazy {
+        val bedDragCallback =
+                object : ItemTouchHelper.SimpleCallback(UP or DOWN or START or END, 0) {
+                    override fun onMove(
+                            recyclerView: RecyclerView,
+                            viewHolder: RecyclerView.ViewHolder,
+                            target: RecyclerView.ViewHolder): Boolean {
+
                         viewHolder as ViewHolder
 
                         val from = viewHolder.adapterPosition
                         val to = target.adapterPosition
                         val bed = viewHolder.bed
 
-                        adapter.notifyItemMoved(from, to)
                         adapter.moveItem(bed, from, to)
+                        adapter.notifyItemMoved(from, to)
 
                         return true
                     }
 
                     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
                 }
-        ItemTouchHelper(simpleItemTouchCallback)
+        ItemTouchHelper(bedDragCallback)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,16 +89,16 @@ class AreaOverviewFragment : Fragment() {
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentAreaOverviewBinding.inflate(inflater, container, false)
-        bedDao = AppDatabase.getDatabase(requireContext()).bedDao()
-        repository = BedRepository(bedDao!!)
+        val bedDao = AppDatabase.getDatabase(requireContext()).bedDao()
+        repository = BedRepository(bedDao)
 
         val recyclerView = binding.gardensRecyclerView
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+        bedDragHelper.attachToRecyclerView(recyclerView)
 
         recyclerView.layoutManager = GridLayoutManager(context, 3)
 
-        binding.newLocationBtn.setOnClickListener {
-            navigateToSpecifyLocationFragment()
+        binding.newBedBtn.setOnClickListener {
+            findNavController().navigate(AreaOverviewFragmentDirections.toCreateGrid())
         }
 
         val observer = { list: List<Bed> ->
@@ -144,7 +141,7 @@ class AreaOverviewFragment : Fragment() {
         init {
             bedImage.setOnClickListener {
                 bedViewModel.setBed(bed)
-                navigateToBedOverviewFragment()
+                findNavController().navigate(AreaOverviewFragmentDirections.seeBedAction())
             }
         }
     }
@@ -192,13 +189,5 @@ class AreaOverviewFragment : Fragment() {
                     updatedBeds[index] = bed
             }
         }
-    }
-
-    private fun navigateToSpecifyLocationFragment() {
-        findNavController().navigate(AreaOverviewFragmentDirections.toCreateGrid())
-    }
-
-    private fun navigateToBedOverviewFragment() {
-        findNavController().navigate(AreaOverviewFragmentDirections.seeBedAction())
     }
 }

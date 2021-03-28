@@ -4,7 +4,4 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "seasons")
-data class Season (
-        @PrimaryKey var season: Int
-        ){
-}
+data class Season (@PrimaryKey var season: Int)

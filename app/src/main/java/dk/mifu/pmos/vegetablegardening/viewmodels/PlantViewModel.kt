@@ -21,7 +21,6 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     val plants: LiveData<List<Plant>> by lazy {
         loadPlants()
     }
-    var userPlants: LiveData<MutableList<Plant>> = MutableLiveData()
 
     private fun loadPlants(): LiveData<List<Plant>> {
         val data = createReader(1)?.readAll()
