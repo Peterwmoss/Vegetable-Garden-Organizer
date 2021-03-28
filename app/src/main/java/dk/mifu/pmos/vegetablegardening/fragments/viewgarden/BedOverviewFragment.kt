@@ -50,11 +50,11 @@ class BedOverviewFragment: Fragment() {
                 true
             }
             R.id.edit -> {
-                findNavController().navigate(BedOverviewFragmentDirections.editBedAction())
+                findNavController().navigate(BedOverviewFragmentDirections.toCreateGrid())
                 true
             }
             R.id.delete -> {
-                findNavController().navigate(BedOverviewFragmentDirections.deleteBedAction())
+                findNavController().navigate(BedOverviewFragmentDirections.toDeleteBedConfirmationDialog())
                 true
             }
             else -> super.onOptionsItemSelected(item)

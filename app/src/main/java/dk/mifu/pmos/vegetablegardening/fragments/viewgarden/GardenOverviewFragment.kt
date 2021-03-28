@@ -44,11 +44,11 @@ class GardenOverviewFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.greenhouseButton.setOnClickListener {
-            findNavController().navigate(GardenOverviewFragmentDirections.seeAreaAction(BedLocation.Greenhouse))
+            findNavController().navigate(GardenOverviewFragmentDirections.toAreaOverview(BedLocation.Greenhouse))
         }
 
         binding.outdoorsButton.setOnClickListener {
-            findNavController().navigate(GardenOverviewFragmentDirections.seeAreaAction(BedLocation.Outdoors))
+            findNavController().navigate(GardenOverviewFragmentDirections.toAreaOverview(BedLocation.Outdoors))
         }
     }
 

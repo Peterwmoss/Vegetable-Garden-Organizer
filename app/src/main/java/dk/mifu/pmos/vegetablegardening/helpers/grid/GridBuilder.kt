@@ -52,7 +52,7 @@ abstract class GridBuilder(
 
     protected fun gridTileListener(coordinate: Coordinate): View.OnClickListener {
         return View.OnClickListener {
-            navController.navigate(CreateGridFragmentDirections.choosePlantAction(coordinate, AllPlantsPredicate()))
+            navController.navigate(CreateGridFragmentDirections.toChoosePlantDialog(coordinate, AllPlantsPredicate()))
         }
     }
 

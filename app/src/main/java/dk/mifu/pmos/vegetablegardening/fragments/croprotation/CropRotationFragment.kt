@@ -67,7 +67,7 @@ class CropRotationFragment: Fragment() {
 
     private fun setButtonListener(){
         binding.guideCropRotation.setOnClickListener {
-            findNavController().navigate(CropRotationFragmentDirections.navigateToGuide())
+            findNavController().navigate(CropRotationFragmentDirections.toCropRotationGuideDialog())
         }
     }
 

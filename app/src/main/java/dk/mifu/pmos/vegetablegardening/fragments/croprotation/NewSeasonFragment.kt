@@ -42,7 +42,7 @@ class NewSeasonFragment: Fragment() {
                 MainScope().launch {
                     handleSave(year)
                     initializeNewSeason(year)
-                    findNavController().navigate(NewSeasonFragmentDirections.navigateToGarden())
+                    findNavController().navigate(NewSeasonFragmentDirections.toGardenOverview())
                 }
             } else {
                 Toast.makeText(context, getString(R.string.toast_missing_year), Toast.LENGTH_LONG).show()

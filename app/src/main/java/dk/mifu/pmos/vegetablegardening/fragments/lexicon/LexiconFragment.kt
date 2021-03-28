@@ -66,7 +66,7 @@ class LexiconFragment: Fragment() {
         })
 
         binding.newPlantBtn.setOnClickListener {
-            findNavController().navigate(LexiconFragmentDirections.newPlantAction())
+            findNavController().navigate(LexiconFragmentDirections.toCustomPlantDialog())
         }
 
         return binding.root

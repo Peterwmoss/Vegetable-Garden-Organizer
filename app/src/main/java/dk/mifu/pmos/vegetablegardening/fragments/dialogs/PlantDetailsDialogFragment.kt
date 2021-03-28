@@ -39,11 +39,11 @@ class PlantDetailsDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-        binding.plantName.text = args.plant.name
+        binding.plantName.text = args.myPlant.name
 
         formatter = Formatter(requireContext())
 
-        loadDataFromPlant(args.plant)
+        loadDataFromPlant(args.myPlant)
         setButtonListeners()
         setDatePickerListeners()
         addCallbacks()
@@ -78,13 +78,13 @@ class PlantDetailsDialogFragment : DialogFragment() {
 
     private fun setButtonListeners() {
         binding.detailsButton.setOnClickListener {
-            val myPlant = args.plant
+            val myPlant = args.myPlant
             val plant = plantViewModel.plants.value?.first { plant -> plant.name == myPlant.name }
             findNavController().navigate(PlantDetailsDialogFragmentDirections.toPlantDetails(plant!!))
         }
 
         binding.editSortButton.setOnClickListener {
-            findNavController().navigate(PlantDetailsDialogFragmentDirections.editSort(args.plant, args.coordinate))
+            findNavController().navigate(PlantDetailsDialogFragmentDirections.toEditSort(args.myPlant, args.coordinate))
         }
     }
 
@@ -106,15 +106,15 @@ class PlantDetailsDialogFragment : DialogFragment() {
             val listener: (Any, Int, Int, Int) -> Unit = { _, year, month, day ->
                 newCal.set(year, month, day)
                 when (date) {
-                    Germinated -> args.plant.germinated = newCal.time
-                    Planted -> args.plant.plantedDate = newCal.time
+                    Germinated -> args.myPlant.germinated = newCal.time
+                    Planted -> args.myPlant.plantedDate = newCal.time
                     Watered -> {
-                        args.plant.wateredDate = newCal.time
+                        args.myPlant.wateredDate = newCal.time
                         bedViewModel.plantsToWater.value?.remove(args.coordinate)
                     }
-                    Harvested -> args.plant.harvestedDate = newCal.time
+                    Harvested -> args.myPlant.harvestedDate = newCal.time
                 }
-                bedViewModel.plants?.put(args.coordinate, args.plant)
+                bedViewModel.plants?.put(args.coordinate, args.myPlant)
             }
             val dialog = DatePickerDialog(requireContext(), listener, currentYear, currentMonth, currentDay)
             dialog.show()

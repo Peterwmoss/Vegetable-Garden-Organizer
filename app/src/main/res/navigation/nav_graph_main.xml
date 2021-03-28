@@ -4,182 +4,227 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_main"
     app:startDestination="@id/gardenOverviewFragment">
+
+    <!--|||||||||||||||-->
+    <!--|| FRAGMENTS ||-->
+    <!--|||||||||||||||-->
+
+    <!-- Garden Overview Fragment -->
+    <fragment
+        android:id="@+id/gardenOverviewFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.viewgarden.GardenOverviewFragment"
+        android:label="GardenOverviewFragment">
+
+        <action
+            android:id="@+id/to_area_overview"
+            app:destination="@id/areaOverviewFragment"/>
+    </fragment>
+
+    <!-- Area Overview Fragment -->
     <fragment
         android:id="@+id/areaOverviewFragment"
         android:name="dk.mifu.pmos.vegetablegardening.fragments.viewgarden.AreaOverviewFragment"
         android:label="fragment_garden_overview"
         tools:layout="@layout/fragment_area_overview">
+
+        <argument
+            android:name="Location"
+            app:argType="dk.mifu.pmos.vegetablegardening.enums.BedLocation" />
+
         <action
-            android:id="@+id/see_bed_action"
+            android:id="@+id/to_bed_overview"
             app:destination="@id/bedOverviewFragment" />
         <action
             android:id="@+id/to_create_grid"
             app:destination="@id/createGridFragment" />
-        <argument
-            android:name="Location"
-            app:argType="dk.mifu.pmos.vegetablegardening.enums.BedLocation" />
     </fragment>
+
+    <!-- Crop Rotation Fragment -->
     <fragment
-        android:id="@+id/bedOverviewFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.viewgarden.BedOverviewFragment"
-        android:label="BedOverviewFragment" >
+        android:id="@+id/cropRotationFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.croprotation.CropRotationFragment"
+        android:label="CropRotationFragment">
+
         <action
-            android:id="@+id/show_plant_info"
-            app:destination="@id/plantDetailsDialogFragment" />
-        <action
-            android:id="@+id/show_planting_options"
-            app:destination="@id/choosePlantFragment"/>
-        <action
-            android:id="@+id/edit_bed_action"
-            app:destination="@id/createGridFragment" />
-        <action
-            android:id="@+id/delete_bed_action"
-            app:destination="@id/deleteBedConfirmationDialogFragment" />
+            android:id="@+id/to_crop_rotation_guide_dialog"
+            app:destination="@id/cropRotationGuideDialogFragment" />
     </fragment>
+
+    <!-- New Season Fragment -->
     <fragment
-        android:id="@+id/plantDetails"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.lexicon.PlantDetailsFragment"
-        android:label="PlantDetails" >
-        <argument android:name="plant"
-            app:argType="dk.mifu.pmos.vegetablegardening.models.Plant" />
+        android:id="@+id/newSeasonFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.croprotation.NewSeasonFragment"
+        android:label="NewSeasonFragment">
+
         <action
-            android:id="@+id/edit_plant"
-            app:destination="@id/createPlantDialogFragment"/>
-        <action
-            android:id="@+id/delete_plant_action"
-            app:destination="@id/deletePlantConfirmationDialogFragment" />
+            android:id="@+id/to_garden_overview"
+            app:destination="@id/gardenOverviewFragment" />
     </fragment>
-    <dialog
-        android:id="@+id/plantDetailsDialogFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.PlantDetailsDialogFragment"
-        android:label="PlantInfoFragment" >
-        <action
-            android:id="@+id/to_plant_details"
-            app:destination="@id/plantDetails" />
-        <argument
-            android:name="coordinate"
-            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
-        <argument
-            android:name="plant"
-            app:argType="dk.mifu.pmos.vegetablegardening.models.MyPlant" />
-        <action
-            android:id="@+id/edit_sort"
-            app:destination="@id/editSortDialogFragment" />
-        <action
-            android:id="@+id/set_germination"
-            app:destination="@id/setGerminationDialogFragment"/>
-    </dialog>
-    <dialog
-        android:id="@+id/choosePlantFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.ChoosePlantDialogFragment"
-        android:label="fragment_choose_plant"
-        tools:layout="@layout/fragment_choose_plant" >
-        <argument android:name="coordinate"
-            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
-        <argument
-            android:name="predicate"
-            app:argType="dk.mifu.pmos.vegetablegardening.helpers.predicates.Predicate" />
-    </dialog>
+
+    <!-- Lexicon Fragment -->
     <fragment
         android:id="@+id/lexiconFragment"
         android:name="dk.mifu.pmos.vegetablegardening.fragments.lexicon.LexiconFragment"
-        android:label="LexiconFragment" >
+        android:label="LexiconFragment">
+
         <action
             android:id="@+id/to_plant_details"
             app:destination="@id/plantDetails" />
         <action
-            android:id="@+id/new_plant_action"
-            app:destination="@id/createPlantDialogFragment" />
+            android:id="@+id/to_custom_plant_dialog"
+            app:destination="@id/customPlantDialogFragment" />
     </fragment>
-    <dialog
-        android:id="@+id/editSortDialogFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.EditSortDialogFragment"
-        android:label="EditSortDialogFragment" >
+
+    <!-- Plant Details Fragment -->
+    <fragment
+        android:id="@+id/plantDetails"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.lexicon.PlantDetailsFragment"
+        android:label="PlantDetails">
+
         <argument
-            android:name="myPlant"
-            app:argType="dk.mifu.pmos.vegetablegardening.models.MyPlant" />
-        <argument
-            android:name="coordinate"
-            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
-    </dialog>
-    <dialog
-        android:id="@+id/setGerminationDialogFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.SetGerminationDialogFragment"
-        android:label="SetGerminationDialogFragment">
-        <argument
-            android:name="myPlant"
-            app:argType="dk.mifu.pmos.vegetablegardening.models.MyPlant" />
-        <argument
-            android:name="coordinate"
-            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
-    </dialog>
+            android:name="plant"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Plant" />
+
+        <action
+            android:id="@+id/to_custom_plant_dialog"
+            app:destination="@id/customPlantDialogFragment" />
+        <action
+            android:id="@+id/to_delete_plant_confirmation_dialog"
+            app:destination="@id/deletePlantConfirmationDialogFragment" />
+    </fragment>
+
+    <!-- Create Grid Fragment -->
     <fragment
         android:id="@+id/createGridFragment"
         android:name="dk.mifu.pmos.vegetablegardening.fragments.creategarden.CreateGridFragment"
-        android:label="CreateGridFragment" >
+        android:label="CreateGridFragment">
+
         <action
-            android:id="@+id/choose_plant_action"
-            app:destination="@id/choosePlantFragment" />
+            android:id="@+id/to_choose_plant_dialog"
+            app:destination="@id/choosePlantDialogFragment" />
         <action
             android:id="@+id/to_save_bed_dialog"
             app:destination="@id/saveBedDialogFragment" />
     </fragment>
-    <dialog
-        android:id="@+id/saveBedDialogFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.SaveBedDialogFragment"
-        android:label="SaveBedDialogFragment">
+
+    <!-- Bed Overview Fragment -->
+    <fragment
+        android:id="@+id/bedOverviewFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.viewgarden.BedOverviewFragment"
+        android:label="BedOverviewFragment">
+
         <action
-            android:id="@+id/save_bed_action"
-            app:destination="@id/areaOverviewFragment" />
-    </dialog>
+            android:id="@+id/to_show_plant_details_dialog"
+            app:destination="@id/plantDetailsDialogFragment" />
+        <action
+            android:id="@+id/to_choose_plant_dialog"
+            app:destination="@id/choosePlantDialogFragment" />
+        <action
+            android:id="@+id/to_create_grid"
+            app:destination="@id/createGridFragment" />
+        <action
+            android:id="@+id/to_delete_bed_confirmation_dialog"
+            app:destination="@id/deleteBedConfirmationDialogFragment" />
+    </fragment>
+
+    <!--|||||||||||||-->
+    <!--|| DIALOGS ||-->
+    <!--|||||||||||||-->
+
+    <!-- Custom Plant Dialog -->
     <dialog
-        android:id="@+id/createPlantDialogFragment"
+        android:id="@+id/customPlantDialogFragment"
         android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.CustomPlantDialogFragment"
         android:label="CreatePlantDialogFragment">
+
         <argument
             android:name="plant"
             app:nullable="true"
             app:argType="dk.mifu.pmos.vegetablegardening.models.Plant"
             android:defaultValue="@null" />
     </dialog>
+
+    <!-- Crop Rotation Guide Dialog -->
     <dialog
-        android:id="@+id/deleteBedConfirmationDialogFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.DeleteBedConfirmationDialogFragment"
-        android:label="DeleteBedConfirmationDialogFragment" />
+        android:id="@+id/cropRotationGuideDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.CropRotationGuideDialogFragment"
+        android:label="CropRotationGuideDialogFragment" />
+
+    <!-- Confirmations -->
+
+    <!-- Delete Plant Confirmation Dialog -->
     <dialog
         android:id="@+id/deletePlantConfirmationDialogFragment"
         android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.DeletePlantConfirmationDialogFragment"
         android:label="DeletePlantConfirmationDialogFragment">
+
         <argument
             android:name="plant"
-            app:argType="dk.mifu.pmos.vegetablegardening.models.Plant"/>
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Plant" />
     </dialog>
-    <fragment
-        android:id="@+id/newSeasonFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.croprotation.NewSeasonFragment"
-        android:label="NewSeasonFragment" >
-        <action
-            android:id="@+id/navigate_to_garden"
-            app:destination="@id/gardenOverviewFragment"/>
-    </fragment>
-    <fragment
-        android:id="@+id/cropRotationFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.croprotation.CropRotationFragment"
-        android:label="CropRotationFragment">
-        <action
-            android:id="@+id/navigate_to_guide"
-            app:destination="@id/cropRotationGuideDialogFragment"/>
-    </fragment>
-    <fragment
-        android:id="@+id/gardenOverviewFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.viewgarden.GardenOverviewFragment"
-        android:label="GardenOverviewFragment">
-        <action
-            android:id="@+id/see_area_action"
-            app:destination="@id/areaOverviewFragment"/>
-    </fragment>
+
+    <!-- Delete Bed Confirmation Dialog -->
     <dialog
-        android:id="@+id/cropRotationGuideDialogFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.CropRotationGuideDialogFragment"
-        android:label="CropRotationGuideDialogFragment"/>
+        android:id="@+id/deleteBedConfirmationDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.DeleteBedConfirmationDialogFragment"
+        android:label="DeleteBedConfirmationDialogFragment" />
+
+    <!-- End Confirmations -->
+
+    <!-- Save Bed Dialog -->
+    <dialog
+        android:id="@+id/saveBedDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.SaveBedDialogFragment"
+        android:label="SaveBedDialogFragment" />
+
+    <!-- Choose Plant Dialog -->
+    <dialog
+        android:id="@+id/choosePlantDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.ChoosePlantDialogFragment"
+        android:label="fragment_choose_plant"
+        tools:layout="@layout/fragment_choose_plant">
+
+        <argument
+            android:name="coordinate"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
+        <argument
+            android:name="predicate"
+            app:argType="dk.mifu.pmos.vegetablegardening.helpers.predicates.Predicate" />
+    </dialog>
+
+    <!-- Plant Details Dialog -->
+    <dialog
+        android:id="@+id/plantDetailsDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.PlantDetailsDialogFragment"
+        android:label="PlantInfoFragment">
+
+        <argument
+            android:name="coordinate"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
+        <argument
+            android:name="myPlant"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.MyPlant" />
+
+        <action
+            android:id="@+id/to_plant_details"
+            app:destination="@id/plantDetails" />
+        <action
+            android:id="@+id/to_edit_sort"
+            app:destination="@id/editSortDialogFragment" />
+    </dialog>
+
+    <!-- Edit Sort Dialog -->
+    <dialog
+        android:id="@+id/editSortDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.EditSortDialogFragment"
+        android:label="EditSortDialogFragment">
+
+        <argument
+            android:name="myPlant"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.MyPlant" />
+        <argument
+            android:name="coordinate"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
+    </dialog>
+
 </navigation>
