@@ -18,7 +18,7 @@
     <string name="guide_bed_already_exists">Et bed med dette navn findes allerede. Vælg venligst et nyt navn til dit bed.</string>
     <string name="guide_plant_already_exists">En plante med dette navn findes allerede. Vælg venligst et nyt navn til din plante.</string>
     <string name="guide_crop_rotation">Appen holder styr på sædskifteintervaller på følgende måde:\n\n Når du har flere bed i et område, f.eks. i dit drivhus, kan du lave om på deres rækkefølge ved at holde inde på et bed og trække i det.\n\n Appen holder styr på hvor mange sæsoner et bed med et bestemt navn har været på samme plads.\n\n Eksempel: Når  dine ærter ikke længere skal være det samme sted, kan du blot flytte \"Ærtebed\" til dit nye sted - smart!</string>
-    <string name="guide_empty_garden">Du kan bruge appen til at holde styr på dine bede eller forskellige områder i din køkkenhave eller drivhus.\n\nTryk på plus-knappen nede i hjørnet for at komme i gang og oprette dine bed.</string>
+    <string name="guide_empty_garden">Du kan bruge appen til at holde styr på dine bede eller forskellige områder i din køkkenhave eller drivhus.\n\nTryk på plus-knappen nede i hjørnet for at komme i gang og oprette dine bede.</string>
 
     <!-- Tooltips -->
     <string name="tooltip_create_grid">Udfyld dit bed ved at trykke på en firkant og vælg fra listen.\n\nDu kan ændre størrelsen på bedet ved plus- og minus-knapperne.</string>
