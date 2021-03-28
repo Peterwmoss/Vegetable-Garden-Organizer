@@ -11,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
-import dk.mifu.pmos.vegetablegardening.database.GardenRepository
+import dk.mifu.pmos.vegetablegardening.database.BedRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentDeleteBedConfirmationDialogBinding
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import kotlinx.coroutines.Dispatchers
@@ -52,7 +52,7 @@ class DeleteBedConfirmationDialogFragment : DialogFragment() {
     private fun deleteCurrentBed() {
         MainScope().launch(Dispatchers.IO) {
             val dao = AppDatabase.getDatabase(requireContext()).bedDao()
-            val repository = GardenRepository(dao)
+            val repository = BedRepository(dao)
             repository.deleteBed(bedViewModel.name!!)
         }
     }

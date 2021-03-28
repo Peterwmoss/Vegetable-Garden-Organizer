@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentChoosePlantBinding
-import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPredicate
+import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPlantPredicate
 import dk.mifu.pmos.vegetablegardening.helpers.recyclerviews.PlantAdapter
 import dk.mifu.pmos.vegetablegardening.helpers.recyclerviews.PlantViewHolder
 import dk.mifu.pmos.vegetablegardening.helpers.search.PlantFilter
@@ -39,7 +39,7 @@ class ChoosePlantDialogFragment : DialogFragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         plantViewModel.plants.observe(viewLifecycleOwner, {
             val plants = it
-                .filter(LocationPredicate(bedViewModel.bedLocation))
+                .filter(LocationPlantPredicate(bedViewModel.bedLocation))
                 .filter(args.predicate)
             adapter = Adapter(plants)
             recyclerView.adapter = adapter

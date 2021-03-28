@@ -10,7 +10,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentEditSortDialogBinding
-import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.hideKeyboard
 import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.showKeyboard
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 
@@ -49,11 +48,6 @@ class EditSortDialogFragment : DialogFragment() {
     override fun onStop() {
         super.onStop()
         (activity as AppCompatActivity).supportActionBar?.title = bedViewModel.name
-    }
-
-    override fun onPause() {
-        super.onPause()
-        hideKeyboard(context, binding.editSortEditText)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

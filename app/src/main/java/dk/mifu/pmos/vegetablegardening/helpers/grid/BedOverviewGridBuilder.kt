@@ -11,7 +11,7 @@ import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
 import dk.mifu.pmos.vegetablegardening.fragments.viewgarden.BedOverviewFragmentDirections
-import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPredicate
+import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPlantPredicate
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.PlantablePredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
@@ -34,7 +34,7 @@ class BedOverviewGridBuilder(
     init {
         existsPlantablePlants = !plantViewModel.plants.value
                 ?.filter(PlantablePredicate())
-                ?.filter(LocationPredicate(bedViewModel.bedLocation))
+                ?.filter(LocationPlantPredicate(bedViewModel.bedLocation))
                 .isNullOrEmpty()
     }
 
