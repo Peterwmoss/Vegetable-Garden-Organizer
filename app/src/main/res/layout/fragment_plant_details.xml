@@ -24,26 +24,4 @@
         android:id="@+id/gridlayout">
     </GridLayout>
 
-    <Button
-        android:id="@+id/edit_sort_button"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/ButtonStyle"
-        android:layout_marginTop="@dimen/spacing_medium"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/set_germination_button"
-        app:layout_constraintTop_toBottomOf="@id/gridlayout" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/edit_sort_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/gridlayout"
-        android:id="@+id/set_germination_button"
-        android:visibility="gone"
-        style="@style/ButtonStyle"
-        android:layout_marginTop="@dimen/spacing_medium"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

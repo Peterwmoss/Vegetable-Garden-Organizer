@@ -47,7 +47,7 @@ class GsonAdapters {
                     out.name("harvestedDate").value(dateToString(it.value?.harvestedDate))
                     out.name("plantedDate").value(dateToString(it.value?.plantedDate))
                     out.name("notes").value(it.value?.notes)
-                    out.name("germinated").value(it.value?.germinated)
+                    out.name("germinated").value(dateToString(it.value?.germinated))
                     out.endObject()
                 }
 
@@ -71,7 +71,7 @@ class GsonAdapters {
                 var harvestedDate: Date? = null
                 var plantedDate: Date? = null
                 var notes: String? = null
-                var germinated: Boolean? = null
+                var germinated: Date? = null
 
                 reader.beginArray()
                 reader.beginObject()
@@ -94,7 +94,7 @@ class GsonAdapters {
                             "harvestedDate" -> { harvestedDate = stringToDate(reader.nextString()) }
                             "plantedDate" -> { plantedDate = stringToDate(reader.nextString()) }
                             "notes" -> notes = reader.nextString()
-                            "germinated" -> germinated = reader.nextBoolean()
+                            "germinated" -> { germinated = stringToDate(reader.nextString()) }
                         }
                     }
                     reader.endObject()
