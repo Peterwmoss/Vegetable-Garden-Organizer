@@ -14,6 +14,8 @@ import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.database.PlantRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCustomPlantDialogBinding
+import dk.mifu.pmos.vegetablegardening.enums.PlantDate
+import dk.mifu.pmos.vegetablegardening.helpers.Formatter
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
@@ -26,8 +28,12 @@ class CustomPlantDialogFragment : DialogFragment() {
 
     private var plant: Plant = Plant("")
 
+    private lateinit var formatter: Formatter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCustomPlantDialogBinding.inflate(inflater, container, false)
+
+        formatter = Formatter(requireContext())
 
         setDataFromArgs()
         setDatePickerListeners()
@@ -50,9 +56,9 @@ class CustomPlantDialogFragment : DialogFragment() {
         binding.plantName.setText(plant.name)
         binding.plantCategory.setText(plant.category)
         if (plant.earliest != null)
-            binding.plantEarliestText.text = formatDate(plant.earliest!!)
+            binding.plantEarliestText.text = formatter.formatDate(plant.earliest!!)
         if (plant.latest != null)
-            binding.plantLatestText.text = formatDate(plant.latest!!)
+            binding.plantLatestText.text = formatter.formatDate(plant.latest!!)
         if (plant.sowing != null)
             binding.plantSowingText.setText(if (plant.sowing!!) "Sås" else "Plantes")
         binding.plantCropRotation.setText(plant.cropRotation)
@@ -165,37 +171,28 @@ class CustomPlantDialogFragment : DialogFragment() {
     }
 
     private fun setDatePickerListeners() {
+        binding.plantEarliest.setOnClickListener(createDatePickerListener(PlantDate.Earliest))
+        binding.plantLatest.setOnClickListener(createDatePickerListener(PlantDate.Latest))
+    }
+
+    private fun createDatePickerListener(date: PlantDate): (View) -> Unit {
         val c = Calendar.getInstance()
         val currentYear = c.get(Calendar.YEAR)
         val currentMonth = c.get(Calendar.MONTH)
         val currentDay = c.get(Calendar.DAY_OF_MONTH)
 
-        binding.plantEarliest.setOnClickListener {
+        return {
             val newCal = Calendar.getInstance()
             val listener = { _: Any, year: Int, month: Int, day: Int ->
                 newCal.set(year, month, day)
-                plant.earliest = newCal.time
-                binding.plantEarliestText.text = formatDate(newCal.time)
+                when (date) {
+                    PlantDate.Earliest -> plant.earliest = newCal.time
+                    PlantDate.Latest -> plant.latest = newCal.time
+                }
+                binding.plantLatestText.text = formatter.formatDate(newCal.time)
             }
             val dialog = DatePickerDialog(requireContext(), listener, currentYear, currentMonth, currentDay)
             dialog.show()
         }
-
-        binding.plantLatest.setOnClickListener {
-            val newCal = Calendar.getInstance()
-            val listener = { _: Any, year: Int, month: Int, day: Int ->
-                newCal.set(year, month, day)
-                plant.latest = newCal.time
-                binding.plantLatestText.text = formatDate(newCal.time)
-            }
-            val dialog = DatePickerDialog(requireContext(), listener, currentYear, currentMonth, currentDay)
-            dialog.show()
-        }
-    }
-
-    private fun formatDate(date: Date): String? {
-        val pattern = "dd. MMMM"
-        val simpleDateFormat = SimpleDateFormat(pattern, Locale("da", "DK"))
-        return simpleDateFormat.format(date)
     }
 }
