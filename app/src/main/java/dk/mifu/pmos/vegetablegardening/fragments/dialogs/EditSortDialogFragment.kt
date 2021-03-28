@@ -34,6 +34,9 @@ class EditSortDialogFragment : DialogFragment() {
             dismiss()
         }
 
+        if (args.myPlant.sort != null)
+            binding.editSortEditText.setText(args.myPlant.sort)
+
         return binding.root
     }
 

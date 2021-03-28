@@ -1,19 +1,21 @@
 package dk.mifu.pmos.vegetablegardening.fragments.dialogs
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsDialogBinding
-import dk.mifu.pmos.vegetablegardening.models.Coordinate
+import dk.mifu.pmos.vegetablegardening.enums.MyPlantDate
+import dk.mifu.pmos.vegetablegardening.enums.MyPlantDate.*
+import dk.mifu.pmos.vegetablegardening.helpers.Formatter
+import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateInViewCallback
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
@@ -27,6 +29,8 @@ class PlantDetailsDialogFragment : DialogFragment() {
     private val bedViewModel: BedViewModel by activityViewModels()
     private val plantViewModel: PlantViewModel by activityViewModels()
 
+    private lateinit var formatter: Formatter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPlantDetailsDialogBinding.inflate(inflater, container, false)
         return binding.root
@@ -35,12 +39,31 @@ class PlantDetailsDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-        binding.plantDetailsDialogPlant.text = args.plant.name
-        if(args.plant.sort != null) {
-            binding.sort.visibility = View.VISIBLE
-            binding.sort.text = args.plant.sort
-        }
+        binding.plantName.text = args.plant.name
+
+        formatter = Formatter(requireContext())
+
+        loadDataFromPlant(args.plant)
         setButtonListeners()
+        setDatePickerListeners()
+        addCallbacks()
+    }
+
+    private fun loadDataFromPlant(myPlant: MyPlant) {
+        if (myPlant.sort != null)
+            binding.sortText.text = myPlant.sort
+
+        if (myPlant.germinated != null)
+            binding.germinatedText.text = formatter.formatDate(myPlant.germinated)
+
+        if (myPlant.wateredDate != null)
+            binding.wateredText.text = formatter.formatDate(myPlant.wateredDate)
+
+        if (myPlant.plantedDate != null)
+            binding.plantedText.text = formatter.formatDate(myPlant.plantedDate)
+
+        if (myPlant.harvestedDate != null)
+            binding.harvestedText.text = formatter.formatDate(myPlant.harvestedDate)
     }
 
     override fun onStop() {
@@ -48,28 +71,53 @@ class PlantDetailsDialogFragment : DialogFragment() {
         (activity as AppCompatActivity).supportActionBar?.title = bedViewModel.name
     }
 
+    private fun addCallbacks() {
+        bedViewModel.plants?.addOnMapChangedCallback(
+                UpdateInViewCallback(args.coordinate, binding, formatter))
+    }
+
     private fun setButtonListeners() {
-        binding.waterButton.setOnClickListener {
-            args.plant.wateredDate = Date()
-            bedViewModel.plants?.put(args.coordinate, args.plant)
-            bedViewModel.plantsToWater.value?.remove(args.coordinate)
-            Toast.makeText(context, getString(R.string.toast_registered_water), Toast.LENGTH_SHORT).show()
-        }
-
-        binding.harvestButton.setOnClickListener {
-            args.plant.harvestedDate = Date()
-            bedViewModel.plants?.put(args.coordinate, args.plant)
-            Toast.makeText(context, getString(R.string.toast_registered_harvest), Toast.LENGTH_SHORT).show()
-        }
-
         binding.detailsButton.setOnClickListener {
             val myPlant = args.plant
             val plant = plantViewModel.plants.value?.first { plant -> plant.name == myPlant.name }
-            navigateToPlantDetails(plant!!, myPlant, args.coordinate)
+            findNavController().navigate(PlantDetailsDialogFragmentDirections.toPlantDetails(plant!!))
+        }
+
+        binding.editSortButton.setOnClickListener {
+            findNavController().navigate(PlantDetailsDialogFragmentDirections.editSort(args.plant, args.coordinate))
         }
     }
 
-    private fun navigateToPlantDetails(plant: Plant, myPlant: MyPlant, coordinate: Coordinate) {
-        findNavController().navigate(PlantDetailsDialogFragmentDirections.toPlantDetails(plant, myPlant, coordinate))
+    private fun setDatePickerListeners() {
+        binding.editGerminationButton.setOnClickListener(createDatePickerListener(Germinated))
+        binding.plantedButton.setOnClickListener(createDatePickerListener(Planted))
+        binding.harvestButton.setOnClickListener(createDatePickerListener(Harvested))
+        binding.waterButton.setOnClickListener(createDatePickerListener(Watered))
+    }
+
+    private fun createDatePickerListener(date: MyPlantDate): (View) -> Unit {
+        val c = Calendar.getInstance()
+        val currentYear = c.get(Calendar.YEAR)
+        val currentMonth = c.get(Calendar.MONTH)
+        val currentDay = c.get(Calendar.DAY_OF_MONTH)
+
+        return {
+            val newCal = Calendar.getInstance()
+            val listener: (Any, Int, Int, Int) -> Unit = { _, year, month, day ->
+                newCal.set(year, month, day)
+                when (date) {
+                    Germinated -> args.plant.germinated = newCal.time
+                    Planted -> args.plant.plantedDate = newCal.time
+                    Watered -> {
+                        args.plant.wateredDate = newCal.time
+                        bedViewModel.plantsToWater.value?.remove(args.coordinate)
+                    }
+                    Harvested -> args.plant.harvestedDate = newCal.time
+                }
+                bedViewModel.plants?.put(args.coordinate, args.plant)
+            }
+            val dialog = DatePickerDialog(requireContext(), listener, currentYear, currentMonth, currentDay)
+            dialog.show()
+        }
     }
 }

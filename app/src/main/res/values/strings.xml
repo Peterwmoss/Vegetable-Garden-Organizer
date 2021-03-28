@@ -10,7 +10,6 @@
 
     <!-- Guides -->
     <string name="help">Hjælp</string>
-    <string name="guide_dialog_plant_details">Her kan du bogføre, hvis du har vandet eller høstet din plante.\nTryk på detaljer for at se mere om din plante.</string>
     <string name="guide_plantable_plants">Der er i øjeblikket mulighed for at plante/så i dit bed!</string>
     <string name="guide_no_plantable_plants">Der er ingen planter, der kan plantes i øjeblikket</string>
     <string name="guide_check_water">Baseret på vejret i dit område, kan det være, dine planter har brug for vand</string>
@@ -33,7 +32,6 @@
     <!-- Titles -->
     <string name="title_location">Hvor er dit bed?</string>
     <string name="title_dialog_germination">Er denne plante blevet forspiret?</string>
-    <string name="title_dialog_plant_details">Hvad har du foretaget dig?</string>
     <string name="title_dialog_save_bed">Navngiv dit bed</string>
     <string name="title_dialog_delete_bed_confirmation">Bekræft sletning af bed</string>
     <string name="title_dialog_delete_plant_confirmation">Bekræft sletning af plante</string>
@@ -46,8 +44,8 @@
     <string name="select_plant">Vælg plante</string>
     <string name="plants">Planter</string>
     <string name="plantable_pants">Plantbare planter</string>
-    <string name="harvest">Høst</string>
-    <string name="water">Vand</string>
+    <string name="harvest">Registrér høstet</string>
+    <string name="water">Registrér vandet</string>
     <string name="new_plant">Ny plante</string>
     <string name="no_plant_name_given">Et navn er påkrævet for at lave en plante</string>
     <string name="remove_plant">Fjern plante</string>
@@ -57,10 +55,12 @@
     <string name="missing_info">Ingen info</string>
     <string name="harvested">Høstet</string>
     <string name="last_watered">Sidst vandet</string>
+    <string name="last_harvested">Sidst høstet</string>
+    <string name="planted">Plantet</string>
     <string name="sow">Sås</string>
     <string name="plant">Plantes</string>
     <string name="number_of_seasons">Sæsoner med denne plante her</string>
-    <string name="details">Detaljer</string>
+    <string name="to_lexicon">Til leksikon</string>
 
     <!-- Toasts -->
     <string name="toast_registered_water">Registreret som vandet</string>
@@ -73,7 +73,7 @@
     <string name="germinated">Forspiret</string>
     <string name="not_germinated">Ikke forspiret</string>
     <string name="set_germination_status">Sæt forspiring</string>
-    <string name="edit_germination_status">Ændr forspiring</string>
+    <string name="edit_germination">Ændr forspiring</string>
 
     <!-- Plant Sort -->
     <string name="sort">Sort</string>

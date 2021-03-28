@@ -38,23 +38,10 @@
     </fragment>
     <fragment
         android:id="@+id/plantDetails"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.PlantDetailsFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.lexicon.PlantDetailsFragment"
         android:label="PlantDetails" >
         <argument android:name="plant"
             app:argType="dk.mifu.pmos.vegetablegardening.models.Plant" />
-        <argument android:name="myplant"
-            app:argType="dk.mifu.pmos.vegetablegardening.models.MyPlant"
-            app:nullable="true" />
-        <argument
-            android:name="coordinate"
-            app:nullable="true"
-            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
-        <action
-            android:id="@+id/edit_sort"
-            app:destination="@id/editSortDialogFragment" />
-        <action
-            android:id="@+id/set_germination"
-            app:destination="@id/setGerminationDialogFragment"/>
         <action
             android:id="@+id/edit_plant"
             app:destination="@id/createPlantDialogFragment"/>
@@ -75,6 +62,12 @@
         <argument
             android:name="plant"
             app:argType="dk.mifu.pmos.vegetablegardening.models.MyPlant" />
+        <action
+            android:id="@+id/edit_sort"
+            app:destination="@id/editSortDialogFragment" />
+        <action
+            android:id="@+id/set_germination"
+            app:destination="@id/setGerminationDialogFragment"/>
     </dialog>
     <dialog
         android:id="@+id/choosePlantFragment"
