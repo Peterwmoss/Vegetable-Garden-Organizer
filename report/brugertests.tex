@@ -1,5 +1,10 @@
 \section{Brugertests}
-Vi har igennem udviklingsprocessen af appen udført X brugertests med Y forskellige brugere.
+Vi har igennem udviklingsprocessen af appen udført X brugertests med Y forskellige brugere. Der er blevet udført brugertests efter følgende sprints med følgende brugere:
+\begin{itemize}
+    \item Sprint 2 - Bruger 1
+    \item Sprint 5 - Bruger 1
+    \item Sprint 7 - Bruger 1 og bruger 2
+\end{itemize}
 
 \subsection{Brugertest 1}
 Ved den første brugertest, sammen med bruger 1, efter sprint 2, var der ikke meget funktionalitet endnu. Brugertesten foregik ved, at vi forklarede den overordnede idé med appen, samt at den var langt fra færdig, og lod derefter brugeren prøve appen selv. Her var brugeren meget forvirret over, hvorfor hun ikke kunne tilføje flere bed. Det blev dermed tydeligt, at vores navngivning af forskellige dele af en have ikke var korrekt, og at det, vi havde kaldt et "haveområde", skulle omdøbes til et "bed". Den ønskede funktionalitet fra brugeren var nemlig allerede implementeret, men ikke intuitiv.
@@ -44,3 +49,40 @@ Afslutningsvis lavede vi en prioriteret liste over de vigtigste ting, som bruger
     \item Tilføj egne planter og sorter, samt at kunne give sådato, data om forkultivering, noter mv.
     \item Todo-liste og generelle noter
 \end{enumerate}
+
+\subsection{Brugertest 3}
+
+Ved tredje brugertest med bruger 1 efter sprint 7, fik vi opklaret nogle uklarheder i forhold til hvordan brugeren ønsker at holde styr på forspiring, samt hvilke detaljer om sine planter hun ønsker at have tilgængelige.
+
+Der blev gjort udtryk for, at brugeren gerne ville have nogle specifikke oplysninger lettere tilgængeligt. Specifikke oplysninger om hver enkelt plante i et bed, såsom vanding eller forspring, skulle være i dialog-boksen frem for i 'Detaljer', som man kunne trykke sig ind på fra denne boks. Det blev senere besluttet på baggrund heraf, at det var helt unødvendigt, at have en 'Detaljer' - alle specifikke oplysninger skulle stå i dialog-boksen, og alle mere overordnede informationer skulle kun være i leksikonet, som kunne linkes til fra dialogen. 
+
+Derudover ønskede brugeren, at hun kunne indtaste dato for hvornår hun har forspiret en plante og ikke om hvorvidt den er forspiret eller ej.
+
+Brugeren var stadigvæk forvirret over måden som et bed blev illustreret på, fordi hver række i et bed er kvadratiske. Til det foreslog hun, at et bed blev lavet mere aflangt på den ene led, så det er tydeligt at hver firkant er en række (eller en del af en række) og ikke et bed. Hun tilføjede herudover, at hun godt kunne tænke sig at der var plads til minimum fem rækker / kolonner på hver led i et bed.
+
+Vi opdagede, at et af de skærmbilleder, som brugeren kom til, når hun skulle oprette et nyt bed, ikke var lavet til skærmstørrelsen på hendes telefon, da den var mindre end de skørmstørrelser, vi havde testet på, og noget af teksten blev derfor ikke vist.
+
+Brugeren var forvirret over vores måde at vise plantbare planter på og synes der manglede forklaring. På det tidspunkt fungerede det ved, at hvis et bed havde tomme felter, foreslog appen nogle planter, der var sæson for lige nu, som man derefter kunne trykke på for at så. Vi foreslog, at det skulle vises på en helt anden måde, hvilket hun syntes godt om. Her tilføjede hun også, at det ikke gav så meget mening at man kunne plante en ny plante direkte i bedet med det samme, da man jo vil så de frø man har. Appen skal derimod give noget information på forhånd, man kan reagere på senere. Den tankegang har vi generelt taget meget til os, og vores fremadrettede syn på appen er, at den skal fungere som visualisering af mange informationer frem for at håndtare og styre alt for dig.
+
+Der blev lavet en række forslag til hvordan denne oversigt kunne blive indbygget:
+\begin{itemize}
+    \item Kunne blive indbygget i leksikonnet
+    \item Få en separat oversigt over planterne, der kan plantes
+    \item En sammenkobling med når man redigerer sine bede - at der her var en form for markering
+\end{itemize}
+
+\subsection{Brugertest 4}
+
+Denne brugertest var mere spontan og i samarbejde med bruger 2 efter sprint 7. Brugeren gav udtryk for at det ikke er tydeligt hvad et bed repræsenterer - det er meget indforstået. Han ønskede en forklaring til hvad et bed er defineret som i appen. Her kunne man også lave en forklaring til hele appen generelt, så brugeren også får en forståelse for andre dele.
+
+Der blev også gjort udtyk for, at det kunne være en god idé at lade brugeren styre for mange inddelinger af under-bede, som de ønsker, således at det ikke er forhåndsbestemt hvor mange niveauer man ønsker at underinddele sin køkkenhave i.
+
+Han kunne godt tænke sig noget hjælp til hvordan man kan lave specielle former af bed, hvis ens bed nu for eksempel er rundt og ikke firkantet. Det kan godt virke som om at appen kun kan bruges, hvis du har en firkantet køkkenhave.
+
+\section{Tæt samarbejde med brugeren}
+Her noget om:
+\begin{itemize}
+    \item Vores kravspecifikation inden projektet
+    \item Info om sædskifte
+\end{itemize} 
+
