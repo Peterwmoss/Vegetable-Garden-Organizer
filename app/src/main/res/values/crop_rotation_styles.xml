@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BedNameStyle" parent="Widget.MaterialComponents.TextView">
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">@dimen/font_medium</item>
+        <item name="android:text">@string/name</item>
+    </style>
+
+    <style name="CropRotationStyle" parent="BedNameStyle">
+        <item name="android:text">@string/seasons_bed_without_plants</item>
+    </style>
+
+    <style name="CropRotationListItemStyle">
+        <item name="android:padding">@dimen/spacing_medium</item>
+    </style>
+</resources>

@@ -8,7 +8,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
-import dk.mifu.pmos.vegetablegardening.database.GardenRepository
+import dk.mifu.pmos.vegetablegardening.database.BedRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.IconCallback
@@ -16,6 +16,7 @@ import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateBedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.grid.BedOverviewGridBuilder
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
+import dk.mifu.pmos.vegetablegardening.viewmodels.SeasonViewModel
 import dk.mifu.pmos.vegetablegardening.views.Tooltip
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -27,6 +28,7 @@ class BedOverviewFragment: Fragment() {
 
     private val bedViewModel: BedViewModel by activityViewModels()
     private val plantViewModel: PlantViewModel by activityViewModels()
+    private val seasonViewModel: SeasonViewModel by activityViewModels()
 
     private var saveChangesCallback: UpdateBedCallback? = null
     private var updateGridViewCallback: BedCallback? = null
@@ -87,10 +89,12 @@ class BedOverviewFragment: Fragment() {
         saveChangesCallback =
                 UpdateBedCallback(
                         bedViewModel.name!!,
+                        seasonViewModel.currentSeason.value!!,
                         bedViewModel.bedLocation!!,
                         requireContext(),
                         bedViewModel.columns,
-                        bedViewModel.rows)
+                        bedViewModel.rows,
+                        bedViewModel.order)
 
         updateGridViewCallback = BedCallback(requireView(), bedViewModel)
         updateIconsCallback = IconCallback(requireView(), bedViewModel)
@@ -100,8 +104,8 @@ class BedOverviewFragment: Fragment() {
         MainScope().launch(Dispatchers.Main) {
             val def = async(Dispatchers.IO) {
                 val dao = AppDatabase.getDatabase(requireContext()).bedDao()
-                val repository = GardenRepository(dao)
-                return@async repository.findBed(bedViewModel.name!!)
+                val repository = BedRepository(dao)
+                return@async repository.findBedByPrimaryKeys(bedViewModel.name!!, seasonViewModel.currentSeason.value!!)
             }
             bedViewModel.setBed(def.await()!!)
             addOnMapChangedCallbacks()

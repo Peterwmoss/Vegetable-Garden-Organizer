@@ -11,6 +11,7 @@ import dk.mifu.pmos.vegetablegardening.enums.BedLocation.Outdoors
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
+import dk.mifu.pmos.vegetablegardening.models.Season
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.extension.*
 import java.io.IOException

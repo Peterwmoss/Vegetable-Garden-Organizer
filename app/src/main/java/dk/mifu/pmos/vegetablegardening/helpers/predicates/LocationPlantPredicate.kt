@@ -5,7 +5,7 @@ import dk.mifu.pmos.vegetablegardening.enums.BedLocation.Greenhouse
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import java.util.*
 
-class LocationPredicate(private val bedLocation: BedLocation?): Predicate<Plant> {
+class LocationPlantPredicate(private val bedLocation: BedLocation?): Predicate<Plant> {
     override fun invoke(plant: Plant): Boolean {
         val locale = Locale("da", "DK")
         val category = plant.category?.toLowerCase(locale)
