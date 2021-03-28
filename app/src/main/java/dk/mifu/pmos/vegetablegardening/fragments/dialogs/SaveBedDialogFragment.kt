@@ -1,7 +1,6 @@
 package dk.mifu.pmos.vegetablegardening.fragments.dialogs
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,16 +10,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavOptions
-import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.findNavController
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
-import dk.mifu.pmos.vegetablegardening.database.GardenRepository
+import dk.mifu.pmos.vegetablegardening.database.BedRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentSaveBedDialogBinding
-import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.hideKeyboard
 import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.showKeyboard
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
+import dk.mifu.pmos.vegetablegardening.viewmodels.SeasonViewModel
 import kotlinx.coroutines.*
 
 class SaveBedDialogFragment : DialogFragment() {
@@ -28,6 +26,7 @@ class SaveBedDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentSaveBedDialogBinding
 
     private val bedViewModel: BedViewModel by activityViewModels()
+    private val seasonViewModel: SeasonViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSaveBedDialogBinding.inflate(inflater, container, false)
@@ -54,19 +53,22 @@ class SaveBedDialogFragment : DialogFragment() {
                     val exists = async { exists(name) }
                     if (!exists.await()) {
                         saveInDatabase(name)
-                        findNavController().navigate(SaveBedDialogFragmentDirections.saveBedAction())
+                        val navOptions = NavOptions.Builder().setPopUpTo(R.id.areaOverviewFragment, true).build()
+                        val bundle = Bundle()
+                        bundle.putSerializable("Location", bedViewModel.bedLocation!!)
+                        findNavController().navigate(R.id.areaOverviewFragment, bundle, navOptions)
                     } else
                         Toast.makeText(requireContext(), getString(R.string.guide_bed_already_exists), Toast.LENGTH_LONG).show()
                 }
             } else {
                 MainScope().launch(Dispatchers.IO) {
                     val dao = AppDatabase.getDatabase(requireContext()).bedDao()
-                    val repository = GardenRepository(dao)
+                    val repository = BedRepository(dao)
                     if (name != bedViewModel.name) {
                         deleteOldFromDatabase()
                         saveInDatabase(name)
                     } else {
-                        repository.updateBed(Bed(bedViewModel.name!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
+                        repository.updateBed(Bed(bedViewModel.name!!, seasonViewModel.currentSeason.value!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows, bedViewModel.order))
                     }
                 }
                 val navOptions = NavOptions.Builder().setPopUpTo(R.id.bedOverviewFragment, true).build()
@@ -77,14 +79,7 @@ class SaveBedDialogFragment : DialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        binding.bedNameEditText.post {
-            showKeyboard(requireContext(), binding.bedNameEditText)
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        hideKeyboard(requireContext(), binding.bedNameEditText)
+        showKeyboard(requireContext(), binding.bedNameEditText)
     }
 
     override fun onStop() {
@@ -95,8 +90,8 @@ class SaveBedDialogFragment : DialogFragment() {
     private suspend fun exists(name: String) : Boolean {
         return withContext(Dispatchers.IO) {
             val dao = AppDatabase.getDatabase(requireContext()).bedDao()
-            val repository = GardenRepository(dao)
-            val bed = repository.findBed(name)
+            val repository = BedRepository(dao)
+            val bed = repository.findBedByPrimaryKeys(name, seasonViewModel.currentSeason.value!!)
             return@withContext bed != null
         }
     }
@@ -105,15 +100,25 @@ class SaveBedDialogFragment : DialogFragment() {
         bedViewModel.name = name
         withContext(Dispatchers.IO) {
             val dao = AppDatabase.getDatabase(requireContext()).bedDao()
-            val repository = GardenRepository(dao)
-            repository.insertBed(Bed(bedViewModel.name!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows))
+            val repository = BedRepository(dao)
+            val order = repository.findOrder(bedViewModel.bedLocation!!, seasonViewModel.currentSeason.value!!)
+            if(order != null)
+                bedViewModel.order = order+1
+            repository.insertBed(
+                    Bed(bedViewModel.name!!,
+                        seasonViewModel.currentSeason.value!!,
+                        bedViewModel.bedLocation!!,
+                        bedViewModel.plants!!.toMap(),
+                        bedViewModel.columns,
+                        bedViewModel.rows,
+                        bedViewModel.order))
         }
     }
 
     private suspend fun deleteOldFromDatabase() {
         withContext(Dispatchers.IO) {
             val dao = AppDatabase.getDatabase(requireContext()).bedDao()
-            val repository = GardenRepository(dao)
+            val repository = BedRepository(dao)
             repository.deleteBed(bedViewModel.name!!)
         }
     }
