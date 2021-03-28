@@ -16,4 +16,13 @@ class Formatter(private val context: Context) {
     fun formatString(string: String?): String {
         return string ?: context.getString(R.string.missing_info)
     }
+
+    fun formatSowingBoolean(sowing: Boolean?): String {
+        return if(sowing != null) {
+            if(sowing) context.getString(R.string.sow)
+            else context.getString(R.string.plant)
+        } else {
+            context.getString(R.string.missing_info)
+        }
+    }
 }

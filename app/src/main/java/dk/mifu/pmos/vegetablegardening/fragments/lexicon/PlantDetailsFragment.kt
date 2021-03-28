@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsBinding
+import dk.mifu.pmos.vegetablegardening.helpers.Formatter
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import dk.mifu.pmos.vegetablegardening.views.Tooltip
@@ -20,7 +21,6 @@ import java.util.*
 class PlantDetailsFragment: Fragment() {
     private val args: PlantDetailsFragmentArgs by navArgs()
     private val plantViewModel: PlantViewModel by activityViewModels()
-    private val bedViewModel: BedViewModel by activityViewModels()
 
     private lateinit var binding: FragmentPlantDetailsBinding
 
@@ -67,10 +67,12 @@ class PlantDetailsFragment: Fragment() {
         binding.plantName.text = plant.name
         binding.gridlayout.columnCount = 2
 
+        val formatter = Formatter(requireContext())
+
         addTextInfoLine(titles?.get(1), plant.category)
-        addTextInfoLine(titles?.get(2), formatDate(plant.earliest))
-        addTextInfoLine(titles?.get(3), formatDate(plant.latest))
-        addTextInfoLine(titles?.get(4), formatSowingBoolean(plant.sowing))
+        addTextInfoLine(titles?.get(2), formatter.formatDate(plant.earliest))
+        addTextInfoLine(titles?.get(3), formatter.formatDate(plant.latest))
+        addTextInfoLine(titles?.get(4), formatter.formatSowingBoolean(plant.sowing))
         addTextInfoLine(titles?.get(5), plant.cropRotation)
         addTextInfoLine(titles?.get(6), plant.quantity)
         addTextInfoLine(titles?.get(7), plant.sowingDepth)
@@ -98,22 +100,6 @@ class PlantDetailsFragment: Fragment() {
         binding.gridlayout.run {
             addView(category)
             addView(data)
-        }
-    }
-
-    private fun formatDate(date: Date?): String {
-        val pattern = "dd. MMMM"
-        val simpleDateFormat = SimpleDateFormat(pattern, Locale("da", "DK"))
-        return if(date != null) simpleDateFormat.format(date)
-        else getString(R.string.missing_info)
-    }
-
-    private fun formatSowingBoolean(sowing: Boolean?): String{
-        return if( sowing != null){
-            if(sowing) getString(R.string.sow)
-            else getString(R.string.plant)
-        } else {
-            getString(R.string.missing_info)
         }
     }
 }
