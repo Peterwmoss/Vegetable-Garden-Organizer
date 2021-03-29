@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
             Log.i(TAG, "Connected to service")
             val binder = service as LocationService.LocationBinder
             this@MainActivity.service = binder.getService()
+            this@MainActivity.service?.requestLocationUpdates()
             bound = true
         }
 

@@ -19,12 +19,8 @@ class LocationService : Service() {
         private const val PACKAGE_NAME = "dk.mifu.pmos.vegetablegardening"
         private val TAG = LocationService::class.simpleName
 
-        // Channel for notifications
-        private const val NOTIFICATION_ID = 12345678
-        private const val CHANNEL_ID = "channel_01"
         const val ACTION_BROADCAST = "$PACKAGE_NAME.broadcast"
         const val EXTRA_LOCATION = "$PACKAGE_NAME.location"
-        private const val EXTRA_STARTED_FROM_NOTIFICATION = "$PACKAGE_NAME.started_from_notification"
 
         private const val UPDATE_INTERVAL = 5000L
         private const val FASTEST_INTERVAL = 1000L
@@ -33,7 +29,6 @@ class LocationService : Service() {
     private val binder: IBinder = LocationBinder()
 
     private var changingConfiguration = false
-    private lateinit var notificationManager: NotificationManager
 
     private lateinit var serviceHandler: Handler
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -58,28 +53,10 @@ class LocationService : Service() {
 
         createLocationRequest()
         getLastLocation()
-
-        val handlerThread = HandlerThread(TAG)
-        handlerThread.start()
-        serviceHandler = Handler(handlerThread.looper)
-        notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = getString(R.string.app_name)
-            val channel = NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT)
-            notificationManager.createNotificationChannel(channel)
-        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.i(TAG, "Service started")
-        val startedFromNotification = intent?.getBooleanExtra(EXTRA_STARTED_FROM_NOTIFICATION, false) ?: false
-
-        // We got here because the user decided to remove location updates from the notification
-        if (startedFromNotification) {
-            removeLocationUpdates()
-            stopSelf()
-        }
         return START_NOT_STICKY
     }
 
@@ -91,7 +68,6 @@ class LocationService : Service() {
     // Service is bound, so should no longer be in foreground
     override fun onBind(intent: Intent?): IBinder {
         Log.i(TAG, "in onBind()")
-        stopForeground(true)
         changingConfiguration = false
 
         return binder
@@ -99,7 +75,6 @@ class LocationService : Service() {
 
     override fun onRebind(intent: Intent?) {
         Log.i(TAG, "in onRebind()")
-        stopForeground(true)
         changingConfiguration = false
         super.onRebind(intent)
     }
@@ -107,16 +82,7 @@ class LocationService : Service() {
     // Service no longer bound, so should be in foreground
     override fun onUnbind(intent: Intent?): Boolean {
         Log.i(TAG, "Last client unbound from service")
-
-        if (!changingConfiguration && LocationUtils.requestingLocationUpdates(this)) {
-            Log.i(TAG, "Starting foreground service")
-            startForeground(NOTIFICATION_ID, getNotification())
-        }
         return true
-    }
-
-    override fun onDestroy() {
-        serviceHandler.removeCallbacksAndMessages(null)
     }
 
     fun requestLocationUpdates() {
@@ -135,26 +101,6 @@ class LocationService : Service() {
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
         LocationUtils.setRequestingLocationUpdates(this, false)
         stopSelf()
-    }
-
-    // TODO Figure out if the notification part is needed
-    private fun getNotification(): Notification {
-        val intent = Intent(this, LocationService::class.java)
-        val text = LocationUtils.getLocationText(location)
-
-        intent.putExtra(EXTRA_STARTED_FROM_NOTIFICATION, true)
-
-        val servicePendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val activityPendingIntent = PendingIntent.getActivity(this, 0, Intent(this, LocationService::class.java), 0)
-
-        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .addAction(R.drawable.ic_flower, "Start activity", activityPendingIntent)
-            .addAction(R.drawable.ic_delete, "Remove location updates", servicePendingIntent)
-            .setContentText(text)
-            .setContentTitle(LocationUtils.getLocationTitle(this))
-            .setOngoing(true)
-
-        return builder.build()
     }
 
     private fun getLastLocation() {
@@ -179,9 +125,6 @@ class LocationService : Service() {
         val intent = Intent(ACTION_BROADCAST)
         intent.putExtra(EXTRA_LOCATION, location)
         LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
-
-        if (serviceIsRunningInForeground(this))
-            notificationManager.notify(NOTIFICATION_ID, getNotification())
     }
 
     private fun createLocationRequest() {
@@ -191,16 +134,5 @@ class LocationService : Service() {
             fastestInterval = FASTEST_INTERVAL
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
-    }
-
-    private fun serviceIsRunningInForeground(context: Context) : Boolean {
-        val manager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
-            if (javaClass.name == service.service.className) {
-                if (service.foreground)
-                    return true
-            }
-        }
-        return false
     }
 }
