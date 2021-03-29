@@ -45,11 +45,11 @@ class PlantDetailsFragment: Fragment() {
                 true
             }
             R.id.edit -> {
-                findNavController().navigate(PlantDetailsFragmentDirections.editPlant().setPlant(args.plant))
+                findNavController().navigate(PlantDetailsFragmentDirections.toCustomPlantDialog().setPlant(args.plant))
                 true
             }
             R.id.delete -> {
-                findNavController().navigate(PlantDetailsFragmentDirections.deletePlantAction(args.plant))
+                findNavController().navigate(PlantDetailsFragmentDirections.toDeletePlantConfirmationDialog(args.plant))
                 true
             }
             else -> super.onOptionsItemSelected(item)

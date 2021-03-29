@@ -84,9 +84,9 @@ class BedOverviewGridBuilder(
 
     private fun navigate(coordinate: Coordinate, plant: MyPlant?) {
         if(plant == null) {
-            navController.navigate(BedOverviewFragmentDirections.showPlantingOptions(coordinate, PlantablePredicate()))
+            navController.navigate(BedOverviewFragmentDirections.toChoosePlantDialog(coordinate, PlantablePredicate()))
         } else {
-            navController.navigate(BedOverviewFragmentDirections.showPlantInfo(coordinate, plant))
+            navController.navigate(BedOverviewFragmentDirections.toShowPlantDetailsDialog(coordinate, plant))
         }
     }
 

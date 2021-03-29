@@ -141,7 +141,7 @@ class AreaOverviewFragment : Fragment() {
         init {
             bedImage.setOnClickListener {
                 bedViewModel.setBed(bed)
-                findNavController().navigate(AreaOverviewFragmentDirections.seeBedAction())
+                findNavController().navigate(AreaOverviewFragmentDirections.toBedOverview())
             }
         }
     }

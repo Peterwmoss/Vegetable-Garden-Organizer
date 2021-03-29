@@ -25,9 +25,9 @@ class BedCallback(
 
             button.setOnClickListener {
                 if (view.findNavController().currentDestination?.id == R.id.bedOverviewFragment)
-                    view.findNavController().navigate(BedOverviewFragmentDirections.showPlantInfo(key!!, plant!!))
+                    view.findNavController().navigate(BedOverviewFragmentDirections.toShowPlantDetailsDialog(key!!, plant!!))
                 else
-                    view.findNavController().navigate(CreateGridFragmentDirections.choosePlantAction(key!!, AllPlantsPredicate()))
+                    view.findNavController().navigate(CreateGridFragmentDirections.toChoosePlantDialog(key!!, AllPlantsPredicate()))
             }
         }
     }
