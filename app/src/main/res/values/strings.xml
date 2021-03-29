@@ -109,4 +109,10 @@
     <string name="seasons_bed_with_plants">%1$d / %2$d år</string>
     <string name="seasons_bed_without_plants">Tomt bed</string>
     <string name="crop_rotation_button">Sådan holder appen styr på sædskifteinterval</string>
+
+    <!-- Location -->
+    <string name="location_updated">Lokation Opdateret</string>
+    <string name="location_permission_rationale">Vi bruger din lokation til at give dig information om vanding af planter</string>
+    <string name="location_permission_denied">Gå til indstillinger hvis du vil slå lokationsdata til</string>
+    <string name="settings">Indstillinger</string>
 </resources>

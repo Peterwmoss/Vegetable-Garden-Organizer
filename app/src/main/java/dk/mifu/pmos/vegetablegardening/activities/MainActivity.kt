@@ -1,42 +1,71 @@
+// Heavily inspired by https://github.com/android/location-samples/blob/432d3b72b8c058f220416958b444274ddd186abd/LocationUpdatesForegroundService/
+
 package dk.mifu.pmos.vegetablegardening.activities
 
 import android.Manifest
+import android.content.*
 import android.content.pm.PackageManager
+import android.location.Location
+import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.SubMenu
+import android.os.IBinder
+import android.provider.Settings
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.menu.MenuItemImpl
-import androidx.appcompat.widget.MenuPopupWindow
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.view.MenuCompat
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.viewModelScope
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
+import androidx.preference.PreferenceManager
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.snackbar.Snackbar
+import dk.mifu.pmos.vegetablegardening.BuildConfig
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.database.SeasonRepository
 import dk.mifu.pmos.vegetablegardening.databinding.ActivityMainBinding
+import dk.mifu.pmos.vegetablegardening.helpers.weather.LocationService
+import dk.mifu.pmos.vegetablegardening.helpers.weather.LocationUtils
+import dk.mifu.pmos.vegetablegardening.helpers.weather.WeatherData
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.SeasonViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
+
     private val seasonViewModel: SeasonViewModel by viewModels()
+    private val bedViewModel: BedViewModel by viewModels()
+
+    // Location service elements
+    private lateinit var weatherDataReceiver : WeatherDataReceiver
+    private var service : LocationService? = null
+    private var bound = false
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            Log.i(TAG, "Connected to service")
+            val binder = service as LocationService.LocationBinder
+            this@MainActivity.service = binder.getService()
+            bound = true
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            Log.i(TAG, "Disconnected from service")
+            service = null
+            bound = false
+        }
+    }
 
     companion object {
-        private const val ALL_PERMISSIONS_RESULT = 1001
+        private val TAG = MainActivity::class.simpleName
+        private const val REQUEST_PERMISSIONS_REQUEST_CODE = 1001
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,8 +73,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), ALL_PERMISSIONS_RESULT)
+        weatherDataReceiver = WeatherDataReceiver()
+
+        if (!checkPermissions()) {
+            requestPermissions()
+        }
 
         val toolbar: MaterialToolbar = findViewById(R.id.toolbar_main)
         setSupportActionBar(toolbar)
@@ -60,9 +92,86 @@ class MainActivity : AppCompatActivity() {
         setUpSeasonsInDrawer()
     }
 
+    override fun onStart() {
+        super.onStart()
+        bindService(Intent(this, LocationService::class.java), serviceConnection, Context.BIND_AUTO_CREATE)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LocalBroadcastManager.getInstance(this).registerReceiver(weatherDataReceiver, IntentFilter(LocationService.ACTION_BROADCAST))
+    }
+
+    override fun onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(weatherDataReceiver)
+        super.onPause()
+    }
+
+    override fun onStop() {
+        if (bound) {
+            unbindService(serviceConnection)
+            bound = false
+        }
+        super.onStop()
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun checkPermissions(): Boolean {
+        return PackageManager.PERMISSION_GRANTED == checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+    }
+
+    private fun requestPermissions() {
+        val shouldProvideRationale = shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)
+
+        if (shouldProvideRationale) {
+            Log.i(TAG, "Displaying permission rationale to user")
+            Snackbar.make(
+                binding.root,
+                R.string.location_permission_rationale,
+                Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.ok) {
+                    requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSIONS_REQUEST_CODE)
+                }
+                .show()
+        } else {
+            Log.i(TAG, "Requesting location permissions.")
+            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSIONS_REQUEST_CODE)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        Log.i(TAG, "onRequestedPermissionResult")
+        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
+            when {
+                grantResults.isEmpty() -> {
+                    Log.i(TAG, "Interaction was cancelled")
+                }
+                grantResults[0] == PackageManager.PERMISSION_GRANTED -> {
+                    service?.requestLocationUpdates()
+                }
+                else -> {
+                    Snackbar.make(
+                        binding.root,
+                        R.string.location_permission_denied,
+                        Snackbar.LENGTH_LONG)
+                        .setAction(R.string.settings) {
+                            // Go to settings
+                            val intent = Intent()
+                            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                            val uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+                            intent.data = uri
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            startActivity(intent)
+                        }
+                        .show()
+                }
+            }
+        }
     }
 
     private fun setUpSeasonsInDrawer(){
@@ -89,6 +198,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpNavigation(){
         binding.navigationView.setupWithNavController(navController)
+    }
+
+    private inner class WeatherDataReceiver: BroadcastReceiver() {
+        private val weatherData = object : WeatherData(applicationContext) {
+            override fun handleResponse(date: Date?) {
+                Log.d("handleResponse()", "date: $date")
+                if (date != null) { bedViewModel.setPlantsToWater(date) }
+            }
+        }
+
+        override fun onReceive(context: Context?, intent: Intent?) {
+            Log.i(TAG, "Location intent received")
+            val location = intent?.getParcelableExtra<Location>(LocationService.EXTRA_LOCATION)
+            MainScope().launch {
+                location?.let { weatherData.getLastRained(it) }
+            }
+        }
     }
 
 }
