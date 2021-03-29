@@ -100,6 +100,7 @@
     <string name="save">Gem</string>
     <string name="delete">Slet</string>
     <string name="close">Luk</string>
+    <string name="dash"> - </string>
 
     <!-- Crop rotation -->
     <string name="new_season">Ny sæson</string>
@@ -109,4 +110,9 @@
     <string name="seasons_bed_with_plants">%1$d / %2$d år</string>
     <string name="seasons_bed_without_plants">Tomt bed</string>
     <string name="crop_rotation_button">Sådan holder appen styr på sædskifteinterval</string>
+
+    <!-- Plantable plants -->
+    <string name="drawer_plantables">Planter i sæson</string>
+    <string name="no_outdoors_plantables">Der er ingen udendørs planter, der kan sås/plantes i øjeblikket. Se leksikon for alle planter i arkivet</string>
+    <string name="no_greenhouse_plantables">Der er ingen drivhusplanter, der kan sås/plantes i øjeblikket. Se leksikon for alle planter i arkivet</string>
 </resources>

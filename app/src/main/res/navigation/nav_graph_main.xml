@@ -127,6 +127,12 @@
             app:destination="@id/deleteBedConfirmationDialogFragment" />
     </fragment>
 
+    <!-- Rain Status Fragment -->
+    <fragment
+        android:id="@+id/plantablePlantsFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.plantables.PlantablePlantsFragment"
+        android:label="PlantablePlantsFragment"/>
+
     <!--|||||||||||||-->
     <!--|| DIALOGS ||-->
     <!--|||||||||||||-->

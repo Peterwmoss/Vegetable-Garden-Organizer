@@ -76,7 +76,6 @@ class BedOverviewFragment: Fragment() {
 
         val builder = BedOverviewGridBuilder(
                 bedViewModel = bedViewModel,
-                plantViewModel = plantViewModel,
                 layoutInflater = layoutInflater,
                 grid = binding.gridlayout,
                 navController = findNavController(),

@@ -20,7 +20,6 @@ import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 
 class BedOverviewGridBuilder(
         bedViewModel: BedViewModel,
-        plantViewModel: PlantViewModel,
         layoutInflater: LayoutInflater,
         grid: GridLayout,
         navController: NavController,
@@ -28,23 +27,9 @@ class BedOverviewGridBuilder(
         private val context: Context,
         private val binding: FragmentBedOverviewBinding
 ) : GridBuilder(bedViewModel, layoutInflater, grid, navController) {
-    private var existsPlantablePlants = false
     private var plantableTileSlots = false
 
-    init {
-        existsPlantablePlants = !plantViewModel.plants.value
-                ?.filter(PlantablePredicate())
-                ?.filter(LocationPlantPredicate(bedViewModel.bedLocation))
-                .isNullOrEmpty()
-    }
-
     override fun initializeIcon(coordinate: Coordinate, plant: MyPlant?, tileBinding: ListItemTileBinding) {
-        if(plant == null && existsPlantablePlants) {
-            tileBinding.iconView.setImageResource(R.drawable.ic_flower)
-            tileBinding.iconView.visibility = View.VISIBLE
-            plantableTileSlots = true
-        }
-
         bedViewModel.plantsToWater.observe(lifecycleOwner, {
             if(plant != null && it != null && it[coordinate] != null){
                 tileBinding.iconView.setImageResource(R.drawable.water)
@@ -54,7 +39,7 @@ class BedOverviewGridBuilder(
     }
 
     override fun initializeTile(coordinate: Coordinate, plant: MyPlant?, tileBinding: ListItemTileBinding) {
-        if(plant != null || existsPlantablePlants) //Only create listeners for tiles with plants or plantables
+        if(plant != null) //Only create listeners for tiles with plants or plantables
             tileBinding.plantButton.setOnClickListener { _ -> navigate(coordinate, plant) }
 
         tileBinding.plantButton.text = plant?.name ?: ""
@@ -67,12 +52,6 @@ class BedOverviewGridBuilder(
     }
 
     fun setExplanationTextViews() {
-        if(existsPlantablePlants && plantableTileSlots){
-            binding.plantableExplanationTextView.visibility = View.VISIBLE
-            binding.plantableExplanationTextView.text = context.getString(R.string.guide_plantable_plants)
-            binding.plantableExplanationImageView.setImageResource(R.drawable.ic_flower)
-        }
-
         bedViewModel.plantsToWater.observe(lifecycleOwner, {
             if(!it.isNullOrEmpty()){
                 binding.waterExplanationTextView.visibility = View.VISIBLE
