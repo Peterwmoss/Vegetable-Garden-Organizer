@@ -12,7 +12,6 @@
         android:id="@+id/plant_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title"
         android:textSize="@dimen/font_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -143,6 +142,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/water_button" />
 
+    <TextView
+        android:id="@+id/notes"
+        style="@style/TitleTextView"
+        android:text="@string/notes"
+        app:layout_constraintBottom_toBottomOf="@id/notes_button"
+        app:layout_constraintEnd_toStartOf="@id/notes_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/notes_button" />
+
+    <TextView
+        android:id="@+id/notes_text"
+        style="@style/NotesTextView"
+        app:layout_constraintTop_toBottomOf="@id/notes_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageButton
+        android:id="@+id/notes_button"
+        android:contentDescription="@string/notes"
+        style="@style/EditButtonStyle"
+        app:layout_constraintStart_toEndOf="@id/notes"
+        app:layout_constraintTop_toBottomOf="@id/harvest_button" />
+
     <Button
         android:id="@+id/details_button"
         android:layout_width="0dp"
@@ -152,6 +174,6 @@
         style="@style/AcceptButtonStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/harvest_button" />
+        app:layout_constraintTop_toBottomOf="@+id/notes_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

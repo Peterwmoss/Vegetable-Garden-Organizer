@@ -31,4 +31,15 @@
         <item name="android:layout_width">@dimen/icon</item>
         <item name="android:layout_marginTop">@dimen/spacing_small</item>
     </style>
+
+    <style name="NotesTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:paddingEnd">@dimen/spacing_small</item>
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">@dimen/font_small</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/missing_info</item>
+        <item name="android:layout_marginStart">@dimen/spacing_medium</item>
+    </style>
 </resources>

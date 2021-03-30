@@ -61,6 +61,7 @@
     <string name="plant">Plantes</string>
     <string name="number_of_seasons">Sæsoner med denne plante her</string>
     <string name="to_lexicon">Til leksikon</string>
+    <string name="notes">Noter</string>
 
     <!-- Toasts -->
     <string name="toast_registered_water">Registreret som vandet</string>
