@@ -9,40 +9,40 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
-import dk.mifu.pmos.vegetablegardening.databinding.FragmentEditSortDialogBinding
-import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.showKeyboard
+import dk.mifu.pmos.vegetablegardening.databinding.FragmentEditNotesDialogBinding
+import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 
-class EditSortDialogFragment : DialogFragment() {
-    private lateinit var binding: FragmentEditSortDialogBinding
+class EditNotesDialogFragment: DialogFragment() {
+    private lateinit var binding: FragmentEditNotesDialogBinding
 
-    private val args: EditSortDialogFragmentArgs by navArgs()
+    private val args: EditNotesDialogFragmentArgs by navArgs()
 
     private val bedViewModel: BedViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentEditSortDialogBinding.inflate(inflater, container, false)
+        binding = FragmentEditNotesDialogBinding.inflate(inflater, container, false)
 
         binding.cancelButton.setOnClickListener {
             dialog?.cancel()
         }
 
-        binding.saveSortButton.setOnClickListener {
-            val plantWithSort = args.myPlant
-            plantWithSort.sort = binding.editSortEditText.text.toString()
-            bedViewModel.plants?.put(args.coordinate, plantWithSort)
+        binding.saveNotesButton.setOnClickListener {
+            val plantWithNotes = args.myPlant
+            plantWithNotes.notes = binding.notesEditText.text.toString()
+            bedViewModel.plants?.put(args.coordinate, plantWithNotes)
             dismiss()
         }
 
-        if (args.myPlant.sort != null)
-            binding.editSortEditText.setText(args.myPlant.sort)
+        if (args.myPlant.notes != null)
+            binding.notesEditText.setText(args.myPlant.notes)
 
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        showKeyboard(context, binding.editSortEditText)
+        KeyboardHelper.showKeyboard(context, binding.notesEditText)
     }
 
     override fun onStop() {
@@ -52,7 +52,6 @@ class EditSortDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val params = dialog!!.window!!.attributes
         params.width = WindowManager.LayoutParams.MATCH_PARENT
         dialog!!.window!!.attributes = params

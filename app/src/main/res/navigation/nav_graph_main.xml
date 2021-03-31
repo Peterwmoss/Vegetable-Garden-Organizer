@@ -211,6 +211,9 @@
         <action
             android:id="@+id/to_edit_sort"
             app:destination="@id/editSortDialogFragment" />
+        <action
+            android:id="@+id/to_edit_notes"
+            app:destination="@+id/editNotesDialogFragment"/>
     </dialog>
 
     <!-- Edit Sort Dialog -->
@@ -219,6 +222,19 @@
         android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.EditSortDialogFragment"
         android:label="EditSortDialogFragment">
 
+        <argument
+            android:name="myPlant"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.MyPlant" />
+        <argument
+            android:name="coordinate"
+            app:argType="dk.mifu.pmos.vegetablegardening.models.Coordinate" />
+    </dialog>
+
+    <!-- Edit Notes Dialog -->
+    <dialog
+        android:id="@+id/editNotesDialogFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.EditNotesDialogFragment"
+        android:label="EditNotesDialogFragment">
         <argument
             android:name="myPlant"
             app:argType="dk.mifu.pmos.vegetablegardening.models.MyPlant" />
