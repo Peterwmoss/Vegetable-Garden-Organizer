@@ -9,6 +9,7 @@ import androidx.preference.PreferenceManager
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentWeatherDataBinding
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.GeoPoint
 
 class WeatherDataFragment : Fragment() {
     private lateinit var binding: FragmentWeatherDataBinding
@@ -19,6 +20,10 @@ class WeatherDataFragment : Fragment() {
         Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context))
 
         binding.map.setTileSource(TileSourceFactory.MAPNIK)
+        val controller = binding.map.controller
+        controller.setZoom(8.0)
+
+        controller.setCenter(GeoPoint(55.7,10.6))
 
         return binding.root
     }
