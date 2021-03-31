@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpSeasonsInDrawer(){
-        val seasonsMenu = binding.navigationView.menu.getItem(2).subMenu
+        val seasonsMenu = binding.navigationView.menu.getItem(3).subMenu
         val dao = AppDatabase.getDatabase(this).seasonDao()
         val seasons = SeasonRepository(dao).getAllSeasons()
 

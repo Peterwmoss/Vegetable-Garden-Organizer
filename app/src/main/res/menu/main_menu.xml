@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
@@ -14,6 +13,11 @@
             android:icon="@drawable/crop_rotation"
             android:id="@+id/cropRotationFragment"
             android:title="@string/crop_rotation"/>
+
+        <item
+            android:icon="@drawable/plantable_plants"
+            android:id="@+id/plantablePlantsFragment"
+            android:title="@string/drawer_plantables"/>
 
         <item
             android:id="@+id/gardenOverviewFragment"
