@@ -78,13 +78,14 @@ class PlantablePlantsFragment: Fragment() {
     private fun fillRecyclerViews(){
         val outdoorsRecyclerView = binding.outdoorsPlantablesRecyclerview
         val greenhouseRecyclerView = binding.greenhousePlantablesRecyclerview
+        val divider = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
 
         outdoorsRecyclerView.layoutManager = LinearLayoutManager(context)
-        outdoorsRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        outdoorsRecyclerView.addItemDecoration(divider)
         outdoorsRecyclerView.adapter = PlantablePlantsAdapter(plantablesOutdoors)
 
         greenhouseRecyclerView.layoutManager = LinearLayoutManager(context)
-        greenhouseRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        greenhouseRecyclerView.addItemDecoration(divider)
         greenhouseRecyclerView.adapter = PlantablePlantsAdapter(plantablesGreenhouse)
 
         if(plantablesOutdoors.isEmpty()) binding.emptyOutdoorsText.visibility = View.VISIBLE
@@ -92,9 +93,9 @@ class PlantablePlantsFragment: Fragment() {
     }
 
     private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var plantName: TextView = view.findViewById(R.id.plant_name)
-        var earliest: TextView = view.findViewById(R.id.plant_earliest_text)
-        var latest: TextView = view.findViewById(R.id.plant_latest_text)
+        val plantName: TextView = view.findViewById(R.id.plant_name)
+        val earliest: TextView = view.findViewById(R.id.plant_earliest_text)
+        val latest: TextView = view.findViewById(R.id.plant_latest_text)
     }
 
     private inner class PlantablePlantsAdapter(private val dataSet: List<Plant>): RecyclerView.Adapter<ViewHolder>() {
