@@ -94,12 +94,18 @@
 
     <!-- Weather -->
     <string name="weather_api_url">https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?%1$s</string>
+    <string name="weather_data">Vejrdata</string>
+    <string name="last_rained">Sidste registrerede regnvejrsdag</string>
+    <string name="date">Dato</string>
 
     <!-- General Dialogs -->
     <string name="cancel">Annullér</string>
     <string name="save">Gem</string>
     <string name="delete">Slet</string>
     <string name="close">Luk</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nej</string>
+    <string name="settings">Indstillinger</string>
 
     <!-- Crop rotation -->
     <string name="new_season">Ny sæson</string>
@@ -112,7 +118,6 @@
 
     <!-- Location -->
     <string name="location_updated">Lokation Opdateret</string>
-    <string name="location_permission_rationale">Vi bruger din lokation til at give dig information om vanding af planter</string>
-    <string name="location_permission_denied">Gå til indstillinger hvis du vil slå lokationsdata til</string>
-    <string name="settings">Indstillinger</string>
+    <string name="location_permission_rationale">Vil du give adgang til din lokation for at få vejrdata fra dit område?</string>
+    <string name="location_permission_denied">Du kan altid slå lokation til i indstillinger, hvis du ønsker</string>
 </resources>

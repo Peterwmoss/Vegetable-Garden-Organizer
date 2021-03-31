@@ -12,6 +12,7 @@ import android.os.IBinder
 import android.provider.Settings
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -86,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout = binding.drawerLayout
         navController = findNavController(R.id.nav_host_fragment)
 
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.gardenOverviewFragment, R.id.lexiconFragment, R.id.newSeasonFragment), drawerLayout)
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.gardenOverviewFragment, R.id.lexiconFragment, R.id.newSeasonFragment, R.id.weatherDataFragment), drawerLayout)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
 
@@ -126,22 +127,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun requestPermissions() {
-        val shouldProvideRationale = shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)
-
-        if (shouldProvideRationale) {
-            Log.i(TAG, "Displaying permission rationale to user")
-            Snackbar.make(
-                binding.root,
-                R.string.location_permission_rationale,
-                Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.ok) {
+        Log.i(TAG, "Displaying permission rationale to user")
+        AlertDialog.Builder(this)
+                .setTitle("Vil du give adgang til lokationsdata?")
+                .setMessage(R.string.location_permission_rationale)
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    Log.i(TAG, "Requesting location permissions.")
                     requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSIONS_REQUEST_CODE)
                 }
+                .setNegativeButton(R.string.no) { _, _ ->
+                    Log.i(TAG, "User denied locationdata")
+                    createSettingsSnackBar().show()
+                }
+                .create()
                 .show()
-        } else {
-            Log.i(TAG, "Requesting location permissions.")
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSIONS_REQUEST_CODE)
-        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -156,27 +155,14 @@ class MainActivity : AppCompatActivity() {
                     service?.requestLocationUpdates()
                 }
                 else -> {
-                    Snackbar.make(
-                        binding.root,
-                        R.string.location_permission_denied,
-                        Snackbar.LENGTH_LONG)
-                        .setAction(R.string.settings) {
-                            // Go to settings
-                            val intent = Intent()
-                            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                            val uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
-                            intent.data = uri
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            startActivity(intent)
-                        }
-                        .show()
+                    createSettingsSnackBar().show()
                 }
             }
         }
     }
 
     private fun setUpSeasonsInDrawer(){
-        val seasonsMenu = binding.navigationView.menu.getItem(2).subMenu
+        val seasonsMenu = binding.navigationView.menu.findItem(R.id.gardenOverviewFragment).subMenu
         val dao = AppDatabase.getDatabase(this).seasonDao()
         val seasons = SeasonRepository(dao).getAllSeasons()
 
@@ -197,6 +183,22 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    private fun createSettingsSnackBar() : Snackbar {
+        return Snackbar.make(
+                binding.root,
+                R.string.location_permission_denied,
+                Snackbar.LENGTH_LONG)
+                .setAction(R.string.settings) {
+                    // Go to settings
+                    val intent = Intent()
+                    intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                    val uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+                    intent.data = uri
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                }
+    }
+
     private fun setUpNavigation(){
         binding.navigationView.setupWithNavController(navController)
     }
@@ -205,7 +207,9 @@ class MainActivity : AppCompatActivity() {
         private val weatherData = object : WeatherData(applicationContext) {
             override fun handleResponse(date: Date?) {
                 Log.d("handleResponse()", "date: $date")
-                if (date != null) { bedViewModel.setPlantsToWater(date) }
+                if (date != null) {
+                    bedViewModel.setPlantsToWater(date)
+                }
             }
         }
 
@@ -217,5 +221,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 }

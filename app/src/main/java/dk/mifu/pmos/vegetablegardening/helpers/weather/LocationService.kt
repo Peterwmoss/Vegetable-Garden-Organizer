@@ -22,15 +22,14 @@ class LocationService : Service() {
         const val ACTION_BROADCAST = "$PACKAGE_NAME.broadcast"
         const val EXTRA_LOCATION = "$PACKAGE_NAME.location"
 
-        private const val UPDATE_INTERVAL = 5000L
-        private const val FASTEST_INTERVAL = 1000L
+        private const val UPDATE_INTERVAL = 20000L
+        private const val FASTEST_INTERVAL = 10000L
     }
 
     private val binder: IBinder = LocationBinder()
 
     private var changingConfiguration = false
 
-    private lateinit var serviceHandler: Handler
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
