@@ -15,10 +15,14 @@
             android:title="@string/crop_rotation"/>
 
         <item
+            android:icon="@drawable/plantable_plants"
+            android:id="@+id/plantablePlantsFragment"
+            android:title="@string/drawer_plantables"/>
+
+        <item
             android:icon="@drawable/weather"
             android:id="@+id/weatherDataFragment"
             android:title="@string/weather_data"/>
-
 
         <item
             android:id="@+id/gardenOverviewFragment"

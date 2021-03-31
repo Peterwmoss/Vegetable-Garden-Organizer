@@ -16,6 +16,7 @@
 
     <dimen name="picture">200dp</dimen>
     <dimen name="grid_tile">100dp</dimen>
+    <dimen name="notes_scroll_view">100dp</dimen>
     <dimen name="line">2dp</dimen>
     <dimen name="text_view">350dp</dimen>
     <dimen name="toolbar">56dp</dimen>

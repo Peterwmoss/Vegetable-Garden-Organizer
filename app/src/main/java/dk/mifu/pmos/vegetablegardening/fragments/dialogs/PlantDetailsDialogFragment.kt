@@ -64,6 +64,9 @@ class PlantDetailsDialogFragment : DialogFragment() {
 
         if (myPlant.harvestedDate != null)
             binding.harvestedText.text = formatter.formatDate(myPlant.harvestedDate)
+
+        if(myPlant.notes != null)
+            binding.notesText.text = myPlant.notes
     }
 
     override fun onStop() {
@@ -85,6 +88,10 @@ class PlantDetailsDialogFragment : DialogFragment() {
 
         binding.editSortButton.setOnClickListener {
             findNavController().navigate(PlantDetailsDialogFragmentDirections.toEditSort(args.myPlant, args.coordinate))
+        }
+
+        binding.notesButton.setOnClickListener {
+            findNavController().navigate(PlantDetailsDialogFragmentDirections.toEditNotes(args.myPlant, args.coordinate))
         }
     }
 

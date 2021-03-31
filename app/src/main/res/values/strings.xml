@@ -28,7 +28,8 @@
     <string name="tooltip_new_season">Her kan du lave en ny sæson.\n\n Det kan hjælpe appen med at holde styr på sædskifteintervaller\n\n Du kan også bruge det til selv at kigge på dine bedes historikker.</string>
     <string name="tooltip_garden_overview">Tryk på \'udendørs\' for at se alle dine udendørs-bede.\n\n Tryk på \'drivhus\' for at se alle dine bede i dit drivhus</string>
     <string name="tooltip_area_overview">Klik på et bed for at se dine planters placering og oplysninger om dem\n\n Hold inde på et bed og træk i det for at ændre dets placering i forhold til de andre.\n\n Tryk på plus-knappen i hjørnet for at oprette et nyt bed. </string>
-    <string name="tooltip_weather_data">Her kan du se din placering og den dato der sidst er registreret som en regnvejrsdag.\n\nHvis du ikke kan se din lokation eller der står \"Ingen info\", så skyldes det sandsynligvis, at du har slået adgang til lokationsdata fra for appen.</string>
+    <string name="tooltip_weather_data">Her kan du se din placering og den dato, der sidst er registreret som en regnvejrsdag.\n\nHvis du ikke kan se din lokation eller der står \"Ingen info\", skyldes det sandsynligvis, at du har slået adgang til lokationsdata fra for appen.</string>
+    <string name="tooltip_plantables">Her kan du se hvilke planter, der er mulighed for at så eller plante i øjeblikket</string>
 
     <!-- Titles -->
     <string name="title_location">Hvor er dit bed?</string>
@@ -62,6 +63,7 @@
     <string name="plant">Plantes</string>
     <string name="number_of_seasons">Sæsoner med denne plante her</string>
     <string name="to_lexicon">Til leksikon</string>
+    <string name="notes">Noter</string>
 
     <!-- Toasts -->
     <string name="toast_registered_water">Registreret som vandet</string>
@@ -107,6 +109,7 @@
     <string name="yes">Ja</string>
     <string name="no">Nej</string>
     <string name="settings">Indstillinger</string>
+    <string name="dash"> - </string>
 
     <!-- Crop rotation -->
     <string name="new_season">Ny sæson</string>
@@ -125,4 +128,9 @@
     <string name="your_location">Din lokation</string>
     <string name="you_are_here">Du er her</string>
     <string name="turn_on_location">Slå lokationsdata til</string>
+
+    <!-- Plantable plants -->
+    <string name="drawer_plantables">Planter i sæson</string>
+    <string name="no_outdoors_plantables">Der er ingen udendørs planter, der kan sås/plantes i øjeblikket. Se leksikon for alle planter i arkivet</string>
+    <string name="no_greenhouse_plantables">Der er ingen drivhusplanter, der kan sås/plantes i øjeblikket. Se leksikon for alle planter i arkivet</string>
 </resources>
