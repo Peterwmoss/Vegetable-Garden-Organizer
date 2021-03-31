@@ -19,7 +19,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
-import androidx.preference.PreferenceManager
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
 import dk.mifu.pmos.vegetablegardening.BuildConfig
@@ -28,11 +27,10 @@ import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.database.SeasonRepository
 import dk.mifu.pmos.vegetablegardening.databinding.ActivityMainBinding
 import dk.mifu.pmos.vegetablegardening.helpers.weather.LocationService
-import dk.mifu.pmos.vegetablegardening.helpers.weather.LocationUtils
 import dk.mifu.pmos.vegetablegardening.helpers.weather.WeatherData
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
+import dk.mifu.pmos.vegetablegardening.viewmodels.LocationViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.SeasonViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.util.*
@@ -44,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     private val seasonViewModel: SeasonViewModel by viewModels()
     private val bedViewModel: BedViewModel by viewModels()
+    private val locationViewModel: LocationViewModel by viewModels()
 
     // Location service elements
     private lateinit var weatherDataReceiver : WeatherDataReceiver
@@ -129,7 +128,7 @@ class MainActivity : AppCompatActivity() {
     private fun requestPermissions() {
         Log.i(TAG, "Displaying permission rationale to user")
         AlertDialog.Builder(this)
-                .setTitle("Vil du give adgang til lokationsdata?")
+                .setTitle(getString(R.string.location_request_title))
                 .setMessage(R.string.location_permission_rationale)
                 .setPositiveButton(R.string.yes) { _, _ ->
                     Log.i(TAG, "Requesting location permissions.")
@@ -208,7 +207,7 @@ class MainActivity : AppCompatActivity() {
             override fun handleResponse(date: Date?) {
                 Log.d("handleResponse()", "date: $date")
                 if (date != null) {
-                    bedViewModel.setPlantsToWater(date)
+                    locationViewModel.lastRained = date
                 }
             }
         }
@@ -217,7 +216,9 @@ class MainActivity : AppCompatActivity() {
             Log.i(TAG, "Location intent received")
             val location = intent?.getParcelableExtra<Location>(LocationService.EXTRA_LOCATION)
             MainScope().launch {
+                locationViewModel.location = location
                 location?.let { weatherData.getLastRained(it) }
+                this@MainActivity.service?.removeLocationUpdates()
             }
         }
     }

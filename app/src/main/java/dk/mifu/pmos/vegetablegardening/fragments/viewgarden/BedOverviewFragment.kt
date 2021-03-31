@@ -15,6 +15,7 @@ import dk.mifu.pmos.vegetablegardening.helpers.callbacks.IconCallback
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateBedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.grid.BedOverviewGridBuilder
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
+import dk.mifu.pmos.vegetablegardening.viewmodels.LocationViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.SeasonViewModel
 import dk.mifu.pmos.vegetablegardening.views.Tooltip
@@ -29,6 +30,7 @@ class BedOverviewFragment: Fragment() {
     private val bedViewModel: BedViewModel by activityViewModels()
     private val plantViewModel: PlantViewModel by activityViewModels()
     private val seasonViewModel: SeasonViewModel by activityViewModels()
+    private val locationViewModel: LocationViewModel by activityViewModels()
 
     private var saveChangesCallback: UpdateBedCallback? = null
     private var updateGridViewCallback: BedCallback? = null
@@ -67,7 +69,6 @@ class BedOverviewFragment: Fragment() {
             savedInstanceState: Bundle?
     ): View {
         binding = FragmentBedOverviewBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -84,7 +85,7 @@ class BedOverviewFragment: Fragment() {
                 context = requireContext(),
                 binding = binding)
 
-        loadBedFromDatabase(builder)
+        loadBed(builder)
 
         saveChangesCallback =
                 UpdateBedCallback(
@@ -100,7 +101,7 @@ class BedOverviewFragment: Fragment() {
         updateIconsCallback = IconCallback(requireView(), bedViewModel)
     }
 
-    private fun loadBedFromDatabase(builder: BedOverviewGridBuilder) {
+    private fun loadBed(builder: BedOverviewGridBuilder) {
         MainScope().launch(Dispatchers.Main) {
             val def = async(Dispatchers.IO) {
                 val dao = AppDatabase.getDatabase(requireContext()).bedDao()
@@ -112,6 +113,9 @@ class BedOverviewFragment: Fragment() {
             builder.updateGridSizeFromViewModel()
             builder.insertTilesInView()
             builder.setExplanationTextViews()
+
+            val date = locationViewModel.lastRained
+            if(date != null) bedViewModel.setPlantsToWater(date)
         }
     }
 

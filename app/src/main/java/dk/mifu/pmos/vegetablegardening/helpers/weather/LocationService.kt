@@ -86,7 +86,6 @@ class LocationService : Service() {
 
     fun requestLocationUpdates() {
         Log.i(TAG, "Requesting location updates")
-        LocationUtils.setRequestingLocationUpdates(this, true)
         startService(Intent(applicationContext, LocationService::class.java))
         try {
             fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper()!!)
@@ -98,7 +97,6 @@ class LocationService : Service() {
     fun removeLocationUpdates() {
         Log.i(TAG, "Removing location updates")
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
-        LocationUtils.setRequestingLocationUpdates(this, false)
         stopSelf()
     }
 
