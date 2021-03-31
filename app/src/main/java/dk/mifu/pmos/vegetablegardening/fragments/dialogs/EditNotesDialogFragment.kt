@@ -16,7 +16,7 @@ import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 class EditNotesDialogFragment: DialogFragment() {
     private lateinit var binding: FragmentEditNotesDialogBinding
 
-    private val args: EditSortDialogFragmentArgs by navArgs()
+    private val args: EditNotesDialogFragmentArgs by navArgs()
 
     private val bedViewModel: BedViewModel by activityViewModels()
 
