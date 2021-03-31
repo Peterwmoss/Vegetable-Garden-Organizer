@@ -1,31 +1,40 @@
+// Heavily inspired by https://github.com/android/location-samples/blob/432d3b72b8c058f220416958b444274ddd186abd/LocationUpdatesForegroundService/
+
 package dk.mifu.pmos.vegetablegardening.helpers.weather
 
-import android.Manifest
-import android.app.Service
+import android.app.*
+import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.location.Location
-import android.os.Binder
-import android.os.Bundle
-import android.os.IBinder
-import android.os.Looper
+import android.os.*
 import android.util.Log
+import androidx.core.app.NotificationCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.location.*
+import dk.mifu.pmos.vegetablegardening.R
 
 class LocationService : Service() {
-    private var startMode: Int = 0
-    private var binder: IBinder? = LocationBinder()
-    private var allowRebind: Boolean = true
+    companion object {
+        private const val PACKAGE_NAME = "dk.mifu.pmos.vegetablegardening"
+        private val TAG = LocationService::class.simpleName
+
+        const val ACTION_BROADCAST = "$PACKAGE_NAME.broadcast"
+        const val EXTRA_LOCATION = "$PACKAGE_NAME.location"
+
+        private const val UPDATE_INTERVAL = 20000L
+        private const val FASTEST_INTERVAL = 10000L
+    }
+
+    private val binder: IBinder = LocationBinder()
+
+    private var changingConfiguration = false
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
 
-    companion object {
-        private const val UPDATE_INTERVAL = 5000L
-        private const val FASTEST_INTERVAL = 1000L
-    }
+    private var location: Location? = null
 
     inner class LocationBinder: Binder() {
         fun getService(): LocationService = this@LocationService
@@ -36,65 +45,91 @@ class LocationService : Service() {
 
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
-                for (location in locationResult.locations) {
-                    sendLocation(location)
-                }
+                super.onLocationResult(locationResult)
+                onNewLocation(locationResult.lastLocation)
             }
         }
-    }
 
-    private fun sendLocation(location: Location) {
-        Log.d("sendLocation()", location.toString())
-        val intent = Intent("sendLocation")
-        val bundle = Bundle()
-        bundle.putParcelable("location", location)
-        intent.putExtra("location", bundle)
-        LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
+        createLocationRequest()
+        getLastLocation()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        requestLocation()
-        return startMode
+        Log.i(TAG, "Service started")
+        return START_NOT_STICKY
     }
 
-    private fun requestLocation() {
-        if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-            return
-
-        locationRequest = LocationRequest.create()
-        locationRequest.apply {
-            priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-            interval = UPDATE_INTERVAL
-            fastestInterval = FASTEST_INTERVAL
-        }
-
-        fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
-            if (location == null) {
-                startLocationUpdates()
-            } else {
-                sendLocation(location)
-            }
-        }
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        changingConfiguration = true
     }
 
-    private fun startLocationUpdates() {
-        if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-            return
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
-    }
+    // Service is bound, so should no longer be in foreground
+    override fun onBind(intent: Intent?): IBinder {
+        Log.i(TAG, "in onBind()")
+        changingConfiguration = false
 
-    override fun onBind(intent: Intent?): IBinder? {
         return binder
     }
 
-    override fun onUnbind(intent: Intent?): Boolean {
-        return allowRebind
+    override fun onRebind(intent: Intent?) {
+        Log.i(TAG, "in onRebind()")
+        changingConfiguration = false
+        super.onRebind(intent)
     }
 
-    override fun onRebind(intent: Intent?) { }
+    // Service no longer bound, so should be in foreground
+    override fun onUnbind(intent: Intent?): Boolean {
+        Log.i(TAG, "Last client unbound from service")
+        return true
+    }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    fun requestLocationUpdates() {
+        Log.i(TAG, "Requesting location updates")
+        startService(Intent(applicationContext, LocationService::class.java))
+        try {
+            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper()!!)
+        } catch (unlikely: SecurityException) {
+            Log.e(TAG, "No permissions. $unlikely")
+        }
+    }
+
+    fun removeLocationUpdates() {
+        Log.i(TAG, "Removing location updates")
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+        stopSelf()
+    }
+
+    private fun getLastLocation() {
+        try {
+            fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
+                if (task.isSuccessful && task.result != null) {
+                    location = task.result
+                } else {
+                    Log.w(TAG, "Failed to get location.")
+                }
+            }
+        } catch (unlikely: SecurityException) {
+            Log.e(TAG, "No permissions. $unlikely")
+        }
+    }
+
+    private fun onNewLocation(location: Location) {
+        Log.i(TAG, "New location: $location")
+
+        this.location = location
+
+        val intent = Intent(ACTION_BROADCAST)
+        intent.putExtra(EXTRA_LOCATION, location)
+        LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
+    }
+
+    private fun createLocationRequest() {
+        locationRequest = LocationRequest.create()
+        locationRequest.apply {
+            interval = UPDATE_INTERVAL
+            fastestInterval = FASTEST_INTERVAL
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
     }
 }

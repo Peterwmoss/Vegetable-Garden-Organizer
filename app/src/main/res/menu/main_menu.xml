@@ -20,6 +20,11 @@
             android:title="@string/drawer_plantables"/>
 
         <item
+            android:icon="@drawable/weather"
+            android:id="@+id/weatherDataFragment"
+            android:title="@string/weather_data"/>
+
+        <item
             android:id="@+id/gardenOverviewFragment"
             android:title="@string/beds">
             <menu>
@@ -32,6 +37,4 @@
             android:icon="@drawable/ic_plus"
             android:title="@string/new_season"/>
     </group>
-
-
 </menu>
