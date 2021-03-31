@@ -15,6 +15,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -207,7 +208,7 @@ class MainActivity : AppCompatActivity() {
             override fun handleResponse(date: Date?) {
                 Log.d("handleResponse()", "date: $date")
                 if (date != null) {
-                    locationViewModel.lastRained = date
+                    locationViewModel.lastRained.value = date
                 }
             }
         }
@@ -216,7 +217,7 @@ class MainActivity : AppCompatActivity() {
             Log.i(TAG, "Location intent received")
             val location = intent?.getParcelableExtra<Location>(LocationService.EXTRA_LOCATION)
             MainScope().launch {
-                locationViewModel.location = location
+                locationViewModel.location.value = location
                 location?.let { weatherData.getLastRained(it) }
                 this@MainActivity.service?.removeLocationUpdates()
             }

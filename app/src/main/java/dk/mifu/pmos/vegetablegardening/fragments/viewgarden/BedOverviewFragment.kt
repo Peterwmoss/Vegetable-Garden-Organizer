@@ -114,8 +114,9 @@ class BedOverviewFragment: Fragment() {
             builder.insertTilesInView()
             builder.setExplanationTextViews()
 
-            val date = locationViewModel.lastRained
-            if(date != null) bedViewModel.setPlantsToWater(date)
+            locationViewModel.lastRained.observe(viewLifecycleOwner, {
+                bedViewModel.setPlantsToWater(it)
+            })
         }
     }
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.preference.PreferenceManager
@@ -15,6 +16,9 @@ import dk.mifu.pmos.vegetablegardening.viewmodels.LocationViewModel
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.overlay.ItemizedIconOverlay
+import org.osmdroid.views.overlay.Overlay
+import org.osmdroid.views.overlay.OverlayItem
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
@@ -34,20 +38,34 @@ class WeatherDataFragment : Fragment() {
         binding.map.isTilesScaledToDpi = true
         val controller = binding.map.controller
 
-        if (locationViewModel.location == null) {
-            controller.setZoom(8.0)
-            controller.setCenter(GeoPoint(55.7,10.6))
-        } else {
-            val location = locationViewModel.location!!
-            controller.setZoom(11.0)
-            controller.setCenter(GeoPoint(location.latitude,location.longitude))
-        }
+        controller.setZoom(8.0)
+        controller.setCenter(GeoPoint(55.7,10.6))
 
-        val locationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(context), binding.map)
-        locationOverlay.enableMyLocation()
-        binding.map.overlays.add(locationOverlay)
+        locationViewModel.location.observe(viewLifecycleOwner, {
+            controller.zoomTo(11.0)
+            val location = GeoPoint(it.latitude, it.longitude)
+            controller.animateTo(location)
 
-        binding.lastRainedText.text = formatter.formatDate(locationViewModel.lastRained)
+            val locationItem = OverlayItem("Din lokation", "Du er her", location)
+            locationItem.setMarker(ContextCompat.getDrawable(requireContext(), R.drawable.location))
+
+            val locationOverlay = ItemizedIconOverlay(context, mutableListOf(locationItem), object:ItemizedIconOverlay.OnItemGestureListener<OverlayItem> {
+                override fun onItemLongPress(index: Int, item: OverlayItem?): Boolean {
+                    return false
+                }
+
+                override fun onItemSingleTapUp(index: Int, item: OverlayItem?): Boolean {
+                    return true
+                }
+            })
+            binding.map.overlays.add(locationOverlay)
+
+        })
+
+        locationViewModel.lastRained.observe(viewLifecycleOwner, {
+            binding.lastRainedText.text = formatter.formatDate(it)
+        })
+
 
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.weather_data)
 
