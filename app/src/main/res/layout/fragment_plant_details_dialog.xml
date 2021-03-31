@@ -12,7 +12,6 @@
         android:id="@+id/plant_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title"
         android:textSize="@dimen/font_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -143,6 +142,43 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/water_button" />
 
+    <TextView
+        android:id="@+id/notes"
+        android:layout_marginTop="@dimen/spacing_small"
+        style="@style/TitleTextView"
+        android:text="@string/notes"
+        app:layout_constraintTop_toBottomOf="@id/harvested"
+        app:layout_constraintStart_toStartOf="parent"
+         />
+
+    <ScrollView
+        android:id="@+id/notes_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/notes_scroll_view"
+        android:scrollbars="vertical"
+        android:fillViewport="true"
+        android:fadeScrollbars="false"
+        app:layout_constraintTop_toBottomOf="@id/notes_button"
+        app:layout_constraintBottom_toTopOf="@id/details_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:id="@+id/notes_text"
+            style="@style/NotesTextView"
+             />
+    </ScrollView>
+
+
+    <ImageButton
+        android:id="@+id/notes_button"
+        android:layout_marginTop="0dp"
+        android:contentDescription="@string/notes"
+        style="@style/EditButtonStyle"
+        app:layout_constraintStart_toEndOf="@id/notes"
+        app:layout_constraintTop_toTopOf="@id/notes"
+        app:layout_constraintBottom_toBottomOf="@id/notes"
+        />
+
     <Button
         android:id="@+id/details_button"
         android:layout_width="0dp"
@@ -152,6 +188,7 @@
         style="@style/AcceptButtonStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/harvest_button" />
+        app:layout_constraintTop_toBottomOf="@+id/notes_scroll_view"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

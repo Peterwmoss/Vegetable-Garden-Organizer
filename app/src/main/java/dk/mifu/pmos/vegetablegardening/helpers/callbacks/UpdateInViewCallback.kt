@@ -22,5 +22,6 @@ class UpdateInViewCallback(
         binding.plantedText.text = formatter.formatDate(plant.plantedDate)
         binding.wateredText.text = formatter.formatDate(plant.wateredDate)
         binding.harvestedText.text = formatter.formatDate(plant.harvestedDate)
+        binding.notesText.text = formatter.formatString(plant.notes)
     }
 }

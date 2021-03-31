@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/notes_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/notes"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outer_layout_edit_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notes_title"
+        style="@style/WideTextViewStyleOuter">
+        <EditText
+            android:id="@+id/notes_edit_text"
+            android:autofillHints="@string/notes"
+            android:hint="@string/notes"
+            style="@style/WideTextViewStyleInner" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:text="@string/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/ButtonStyle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/save_notes_button"
+        app:layout_constraintTop_toBottomOf="@id/outer_layout_edit_text"/>
+
+    <Button
+        android:id="@+id/save_notes_button"
+        android:text="@string/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/AcceptButtonStyle"
+        app:layout_constraintStart_toEndOf="@id/cancel_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/outer_layout_edit_text"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

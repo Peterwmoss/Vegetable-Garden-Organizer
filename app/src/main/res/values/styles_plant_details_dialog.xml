@@ -19,7 +19,6 @@
         <item name="android:textSize">@dimen/font_medium</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">@dimen/spacing_medium</item>
     </style>
 
     <style name="EditButtonStyle" parent="Widget.MaterialComponents.Button">
@@ -30,5 +29,11 @@
         <item name="android:layout_height">@dimen/icon</item>
         <item name="android:layout_width">@dimen/icon</item>
         <item name="android:layout_marginTop">@dimen/spacing_small</item>
+    </style>
+
+    <style name="NotesTextView" parent="DataTextView">
+        <item name="android:textSize">@dimen/font_small</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:layout_width">match_parent</item>
     </style>
 </resources>
