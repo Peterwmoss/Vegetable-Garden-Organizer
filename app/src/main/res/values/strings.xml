@@ -124,4 +124,5 @@
     <string name="location_request_title">Lokationsdata</string>
     <string name="your_location">Din lokation</string>
     <string name="you_are_here">Du er her</string>
+    <string name="turn_on_location">Slå lokationsdata til</string>
 </resources>

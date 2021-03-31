@@ -28,6 +28,7 @@ import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.database.SeasonRepository
 import dk.mifu.pmos.vegetablegardening.databinding.ActivityMainBinding
 import dk.mifu.pmos.vegetablegardening.helpers.weather.LocationService
+import dk.mifu.pmos.vegetablegardening.helpers.weather.LocationUtils
 import dk.mifu.pmos.vegetablegardening.helpers.weather.WeatherData
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.LocationViewModel
@@ -42,7 +43,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     private val seasonViewModel: SeasonViewModel by viewModels()
-    private val bedViewModel: BedViewModel by viewModels()
     private val locationViewModel: LocationViewModel by viewModels()
 
     // Location service elements
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private val TAG = MainActivity::class.simpleName
-        private const val REQUEST_PERMISSIONS_REQUEST_CODE = 1001
+        const val REQUEST_PERMISSIONS_REQUEST_CODE = 1001
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,8 +77,10 @@ class MainActivity : AppCompatActivity() {
 
         weatherDataReceiver = WeatherDataReceiver()
 
-        if (!checkPermissions()) {
-            requestPermissions()
+        if (!LocationUtils.hasRequestedLocationPermissions(this)) {
+            if (!checkPermissions()) {
+                requestPermissions()
+            }
         }
 
         val toolbar: MaterialToolbar = findViewById(R.id.toolbar_main)
@@ -128,6 +130,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun requestPermissions() {
         Log.i(TAG, "Displaying permission rationale to user")
+        LocationUtils.setHasRequestedLocationPermissions(this, true)
         AlertDialog.Builder(this)
                 .setTitle(getString(R.string.location_request_title))
                 .setMessage(R.string.location_permission_rationale)
@@ -187,7 +190,7 @@ class MainActivity : AppCompatActivity() {
         return Snackbar.make(
                 binding.root,
                 R.string.location_permission_denied,
-                Snackbar.LENGTH_LONG)
+                5)
                 .setAction(R.string.settings) {
                     // Go to settings
                     val intent = Intent()
