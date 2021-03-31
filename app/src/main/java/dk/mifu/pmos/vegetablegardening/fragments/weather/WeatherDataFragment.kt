@@ -1,9 +1,7 @@
 package dk.mifu.pmos.vegetablegardening.fragments.weather
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -13,6 +11,7 @@ import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentWeatherDataBinding
 import dk.mifu.pmos.vegetablegardening.helpers.Formatter
 import dk.mifu.pmos.vegetablegardening.viewmodels.LocationViewModel
+import dk.mifu.pmos.vegetablegardening.views.Tooltip
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
@@ -27,18 +26,37 @@ class WeatherDataFragment : Fragment() {
 
     private val locationViewModel: LocationViewModel by activityViewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_default, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.tooltip -> {
+                Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_weather_data), requireView().rootView.findViewById(R.id.tooltip))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentWeatherDataBinding.inflate(inflater, container, false)
 
         val formatter = Formatter(requireContext())
 
-        Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context))
+       Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context))
 
         binding.map.setTileSource(TileSourceFactory.MAPNIK)
         binding.map.isTilesScaledToDpi = true
         val controller = binding.map.controller
 
-        controller.setZoom(8.0)
+        controller.setZoom(6.0)
         controller.setCenter(GeoPoint(55.7,10.6))
 
         locationViewModel.location.observe(viewLifecycleOwner, {
@@ -46,7 +64,7 @@ class WeatherDataFragment : Fragment() {
             val location = GeoPoint(it.latitude, it.longitude)
             controller.animateTo(location)
 
-            val locationItem = OverlayItem("Din lokation", "Du er her", location)
+            val locationItem = OverlayItem(getString(R.string.your_location), getString(R.string.you_are_here), location)
             locationItem.setMarker(ContextCompat.getDrawable(requireContext(), R.drawable.location))
 
             val locationOverlay = ItemizedIconOverlay(context, mutableListOf(locationItem), object:ItemizedIconOverlay.OnItemGestureListener<OverlayItem> {

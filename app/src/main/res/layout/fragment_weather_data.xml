@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginBottom="@dimen/spacing_small"
         android:text="@string/last_rained"
-        android:textSize="@dimen/font_medium"
+        android:textSize="@dimen/font_large"
         android:textAlignment="center"
         android:layout_width="0dp"
         android:layout_height="wrap_content"/>
@@ -27,7 +27,7 @@
         android:layout_marginBottom="@dimen/spacing_medium"
         android:textSize="@dimen/font_medium"
         android:textAlignment="center"
-        android:text="@string/date"
+        android:text="@string/missing_info"
         android:layout_width="0dp"
         android:layout_height="wrap_content"/>
 
