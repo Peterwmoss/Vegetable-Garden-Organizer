@@ -127,6 +127,12 @@
             app:destination="@id/deleteBedConfirmationDialogFragment" />
     </fragment>
 
+    <!-- Weather Data Fragment -->
+    <fragment
+        android:id="@+id/weatherDataFragment"
+        android:name="dk.mifu.pmos.vegetablegardening.fragments.weather.WeatherDataFragment"
+        android:label="WeatherDataFragment" />
+
     <!--|||||||||||||-->
     <!--|| DIALOGS ||-->
     <!--|||||||||||||-->
