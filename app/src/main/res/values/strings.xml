@@ -84,7 +84,7 @@
     <string name="beds">Bede</string>
     <string name="new_bed">Nyt bed</string>
 
-    <!-- Locations -->
+    <!-- Bed Locations -->
     <string name="location_outdoors">Udendørs</string>
     <string name="location_greenhouse">Drivhus</string>
 
@@ -120,4 +120,5 @@
     <string name="location_updated">Lokation Opdateret</string>
     <string name="location_permission_rationale">Vil du give adgang til din lokation for at få vejrdata fra dit område?</string>
     <string name="location_permission_denied">Du kan altid slå lokation til i indstillinger, hvis du ønsker</string>
+    <string name="location_request_title">Lokationsdata</string>
 </resources>
