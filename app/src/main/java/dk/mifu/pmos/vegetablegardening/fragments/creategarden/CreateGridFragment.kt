@@ -62,6 +62,7 @@ class CreateGridFragment : Fragment() {
         bedViewModel.tileIds = HashMap()
 
         initializeGrid()
+        updateButtonVisibility()
         setColumnButtonListeners()
         setRowButtonListeners()
         setSaveBedListener()
@@ -104,7 +105,6 @@ class CreateGridFragment : Fragment() {
                 navController = findNavController())
         builder.updateGridSizeFromViewModel()
         builder.insertTilesInView()
-        updateButtonVisibility()
     }
 
     private fun updateButtonVisibility() {
