@@ -65,8 +65,6 @@ class AreaOverviewFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bedViewModel.clear()
-        bedViewModel.bedLocation = args.location
         setHasOptionsMenu(true)
     }
 
@@ -118,6 +116,8 @@ class AreaOverviewFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         (activity as AppCompatActivity).supportActionBar?.title = seasonViewModel.currentSeason.value.toString()
+        bedViewModel.clear()
+        bedViewModel.bedLocation = args.location
     }
 
     override fun onStop() {

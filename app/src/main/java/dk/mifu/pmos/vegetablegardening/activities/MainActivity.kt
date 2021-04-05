@@ -190,7 +190,7 @@ class MainActivity : AppCompatActivity() {
         return Snackbar.make(
                 binding.root,
                 R.string.location_permission_denied,
-                5)
+                Snackbar.LENGTH_LONG)
                 .setAction(R.string.settings) {
                     // Go to settings
                     val intent = Intent()
