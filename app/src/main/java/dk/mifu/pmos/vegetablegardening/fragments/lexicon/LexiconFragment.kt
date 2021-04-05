@@ -1,7 +1,9 @@
 package dk.mifu.pmos.vegetablegardening.fragments.lexicon
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -93,6 +95,8 @@ class LexiconFragment: Fragment() {
     private inner class ViewHolder(view: View) : PlantViewHolder(view) {
         init {
             view.setOnClickListener {
+                val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(binding.searchPlantEdittext.windowToken, 0)
                 findNavController().navigate(LexiconFragmentDirections.toPlantDetails(plant))
             }
         }
