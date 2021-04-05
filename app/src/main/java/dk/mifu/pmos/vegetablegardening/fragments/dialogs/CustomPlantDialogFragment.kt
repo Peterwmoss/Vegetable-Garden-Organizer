@@ -186,10 +186,15 @@ class CustomPlantDialogFragment : DialogFragment() {
             val listener = { _: Any, year: Int, month: Int, day: Int ->
                 newCal.set(year, month, day)
                 when (date) {
-                    PlantDate.Earliest -> plant.earliest = newCal.time
-                    PlantDate.Latest -> plant.latest = newCal.time
+                    PlantDate.Earliest -> {
+                        plant.earliest = newCal.time
+                        binding.plantEarliestText.text = formatter.formatDate(newCal.time)
+                    }
+                    PlantDate.Latest -> {
+                        plant.latest = newCal.time
+                        binding.plantLatestText.text = formatter.formatDate(newCal.time)
+                    }
                 }
-                binding.plantLatestText.text = formatter.formatDate(newCal.time)
             }
             val dialog = DatePickerDialog(requireContext(), listener, currentYear, currentMonth, currentDay)
             dialog.show()

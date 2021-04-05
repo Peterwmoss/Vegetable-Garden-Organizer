@@ -1,11 +1,13 @@
 package dk.mifu.pmos.vegetablegardening.fragments.dialogs
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -37,6 +39,11 @@ class DeleteBedConfirmationDialogFragment : DialogFragment() {
         }
 
         return binding.root
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity).supportActionBar?.title = bedViewModel.name
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
