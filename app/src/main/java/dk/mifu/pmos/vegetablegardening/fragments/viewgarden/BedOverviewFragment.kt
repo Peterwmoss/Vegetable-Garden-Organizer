@@ -28,7 +28,6 @@ class BedOverviewFragment: Fragment() {
     private lateinit var binding: FragmentBedOverviewBinding
 
     private val bedViewModel: BedViewModel by activityViewModels()
-    private val plantViewModel: PlantViewModel by activityViewModels()
     private val seasonViewModel: SeasonViewModel by activityViewModels()
     private val locationViewModel: LocationViewModel by activityViewModels()
 

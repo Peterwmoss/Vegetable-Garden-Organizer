@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
-import dk.mifu.pmos.vegetablegardening.database.BedDao
 import dk.mifu.pmos.vegetablegardening.database.BedRepository
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentAreaOverviewBinding
@@ -65,8 +64,6 @@ class AreaOverviewFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bedViewModel.clear()
-        bedViewModel.bedLocation = args.location
         setHasOptionsMenu(true)
     }
 
@@ -101,16 +98,20 @@ class AreaOverviewFragment : Fragment() {
             findNavController().navigate(AreaOverviewFragmentDirections.toCreateGrid())
         }
 
-        val observer = { list: List<Bed> ->
-            seasonViewModel.currentSeason.observe(viewLifecycleOwner, { currentSeason ->
-            adapter = AreaOverviewAdapter(
-                    list.filter(CurrentSeasonPredicate(currentSeason)))
-                    updatedBeds = list.toMutableList()
+        fun seasonObserver(list: List<Bed>) = { currentSeason: Int ->
+            val filteredList = list.filter(CurrentSeasonPredicate(currentSeason))
+            val sortedList = filteredList.sortedBy { bed -> bed.order }
+            adapter = AreaOverviewAdapter(sortedList)
+            updatedBeds = sortedList.toMutableList()
             recyclerView.adapter = adapter
             setExplanatoryTextBasedOnItemCount()
-        })}
+        }
 
-        repository?.findBedsWithLocation(args.location)?.observe(viewLifecycleOwner, observer)
+        val bedsObserver = { list: List<Bed> ->
+            seasonViewModel.currentSeason.observe(viewLifecycleOwner, seasonObserver(list))
+        }
+
+        repository?.findBedsWithLocation(args.location)?.observe(viewLifecycleOwner, bedsObserver)
 
         return binding.root
     }
@@ -118,6 +119,8 @@ class AreaOverviewFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         (activity as AppCompatActivity).supportActionBar?.title = seasonViewModel.currentSeason.value.toString()
+        bedViewModel.clear()
+        bedViewModel.bedLocation = args.location
     }
 
     override fun onStop() {
