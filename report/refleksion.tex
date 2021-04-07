@@ -27,10 +27,19 @@ Da vi startede projektet, havde vi følgende forventninger til appens kunnen:
 
 \subsection{Appens omfang}
 
-\subsection{Kalenderintegration}
+\subsection{Kalenderintegration og notifikationer}
 Da appens egentlige rolle stod mere klart, gik det også op for os, at kalenderintegration ikke gav meget mening at lave. Da appen ikke skulle holde styr på præcist hvilke handlinger, der skulle udføres hvornår, i hvilke bede og med hvilke planter, er der ikke nogen begivenheder, der kan stå i kalenderen. Hvis kalenderen skulle bruges, skulle der være afsat flere dage i træk til f.eks. at vise, at en plante var i sæson. Det vurderede vi ikke gav værdi for brugeren, da kalenderen som regel bruges til at holde styr på begivenheder eller arbejdsopgaver, man skal på et bestemt tidspunkt. Det er ikke en bogholder for hvornår du måske vil gøre noget.
 
-Notifikationer gav stadig mening, da de kan minde brugeren om at tjekke til deres køkkenhave i ny og næ, hvis de ønsker sådanne påmindelser.
+Notifikationer gav stadig mening til en hvis grad, da de ville kunne minde brugeren om at tjekke til deres køkkenhave i ny og næ, ved ønske om sådanne påmindelser. Udfordringen hertil kommer af, at der er dårlig offline support for baggrundsservices på nyere versioner af Android, da de kan dræne ressourcer hele tiden. Dette gav os to muligheder for at få notifikationer ud til brugerne:
+
+\begin{enumerate}
+    \item Lav en uelegant løsning ved at bruge en \texttt{AlarmManager}, som fungerer som "alarm" og checker en gang i døgnet, om der skal sendes en notifikation til brugeren
+    \item Lav en stor opsætning med Firebase eller en anden online service, som vi herfra kan få appen til at være "subscribet" til.
+\end{enumerate}
+
+Den første løsning ønskede vi ikke at lave, da det ville give en dårlig kodestruktur og misbruge \texttt{AlarmManager}-klassen, og gå imod den tiltænkte brug.
+
+Den anden løsning blev fravalgt, da der skulle meget arbejde til at få server og service sat op, i forhold til hvilken værdi vi vurderede, det ville give for brugeren af appen. Det er overdrevent at gøre appen afhængig af en seperat server med en internet-service af den ene grund, at brugeren skal kunne få notifikationer om sin egen køkkenhave, som ellers ikke kræver internet at bruge.
 
 \subsection{Image analysis}
 
