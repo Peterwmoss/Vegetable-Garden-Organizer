@@ -63,9 +63,14 @@ abstract class GridBuilder(
             return context.resources.getDimension(R.dimen.toolbar).toInt()
         }
 
-        fun getTileSideLength(): Int {
+        fun getTileSideWidth(): Int {
             val width = getWidthOfScreen() - buttonSideLength
-            return width shr 2 //Divide by 4
+            return width/5
+        }
+
+        fun getTileSideHeight(): Int {
+            val widthOfFullGrid = getWidthOfScreen() - buttonSideLength
+            return widthOfFullGrid/3
         }
 
         private fun getWidthOfScreen(): Int {
@@ -78,7 +83,7 @@ abstract class GridBuilder(
 
         fun remainingHeight(rows: Int, context: Context): Int {
             return (getHeightOfScreen()
-                    -(getTileSideLength() *rows)
+                    -(getTileSideHeight() *rows)
                     - toolBarSize(context)
                     - buttonSideLength)
         }

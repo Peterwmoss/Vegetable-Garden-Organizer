@@ -21,7 +21,7 @@ import dk.mifu.pmos.vegetablegardening.views.Tooltip
 
 class CreateGridFragment : Fragment() {
     companion object {
-        private const val MAX_COLUMNS = 4
+        private const val MAX_COLUMNS = 5
         private const val MIN_SIZE = 1
     }
 
@@ -29,7 +29,7 @@ class CreateGridFragment : Fragment() {
 
     private val bedViewModel: BedViewModel by activityViewModels()
 
-    private var tileSideLength = GridBuilder.getTileSideLength()
+    private var tileSideHeight = GridBuilder.getTileSideHeight()
     private var callback: BedCallback? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -125,7 +125,7 @@ class CreateGridFragment : Fragment() {
             binding.addColumnButton.visibility = View.VISIBLE
             adjustPlacementOfGrid(full = false, column = true)
         }
-        if (remainingHeight(bedViewModel.rows, requireContext()) < tileSideLength) {
+        if (remainingHeight(bedViewModel.rows, requireContext()) < tileSideHeight) {
             binding.addRowButton.visibility = View.GONE
             binding.removeRowButton.visibility = View.VISIBLE
             adjustPlacementOfGrid(full = true, column = false)

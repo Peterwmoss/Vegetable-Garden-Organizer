@@ -19,8 +19,7 @@ open class EditGridBuilder(
 
     override fun initializeTile(coordinate: Coordinate, plant: MyPlant?, tileBinding: ListItemTileBinding) {
         tileBinding.plantButton.text = plant?.name ?: ""
-        val tileSideLength = getTileSideLength()
-        val params = FrameLayout.LayoutParams(tileSideLength, tileSideLength)
+        val params = FrameLayout.LayoutParams(getTileSideWidth(), getTileSideHeight())
         tileBinding.plantButton.layoutParams = params
         tileBinding.plantButton.id = View.generateViewId()
         tileBinding.plantButton.setOnClickListener(gridTileListener(coordinate))

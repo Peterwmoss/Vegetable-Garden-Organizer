@@ -11,12 +11,10 @@ import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentBedOverviewBinding
 import dk.mifu.pmos.vegetablegardening.databinding.ListItemTileBinding
 import dk.mifu.pmos.vegetablegardening.fragments.viewgarden.BedOverviewFragmentDirections
-import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPlantPredicate
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.PlantablePredicate
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
-import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 
 class BedOverviewGridBuilder(
         bedViewModel: BedViewModel,
@@ -27,7 +25,6 @@ class BedOverviewGridBuilder(
         private val context: Context,
         private val binding: FragmentBedOverviewBinding
 ) : GridBuilder(bedViewModel, layoutInflater, grid, navController) {
-    private var plantableTileSlots = false
 
     override fun initializeIcon(coordinate: Coordinate, plant: MyPlant?, tileBinding: ListItemTileBinding) {
         bedViewModel.plantsToWater.observe(lifecycleOwner, {
@@ -39,12 +36,11 @@ class BedOverviewGridBuilder(
     }
 
     override fun initializeTile(coordinate: Coordinate, plant: MyPlant?, tileBinding: ListItemTileBinding) {
-        if(plant != null) //Only create listeners for tiles with plants or plantables
-            tileBinding.plantButton.setOnClickListener { _ -> navigate(coordinate, plant) }
+        if(plant != null)
+            tileBinding.plantButton.setOnClickListener { navigate(coordinate, plant) }
 
         tileBinding.plantButton.text = plant?.name ?: ""
-        val tileSideLength = getTileSideLength()
-        val params = FrameLayout.LayoutParams(tileSideLength, tileSideLength)
+        val params = FrameLayout.LayoutParams(getTileSideWidth(), getTileSideHeight())
         tileBinding.plantButton.layoutParams = params
         tileBinding.plantButton.id = View.generateViewId()
 
