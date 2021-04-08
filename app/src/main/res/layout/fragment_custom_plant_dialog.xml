@@ -47,7 +47,7 @@
                     android:id="@+id/plant_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Kategori"
+                    android:hint="@string/category"
                     android:autofillHints=""
                     android:layout_marginTop="@dimen/spacing_small"
                     android:inputType="textCapWords" />
@@ -63,7 +63,7 @@
                     android:id="@+id/plant_earliest"
                     android:layout_width="185dp"
                     android:layout_height="wrap_content"
-                    android:text="Tidligste så-dato"
+                    android:text="@string/earliest_date"
                     style="@style/ButtonStyle"/>
 
                 <TextView
@@ -72,7 +72,7 @@
                     android:layout_marginStart="@dimen/spacing_medium"
                     android:textAlignment="center"
                     android:layout_gravity="center"
-                    android:text="Ingen info"
+                    android:text="@string/missing_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -88,14 +88,14 @@
                     android:id="@+id/plant_latest"
                     android:layout_width="185dp"
                     android:layout_height="wrap_content"
-                    android:text="Seneste så-dato"
+                    android:text="@string/latest_date"
                     style="@style/ButtonStyle"/>
 
                 <TextView
                     android:id="@+id/plant_latest_text"
                     android:textSize="@dimen/font_small"
                     android:layout_marginStart="@dimen/spacing_medium"
-                    android:text="Ingen info"
+                    android:text="@string/missing_info"
                     android:textAlignment="center"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
@@ -107,14 +107,14 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
                 android:id="@+id/plant_sowing"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Sås eller plantes?">
+                android:layout_height="wrap_content">
                 <AutoCompleteTextView
                     android:id="@+id/plant_sowing_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_small"
-                    android:inputType="none"/>
+                    android:inputType="none"
+                    android:hint="@string/sow_or_plant"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -124,7 +124,7 @@
                     android:id="@+id/plant_crop_rotation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Sædskifterotation i antal år"
+                    android:hint="@string/croprotation_in_years"
                     android:autofillHints=""
                     android:layout_marginTop="@dimen/spacing_small"
                     android:inputType="number" />
@@ -137,7 +137,7 @@
                     android:id="@+id/plant_quantity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Antal frø pr. meter række"
+                    android:hint="@string/seeds_per_meter"
                     android:autofillHints=""
                     android:layout_marginTop="@dimen/spacing_small"
                     android:inputType="number" />
@@ -150,7 +150,7 @@
                     android:id="@+id/plant_sowing_depth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Sådybde"
+                    android:hint="@string/sowing_depth"
                     android:autofillHints=""
                     android:layout_marginTop="@dimen/spacing_small"
                     android:inputType="text" />
@@ -163,7 +163,7 @@
                     android:id="@+id/plant_distance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Afstand mellem rækker i cm"
+                    android:hint="@string/distance_rows"
                     android:autofillHints=""
                     android:layout_marginTop="@dimen/spacing_small"
                     android:inputType="number" />
@@ -176,7 +176,7 @@
                     android:id="@+id/plant_fertilizer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Gødningsnivau"
+                    android:hint="@string/fertilizer"
                     android:autofillHints=""
                     android:layout_marginTop="@dimen/spacing_small"
                     android:inputType="textCapWords" />
@@ -189,7 +189,7 @@
                     android:id="@+id/plant_harvest"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Forventet høst pr. række"
+                    android:hint="@string/expected_harvest"
                     android:autofillHints=""
                     android:layout_marginTop="@dimen/spacing_small"
                     android:inputType="textCapWords" />

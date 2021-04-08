@@ -55,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@id/gridlayout"
         android:src="@drawable/ic_minus"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/save_garden_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,6 +64,7 @@
         android:layout_margin="@dimen/spacing_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/ic_save"/>
+        app:icon="@drawable/ic_save"
+        android:text="@string/save"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
