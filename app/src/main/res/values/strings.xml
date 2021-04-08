@@ -143,6 +143,6 @@
     <string name="seeds_per_meter">Antal frø pr. meter række</string>
     <string name="sowing_depth">Sådybde</string>
     <string name="distance_rows">Afstand mellem rækker i cm</string>
-    <string name="fertilizer">Gødningsnivau</string>
+    <string name="fertilizer">Gødning</string>
     <string name="expected_harvest">Forventet høst pr. række</string>
 </resources>
