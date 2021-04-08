@@ -17,13 +17,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/sort_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/sort"
+        app:layout_constraintTop_toTopOf="@id/edit_sort_button"
+        app:layout_constraintBottom_toBottomOf="@id/edit_sort_button"
+        style="@style/Icon"
+        android:src="@drawable/variety"
+        android:contentDescription="@string/sort" />
+
     <TextView
         android:id="@+id/sort"
         android:text="@string/sort"
         style="@style/TitleTextView"
         app:layout_constraintTop_toTopOf="@id/edit_sort_button"
         app:layout_constraintBottom_toBottomOf="@id/edit_sort_button"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/sort_icon"
         app:layout_constraintEnd_toStartOf="@id/sort_text"/>
 
     <TextView
@@ -42,13 +54,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/plant_name" />
 
+    <ImageView
+        android:id="@+id/germination_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/germinated"
+        app:layout_constraintTop_toTopOf="@id/edit_germination_button"
+        app:layout_constraintBottom_toBottomOf="@id/edit_germination_button"
+        style="@style/Icon"
+        android:src="@drawable/germination"
+        android:contentDescription="@string/germinated" />
+
     <TextView
         android:id="@+id/germinated"
         style="@style/TitleTextView"
         android:text="@string/germinated"
         app:layout_constraintBottom_toBottomOf="@id/edit_germination_button"
         app:layout_constraintEnd_toStartOf="@id/germinated_text"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/germination_icon"
         app:layout_constraintTop_toTopOf="@id/edit_germination_button" />
 
     <TextView
@@ -67,13 +91,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edit_sort_button" />
 
+    <ImageView
+        android:id="@+id/planted_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/planted"
+        app:layout_constraintTop_toTopOf="@id/planted_button"
+        app:layout_constraintBottom_toBottomOf="@id/planted_button"
+        style="@style/Icon"
+        android:src="@drawable/planted"
+        android:contentDescription="@string/planted_date" />
+
     <TextView
         android:id="@+id/planted"
         style="@style/TitleTextView"
-        android:text="@string/planted"
+        android:text="@string/planted_date"
         app:layout_constraintBottom_toBottomOf="@id/planted_button"
         app:layout_constraintEnd_toStartOf="@id/planted_text"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/planted_icon"
         app:layout_constraintTop_toTopOf="@id/planted_button" />
 
     <TextView
@@ -92,13 +128,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edit_germination_button" />
 
+    <ImageView
+        android:id="@+id/watered_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/watered"
+        app:layout_constraintTop_toTopOf="@id/water_button"
+        app:layout_constraintBottom_toBottomOf="@id/water_button"
+        style="@style/Icon"
+        android:src="@drawable/watering_can"
+        android:contentDescription="@string/last_watered" />
+
     <TextView
         android:id="@+id/watered"
         style="@style/TitleTextView"
         android:text="@string/last_watered"
         app:layout_constraintBottom_toBottomOf="@id/water_button"
         app:layout_constraintEnd_toStartOf="@id/watered_text"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/watered_icon"
         app:layout_constraintTop_toTopOf="@id/water_button" />
 
     <TextView
@@ -117,13 +165,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/planted_button" />
 
+    <ImageView
+        android:id="@+id/harvest_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/harvested"
+        app:layout_constraintTop_toTopOf="@id/harvest_button"
+        app:layout_constraintBottom_toBottomOf="@id/harvest_button"
+        style="@style/Icon"
+        android:src="@drawable/harvest"
+        android:contentDescription="@string/harvest" />
+
     <TextView
         android:id="@+id/harvested"
         style="@style/TitleTextView"
         android:text="@string/last_harvested"
         app:layout_constraintBottom_toBottomOf="@id/harvest_button"
         app:layout_constraintEnd_toStartOf="@id/harvested_text"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/harvest_icon"
         app:layout_constraintTop_toTopOf="@id/harvest_button" />
 
     <TextView
@@ -142,13 +202,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/water_button" />
 
+    <ImageView
+        android:id="@+id/notes_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/notes"
+        app:layout_constraintTop_toTopOf="@id/notes"
+        app:layout_constraintBottom_toBottomOf="@id/notes"
+        style="@style/Icon"
+        android:src="@drawable/notes"
+        android:contentDescription="@string/notes" />
+
     <TextView
         android:id="@+id/notes"
         android:layout_marginTop="@dimen/spacing_small"
         style="@style/TitleTextView"
         android:text="@string/notes"
         app:layout_constraintTop_toBottomOf="@id/harvested"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/notes_icon"
          />
 
     <ScrollView

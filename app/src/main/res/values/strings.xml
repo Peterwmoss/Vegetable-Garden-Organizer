@@ -59,6 +59,7 @@
     <string name="last_watered">Sidst vandet</string>
     <string name="last_harvested">Sidst høstet</string>
     <string name="planted">Plantet</string>
+    <string name="planted_date">Plantedato</string>
     <string name="sow">Sås</string>
     <string name="plant">Plantes</string>
     <string name="number_of_seasons">Sæsoner med denne plante her</string>

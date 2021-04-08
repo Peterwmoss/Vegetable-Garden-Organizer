@@ -2,6 +2,10 @@
 <resources>
     <dimen name="icon">32dp</dimen>
 
+    <style name="Icon">
+        <item name="android:paddingEnd">@dimen/spacing_small</item>
+    </style>
+
     <style name="DataTextView" parent="Widget.MaterialComponents.TextView">
         <item name="android:paddingEnd">@dimen/spacing_small</item>
         <item name="fontFamily">@font/roboto</item>
