@@ -29,7 +29,7 @@ class CreateGridFragment : Fragment() {
 
     private val bedViewModel: BedViewModel by activityViewModels()
 
-    private var tileSideHeight = GridBuilder.getTileSideHeight()
+    private var tileSideHeight = 0
     private var callback: BedCallback? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +53,7 @@ class CreateGridFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCreateGridBinding.inflate(inflater, container, false)
+        tileSideHeight = GridBuilder.getTileSideHeight(requireContext())
         return binding.root
     }
 
@@ -92,7 +93,8 @@ class CreateGridFragment : Fragment() {
             bedViewModel = bedViewModel,
             layoutInflater = layoutInflater,
             grid = binding.gridlayout,
-            navController = findNavController())
+            navController = findNavController(),
+            context = requireContext())
         builder.createEmptyGrid()
         builder.updateGridSizeFromViewModel()
     }
@@ -102,7 +104,8 @@ class CreateGridFragment : Fragment() {
                 bedViewModel = bedViewModel,
                 layoutInflater = layoutInflater,
                 grid = binding.gridlayout,
-                navController = findNavController())
+                navController = findNavController(),
+                context = requireContext())
         builder.updateGridSizeFromViewModel()
         builder.insertTilesInView()
     }
@@ -207,7 +210,8 @@ class CreateGridFragment : Fragment() {
                 bedViewModel = bedViewModel,
                 layoutInflater = layoutInflater,
                 grid = binding.gridlayout,
-                navController = findNavController())
+                navController = findNavController(),
+                context = requireContext())
         builder.updateGridSizeFromViewModel()
         updatePlantsInViewModel(add, column)
         builder.insertTilesInView()

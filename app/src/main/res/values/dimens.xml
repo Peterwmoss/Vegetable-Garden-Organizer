@@ -20,4 +20,5 @@
     <dimen name="line">2dp</dimen>
     <dimen name="text_view">350dp</dimen>
     <dimen name="toolbar">56dp</dimen>
+    <dimen name="floating_action_button">64dp</dimen>
 </resources>

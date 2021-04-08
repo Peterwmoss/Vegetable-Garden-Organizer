@@ -40,7 +40,7 @@ class BedOverviewGridBuilder(
             tileBinding.plantButton.setOnClickListener { navigate(coordinate, plant) }
 
         tileBinding.plantButton.text = plant?.name ?: ""
-        val params = FrameLayout.LayoutParams(getTileSideWidth(), getTileSideHeight())
+        val params = FrameLayout.LayoutParams(getTileSideWidth(context), getTileSideHeight(context))
         tileBinding.plantButton.layoutParams = params
         tileBinding.plantButton.id = View.generateViewId()
 
