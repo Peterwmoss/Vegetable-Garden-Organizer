@@ -58,6 +58,9 @@ abstract class GridBuilder(
 
     companion object {
 
+        const val MAX_COLUMNS = 5
+        const val MIN_SIZE = 1
+
         private fun buttonSize(context: Context): Int {
             return context.resources.getDimension(R.dimen.floating_action_button).toInt()
         }
@@ -68,7 +71,7 @@ abstract class GridBuilder(
 
         fun getTileSideWidth(context: Context): Int {
             val width = getWidthOfScreen() - buttonSize(context)
-            return width/5
+            return width/ MAX_COLUMNS - context.resources.getDimension(R.dimen.spacing_xsmall).toInt()
         }
 
         fun getTileSideHeight(context: Context): Int {

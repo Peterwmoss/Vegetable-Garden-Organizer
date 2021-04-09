@@ -3,6 +3,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
+    android:layout_marginStart="@dimen/spacing_xsmall"
+    android:layout_marginBottom="@dimen/line_overlap"
     android:id="@+id/tile_frame_layout">
 
 

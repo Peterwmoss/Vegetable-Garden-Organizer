@@ -14,17 +14,14 @@ import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.grid.EditGridBuilder
 import dk.mifu.pmos.vegetablegardening.helpers.grid.EmptyGridBuilder
 import dk.mifu.pmos.vegetablegardening.helpers.grid.GridBuilder
+import dk.mifu.pmos.vegetablegardening.helpers.grid.GridBuilder.Companion.MAX_COLUMNS
+import dk.mifu.pmos.vegetablegardening.helpers.grid.GridBuilder.Companion.MIN_SIZE
 import dk.mifu.pmos.vegetablegardening.helpers.grid.GridBuilder.Companion.remainingHeight
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.views.Tooltip
 
 class CreateGridFragment : Fragment() {
-    companion object {
-        private const val MAX_COLUMNS = 5
-        private const val MIN_SIZE = 1
-    }
-
     private lateinit var binding: FragmentCreateGridBinding
 
     private val bedViewModel: BedViewModel by activityViewModels()

@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="@dimen/spacing_small"
+    android:padding="@dimen/spacing_xsmall"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.dialogs.PlantDetailsDialogFragment">
@@ -202,25 +202,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/water_button" />
 
-    <ImageView
-        android:id="@+id/notes_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/notes"
-        app:layout_constraintTop_toTopOf="@id/notes"
-        app:layout_constraintBottom_toBottomOf="@id/notes"
-        style="@style/Icon"
-        android:src="@drawable/notes"
-        android:contentDescription="@string/notes" />
-
     <TextView
         android:id="@+id/notes"
         android:layout_marginTop="@dimen/spacing_small"
         style="@style/TitleTextView"
         android:text="@string/notes"
         app:layout_constraintTop_toBottomOf="@id/harvested"
-        app:layout_constraintStart_toEndOf="@id/notes_icon"
+        app:layout_constraintStart_toStartOf="parent"
          />
 
     <ScrollView
