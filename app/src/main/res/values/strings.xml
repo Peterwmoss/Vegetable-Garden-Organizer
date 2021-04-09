@@ -16,7 +16,6 @@
     <string name="guide_no_bed_name_given">Indtast venligst et navn til dit bed</string>
     <string name="guide_bed_already_exists">Et bed med dette navn findes allerede. Vælg venligst et nyt navn til dit bed.</string>
     <string name="guide_plant_already_exists">En plante med dette navn findes allerede. Vælg venligst et nyt navn til din plante.</string>
-    <string name="guide_crop_rotation">Appen holder styr på sædskifteintervaller på følgende måde:\n\n Når du har flere bed i et område, f.eks. i dit drivhus, kan du lave om på deres rækkefølge ved at holde inde på et bed og trække i det.\n\n Appen holder styr på hvor mange sæsoner et bed med et bestemt navn har været på samme plads.\n\n Eksempel: Når  dine ærter ikke længere skal være det samme sted, kan du blot flytte \"Ærtebed\" til dit nye sted - smart!</string>
     <string name="guide_empty_garden">Du kan bruge appen til at holde styr på dine bede eller forskellige områder i din køkkenhave eller drivhus.\n\nTryk på plus-knappen nede i hjørnet for at komme i gang og oprette dine bede.</string>
 
     <!-- Tooltips -->
@@ -30,6 +29,7 @@
     <string name="tooltip_area_overview">Klik på et bed for at se dine planters placering og oplysninger om dem\n\n Hold inde på et bed og træk i det for at ændre dets placering i forhold til de andre.\n\n Tryk på plus-knappen i hjørnet for at oprette et nyt bed. </string>
     <string name="tooltip_weather_data">Her kan du se din placering og den dato, der sidst er registreret som en regnvejrsdag.\n\nHvis du ikke kan se din lokation eller der står \"Ingen info\", skyldes det sandsynligvis, at du har slået adgang til lokationsdata fra for appen.</string>
     <string name="tooltip_plantables">Her kan du se hvilke planter, der er mulighed for at så eller plante i øjeblikket</string>
+    <string name="tooltip_crop_rotation">Appen holder styr på sædskifteintervaller på følgende måde:\n\n Når du har flere bed i et område, f.eks. i dit drivhus, kan du lave om på deres rækkefølge ved at holde inde på et bed og trække i det.\n\n Appen holder styr på hvor mange sæsoner et bed med et bestemt navn har været på samme plads.\n\n Eksempel: Når  dine ærter ikke længere skal være det samme sted, kan du blot flytte \"Ærtebed\" til dit nye sted - smart!</string>
 
     <!-- Titles -->
     <string name="title_location">Hvor er dit bed?</string>

@@ -44,10 +44,6 @@
         android:id="@+id/cropRotationFragment"
         android:name="dk.mifu.pmos.vegetablegardening.fragments.croprotation.CropRotationFragment"
         android:label="CropRotationFragment">
-
-        <action
-            android:id="@+id/to_crop_rotation_guide_dialog"
-            app:destination="@id/cropRotationGuideDialogFragment" />
     </fragment>
 
     <!-- New Season Fragment -->
@@ -155,12 +151,6 @@
             app:argType="dk.mifu.pmos.vegetablegardening.models.Plant"
             android:defaultValue="@null" />
     </dialog>
-
-    <!-- Crop Rotation Guide Dialog -->
-    <dialog
-        android:id="@+id/cropRotationGuideDialogFragment"
-        android:name="dk.mifu.pmos.vegetablegardening.fragments.dialogs.CropRotationGuideDialogFragment"
-        android:label="CropRotationGuideDialogFragment" />
 
     <!-- Confirmations -->
 
