@@ -1,5 +1,21 @@
 # Køkkenhave app
 
+## Vejledning 05/04-21
+
+* Mere info på kortet
+* Mm regn er vigtigt
+* Man vil nok gerne ind på nyeste sæson - måske bare en bedre forklaring
+* Måske bare indsætte billede - overblik med image analysis
+* Nemt at læse, godt skrevet
+* Ikke for meget referat. Mere vægt på analyse og beslutninger. Gav anledning til store ændringer - vurderende
+* Hvad var overraskende / svært - fravalg
+* Minimal brugervejledning og process
+* Gerne analyse i processen også
+* Kritik i rapporten
+* Mere hvorfor end hvad
+* 1-2 sider om image analysis
+* Rapporten begynder at blive vigtigst
+
 ## Vejledning 22/03-21
 
 * Se udkast til rapport efter påske
