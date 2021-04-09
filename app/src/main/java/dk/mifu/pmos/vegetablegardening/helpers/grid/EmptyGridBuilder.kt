@@ -1,5 +1,6 @@
 package dk.mifu.pmos.vegetablegardening.helpers.grid
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.widget.GridLayout
 import androidx.navigation.NavController
@@ -11,8 +12,9 @@ class EmptyGridBuilder(
         bedViewModel: BedViewModel,
         layoutInflater: LayoutInflater,
         grid: GridLayout,
-        navController: NavController
-) : EditGridBuilder(bedViewModel, layoutInflater, grid, navController) {
+        navController: NavController,
+        context: Context
+) : EditGridBuilder(bedViewModel, layoutInflater, grid, navController, context) {
 
     fun createEmptyGrid(size: Int = 2) {
         bedViewModel.rows = size

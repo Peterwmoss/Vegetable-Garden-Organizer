@@ -14,22 +14,19 @@ import dk.mifu.pmos.vegetablegardening.helpers.callbacks.BedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.grid.EditGridBuilder
 import dk.mifu.pmos.vegetablegardening.helpers.grid.EmptyGridBuilder
 import dk.mifu.pmos.vegetablegardening.helpers.grid.GridBuilder
+import dk.mifu.pmos.vegetablegardening.helpers.grid.GridBuilder.Companion.MAX_COLUMNS
+import dk.mifu.pmos.vegetablegardening.helpers.grid.GridBuilder.Companion.MIN_SIZE
 import dk.mifu.pmos.vegetablegardening.helpers.grid.GridBuilder.Companion.remainingHeight
 import dk.mifu.pmos.vegetablegardening.models.Coordinate
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.views.Tooltip
 
 class CreateGridFragment : Fragment() {
-    companion object {
-        private const val MAX_COLUMNS = 4
-        private const val MIN_SIZE = 1
-    }
-
     private lateinit var binding: FragmentCreateGridBinding
 
     private val bedViewModel: BedViewModel by activityViewModels()
 
-    private var tileSideLength = GridBuilder.getTileSideLength()
+    private var tileSideHeight = 0
     private var callback: BedCallback? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +50,7 @@ class CreateGridFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCreateGridBinding.inflate(inflater, container, false)
+        tileSideHeight = GridBuilder.getTileSideHeight(requireContext())
         return binding.root
     }
 
@@ -92,7 +90,8 @@ class CreateGridFragment : Fragment() {
             bedViewModel = bedViewModel,
             layoutInflater = layoutInflater,
             grid = binding.gridlayout,
-            navController = findNavController())
+            navController = findNavController(),
+            context = requireContext())
         builder.createEmptyGrid()
         builder.updateGridSizeFromViewModel()
     }
@@ -102,7 +101,8 @@ class CreateGridFragment : Fragment() {
                 bedViewModel = bedViewModel,
                 layoutInflater = layoutInflater,
                 grid = binding.gridlayout,
-                navController = findNavController())
+                navController = findNavController(),
+                context = requireContext())
         builder.updateGridSizeFromViewModel()
         builder.insertTilesInView()
     }
@@ -125,7 +125,7 @@ class CreateGridFragment : Fragment() {
             binding.addColumnButton.visibility = View.VISIBLE
             adjustPlacementOfGrid(full = false, column = true)
         }
-        if (remainingHeight(bedViewModel.rows, requireContext()) < tileSideLength) {
+        if (remainingHeight(bedViewModel.rows, requireContext()) < tileSideHeight) {
             binding.addRowButton.visibility = View.GONE
             binding.removeRowButton.visibility = View.VISIBLE
             adjustPlacementOfGrid(full = true, column = false)
@@ -207,7 +207,8 @@ class CreateGridFragment : Fragment() {
                 bedViewModel = bedViewModel,
                 layoutInflater = layoutInflater,
                 grid = binding.gridlayout,
-                navController = findNavController())
+                navController = findNavController(),
+                context = requireContext())
         builder.updateGridSizeFromViewModel()
         updatePlantsInViewModel(add, column)
         builder.insertTilesInView()

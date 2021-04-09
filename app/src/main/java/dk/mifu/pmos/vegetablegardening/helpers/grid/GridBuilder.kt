@@ -57,15 +57,26 @@ abstract class GridBuilder(
     }
 
     companion object {
-        private const val buttonSideLength = 200
+
+        const val MAX_COLUMNS = 5
+        const val MIN_SIZE = 1
+
+        private fun buttonSize(context: Context): Int {
+            return context.resources.getDimension(R.dimen.floating_action_button).toInt()
+        }
 
         private fun toolBarSize(context: Context): Int {
             return context.resources.getDimension(R.dimen.toolbar).toInt()
         }
 
-        fun getTileSideLength(): Int {
-            val width = getWidthOfScreen() - buttonSideLength
-            return width shr 2 //Divide by 4
+        fun getTileSideWidth(context: Context): Int {
+            val width = getWidthOfScreen() - buttonSize(context)
+            return width/ MAX_COLUMNS - context.resources.getDimension(R.dimen.spacing_xsmall).toInt()
+        }
+
+        fun getTileSideHeight(context: Context): Int {
+            val widthOfFullGrid = getWidthOfScreen() - buttonSize(context)
+            return widthOfFullGrid/3
         }
 
         private fun getWidthOfScreen(): Int {
@@ -78,9 +89,9 @@ abstract class GridBuilder(
 
         fun remainingHeight(rows: Int, context: Context): Int {
             return (getHeightOfScreen()
-                    -(getTileSideLength() *rows)
+                    -(getTileSideHeight(context) *rows)
                     - toolBarSize(context)
-                    - buttonSideLength)
+                    - buttonSize(context))
         }
     }
 }

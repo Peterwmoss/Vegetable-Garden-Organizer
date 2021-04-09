@@ -59,6 +59,7 @@
     <string name="last_watered">Sidst vandet</string>
     <string name="last_harvested">Sidst høstet</string>
     <string name="planted">Plantet</string>
+    <string name="planted_date">Plantedato</string>
     <string name="sow">Sås</string>
     <string name="plant">Plantes</string>
     <string name="number_of_seasons">Sæsoner med denne plante her</string>
@@ -133,4 +134,16 @@
     <string name="drawer_plantables">Planter i sæson</string>
     <string name="no_outdoors_plantables">Der er ingen udendørs planter, der kan sås/plantes i øjeblikket. Se leksikon for alle planter i arkivet</string>
     <string name="no_greenhouse_plantables">Der er ingen drivhusplanter, der kan sås/plantes i øjeblikket. Se leksikon for alle planter i arkivet</string>
+
+    <!-- New Plant -->
+    <string name="earliest_date">Tidligste så-dato</string>
+    <string name="category">Kategori</string>
+    <string name="latest_date">Seneste så-dato</string>
+    <string name="sow_or_plant">Sås eller plantes?</string>
+    <string name="croprotation_in_years">Sædskifterotation i antal år</string>
+    <string name="seeds_per_meter">Antal frø pr. meter række</string>
+    <string name="sowing_depth">Sådybde</string>
+    <string name="distance_rows">Afstand mellem rækker i cm</string>
+    <string name="fertilizer">Gødning</string>
+    <string name="expected_harvest">Forventet høst pr. række</string>
 </resources>

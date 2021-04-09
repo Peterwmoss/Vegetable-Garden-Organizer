@@ -2,12 +2,16 @@
 <resources>
     <dimen name="icon">32dp</dimen>
 
+    <style name="Icon">
+        <item name="android:paddingEnd">@dimen/spacing_xsmall</item>
+    </style>
+
     <style name="DataTextView" parent="Widget.MaterialComponents.TextView">
-        <item name="android:paddingEnd">@dimen/spacing_small</item>
+        <item name="android:paddingEnd">@dimen/spacing_xsmall</item>
         <item name="fontFamily">@font/roboto</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:textAlignment">viewEnd</item>
-        <item name="android:textSize">@dimen/font_medium</item>
+        <item name="android:textSize">@dimen/font_small</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:text">@string/missing_info</item>
@@ -29,10 +33,10 @@
         <item name="android:layout_height">@dimen/icon</item>
         <item name="android:layout_width">@dimen/icon</item>
         <item name="android:layout_marginTop">@dimen/spacing_small</item>
+        <item name="android:background">@null</item>
     </style>
 
     <style name="NotesTextView" parent="DataTextView">
-        <item name="android:textSize">@dimen/font_small</item>
         <item name="android:textAlignment">viewStart</item>
         <item name="android:layout_width">match_parent</item>
     </style>
