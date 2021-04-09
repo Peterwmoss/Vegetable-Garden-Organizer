@@ -1,9 +1,7 @@
 package dk.mifu.pmos.vegetablegardening.fragments.croprotation
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -17,10 +15,12 @@ import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.database.BedDao
 import dk.mifu.pmos.vegetablegardening.database.BedRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCropRotationBinding
+import dk.mifu.pmos.vegetablegardening.fragments.viewgarden.BedOverviewFragmentDirections
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.SeasonViewModel
+import dk.mifu.pmos.vegetablegardening.views.Tooltip
 import kotlinx.coroutines.*
 
 class CropRotationFragment: Fragment() {
@@ -30,6 +30,25 @@ class CropRotationFragment: Fragment() {
 
     private val plantViewModel: PlantViewModel by activityViewModels()
     private val seasonViewModel: SeasonViewModel by activityViewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_default, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.tooltip -> {
+                Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_crop_rotation), requireView().rootView.findViewById(R.id.tooltip))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -57,18 +76,11 @@ class CropRotationFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.crop_rotation)
-        setButtonListener()
     }
 
     override fun onStart() {
         super.onStart()
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.toolbar_crop_rotation)
-    }
-
-    private fun setButtonListener(){
-        binding.guideCropRotation.setOnClickListener {
-            findNavController().navigate(CropRotationFragmentDirections.toCropRotationGuideDialog())
-        }
     }
 
     private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
