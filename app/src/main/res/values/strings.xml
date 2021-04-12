@@ -17,6 +17,7 @@
     <string name="guide_bed_already_exists">Et bed med dette navn findes allerede. Vælg venligst et nyt navn til dit bed.</string>
     <string name="guide_plant_already_exists">En plante med dette navn findes allerede. Vælg venligst et nyt navn til din plante.</string>
     <string name="guide_empty_garden">Du kan bruge appen til at holde styr på dine bede eller forskellige områder i din køkkenhave eller drivhus.\n\nTryk på plus-knappen nede i hjørnet for at komme i gang og oprette dine bede.</string>
+    <string name="guide_map">Vejrdata er blevet indsamlet fra følgende lokation</string>
 
     <!-- Tooltips -->
     <string name="tooltip_create_grid">Udfyld dit bed ved at trykke på en firkant og vælg fra listen.\n\nDu kan ændre størrelsen på bedet ved plus- og minus-knapperne.</string>
@@ -101,6 +102,7 @@
     <string name="weather_data">Vejrdata</string>
     <string name="last_rained">Sidste registrerede regnvejrsdag</string>
     <string name="date">Dato</string>
+    <string name="last_rained_text">%1$s - %2$s</string>
 
     <!-- General Dialogs -->
     <string name="cancel">Annullér</string>

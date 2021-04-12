@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/spacing_medium"
+    android:padding="@dimen/spacing_small"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
@@ -11,7 +11,6 @@
         app:layout_constraintBottom_toTopOf="@id/last_rained_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="@dimen/spacing_small"
         android:text="@string/last_rained"
         android:textSize="@dimen/font_large"
         android:textAlignment="center"
@@ -20,14 +19,28 @@
 
     <TextView
         android:id="@+id/last_rained_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_large"
+        android:text="@string/missing_info"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_medium"
+        app:layout_constraintBottom_toTopOf="@id/map_guide_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/last_rained" />
+
+    <TextView
+        android:id="@+id/map_guide_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/map"
-        app:layout_constraintTop_toBottomOf="@id/last_rained"
-        android:layout_marginBottom="@dimen/spacing_medium"
-        android:textSize="@dimen/font_medium"
+        app:layout_constraintTop_toBottomOf="@id/last_rained_text"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:textSize="@dimen/font_small"
         android:textAlignment="center"
-        android:text="@string/missing_info"
+        android:text="@string/guide_map"
         android:layout_width="0dp"
         android:layout_height="wrap_content"/>
 
@@ -35,7 +48,7 @@
         android:id="@+id/map"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/last_rained_text"
+        app:layout_constraintTop_toBottomOf="@id/map_guide_text"
         app:layout_constraintBottom_toTopOf="@id/turn_on_location_permissions"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>

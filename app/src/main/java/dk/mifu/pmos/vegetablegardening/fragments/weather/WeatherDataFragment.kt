@@ -104,8 +104,10 @@ class WeatherDataFragment : Fragment() {
 
     private fun setupLastRainedText() {
         val formatter = Formatter(requireContext())
-        locationViewModel.lastRained.observe(viewLifecycleOwner, {
-            binding.lastRainedText.text = formatter.formatDate(it)
+        locationViewModel.weather.observe(viewLifecycleOwner, {
+            if (it.date != null) {
+                binding.lastRainedText.text = String.format(getString(R.string.last_rained_text, formatter.formatDate(it.date), formatter.formatRain(it.mm)))
+            }
         })
     }
 }
