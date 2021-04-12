@@ -20,7 +20,7 @@ abstract class WeatherData(private val context: Context) {
     companion object {
         private const val PERIOD = "latest-month"
         private const val LIMIT = 1000
-        private const val RAINED_MILLIMETERS_CUTOFF = 2
+        const val RAINED_MILLIMETERS_CUTOFF = 2
 
         private val TAG = WeatherData::class.simpleName
     }
