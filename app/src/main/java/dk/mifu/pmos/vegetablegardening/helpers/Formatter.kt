@@ -25,4 +25,8 @@ class Formatter(private val context: Context) {
             context.getString(R.string.missing_info)
         }
     }
+
+    fun formatRain(mm: Double): String {
+        return String.format("%.1f mm", mm)
+    }
 }

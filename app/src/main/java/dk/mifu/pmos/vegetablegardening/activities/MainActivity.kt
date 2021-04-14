@@ -30,6 +30,7 @@ import dk.mifu.pmos.vegetablegardening.databinding.ActivityMainBinding
 import dk.mifu.pmos.vegetablegardening.helpers.weather.LocationService
 import dk.mifu.pmos.vegetablegardening.helpers.weather.LocationUtils
 import dk.mifu.pmos.vegetablegardening.helpers.weather.WeatherData
+import dk.mifu.pmos.vegetablegardening.models.Weather
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.LocationViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.SeasonViewModel
@@ -208,10 +209,10 @@ class MainActivity : AppCompatActivity() {
 
     private inner class WeatherDataReceiver: BroadcastReceiver() {
         private val weatherData = object : WeatherData(applicationContext) {
-            override fun handleResponse(date: Date?) {
-                Log.d("handleResponse()", "date: $date")
-                if (date != null) {
-                    locationViewModel.lastRained.value = date
+            override fun handleResponse(weather: Weather?) {
+                Log.d("handleResponse()", "date: $weather.date")
+                if (weather != null) {
+                    locationViewModel.weather.value = weather
                 }
             }
         }

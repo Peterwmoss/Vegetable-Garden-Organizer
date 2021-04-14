@@ -13,6 +13,7 @@ import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.activities.MainActivity
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentWeatherDataBinding
 import dk.mifu.pmos.vegetablegardening.helpers.Formatter
+import dk.mifu.pmos.vegetablegardening.helpers.weather.WeatherData
 import dk.mifu.pmos.vegetablegardening.viewmodels.LocationViewModel
 import dk.mifu.pmos.vegetablegardening.views.Tooltip
 import org.osmdroid.config.Configuration
@@ -38,7 +39,8 @@ class WeatherDataFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.tooltip -> {
-                Tooltip.newTooltip(requireContext(), getString(R.string.tooltip_weather_data), requireView().rootView.findViewById(R.id.tooltip))
+                val tooltipText = String.format(getString(R.string.tooltip_weather_data), WeatherData.RAINED_MILLIMETERS_CUTOFF)
+                Tooltip.newTooltip(requireContext(), tooltipText, requireView().rootView.findViewById(R.id.tooltip))
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -104,8 +106,10 @@ class WeatherDataFragment : Fragment() {
 
     private fun setupLastRainedText() {
         val formatter = Formatter(requireContext())
-        locationViewModel.lastRained.observe(viewLifecycleOwner, {
-            binding.lastRainedText.text = formatter.formatDate(it)
+        locationViewModel.weather.observe(viewLifecycleOwner, {
+            if (it.date != null) {
+                binding.lastRainedText.text = String.format(getString(R.string.last_rained_text, formatter.formatDate(it.date), formatter.formatRain(it.mm)))
+            }
         })
     }
 }

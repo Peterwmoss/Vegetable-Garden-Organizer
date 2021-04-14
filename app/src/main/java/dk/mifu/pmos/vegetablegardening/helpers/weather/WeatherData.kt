@@ -7,6 +7,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import dk.mifu.pmos.vegetablegardening.BuildConfig
 import dk.mifu.pmos.vegetablegardening.R
+import dk.mifu.pmos.vegetablegardening.models.Weather
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -14,12 +15,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 abstract class WeatherData(private val context: Context) {
-    protected abstract fun handleResponse(date: Date?)
+    protected abstract fun handleResponse(weather: Weather?)
 
     companion object {
         private const val PERIOD = "latest-month"
-        private const val LIMIT = 10000
-        private const val RAINED_MILLIMETERS_CUTOFF = 0.5
+        private const val LIMIT = 1000
+        const val RAINED_MILLIMETERS_CUTOFF = 2
+
+        private val TAG = WeatherData::class.simpleName
     }
 
     suspend fun getLastRained(location: Location) {
@@ -34,13 +37,13 @@ abstract class WeatherData(private val context: Context) {
             val boundaryBox = "${minLon},${minLat},${maxLon},${maxLat}"
 
             val apiBaseUrl = context.resources.getString(R.string.weather_api_url)
-            val parameters = "parameterId=precip_past10min&period=${PERIOD}&limit=${LIMIT}&bbox=${boundaryBox}"
+            val parameters = "parameterId=precip_past1h&period=${PERIOD}&limit=${LIMIT}&bbox=${boundaryBox}"
             val url = String.format(apiBaseUrl, parameters)
 
             val queue = Volley.newRequestQueue(context)
             val request = object : JsonObjectRequest(Method.GET, url, null,
                     { response ->
-                        Log.d("getLastRained()", "Response received: $response")
+                        Log.d(TAG, "json response: $response")
                         handleResponse(jsonToLastRained(response))
                     },
                     { error -> Log.e("getLastRained()", error.toString()) }) {
@@ -55,20 +58,55 @@ abstract class WeatherData(private val context: Context) {
         }
     }
 
-    private fun jsonToLastRained(json: JSONObject) : Date? {
-        Log.d("jsonToWeather()", "json input: $json")
-
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale("da", "DK"))
+    private fun jsonToLastRained(json: JSONObject) : Weather? {
+        val map = TreeMap<Int, Double>() // Day in year to MM rained
 
         val features = json.getJSONArray("features")
-        for (i in 0 until features.length()) {
-            val feature = features.getJSONObject(i)
-            Log.d("feature", feature.toString())
+        val first = features.getJSONObject(0)
+        val station = getStationIdFromFeature(first)
+        map[getDateFromFeature(first)] = getRainedMMFromFeature(first)
 
-            val properties = feature.getJSONObject("properties")
-            if (properties.getDouble("value") >= RAINED_MILLIMETERS_CUTOFF)
-                return dateFormat.parse(properties.getString("observed"))
+        for (i in 1 until features.length()) {
+            val feature = features.getJSONObject(i)
+            if (getStationIdFromFeature(feature) == station) {
+                val date = getDateFromFeature(feature)
+                if (map[date] != null) {
+                    map[date] = map[date]!! + getRainedMMFromFeature(feature)
+                } else {
+                    map[date] = getRainedMMFromFeature(feature)
+                }
+            }
         }
+
+        val sorted = map.toSortedMap(compareByDescending { it })
+
+        sorted.entries.forEach {
+            if (it.value >= RAINED_MILLIMETERS_CUTOFF) {
+                val cal = Calendar.getInstance()
+                cal.set(Calendar.DAY_OF_YEAR, it.key)
+                return Weather(cal.time, it.value)
+            }
+        }
+
         return null
+    }
+
+    private fun getRainedMMFromFeature(feature: JSONObject): Double {
+        val properties = feature.getJSONObject("properties")
+        return properties.getDouble("value")
+    }
+
+    private fun getDateFromFeature(jsonObj: JSONObject): Int {
+        val properties = jsonObj.getJSONObject("properties")
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale("da", "DK"))
+        val date = dateFormat.parse(properties.getString("observed"))!!
+        val cal = Calendar.getInstance()
+        cal.time = date
+        return cal.get(Calendar.DAY_OF_YEAR)
+    }
+
+    private fun getStationIdFromFeature(jsonObj: JSONObject): Int {
+        val properties = jsonObj.getJSONObject("properties")
+        return properties.getInt("stationId")
     }
 }
