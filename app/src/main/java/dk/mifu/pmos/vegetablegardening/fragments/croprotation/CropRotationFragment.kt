@@ -2,21 +2,16 @@ package dk.mifu.pmos.vegetablegardening.fragments.croprotation
 
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
-import dk.mifu.pmos.vegetablegardening.database.BedDao
 import dk.mifu.pmos.vegetablegardening.database.BedRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCropRotationBinding
-import dk.mifu.pmos.vegetablegardening.fragments.viewgarden.BedOverviewFragmentDirections
+import dk.mifu.pmos.vegetablegardening.helpers.listviews.CropRotationAdapter
 import dk.mifu.pmos.vegetablegardening.models.Bed
+import dk.mifu.pmos.vegetablegardening.models.CropRotationHistoryItem
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.SeasonViewModel
@@ -59,18 +54,95 @@ class CropRotationFragment: Fragment() {
         val bedDao = AppDatabase.getDatabase(requireContext()).bedDao()
         repository = BedRepository(bedDao)
 
-        val recyclerView = binding.cropRotationRecyclerView
-        recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        val expandableListView = binding.cropRotationExpandableList
+
+        val plants = plantViewModel.plants.value!!
 
         MainScope().launch(Dispatchers.IO) {
-            adapter = CropRotationAdapter(
-                    repository.findBedsWithSeason(seasonViewModel.currentSeason.value!!)
-            )
-            recyclerView.adapter = adapter
+            val beds = repository.findBedsWithSeason(seasonViewModel.currentSeason.value!!)
+            val bedsLookup = beds.map {
+                it to createHistoryList(it, plants)
+            }.toMap()
+            adapter = CropRotationAdapter(requireContext(), beds, bedsLookup)
+            expandableListView.setAdapter(adapter)
         }
 
         return binding.root
+    }
+
+    val <T> List<T>.tail: List<T>
+        get() = drop(1)
+
+    val <T> List<T>.head: T
+        get() = first()
+
+    private suspend fun createHistoryList(bed: Bed, plants: List<Plant>): List<CropRotationHistoryItem> {
+        return withContext(Dispatchers.IO){
+            val list = mutableListOf<CropRotationHistoryItem>()
+            val earlierVersionsOfBed = repository.findBedsByName(bed.name)
+
+            fun aux(remainingBeds: ListIterator<Bed>, order: Int) {
+                var yearsInSameSpot = 0
+                while (remainingBeds.hasNext()) {
+                    val currentBed = remainingBeds.next()
+                    if (currentBed.order == order) {
+                        yearsInSameSpot++
+                        if (!remainingBeds.hasNext()) {
+                            val remainingYears = findMinCropInterval(currentBed, plants) - yearsInSameSpot
+                            list.add(CropRotationHistoryItem(bed.order, remainingYears))
+                        }
+                    }
+                    else {
+                        val remainingYears = findMinCropInterval(currentBed, plants) - yearsInSameSpot
+                        list.add(CropRotationHistoryItem(currentBed.order, remainingYears))
+                        aux(remainingBeds, currentBed.order)
+                    }
+                }
+            }
+
+            // Current spot
+            var yearsInSameSpot = 0
+            if (earlierVersionsOfBed.isNotEmpty()) {
+                val iterator = earlierVersionsOfBed.listIterator()
+                var currentBed = iterator.next()
+                do {
+                    if (currentBed.order == bed.order) {
+                        yearsInSameSpot++
+                        if (!iterator.hasNext()) {
+                            list.add(CropRotationHistoryItem(bed.order, yearsInSameSpot))
+                        }
+                    } else {
+                        list.add(CropRotationHistoryItem(bed.order, yearsInSameSpot))
+                        aux(iterator, currentBed.order)
+                    }
+                    if (iterator.hasNext())
+                        currentBed = iterator.next()
+                } while (iterator.hasNext())
+            }
+
+            return@withContext list
+        }
+    }
+
+    private fun findMinCropInterval(bed: Bed, plants: List<Plant>): Int {
+        var lowestInterval = Int.MAX_VALUE
+        val bedPlants = bed.plants.values
+
+        if(bedPlants.isEmpty()) return 0
+
+        bed.plants.values.forEach{
+            val plant = plants.find {
+                plant -> plant.name == it.name
+            }
+
+            if(plant != null){
+                val cropRotationNumber = plant.cropRotation!!.substring(0,1).toInt()
+                if(cropRotationNumber < lowestInterval)
+                    lowestInterval = cropRotationNumber
+            }
+        }
+
+        return lowestInterval
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,70 +153,5 @@ class CropRotationFragment: Fragment() {
     override fun onStart() {
         super.onStart()
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.toolbar_crop_rotation)
-    }
-
-    private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val bedName: TextView = view.findViewById(R.id.bed_name_crop_rotation)
-        val seasons: TextView = view.findViewById(R.id.seasons_croprotation)
-    }
-
-    private inner class CropRotationAdapter(private val dataSet: List<Bed>): RecyclerView.Adapter<CropRotationFragment.ViewHolder>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CropRotationFragment.ViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_crop_rotation, parent, false)
-            return ViewHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: CropRotationFragment.ViewHolder, position: Int) {
-            val bed = dataSet[position]
-            holder.bedName.text = bed.name
-            val plants = plantViewModel.plants.value
-
-            MainScope().launch {
-                holder.seasons.text = findNumberOfSeasonsWithBedPlacedHere(bed, plants!!)
-            }
-        }
-
-        override fun getItemCount(): Int {
-            return dataSet.size
-        }
-
-        private suspend fun findNumberOfSeasonsWithBedPlacedHere(bed: Bed, plants: List<Plant>): String {
-            return withContext(Dispatchers.IO){
-                val earlierVersionsOfBed = repository.findBedsByName(bed.name)
-                var yearsInSameSpot = 0
-                earlierVersionsOfBed.forEach {
-                    if(it.order == bed.order) yearsInSameSpot++
-                    else return@forEach
-                }
-
-                val minCropInterval = findMinCropInterval(bed, plants)
-                return@withContext if(minCropInterval == 0){
-                    getString(R.string.seasons_bed_without_plants)
-                } else {
-                    getString(R.string.seasons_bed_with_plants, yearsInSameSpot, minCropInterval)
-                }
-            }
-        }
-
-        private fun findMinCropInterval(bed: Bed, plants: List<Plant>): Int {
-            var lowestInterval = Int.MAX_VALUE
-            val bedPlants = bed.plants.values
-
-            if(bedPlants.isEmpty()) return 0
-
-            bed.plants.values.forEach{
-                val plant = plants.find {
-                    plant -> plant.name == it.name
-                }
-
-                if(plant != null){
-                    val cropRotationNumber = plant.cropRotation!!.substring(0,1).toInt()
-                    if(cropRotationNumber < lowestInterval)
-                        lowestInterval = cropRotationNumber
-                }
-            }
-
-            return lowestInterval
-        }
     }
 }

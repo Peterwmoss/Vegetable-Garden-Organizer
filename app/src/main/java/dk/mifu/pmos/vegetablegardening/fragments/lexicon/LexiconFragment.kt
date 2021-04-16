@@ -15,9 +15,8 @@ import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.database.PlantRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentLexiconBinding
-import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper
-import dk.mifu.pmos.vegetablegardening.helpers.recyclerviews.PlantAdapter
-import dk.mifu.pmos.vegetablegardening.helpers.recyclerviews.PlantViewHolder
+import dk.mifu.pmos.vegetablegardening.helpers.listviews.PlantAdapter
+import dk.mifu.pmos.vegetablegardening.helpers.listviews.PlantViewHolder
 import dk.mifu.pmos.vegetablegardening.helpers.search.PlantFilter
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel

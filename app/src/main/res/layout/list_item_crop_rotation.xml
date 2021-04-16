@@ -6,20 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        style="@style/BedNameStyle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/seasons_croprotation"
-        android:id="@+id/bed_name_crop_rotation"/>
-
-    <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/CropRotationStyle"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/seasons_croprotation"/>
+        style="@style/BedNameStyle"
+        android:text="@string/name"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

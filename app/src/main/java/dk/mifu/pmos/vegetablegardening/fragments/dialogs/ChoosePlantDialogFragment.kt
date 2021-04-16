@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentChoosePlantBinding
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPlantPredicate
-import dk.mifu.pmos.vegetablegardening.helpers.recyclerviews.PlantAdapter
-import dk.mifu.pmos.vegetablegardening.helpers.recyclerviews.PlantViewHolder
+import dk.mifu.pmos.vegetablegardening.helpers.listviews.PlantAdapter
+import dk.mifu.pmos.vegetablegardening.helpers.listviews.PlantViewHolder
 import dk.mifu.pmos.vegetablegardening.helpers.search.PlantFilter
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.models.Plant

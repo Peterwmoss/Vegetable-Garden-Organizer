@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/CropRotationGroupItemStyle"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/bed_name_crop_rotation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/BedNameStyle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/placement_crop_rotation" />
+
+    <TextView
+        android:id="@+id/placement_crop_rotation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/PlacementStyle"
+        app:layout_constraintStart_toEndOf="@id/bed_name_crop_rotation"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/seasons_crop_rotation" />
+
+    <TextView
+        android:id="@+id/seasons_crop_rotation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/CropRotationStyle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

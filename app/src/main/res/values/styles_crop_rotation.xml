@@ -7,8 +7,17 @@
         <item name="android:text">@string/name</item>
     </style>
 
+    <style name="PlacementStyle" parent="BedNameStyle">
+        <item name="android:text" />
+    </style>
+
     <style name="CropRotationStyle" parent="BedNameStyle">
         <item name="android:text">@string/seasons_bed_without_plants</item>
+    </style>
+
+    <style name="CropRotationGroupItemStyle">
+        <item name="android:padding">@dimen/spacing_medium</item>
+        <item name="android:paddingStart">@dimen/spacing_large</item>
     </style>
 
     <style name="CropRotationListItemStyle">
