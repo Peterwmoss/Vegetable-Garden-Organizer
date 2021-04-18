@@ -15,6 +15,7 @@ import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.database.PlantRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentLexiconBinding
+import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper
 import dk.mifu.pmos.vegetablegardening.helpers.listviews.PlantAdapter
 import dk.mifu.pmos.vegetablegardening.helpers.listviews.PlantViewHolder
 import dk.mifu.pmos.vegetablegardening.helpers.search.PlantFilter
@@ -94,8 +95,7 @@ class LexiconFragment: Fragment() {
     private inner class ViewHolder(view: View) : PlantViewHolder(view) {
         init {
             view.setOnClickListener {
-                val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager.hideSoftInputFromWindow(binding.searchPlantEdittext.windowToken, 0)
+                KeyboardHelper.hideKeyBoard(context, binding.searchPlantEdittext)
                 findNavController().navigate(LexiconFragmentDirections.toPlantDetails(plant))
             }
         }

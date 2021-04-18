@@ -84,24 +84,42 @@ class CropRotationFragment: Fragment() {
             if (earlierVersionsOfBed.isEmpty())
                 return@withContext list
 
-            fun aux(currentBed: Bed?, remainingBeds : List<Bed>, yearsInSameSpot: Int) {
+            fun addOldToList(bed: Bed) {
+                val interval = findMinCropInterval(bed, plants)
+                val seasonsSincePlantedHere = seasonViewModel.currentSeason.value!! - bed.season
+                list.add(CropRotationHistoryItem(bed.order, interval - seasonsSincePlantedHere))
+            }
+
+            fun oldPositions(currentBed: Bed?, remainingBeds : List<Bed>) {
                 when {
-                    currentBed == null -> return
-                    currentBed.order == bed.order -> {
-                        aux(remainingBeds.head, remainingBeds.tail, yearsInSameSpot+1)
+                    remainingBeds.isEmpty() -> addOldToList(currentBed!!)
+                    remainingBeds.head?.order == bed.order -> {
+                        oldPositions(currentBed, remainingBeds.tail)
                     }
-                    currentBed.order != bed.order -> {
-                        if (list.isEmpty()) {
-                            list.add(CropRotationHistoryItem(currentBed.order, yearsInSameSpot))
-                        } else {
-                            val remainingYears = findMinCropInterval(currentBed, plants) - yearsInSameSpot
-                            list.add(CropRotationHistoryItem(currentBed.order, remainingYears))
-                        }
-                        aux(remainingBeds.head, remainingBeds.tail, 0)
+                    remainingBeds.head?.order != bed.order -> {
+                        addOldToList(currentBed!!)
+                        oldPositions(remainingBeds.head, remainingBeds.tail)
                     }
                 }
             }
-            aux(earlierVersionsOfBed.head, earlierVersionsOfBed.tail, 0)
+
+            fun addNewToList(bed: Bed, seasons: Int) {
+                list.add(CropRotationHistoryItem(bed.order, seasons))
+            }
+
+            fun currentPosition(currentBed: Bed?, remainingBeds: List<Bed>, seasons: Int) {
+                when {
+                    remainingBeds.isEmpty() -> addNewToList(currentBed!!, seasons)
+                    remainingBeds.head?.order == bed.order -> {
+                        currentPosition(currentBed, remainingBeds.tail, seasons+1)
+                    }
+                    else -> {
+                        addNewToList(currentBed!!, seasons)
+                        oldPositions(remainingBeds.head, remainingBeds.tail)
+                    }
+                }
+            }
+            currentPosition(earlierVersionsOfBed.head, earlierVersionsOfBed.tail, 1)
 
             return@withContext list
         }

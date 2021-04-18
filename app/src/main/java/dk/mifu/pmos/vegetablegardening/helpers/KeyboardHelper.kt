@@ -16,5 +16,10 @@ class KeyboardHelper {
                 inputMethodManager.showSoftInput(editText, SHOW_IMPLICIT)
             }, 100)
         }
+
+        fun hideKeyBoard(context: Context?, view: View) {
+            val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 }

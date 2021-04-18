@@ -17,7 +17,7 @@ class CropRotationAdapter(private val context: Context, private val beds : List<
 
     override fun getChildrenCount(groupPosition: Int): Int {
         val bed = beds[groupPosition]
-        return bedsLookup[bed]!!.size
+        return bedsLookup[bed]!!.size - 1
     }
 
     override fun getGroup(groupPosition: Int): Any {
@@ -54,12 +54,12 @@ class CropRotationAdapter(private val context: Context, private val beds : List<
 
         name.text = bed.name
         placement.text = "Position: ${bed.order + 1}"
-        years.text = "${bedsLookup[bed]!![0].seasons} år"
+        years.text = "${bedsLookup[bed]!![0].seasons} år her"
         return view
     }
 
     override fun getChildView(groupPosition: Int, childPosition: Int, isLastChild: Boolean, convertView: View?, parent: ViewGroup?): View {
-        val historyItem = getChild(groupPosition, childPosition) as CropRotationHistoryItem
+        val historyItem = getChild(groupPosition, childPosition+1) as CropRotationHistoryItem
         var view = convertView
         if (view == null) {
             view = View.inflate(context, R.layout.list_item_crop_rotation, null)
