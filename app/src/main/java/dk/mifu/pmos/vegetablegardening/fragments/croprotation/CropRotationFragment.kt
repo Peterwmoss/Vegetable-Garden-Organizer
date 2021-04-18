@@ -73,52 +73,35 @@ class CropRotationFragment: Fragment() {
     val <T> List<T>.tail: List<T>
         get() = drop(1)
 
-    val <T> List<T>.head: T
-        get() = first()
+    val <T> List<T>.head: T?
+        get() = firstOrNull()
 
     private suspend fun createHistoryList(bed: Bed, plants: List<Plant>): List<CropRotationHistoryItem> {
         return withContext(Dispatchers.IO){
             val list = mutableListOf<CropRotationHistoryItem>()
             val earlierVersionsOfBed = repository.findBedsByName(bed.name)
 
-            fun aux(remainingBeds: ListIterator<Bed>, order: Int) {
-                var yearsInSameSpot = 0
-                while (remainingBeds.hasNext()) {
-                    val currentBed = remainingBeds.next()
-                    if (currentBed.order == order) {
-                        yearsInSameSpot++
-                        if (!remainingBeds.hasNext()) {
-                            val remainingYears = findMinCropInterval(currentBed, plants) - yearsInSameSpot
-                            list.add(CropRotationHistoryItem(bed.order, remainingYears))
-                        }
+            if (earlierVersionsOfBed.isEmpty())
+                return@withContext list
+
+            fun aux(currentBed: Bed?, remainingBeds : List<Bed>, yearsInSameSpot: Int) {
+                when {
+                    currentBed == null -> return
+                    currentBed.order == bed.order -> {
+                        aux(remainingBeds.head, remainingBeds.tail, yearsInSameSpot+1)
                     }
-                    else {
-                        val remainingYears = findMinCropInterval(currentBed, plants) - yearsInSameSpot
-                        list.add(CropRotationHistoryItem(currentBed.order, remainingYears))
-                        aux(remainingBeds, currentBed.order)
+                    currentBed.order != bed.order -> {
+                        if (list.isEmpty()) {
+                            list.add(CropRotationHistoryItem(currentBed.order, yearsInSameSpot))
+                        } else {
+                            val remainingYears = findMinCropInterval(currentBed, plants) - yearsInSameSpot
+                            list.add(CropRotationHistoryItem(currentBed.order, remainingYears))
+                        }
+                        aux(remainingBeds.head, remainingBeds.tail, 0)
                     }
                 }
             }
-
-            // Current spot
-            var yearsInSameSpot = 0
-            if (earlierVersionsOfBed.isNotEmpty()) {
-                val iterator = earlierVersionsOfBed.listIterator()
-                var currentBed = iterator.next()
-                do {
-                    if (currentBed.order == bed.order) {
-                        yearsInSameSpot++
-                        if (!iterator.hasNext()) {
-                            list.add(CropRotationHistoryItem(bed.order, yearsInSameSpot))
-                        }
-                    } else {
-                        list.add(CropRotationHistoryItem(bed.order, yearsInSameSpot))
-                        aux(iterator, currentBed.order)
-                    }
-                    if (iterator.hasNext())
-                        currentBed = iterator.next()
-                } while (iterator.hasNext())
-            }
+            aux(earlierVersionsOfBed.head, earlierVersionsOfBed.tail, 0)
 
             return@withContext list
         }

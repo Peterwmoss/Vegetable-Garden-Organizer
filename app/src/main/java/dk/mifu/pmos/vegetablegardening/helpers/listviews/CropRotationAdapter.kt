@@ -17,7 +17,7 @@ class CropRotationAdapter(private val context: Context, private val beds : List<
 
     override fun getChildrenCount(groupPosition: Int): Int {
         val bed = beds[groupPosition]
-        return max(bedsLookup[bed]!!.size - 1,0)
+        return bedsLookup[bed]!!.size
     }
 
     override fun getGroup(groupPosition: Int): Any {
@@ -49,17 +49,30 @@ class CropRotationAdapter(private val context: Context, private val beds : List<
         }
         view!!
         val name : TextView = view.findViewById(R.id.bed_name_crop_rotation)
+        val placement : TextView = view.findViewById(R.id.placement_crop_rotation)
+        val years : TextView = view.findViewById(R.id.seasons_crop_rotation)
+
         name.text = bed.name
+        placement.text = "Position: ${bed.order + 1}"
+        years.text = "${bedsLookup[bed]!![0].seasons} år"
         return view
     }
 
     override fun getChildView(groupPosition: Int, childPosition: Int, isLastChild: Boolean, convertView: View?, parent: ViewGroup?): View {
-        val historyItem = getChild(groupPosition, childPosition)
+        val historyItem = getChild(groupPosition, childPosition) as CropRotationHistoryItem
         var view = convertView
         if (view == null) {
             view = View.inflate(context, R.layout.list_item_crop_rotation, null)
         }
-        return view!!
+
+        view!!
+        val placement : TextView = view.findViewById(R.id.placement_crop_rotation)
+        val years : TextView = view.findViewById(R.id.seasons_crop_rotation)
+
+        placement.text = "Position: ${historyItem.order + 1}"
+        years.text = "${historyItem.seasons} år tilbage"
+
+        return view
     }
 
     override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean {
