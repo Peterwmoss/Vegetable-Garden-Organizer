@@ -9,6 +9,8 @@ import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.database.BedRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCropRotationBinding
+import dk.mifu.pmos.vegetablegardening.helpers.ListExtension.Companion.head
+import dk.mifu.pmos.vegetablegardening.helpers.ListExtension.Companion.tail
 import dk.mifu.pmos.vegetablegardening.helpers.listviews.CropRotationAdapter
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.CropRotationHistoryItem
@@ -69,12 +71,6 @@ class CropRotationFragment: Fragment() {
 
         return binding.root
     }
-
-    val <T> List<T>.tail: List<T>
-        get() = drop(1)
-
-    val <T> List<T>.head: T?
-        get() = firstOrNull()
 
     private suspend fun createHistoryList(initialBed: Bed, plants: List<Plant>): List<CropRotationHistoryItem> {
         return withContext(Dispatchers.IO){
