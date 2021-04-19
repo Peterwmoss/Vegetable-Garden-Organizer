@@ -62,6 +62,9 @@ abstract class WeatherData(private val context: Context) {
         val map = TreeMap<Int, Double>() // Day in year to MM rained
 
         val features = json.getJSONArray("features")
+        if (features.length() == 0)
+            return null
+
         val first = features.getJSONObject(0)
         val station = getStationIdFromFeature(first)
         map[getDateFromFeature(first)] = getRainedMMFromFeature(first)

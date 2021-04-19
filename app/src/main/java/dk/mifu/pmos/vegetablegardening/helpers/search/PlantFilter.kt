@@ -4,7 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.Filter
-import dk.mifu.pmos.vegetablegardening.helpers.recyclerviews.PlantAdapter
+import dk.mifu.pmos.vegetablegardening.helpers.listviews.PlantAdapter
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import java.util.*
 

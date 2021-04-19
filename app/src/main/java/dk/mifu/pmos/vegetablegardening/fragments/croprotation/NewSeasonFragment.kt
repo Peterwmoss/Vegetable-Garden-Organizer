@@ -42,6 +42,7 @@ class NewSeasonFragment: Fragment() {
                 MainScope().launch {
                     handleSave(year)
                     initializeNewSeason(year)
+                    KeyboardHelper.hideKeyBoard(context, binding.year)
                     findNavController().navigate(NewSeasonFragmentDirections.toGardenOverview())
                 }
             } else {
@@ -69,6 +70,11 @@ class NewSeasonFragment: Fragment() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        KeyboardHelper.showKeyboard(context, binding.year)
     }
 
     private suspend fun handleSave(year: Int) {
