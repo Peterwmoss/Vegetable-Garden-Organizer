@@ -18,7 +18,7 @@
     </style>
 
     <style name="CropRotationStyle" parent="BedNameStyle">
-        <item name="android:text">@string/seasons_bed_without_plants</item>
+        <item name="android:text">@string/seasons_empty_bed</item>
     </style>
 
     <style name="CropRotationSmallStyle" parent="CropRotationStyle">

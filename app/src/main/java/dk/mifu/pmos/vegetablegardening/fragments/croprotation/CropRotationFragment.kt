@@ -87,19 +87,19 @@ class CropRotationFragment: Fragment() {
             fun addChildToList(bed: Bed) {
                 val interval = findMinCropInterval(bed, plants)
                 val seasonsSincePlantedHere = seasonViewModel.currentSeason.value!! - bed.season
-                list.add(CropRotationHistoryItem(bed.order, interval - seasonsSincePlantedHere))
+                list.add(CropRotationHistoryItem(bed.order, interval - seasonsSincePlantedHere + 1))  // Plantable the year after time is up
             }
 
-            fun addChildItems(currentBed: Bed?, remainingBeds : List<Bed>) {
-                val previousBedOrder = list.last().order
+            fun addChildItems(currentBed: Bed?, remainingBeds : List<Bed>, currentChildOrder: Int?) {
                 when {
                     remainingBeds.isEmpty() -> addChildToList(currentBed!!)
-                    remainingBeds.head?.order == previousBedOrder -> {
-                        addChildItems(currentBed, remainingBeds.tail)
+                    remainingBeds.head?.order == currentChildOrder -> {
+                        addChildItems(currentBed, remainingBeds.tail, currentChildOrder)
                     }
-                    remainingBeds.head?.order != previousBedOrder -> {
+                    remainingBeds.head?.order != currentChildOrder -> {
                         addChildToList(currentBed!!)
-                        addChildItems(remainingBeds.head, remainingBeds.tail)
+                        val nextBed = remainingBeds.head
+                        addChildItems(nextBed, remainingBeds.tail, nextBed?.order)
                     }
                 }
             }
@@ -116,7 +116,8 @@ class CropRotationFragment: Fragment() {
                     }
                     else -> {
                         addFirstToList(currentBed!!, seasons)
-                        addChildItems(remainingBeds.head, remainingBeds.tail)
+                        val nextBed = remainingBeds.head
+                        addChildItems(nextBed, remainingBeds.tail, nextBed?.order)
                     }
                 }
             }
@@ -138,7 +139,7 @@ class CropRotationFragment: Fragment() {
             }
 
             if(plant != null){
-                val cropRotationNumber = plant.cropRotation!!.substring(0,1).toInt()
+                val cropRotationNumber = plant.cropRotation!!.substring(0,1).toIntOrNull() ?: return 0
                 if(cropRotationNumber < lowestInterval)
                     lowestInterval = cropRotationNumber
             }

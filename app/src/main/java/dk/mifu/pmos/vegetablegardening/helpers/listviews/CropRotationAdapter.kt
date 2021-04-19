@@ -53,12 +53,13 @@ class CropRotationAdapter(private val context: Context, private val beds : List<
         val years : TextView = view.findViewById(R.id.seasons_crop_rotation)
 
         name.text = bed.name
-        placement.text = "Position: ${bed.order + 1}"
-        years.text = "${bedsLookup[bed]!![0].seasons} år her"
+        placement.text = context.getString(R.string.position, bed.order + 1)
+        years.text = context.getString(R.string.current_year, bedsLookup[bed]!![0].seasons)
         return view
     }
 
     override fun getChildView(groupPosition: Int, childPosition: Int, isLastChild: Boolean, convertView: View?, parent: ViewGroup?): View {
+        val bed = getGroup(groupPosition) as Bed
         val historyItem = getChild(groupPosition, childPosition+1) as CropRotationHistoryItem
         var view = convertView
         if (view == null) {
@@ -69,12 +70,13 @@ class CropRotationAdapter(private val context: Context, private val beds : List<
         val placement : TextView = view.findViewById(R.id.placement_crop_rotation)
         val years : TextView = view.findViewById(R.id.seasons_crop_rotation)
 
-        placement.text = "Position: ${historyItem.order + 1}"
+        placement.text = context.getString(R.string.position, historyItem.order + 1)
         years.text =
-                if (historyItem.seasons <= 0)
-                    "Bedet kan plantes her igen"
-                else
-                    "${historyItem.seasons} år tilbage"
+                when {
+                    bed.plants.isNullOrEmpty() -> context.getString(R.string.seasons_empty_bed)
+                    historyItem.seasons <= 0 -> context.getString(R.string.plantable_again)
+                    else -> context.getString(R.string.years_left, historyItem.seasons)
+                }
 
         return view
     }
