@@ -70,7 +70,11 @@ class CropRotationAdapter(private val context: Context, private val beds : List<
         val years : TextView = view.findViewById(R.id.seasons_crop_rotation)
 
         placement.text = "Position: ${historyItem.order + 1}"
-        years.text = "${historyItem.seasons} år tilbage"
+        years.text =
+                if (historyItem.seasons <= 0)
+                    "Bedet kan plantes her igen"
+                else
+                    "${historyItem.seasons} år tilbage"
 
         return view
     }

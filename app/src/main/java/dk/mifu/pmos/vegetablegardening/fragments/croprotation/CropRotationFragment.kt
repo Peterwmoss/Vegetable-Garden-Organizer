@@ -76,50 +76,51 @@ class CropRotationFragment: Fragment() {
     val <T> List<T>.head: T?
         get() = firstOrNull()
 
-    private suspend fun createHistoryList(bed: Bed, plants: List<Plant>): List<CropRotationHistoryItem> {
+    private suspend fun createHistoryList(initialBed: Bed, plants: List<Plant>): List<CropRotationHistoryItem> {
         return withContext(Dispatchers.IO){
             val list = mutableListOf<CropRotationHistoryItem>()
-            val earlierVersionsOfBed = repository.findBedsByName(bed.name)
+            val earlierVersionsOfBed = repository.findBedsByName(initialBed.name)
 
             if (earlierVersionsOfBed.isEmpty())
                 return@withContext list
 
-            fun addOldToList(bed: Bed) {
+            fun addChildToList(bed: Bed) {
                 val interval = findMinCropInterval(bed, plants)
                 val seasonsSincePlantedHere = seasonViewModel.currentSeason.value!! - bed.season
                 list.add(CropRotationHistoryItem(bed.order, interval - seasonsSincePlantedHere))
             }
 
-            fun oldPositions(currentBed: Bed?, remainingBeds : List<Bed>) {
+            fun addChildItems(currentBed: Bed?, remainingBeds : List<Bed>) {
+                val previousBedOrder = list.last().order
                 when {
-                    remainingBeds.isEmpty() -> addOldToList(currentBed!!)
-                    remainingBeds.head?.order == bed.order -> {
-                        oldPositions(currentBed, remainingBeds.tail)
+                    remainingBeds.isEmpty() -> addChildToList(currentBed!!)
+                    remainingBeds.head?.order == previousBedOrder -> {
+                        addChildItems(currentBed, remainingBeds.tail)
                     }
-                    remainingBeds.head?.order != bed.order -> {
-                        addOldToList(currentBed!!)
-                        oldPositions(remainingBeds.head, remainingBeds.tail)
+                    remainingBeds.head?.order != previousBedOrder -> {
+                        addChildToList(currentBed!!)
+                        addChildItems(remainingBeds.head, remainingBeds.tail)
                     }
                 }
             }
 
-            fun addNewToList(bed: Bed, seasons: Int) {
+            fun addFirstToList(bed: Bed, seasons: Int) {
                 list.add(CropRotationHistoryItem(bed.order, seasons))
             }
 
-            fun currentPosition(currentBed: Bed?, remainingBeds: List<Bed>, seasons: Int) {
+            fun addFirstItem(currentBed: Bed?, remainingBeds: List<Bed>, seasons: Int) {
                 when {
-                    remainingBeds.isEmpty() -> addNewToList(currentBed!!, seasons)
-                    remainingBeds.head?.order == bed.order -> {
-                        currentPosition(currentBed, remainingBeds.tail, seasons+1)
+                    remainingBeds.isEmpty() -> addFirstToList(currentBed!!, seasons)
+                    remainingBeds.head?.order == initialBed.order -> {
+                        addFirstItem(currentBed, remainingBeds.tail, seasons+1)
                     }
                     else -> {
-                        addNewToList(currentBed!!, seasons)
-                        oldPositions(remainingBeds.head, remainingBeds.tail)
+                        addFirstToList(currentBed!!, seasons)
+                        addChildItems(remainingBeds.head, remainingBeds.tail)
                     }
                 }
             }
-            currentPosition(earlierVersionsOfBed.head, earlierVersionsOfBed.tail, 1)
+            addFirstItem(earlierVersionsOfBed.head, earlierVersionsOfBed.tail, 1)
 
             return@withContext list
         }
