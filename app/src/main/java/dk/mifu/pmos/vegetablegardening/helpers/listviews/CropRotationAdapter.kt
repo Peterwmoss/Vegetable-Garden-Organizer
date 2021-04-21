@@ -8,7 +8,6 @@ import android.widget.TextView
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.CropRotationHistoryItem
-import kotlin.math.max
 
 class CropRotationAdapter(private val context: Context, private val beds : List<Bed>, private val bedsLookup : Map<Bed, List<CropRotationHistoryItem>>) : BaseExpandableListAdapter() {
     override fun getGroupCount(): Int {

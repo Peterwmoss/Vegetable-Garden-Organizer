@@ -3,7 +3,7 @@ package dk.mifu.pmos.vegetablegardening.helpers.predicates
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import java.util.*
 
-class NeedsWaterPredicate(private val lastRainDate: Date): Predicate<MyPlant?> {
+class NeedsWaterPredicate(private val lastRainDate: Date?): Predicate<MyPlant?> {
     override fun invoke(plant: MyPlant?): Boolean {
         if (plant == null)
             return false
@@ -11,10 +11,10 @@ class NeedsWaterPredicate(private val lastRainDate: Date): Predicate<MyPlant?> {
         val today = Date().time
         return if (wateredDate != null) {
             ((today - wateredDate.time) > MAX_TIME_SINCE_LAST_WATER
-                    && (today - lastRainDate.time) > MAX_TIME_SINCE_LAST_WATER)
+                    && (lastRainDate == null || (today - lastRainDate.time) > MAX_TIME_SINCE_LAST_WATER))
         }
         else {
-            (today - lastRainDate.time) > MAX_TIME_SINCE_LAST_WATER
+            (lastRainDate == null || (today - lastRainDate.time) > MAX_TIME_SINCE_LAST_WATER)
         }
     }
 

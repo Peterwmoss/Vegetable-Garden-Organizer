@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="IconDuplicates">
+        <ignore path="src/main/res/mipmap-hdpi/ic_launcher.png" />
+        <ignore path="src/main/res/mipmap-xhdpi/ic_launcher.png" />
+        <ignore path="src/main/res/mipmap-xhdpi/ic_launcher_round.png" />
+    </issue>
+    <issue id="IconLocation">
+        <ignore path="src/main/res/drawable/greenhouse_focused.png" />
+        <ignore path="src/main/res/drawable/greenhouse_normal.png" />
+        <ignore path="src/main/res/drawable/greenhouse_pressed.png" />
+        <ignore path="src/main/res/drawable/outdoors_focused.png" />
+        <ignore path="src/main/res/drawable/outdoors_focused.png" />
+        <ignore path="src/main/res/drawable/outdoors_focused.png" />
+        <ignore path="src/main/res/drawable/outdoors_normal.png" />
+        <ignore path="src/main/res/drawable/outdoors_pressed.png" />
+    </issue>
+</lint>

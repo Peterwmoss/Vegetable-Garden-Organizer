@@ -3,7 +3,6 @@ package dk.mifu.pmos.vegetablegardening.models
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.TypeConverters
-import androidx.room.PrimaryKey
 import dk.mifu.pmos.vegetablegardening.enums.BedLocation
 import dk.mifu.pmos.vegetablegardening.helpers.database.DatabaseConverters
 

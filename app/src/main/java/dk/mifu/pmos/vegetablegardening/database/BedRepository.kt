@@ -34,8 +34,6 @@ class BedRepository(private val bedDao: BedDao) {
         return bedDao.findByPrimaryKeys(name, season)
     }
 
-    fun getAllBeds(): LiveData<List<Bed>> = bedDao.getAll()
-
     suspend fun findOrder(location: BedLocation, season: Int): Int? {
         return withContext(Dispatchers.IO){
             return@withContext bedDao.findOrder(location.toString(), season)

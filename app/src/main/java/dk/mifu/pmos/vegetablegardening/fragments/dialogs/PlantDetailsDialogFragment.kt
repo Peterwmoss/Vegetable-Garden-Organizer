@@ -17,7 +17,6 @@ import dk.mifu.pmos.vegetablegardening.enums.MyPlantDate.*
 import dk.mifu.pmos.vegetablegardening.helpers.Formatter
 import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateInViewCallback
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
-import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import java.util.*

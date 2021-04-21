@@ -42,7 +42,6 @@ class GsonAdapters {
                     out.beginObject()
                     out.name("name").value(it.value?.name)
                     out.name("sort").value(it.value?.sort)
-                    out.name("seasons").value(it.value?.seasons)
                     out.name("wateredDate").value(dateToString(it.value?.wateredDate))
                     out.name("harvestedDate").value(dateToString(it.value?.harvestedDate))
                     out.name("plantedDate").value(dateToString(it.value?.plantedDate))
@@ -89,7 +88,6 @@ class GsonAdapters {
                         when (reader.nextName()) {
                             "name" -> name = reader.nextString()
                             "sort" -> sort = reader.nextString()
-                            "seasons" -> { seasons = reader.nextInt() }
                             "wateredDate" -> { wateredDate = stringToDate(reader.nextString()) }
                             "harvestedDate" -> { harvestedDate = stringToDate(reader.nextString()) }
                             "plantedDate" -> { plantedDate = stringToDate(reader.nextString()) }
@@ -104,7 +102,7 @@ class GsonAdapters {
 
                 map[Coordinate(col, row)] =
                         if (name != null)
-                            MyPlant(name, sort, seasons, wateredDate, harvestedDate, plantedDate, notes, germinated)
+                            MyPlant(name, sort, wateredDate, harvestedDate, plantedDate, notes, germinated)
                         else
                             null
             }
