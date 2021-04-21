@@ -1,33 +1,66 @@
 \section{Refleksion}
 
 \subsection{Indledende forventninger}
-Da vi startede projektet, havde vi følgende forventninger til appens kunnen:
+Da vi startede projektet, skrev vi følgende problemformulering:
+\medskip
+
+\textit{This project is a bachelor project that will take place in spring 2021.
+The project will aim to simplify the process of keeping your vegetable garden. This will bedone so with an app for Android. It is a cumbersome task to keep track of your vegetable garden. Among other things, here are a few examples:}
+
+\textit{\begin{itemize}
+    \item 
+    What did I plant where?
+    \item
+    How much water does this specific plant need?
+    \item
+    Crop rotation - when and how?
+    \item
+    When to plant and transplant your plants?
+\end{itemize}}
+
+\textit{Currently on the market there are some apps that you can use to track some of these aspects of gardening. The ones we researched primarily lack ease of use as well as certain features, such as crop rotation. The app will be implemented in Kotlin for native Android support and will include the following features:}
+
+\textit{\begin{itemize}
+        \item
+    The ability to see what you have planted and where
+        \item
+    An overview of the actions you need to perform and when
+        \item
+    An overview of crop rotation for your vegetable garden
+        \item
+    Notifications about your crops and integration with calendar
+        \item
+    Overview of your plating locations (outdoors, greenhouse, etc.)
+        \item
+    Lexicon with additional info about plants 
+\end{itemize}}
+
+\textit{The following points are open for research but are not required implemented in the application:}
+\textit{\begin{itemize}
+        \item
+    Integration with sensors or other IOT devices
+        \item 
+    Image analysis for identifying crops
+\end{itemize}}
+
+Derudover havde vi internt i gruppen nogle forestillinger om appens fremtidige kunnen:
 
 \begin{enumerate}
-    \item Se hvor man har plantet hvilke planter
     \item Guide dig fuldstændig i alt, hvad du foretager dig i din køkkenhave. Herunder indgår vanding, plantning/såning, forspiring og udplantning, sædskifte og høst
     \item Oversigter over alle handlinger, der skal udføres
     \item Understøtte planter indenfor, udenfor og i drivhus
     \item Understøtte at plante/så direkte i jorden, i potter eller i plantekasser
     \item Designe sit eget haveområde i appen
-    \item Give dig notifikationer og være integrerbar i kalenderen
     \item Se historik over vanding og platning
-    \item Lexicon med generel information
     \item Planlægning af en ny sæson
-\end{enumerate}
-
-\noindent Vi havde følgende ønsker om research og muligvis implementering:
-
-\begin{enumerate}
-    \item Image analysis til at tage billeder af allerede eksisterende haveområder, som appen derefter kan generere design til
-    \item Integration med IoT f.eks. et jord-termometer
 \end{enumerate}
 
 \subsection{Appens egentlige rolle}
 
 \subsection{Appens omfang}
+Her noget om hvilke forvetninger/krav vi opfyldte, og hvilke vi ikke gjorde.
 
-\subsection{Kalenderintegration og notifikationer}
+\subsubsection{Kalenderintegration og notifikationer}
 Da appens egentlige rolle stod mere klart, gik det også op for os, at kalenderintegration ikke gav meget mening at lave. Da appen ikke skulle holde styr på præcist hvilke handlinger, der skulle udføres hvornår, i hvilke bede og med hvilke planter, er der ikke nogen begivenheder, der kan stå i kalenderen. Hvis kalenderen skulle bruges, skulle der være afsat flere dage i træk til f.eks. at vise, at en plante var i sæson. Det vurderede vi ikke gav værdi for brugeren, da kalenderen som regel bruges til at holde styr på begivenheder eller arbejdsopgaver, man skal på et bestemt tidspunkt. Det er ikke en bogholder for hvornår du måske vil gøre noget.
 
 Notifikationer gav stadig mening til en hvis grad, da de ville kunne minde brugeren om at tjekke til deres køkkenhave i ny og næ, ved ønske om sådanne påmindelser. Udfordringen hertil kommer af, at der er dårlig offline support for baggrundsservices på nyere versioner af Android, da de kan dræne ressourcer hele tiden. Dette gav os to muligheder for at få notifikationer ud til brugerne:
@@ -41,12 +74,15 @@ Den første løsning ønskede vi ikke at lave, da det ville give en dårlig kode
 
 Den anden løsning blev fravalgt, da der skulle meget arbejde til at få server og service sat op, i forhold til hvilken værdi vi vurderede, det ville give for brugeren af appen. Det er overdrevent at gøre appen afhængig af en seperat server med en internet-service af den ene grund, at brugeren skal kunne få notifikationer om sin egen køkkenhave, som ellers ikke kræver internet at bruge.
 
-\subsection{Image analysis}
+\subsubsection{Sædskifteinterval}
+Jævnfør problemformuleringen opfyldte vi dette krav. I forhold til vores egne forvetninger, derimod, blev det implemeteret på en helt anden måde. Det datagrundlag, vi fandt, samt det, vi læste om sædskifte (INDSÆT REFERENCE HER) informerede os om vigtighigheden heraf og hvordan det er forskelligt fra plante til plante. Derfor havde vi først troet, at vi skulle visualisere alle planter i alle bed i forhold til sædskifte. Efter en observation af bruger 1's nuværende måde at holde styr på sædskifte samt en forklarende snak med hende, fandt vi dog frem til, at det giver bedre mening at holde styr på sædskifte på bed-niveau. Man vil som oftest så planter af samme familie i samme bed og rotere hele bede for at undgå udpining af jorden. Derfor ændrede vi vores måde at anskue hele featuren til at give et overblik over hvor længe et bed har været på samme plads, hvor det tidligere har været samt hvornår det igen kan plantes på en tidligere position ifølge den type plante i bedet, der har største sædskifteinterval.
 
-\subsection{IoT devices}
+\subsubsection{Image analysis}
+
+\subsubsection{IoT devices}
 Undervejs i projektet undersøgte vi hvilke køkkenhave-relaterede produkter, der enten allerede fandtes som IoT eller kunne give mening at gøre til en IoT.
 
-\subsubsection{Jordtermometer}
+\subsubsection*{Jordtermometer}
 Der findes mange jordtermometre på markedet, men det er ikke lykkedes os at finde nogen IoT-jordtermometre. Derudover lagde vi mærke til, at de heller ikke kommer med en guide til hvilke planter, der tåler hvilken temperatur. Dette skal brugeren selv finde ud af ved f.eks. at købe frøposer med denne information på forsiden, søge på internettet eller læse i bøger. 
 
 Det kunne derfor måske give mening at lave et samarbejde mellem appen og et jordtermometer. Det ville kræve, at man først lavede en række brugertests med brugere af jordtermometre, for at opleve deres arbejdspraksis og se, om det giver mening for dem at bruge en app.
@@ -63,7 +99,7 @@ Derudover kunne man udvide leksikonnet til at have information om planternes for
 
 For at denne idé kunne realiseres, ville man behøve et samarbejde med en udgiver af jordtermometre, samt yderligere data om planter i forhold til jordtemperatur.
 
-\subsubsection{Gardena vandingssystem}
+\subsubsection*{Gardena vandingssystem}
 Gardena Smart System har en app, der kan forbindes til et vandingssystem og/eller græsslåmaskine. Her er vandingssystemet relevant for køkkenhaver og drivhuse. Deres produkt har en sensor, der afgør hvornår der skal vandes. Den kigger også på vejrudsigten. Brugeren altid sætte den igang eller stoppe en vanding, samt sætte en tidsplan.
 
 Dette produkt er klart mere nøjagtig og automatisk end vores feature, der kun tager højde for vejret og ikke er tilknyttet et produkt.
