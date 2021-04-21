@@ -12,11 +12,8 @@ import androidx.navigation.fragment.navArgs
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantDetailsBinding
 import dk.mifu.pmos.vegetablegardening.helpers.Formatter
-import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import dk.mifu.pmos.vegetablegardening.views.Tooltip
-import java.text.SimpleDateFormat
-import java.util.*
 
 class PlantDetailsFragment: Fragment() {
     private val args: PlantDetailsFragmentArgs by navArgs()

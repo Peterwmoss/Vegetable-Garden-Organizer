@@ -3,17 +3,10 @@ package dk.mifu.pmos.vegetablegardening.database
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import dk.mifu.pmos.vegetablegardening.TestUtils.InstantExecutorExtension
-import dk.mifu.pmos.vegetablegardening.TestUtils.TestLifeCycleOwner
-import dk.mifu.pmos.vegetablegardening.enums.BedLocation
-import dk.mifu.pmos.vegetablegardening.enums.BedLocation.Greenhouse
-import dk.mifu.pmos.vegetablegardening.enums.BedLocation.Outdoors
-import dk.mifu.pmos.vegetablegardening.models.Bed
-import dk.mifu.pmos.vegetablegardening.models.Coordinate
-import dk.mifu.pmos.vegetablegardening.models.MyPlant
-import dk.mifu.pmos.vegetablegardening.models.Season
-import org.junit.jupiter.api.*
-import org.junit.jupiter.api.extension.*
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import java.io.IOException
 
 

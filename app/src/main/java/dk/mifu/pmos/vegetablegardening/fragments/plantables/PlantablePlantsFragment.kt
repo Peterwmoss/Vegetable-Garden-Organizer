@@ -2,27 +2,19 @@ package dk.mifu.pmos.vegetablegardening.fragments.plantables
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Adapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.appcompat.widget.AppCompatButton
-import androidx.constraintlayout.widget.Constraints
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentPlantablePlantsBinding
 import dk.mifu.pmos.vegetablegardening.enums.BedLocation
-import dk.mifu.pmos.vegetablegardening.fragments.viewgarden.AreaOverviewFragmentDirections
 import dk.mifu.pmos.vegetablegardening.helpers.Formatter
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPlantPredicate
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.PlantablePredicate
-import dk.mifu.pmos.vegetablegardening.models.Bed
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import dk.mifu.pmos.vegetablegardening.views.Tooltip

@@ -33,11 +33,6 @@
         <item name="background">?attr/colorPrimary</item>
     </style>
 
-    <style name="SpecialButtonStyle" parent="ButtonStyle">
-        <item name="backgroundTint">@color/blue</item>
-        <item name="background">@color/blue</item>
-    </style>
-
     <style name="Widget.App.NavigationView" parent="Widget.MaterialComponents.NavigationView">
         <item name="itemIconTint">@color/drawer_item_color</item>
         <item name="itemTextColor">@color/drawer_item_color</item>

@@ -1,10 +1,11 @@
 package dk.mifu.pmos.vegetablegardening.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
-import dk.mifu.pmos.vegetablegardening.enums.BedLocation
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
 import dk.mifu.pmos.vegetablegardening.models.Bed
-import dk.mifu.pmos.vegetablegardening.models.Season
 
 @Dao
 interface BedDao {

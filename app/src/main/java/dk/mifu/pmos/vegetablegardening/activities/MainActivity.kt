@@ -15,7 +15,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.MutableLiveData
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -31,7 +30,6 @@ import dk.mifu.pmos.vegetablegardening.helpers.weather.LocationService
 import dk.mifu.pmos.vegetablegardening.helpers.weather.LocationUtils
 import dk.mifu.pmos.vegetablegardening.helpers.weather.WeatherData
 import dk.mifu.pmos.vegetablegardening.models.Weather
-import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.LocationViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.SeasonViewModel
 import kotlinx.coroutines.MainScope
@@ -213,6 +211,8 @@ class MainActivity : AppCompatActivity() {
                 Log.d("handleResponse()", "date: $weather.date")
                 if (weather != null) {
                     locationViewModel.weather.value = weather
+                } else {
+                    locationViewModel.weather.value = Weather(null, 0.0)
                 }
             }
         }

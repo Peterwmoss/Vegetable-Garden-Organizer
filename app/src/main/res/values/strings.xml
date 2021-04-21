@@ -2,7 +2,6 @@
     <string name="app_name">Køkkenhave</string>
 
     <!-- Toolbar -->
-    <string name="toolbar_location">Vælg lokation</string>
     <string name="toolbar_create_grid">Design dit bed</string>
     <string name="toolbar_new_season">Opret en ny sæson</string>
     <string name="toolbar_edit_grid">Redigér dit bed</string>
@@ -10,8 +9,6 @@
 
     <!-- Guides -->
     <string name="help">Hjælp</string>
-    <string name="guide_plantable_plants">Der er i øjeblikket mulighed for at plante/så i dit bed!</string>
-    <string name="guide_no_plantable_plants">Der er ingen planter, der kan plantes i øjeblikket</string>
     <string name="guide_check_water">Baseret på vejret i dit område, kan det være, dine planter har brug for vand</string>
     <string name="guide_no_bed_name_given">Indtast venligst et navn til dit bed</string>
     <string name="guide_bed_already_exists">Et bed med dette navn findes allerede. Vælg venligst et nyt navn til dit bed.</string>
@@ -22,19 +19,16 @@
     <!-- Tooltips -->
     <string name="tooltip_create_grid">Udfyld dit bed ved at trykke på en firkant og vælg fra listen.\n\nDu kan ændre størrelsen på bedet ved plus- og minus-knapperne.</string>
     <string name="tooltip_bed_overview">Her kan du se de planter, som er plantet i dit bed.\n\nKlik på en plante for at flere informationer om planten.</string>
-    <string name="tooltip_plant_details_planted">Her kan du se alle informationer om din plante.\n\nDu kan ændre om planten er forspiret og hvilken sort, der er plantet her.</string>
     <string name="tooltip_plant_details_not_planted">Her kan du se alle informationer om den valgte plante.</string>
     <string name="tooltip_lexicon">Her kan du se alle planter, som er oprettet.\n\nVælg en plante for at se flere informationer om planten.\n\nDu kan også lave en ny plante ved at klikke på plus-knappen nede i hjørnet.</string>
     <string name="tooltip_new_season">Her kan du lave en ny sæson.\n\n Det kan hjælpe appen med at holde styr på sædskifteintervaller\n\n Du kan også bruge det til selv at kigge på dine bedes historikker.</string>
     <string name="tooltip_garden_overview">Tryk på \'udendørs\' for at se alle dine udendørs-bede.\n\n Tryk på \'drivhus\' for at se alle dine bede i dit drivhus</string>
     <string name="tooltip_area_overview">Klik på et bed for at se dine planters placering og oplysninger om dem\n\n Hold inde på et bed og træk i det for at ændre dets placering i forhold til de andre.\n\n Tryk på plus-knappen i hjørnet for at oprette et nyt bed. </string>
-    <string name="tooltip_weather_data">Her kan du se din placering og den dato, der sidst er registreret som en regnvejrsdag (%1$d mm regn på en dag).\n\nHvis du ikke kan se din lokation eller der står \"Ingen info\", skyldes det sandsynligvis, at du har slået adgang til lokationsdata fra for appen.</string>
+    <string name="tooltip_weather_data">Her kan du se din placering og den dato, der sidst er registreret som en regnvejrsdag (%1$d mm regn på en dag).\n\nHvis du ikke kan se din lokation eller der står \"Ingen info\", skyldes det sandsynligvis, at du har slået adgang til lokationsdata fra for appen, eller du befinder dig uden for Danmark.</string>
     <string name="tooltip_plantables">Her kan du se hvilke planter, der er mulighed for at så eller plante i øjeblikket</string>
     <string name="tooltip_crop_rotation">Appen holder styr på sædskifteintervaller på følgende måde:\n\n Når du har flere bed i et område, f.eks. i dit drivhus, kan du lave om på deres rækkefølge ved at holde inde på et bed og trække i det.\n\n Appen holder styr på hvor mange sæsoner et bed med et bestemt navn har været på samme plads.\n\n Eksempel: Når  dine ærter ikke længere skal være det samme sted, kan du blot flytte \"Ærtebed\" til dit nye sted - smart!</string>
 
     <!-- Titles -->
-    <string name="title_location">Hvor er dit bed?</string>
-    <string name="title_dialog_germination">Er denne plante blevet forspiret?</string>
     <string name="title_dialog_save_bed">Navngiv dit bed</string>
     <string name="title_dialog_delete_bed_confirmation">Bekræft sletning af bed</string>
     <string name="title_dialog_delete_plant_confirmation">Bekræft sletning af plante</string>
@@ -44,9 +38,7 @@
     <string name="add_row">Tilføj række</string>
 
     <!-- Plants -->
-    <string name="select_plant">Vælg plante</string>
     <string name="plants">Planter</string>
-    <string name="plantable_pants">Plantbare planter</string>
     <string name="harvest">Registrér høstet</string>
     <string name="water">Registrér vandet</string>
     <string name="new_plant">Ny plante</string>
@@ -56,38 +48,32 @@
     <!-- Plant Details -->
     <string name="name">Navn</string>
     <string name="missing_info">Ingen info</string>
-    <string name="harvested">Høstet</string>
     <string name="last_watered">Sidst vandet</string>
     <string name="last_harvested">Sidst høstet</string>
     <string name="planted">Plantet</string>
     <string name="planted_date">Plantedato</string>
     <string name="sow">Sås</string>
     <string name="plant">Plantes</string>
-    <string name="number_of_seasons">Sæsoner med denne plante her</string>
     <string name="to_lexicon">Til leksikon</string>
     <string name="notes">Noter</string>
 
     <!-- Toasts -->
-    <string name="toast_registered_water">Registreret som vandet</string>
-    <string name="toast_registered_harvest">Registreret som høstet</string>
     <string name="toast_bed_deleted">Bedet er slettet</string>
     <string name="toast_plant_deleted">Planten er slettet</string>
     <string name="toast_missing_year">Indtast venligst et årstal</string>
 
     <!-- Plant Germination -->
     <string name="germinated">Forspiret</string>
-    <string name="not_germinated">Ikke forspiret</string>
-    <string name="set_germination_status">Sæt forspiring</string>
     <string name="edit_germination">Ændr forspiring</string>
 
     <!-- Plant Sort -->
     <string name="sort">Sort</string>
     <string name="edit_sort">Redigér sort</string>
-    <string name="add_sort">Tilføj sort</string>
 
     <!-- Beds -->
     <string name="beds">Bede</string>
     <string name="new_bed">Nyt bed</string>
+    <string name="water_drop">Vanddråbe</string>
 
     <!-- Bed Locations -->
     <string name="location_outdoors">Udendørs</string>
@@ -101,14 +87,12 @@
     <string name="weather_api_url">https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?%1$s</string>
     <string name="weather_data">Vejrdata</string>
     <string name="last_rained">Sidste registrerede regnvejrsdag</string>
-    <string name="date">Dato</string>
     <string name="last_rained_text">%1$s - %2$s</string>
 
     <!-- General Dialogs -->
     <string name="cancel">Annullér</string>
     <string name="save">Gem</string>
     <string name="delete">Slet</string>
-    <string name="close">Luk</string>
     <string name="yes">Ja</string>
     <string name="no">Nej</string>
     <string name="settings">Indstillinger</string>
@@ -119,16 +103,13 @@
     <string name="year">Årstal</string>
     <string name="already_exists_season">Der findes allerede en sæson med dette årstal</string>
     <string name="crop_rotation">Sædskifte</string>
-    <string name="seasons_bed_with_plants">%1$d / %2$d år</string>
     <string name="seasons_empty_bed">Tomt bed</string>
-    <string name="crop_rotation_button">Sådan holder appen styr på sædskifteinterval</string>
     <string name="position">"Position: %1$d</string>
     <string name="current_year">"%1$d. år her</string>
     <string name="plantable_again">Bedet kan plantes her igen</string>
     <string name="years_left">%1$d år tilbage</string>
 
     <!-- Location -->
-    <string name="location_updated">Lokation Opdateret</string>
     <string name="location_permission_rationale">Vil du give adgang til din lokation for at få vejrdata fra dit område?</string>
     <string name="location_permission_denied">Du kan altid slå lokation til i indstillinger, hvis du ønsker</string>
     <string name="location_request_title">Lokationsdata</string>
@@ -140,6 +121,7 @@
     <string name="drawer_plantables">Planter i sæson</string>
     <string name="no_outdoors_plantables">Der er ingen udendørs planter, der kan sås/plantes i øjeblikket. Se leksikon for alle planter i arkivet</string>
     <string name="no_greenhouse_plantables">Der er ingen drivhusplanter, der kan sås/plantes i øjeblikket. Se leksikon for alle planter i arkivet</string>
+    <string name="water_explanation_image_view_content_description">Vandingsikon til forklaringstekst</string>
 
     <!-- New Plant -->
     <string name="earliest_date">Tidligste så-dato</string>

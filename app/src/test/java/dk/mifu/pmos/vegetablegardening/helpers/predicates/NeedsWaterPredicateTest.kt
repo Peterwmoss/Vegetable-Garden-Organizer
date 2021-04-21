@@ -1,10 +1,9 @@
 package dk.mifu.pmos.vegetablegardening.helpers.predicates
 
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
-import org.hamcrest.core.Is.`is`
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
-
-import org.junit.Assert.*
 import java.util.*
 
 class NeedsWaterPredicateTest {

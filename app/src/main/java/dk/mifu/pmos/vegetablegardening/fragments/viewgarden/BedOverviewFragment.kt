@@ -16,7 +16,6 @@ import dk.mifu.pmos.vegetablegardening.helpers.callbacks.UpdateBedCallback
 import dk.mifu.pmos.vegetablegardening.helpers.grid.BedOverviewGridBuilder
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.LocationViewModel
-import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.SeasonViewModel
 import dk.mifu.pmos.vegetablegardening.views.Tooltip
 import kotlinx.coroutines.Dispatchers
@@ -113,8 +112,7 @@ class BedOverviewFragment: Fragment() {
             builder.setExplanationTextViews()
 
             locationViewModel.weather.observe(viewLifecycleOwner, {
-                if (it.date != null)
-                    bedViewModel.setPlantsToWater(it.date)
+                bedViewModel.setPlantsToWater(it.date)
             })
         }
     }

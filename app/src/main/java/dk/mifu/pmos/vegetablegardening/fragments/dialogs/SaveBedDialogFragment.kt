@@ -28,7 +28,7 @@ class SaveBedDialogFragment : DialogFragment() {
     private val bedViewModel: BedViewModel by activityViewModels()
     private val seasonViewModel: SeasonViewModel by activityViewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSaveBedDialogBinding.inflate(inflater, container, false)
 
         if (!bedViewModel.name.isNullOrBlank()) {
@@ -48,31 +48,37 @@ class SaveBedDialogFragment : DialogFragment() {
 
         binding.saveBedButton.setOnClickListener {
             val name = binding.bedNameEditText.text.toString()
-            if (bedViewModel.name.isNullOrBlank()) {
-                MainScope().launch {
-                    val exists = async { exists(name) }
-                    if (!exists.await()) {
-                        saveInDatabase(name)
-                        val navOptions = NavOptions.Builder().setPopUpTo(R.id.areaOverviewFragment, true).build()
-                        val bundle = Bundle()
-                        bundle.putSerializable("Location", bedViewModel.bedLocation!!)
-                        findNavController().navigate(R.id.areaOverviewFragment, bundle, navOptions)
-                    } else
-                        Toast.makeText(requireContext(), getString(R.string.guide_bed_already_exists), Toast.LENGTH_LONG).show()
+            when {
+                name.isBlank() -> {
+                    Toast.makeText(requireContext(), getString(R.string.guide_no_bed_name_given), Toast.LENGTH_LONG).show()
                 }
-            } else {
-                MainScope().launch(Dispatchers.IO) {
-                    val dao = AppDatabase.getDatabase(requireContext()).bedDao()
-                    val repository = BedRepository(dao)
-                    if (name != bedViewModel.name) {
-                        deleteOldFromDatabase()
-                        saveInDatabase(name)
-                    } else {
-                        repository.updateBed(Bed(bedViewModel.name!!, seasonViewModel.currentSeason.value!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows, bedViewModel.order))
+                bedViewModel.name.isNullOrBlank() -> {
+                    MainScope().launch {
+                        val exists = async { exists(name) }
+                        if (!exists.await()) {
+                            saveInDatabase(name)
+                            val navOptions = NavOptions.Builder().setPopUpTo(R.id.areaOverviewFragment, true).build()
+                            val bundle = Bundle()
+                            bundle.putSerializable("Location", bedViewModel.bedLocation!!)
+                            findNavController().navigate(R.id.areaOverviewFragment, bundle, navOptions)
+                        } else
+                            Toast.makeText(requireContext(), getString(R.string.guide_bed_already_exists), Toast.LENGTH_LONG).show()
                     }
                 }
-                val navOptions = NavOptions.Builder().setPopUpTo(R.id.bedOverviewFragment, true).build()
-                findNavController().navigate(R.id.bedOverviewFragment, null, navOptions)
+                else -> {
+                    MainScope().launch(Dispatchers.IO) {
+                        val dao = AppDatabase.getDatabase(requireContext()).bedDao()
+                        val repository = BedRepository(dao)
+                        if (name != bedViewModel.name) {
+                            deleteOldFromDatabase()
+                            saveInDatabase(name)
+                        } else {
+                            repository.updateBed(Bed(bedViewModel.name!!, seasonViewModel.currentSeason.value!!, bedViewModel.bedLocation!!, bedViewModel.plants!!.toMap(), bedViewModel.columns, bedViewModel.rows, bedViewModel.order))
+                        }
+                    }
+                    val navOptions = NavOptions.Builder().setPopUpTo(R.id.bedOverviewFragment, true).build()
+                    findNavController().navigate(R.id.bedOverviewFragment, null, navOptions)
+                }
             }
         }
     }

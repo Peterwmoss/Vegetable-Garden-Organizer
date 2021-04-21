@@ -17,6 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/nav_graph_main" />
+        app:navGraph="@navigation/nav_graph_main"
+        tools:ignore="FragmentTagUsage" />
+    <!-- We suppress this warning since it does not work with FragmentHost as of 21/04-2021 -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

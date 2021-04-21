@@ -52,7 +52,7 @@ class BedViewModel(application: Application) : AndroidViewModel(application) {
         order = 0
     }
 
-    fun setPlantsToWater(date: Date) {
+    fun setPlantsToWater(date: Date?) {
         val map = HashMap<Coordinate, MyPlant>()
         val filteredPlants = plants?.filterValues(NeedsWaterPredicate(date))
         if (filteredPlants != null) {

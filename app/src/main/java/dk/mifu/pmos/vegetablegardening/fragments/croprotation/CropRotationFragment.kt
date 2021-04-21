@@ -81,7 +81,7 @@ class CropRotationFragment: Fragment() {
                 return@withContext list
 
             fun addChildToList(bed: Bed) {
-                val interval = findMinCropInterval(bed, plants)
+                val interval = findMaxCropInterval(bed, plants)
                 val seasonsSincePlantedHere = seasonViewModel.currentSeason.value!! - bed.season
                 list.add(CropRotationHistoryItem(bed.order, interval - seasonsSincePlantedHere + 1))  // Plantable the year after time is up
             }
@@ -123,8 +123,8 @@ class CropRotationFragment: Fragment() {
         }
     }
 
-    private fun findMinCropInterval(bed: Bed, plants: List<Plant>): Int {
-        var lowestInterval = Int.MAX_VALUE
+    private fun findMaxCropInterval(bed: Bed, plants: List<Plant>): Int {
+        var highestInterval = Int.MIN_VALUE
         val bedPlants = bed.plants.values
 
         if(bedPlants.isEmpty()) return 0
@@ -135,13 +135,15 @@ class CropRotationFragment: Fragment() {
             }
 
             if(plant != null){
-                val cropRotationNumber = plant.cropRotation!!.substring(0,1).toIntOrNull() ?: return 0
-                if(cropRotationNumber < lowestInterval)
-                    lowestInterval = cropRotationNumber
+                val cropRotationNumber = plant.cropRotation!!.substring(0,1).toIntOrNull()
+                if (cropRotationNumber == null)
+                    highestInterval = 0
+                else if (cropRotationNumber > highestInterval)
+                    highestInterval = cropRotationNumber
             }
         }
 
-        return lowestInterval
+        return highestInterval
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
