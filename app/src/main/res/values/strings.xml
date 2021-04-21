@@ -20,7 +20,7 @@
     <string name="guide_map">Vejrdata er blevet indsamlet fra følgende lokation</string>
 
     <!-- Tooltips -->
-    <string name="tooltip_create_grid">Udfyld dit bed ved at trykke på en firkant og vælg fra listen.\n\nDu kan ændre størrelsen på bedet ved plus- og minus-knapperne.</string>
+    <string name="tooltip_create_grid">Udfyld dit bed ved at trykke på en firkant og vælg fra listen.\n\nDu kan ændre størrelsen på bedet ved plus- og minus-knapperne.\n\nHvis dit bed ikke er firkantet, anbefaler vi, at du tilføjer flere firkanter end nødvendigt og udfylder dem, som udgør formen på dit bed.</string>
     <string name="tooltip_bed_overview">Her kan du se de planter, som er plantet i dit bed.\n\nKlik på en plante for at flere informationer om planten.</string>
     <string name="tooltip_plant_details_planted">Her kan du se alle informationer om din plante.\n\nDu kan ændre om planten er forspiret og hvilken sort, der er plantet her.</string>
     <string name="tooltip_plant_details_not_planted">Her kan du se alle informationer om den valgte plante.</string>
@@ -30,7 +30,7 @@
     <string name="tooltip_area_overview">Klik på et bed for at se dine planters placering og oplysninger om dem\n\n Hold inde på et bed og træk i det for at ændre dets placering i forhold til de andre.\n\n Tryk på plus-knappen i hjørnet for at oprette et nyt bed. </string>
     <string name="tooltip_weather_data">Her kan du se din placering og den dato, der sidst er registreret som en regnvejrsdag (%1$d mm regn på en dag).\n\nHvis du ikke kan se din lokation eller der står \"Ingen info\", skyldes det sandsynligvis, at du har slået adgang til lokationsdata fra for appen.</string>
     <string name="tooltip_plantables">Her kan du se hvilke planter, der er mulighed for at så eller plante i øjeblikket</string>
-    <string name="tooltip_crop_rotation">Appen holder styr på sædskifteintervaller på følgende måde:\n\n Når du har flere bed i et område, f.eks. i dit drivhus, kan du lave om på deres rækkefølge ved at holde inde på et bed og trække i det.\n\n Appen holder styr på hvor mange sæsoner et bed med et bestemt navn har været på samme plads.\n\n Eksempel: Når  dine ærter ikke længere skal være det samme sted, kan du blot flytte \"Ærtebed\" til dit nye sted - smart!</string>
+    <string name="tooltip_crop_rotation">Appen holder styr på sædskifteintervaller på følgende måde:\n\n Når du har flere bed i et område, f.eks. i dit drivhus, kan du lave om på deres rækkefølge ved at holde inde på et bed og trække i det.\n\n Appen holder styr på hvor mange sæsoner et bed med et bestemt navn har været på samme plads, samt hvor lang tid der skal gå, før du bør placere bedet på en given position igen.\n\n Eksempel: Når  dine ærter ikke længere skal være det samme sted, kan du blot flytte \"Ærtebed\" til dit nye sted - smart!</string>
 
     <!-- Titles -->
     <string name="title_location">Hvor er dit bed?</string>
