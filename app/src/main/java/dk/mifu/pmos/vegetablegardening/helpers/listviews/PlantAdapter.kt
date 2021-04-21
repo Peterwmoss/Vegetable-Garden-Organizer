@@ -1,4 +1,4 @@
-package dk.mifu.pmos.vegetablegardening.helpers.recyclerviews
+package dk.mifu.pmos.vegetablegardening.helpers.listviews
 
 import android.widget.Filter
 import android.widget.Filterable

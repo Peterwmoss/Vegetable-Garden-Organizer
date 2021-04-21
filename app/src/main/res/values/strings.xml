@@ -120,8 +120,12 @@
     <string name="already_exists_season">Der findes allerede en sæson med dette årstal</string>
     <string name="crop_rotation">Sædskifte</string>
     <string name="seasons_bed_with_plants">%1$d / %2$d år</string>
-    <string name="seasons_bed_without_plants">Tomt bed</string>
+    <string name="seasons_empty_bed">Tomt bed</string>
     <string name="crop_rotation_button">Sådan holder appen styr på sædskifteinterval</string>
+    <string name="position">"Position: %1$d</string>
+    <string name="current_year">"%1$d. år her</string>
+    <string name="plantable_again">Bedet kan plantes her igen</string>
+    <string name="years_left">%1$d år tilbage</string>
 
     <!-- Location -->
     <string name="location_updated">Lokation Opdateret</string>
