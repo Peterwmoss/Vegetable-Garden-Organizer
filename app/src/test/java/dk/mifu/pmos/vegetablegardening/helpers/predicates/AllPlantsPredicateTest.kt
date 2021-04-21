@@ -2,10 +2,8 @@ package dk.mifu.pmos.vegetablegardening.helpers.predicates
 
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.models.Plant
-import org.hamcrest.core.Is.`is`
+import org.junit.Assert.assertTrue
 import org.junit.Test
-
-import org.junit.Assert.*
 
 class AllPlantsPredicateTest {
 

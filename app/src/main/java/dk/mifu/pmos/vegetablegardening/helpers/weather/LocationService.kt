@@ -3,16 +3,13 @@
 package dk.mifu.pmos.vegetablegardening.helpers.weather
 
 import android.app.*
-import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.location.Location
 import android.os.*
 import android.util.Log
-import androidx.core.app.NotificationCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.location.*
-import dk.mifu.pmos.vegetablegardening.R
 
 class LocationService : Service() {
     companion object {

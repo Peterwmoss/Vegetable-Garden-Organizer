@@ -1,6 +1,5 @@
 package dk.mifu.pmos.vegetablegardening.fragments.dialogs
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

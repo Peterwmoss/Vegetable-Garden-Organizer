@@ -18,7 +18,6 @@ import dk.mifu.pmos.vegetablegardening.enums.PlantDate
 import dk.mifu.pmos.vegetablegardening.helpers.Formatter
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import kotlinx.coroutines.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 class CustomPlantDialogFragment : DialogFragment() {

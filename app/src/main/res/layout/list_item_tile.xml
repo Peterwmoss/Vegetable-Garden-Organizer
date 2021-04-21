@@ -22,6 +22,7 @@
         android:elevation="@dimen/elevation_picture_on_button"
         android:layout_marginStart="@dimen/spacing_xsmall"
         android:layout_marginTop="@dimen/spacing_xsmall"
+        android:contentDescription="@string/water_drop"
         android:background="@null"
         android:visibility="gone"/>
 
