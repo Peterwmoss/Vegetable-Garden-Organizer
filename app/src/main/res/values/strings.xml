@@ -20,7 +20,7 @@
     <string name="guide_map">Vejrdata er blevet indsamlet fra følgende lokation</string>
 
     <!-- Tooltips -->
-    <string name="tooltip_create_grid">Udfyld dit bed ved at trykke på en firkant og vælg fra listen.\n\nDu kan ændre størrelsen på bedet ved plus- og minus-knapperne.</string>
+    <string name="tooltip_create_grid">Udfyld dit bed ved at trykke på en firkant og vælg fra listen.\n\nDu kan ændre størrelsen på bedet ved plus- og minus-knapperne.\n\nHvis dit bed ikke er firkantet, anbefaler vi, at du tilføjer flere firkanter end nødvendigt og udfylder dem, som udgør formen på dit bed.</string>
     <string name="tooltip_bed_overview">Her kan du se de planter, som er plantet i dit bed.\n\nKlik på en plante for at flere informationer om planten.</string>
     <string name="tooltip_plant_details_planted">Her kan du se alle informationer om din plante.\n\nDu kan ændre om planten er forspiret og hvilken sort, der er plantet her.</string>
     <string name="tooltip_plant_details_not_planted">Her kan du se alle informationer om den valgte plante.</string>
