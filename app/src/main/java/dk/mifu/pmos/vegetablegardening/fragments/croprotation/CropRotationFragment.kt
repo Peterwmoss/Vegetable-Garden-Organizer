@@ -136,14 +136,16 @@ class CropRotationFragment: Fragment() {
 
             if(plant != null){
                 val cropRotationNumber = plant.cropRotation!!.substring(0,1).toIntOrNull()
-                if (cropRotationNumber == null)
-                    highestInterval = 0
-                else if (cropRotationNumber > highestInterval)
-                    highestInterval = cropRotationNumber
+                if (cropRotationNumber != null)
+                    if (cropRotationNumber > highestInterval)
+                        highestInterval = cropRotationNumber
             }
         }
 
-        return highestInterval
+        return if (highestInterval == Int.MIN_VALUE)
+            0
+        else
+            highestInterval
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
