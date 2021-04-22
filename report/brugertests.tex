@@ -10,28 +10,19 @@ Vi har igennem udviklingsprocessen af appen udført X brugertests med Y forskell
 Undervejs i vores brugertests fandt vi bugs vedrørende UI, fejl, mangler og uklarheder. Vi fandt også ud af hvilke ting, der var vigtige at holde fast i og som fungerede godt. De nedenstående afsnit går mere i dybden med de enkelte brugertests, men indeholder stadig kun de vigtigste erfaringer, vi gjorde os.
 
 \subsection{Brugertest 1}
-Ved den første brugertest, sammen med bruger 1, efter sprint 2, var der ikke meget funktionalitet endnu. Brugertesten foregik ved, at vi forklarede den overordnede idé med appen, samt at den var langt fra færdig, og lod derefter brugeren prøve appen selv. Det gav alligevelanledning til ændringer. Brugeren var meget forvirret over, hvorfor hun ikke kunne tilføje flere bed. Det blev dermed tydeligt, at vores navngivning af forskellige dele af en have ikke var korrekt, og at det, vi havde kaldt et "haveområde", skulle omdøbes til et "bed". Den ønskede funktionalitet fra brugeren var nemlig allerede implementeret, men ikke intuitiv.
+Ved den første brugertest, sammen med bruger 1, efter sprint 2, var der ikke meget funktionalitet endnu. Brugertesten foregik ved, at vi forklarede den overordnede idé med appen, samt at den var langt fra færdig, og lod derefter brugeren prøve appen selv. Det gav alligevel anledning til ændringer. Brugeren var meget forvirret over, hvorfor hun ikke kunne tilføje flere bede. Det blev dermed tydeligt, at vores navngivning af forskellige dele af en have ikke var korrekt, og at det, vi havde kaldt et "haveområde", skulle omdøbes til et "bed". Den ønskede funktionalitet fra brugeren var nemlig allerede implementeret, men ikke intuitiv.
 
 \subsection{Brugertest 2}
 
-Ved den anden brugertest, sammen med bruger 1, efter sprint 5, blev brugertesten udført som en tænke-højt-test, hvor brugeren sagde, hvad hun tænkte om forskellige dele af appen.
-Brugeren gav udtryk for en masse forbedringsmuligheder. En af hovedpointerne var, at der skulle flere forklainger til siderne. Hun var lidt forvirret over hvad, hun skulle på den enkelte side i mange tilfælde, så det valgte vi at fokusere på at gøre mere tydeligt fremadrettet.
+Ved den anden brugertest, sammen med bruger 1, efter sprint 5, blev brugertesten udført som en tænke-højt-test. En af hovedpointerne var, at der skulle flere forklainger til siderne. Hun var lidt forvirret over hvad, hun skulle på den enkelte side i mange tilfælde, så det valgte vi at fokusere på at gøre mere tydeligt fremadrettet.
 
-Brugeren efterspurgte også at kunne indtaste personlige notater til planter - f.eks. sort, hvilken leverandør der er blevet brugt og andre ting til den pågældende plante. Dette havde vi ikke tænkt over før, men blev senere en stor værdi i vores app, da den løfter appen fra at være ensformig for alle til at kunne favne alle behov - hvis brugeren savner en funktionalitet, kan de altid bruge notesfeltet til selv at holde styr på ønsket i stedet. I samme forbindelse gav det også mening senere at implementere muligheden for at lave sine egne planter, hvilket brugeren også gav ønske om. På samme måde ville det løfte appen fra at have en fast mængde planter til at kunne holde styr på alle planter, der findes.
+Brugeren efterspurgte også at kunne indtaste personlige notater til planter - f.eks. sort, hvilken leverandør der er blevet brugt og andre ting til den pågældende plante. Dette havde vi ikke tænkt over før, men blev senere en stor værdi i vores app, da den løftede appen fra at være ensformig for alle til at kunne favne alle behov - hvis brugeren savnede en funktionalitet, kunne de altid bruge notesfeltet til selv at holde styr på ønsket i stedet. I samme forbindelse gav det også mening senere at implementere muligheden for at lave sine egne planter, hvilket brugeren også gav ønske om. På samme måde ville det løfte appen fra at have en fast mængde planter til at kunne holde styr på alle planter, der findes.
 
-Der blev også kommenteret på vores valg af ikoner, som hun synes var lidt forvirrende og derfor ikke helt vidste, hvad de refererede til. Her var det primært vores udendørs-ikon, som blev forvekslet med en have og ikke så meget en køkkenhave, og brugeren troede derfor ikke, hun kunne lave et køkkenhave-bed før hun læste titlerne til hvert ikon. Dette gjorde os opmærksom på vigtigheden af ikoner, og især at hvis man vælger at bruge ikoner, skal de også virkelig forestille det, der er meningen - eller gør de ingen gavn.
+Der blev også kommenteret på vores valg af ikoner, som hun syntes var lidt forvirrende og derfor ikke helt vidste, hvad de refererede til. Her var det primært vores udendørs-ikon, som blev forvekslet med en have og ikke så meget en køkkenhave, og brugeren troede derfor ikke, hun kunne lave et køkkenhave-bed før hun læste titlerne til hvert ikon. Dette gjorde os opmærksom på vigtigheden af ikoner, og især at hvis man vælger at bruge ikoner, skal de også virkelig forestille det, der er meningen - ellers gør de ingen gavn.
 
 Efter brugertesten snakkede vi om frø-poser, som gav idéen til at indsætte billeder i appen. Denne idé er udfoldet i afsnittet refleksion under X.
 
-Afslutningsvis lavede vi en prioriteret liste over de vigtigste ting, som brugeren gerne ville have med i appen og fik følgende prioritering:
-
-\begin{enumerate}
-    \item Guide / forklarende overskrifter og tekst
-    \item Tilføj egne planter og sorter, samt at kunne give sådato, data om forkultivering, noter mv.
-    \item Todo-liste og generelle noter
-\end{enumerate}
-
-Generelt gav den brugertest os en stor indsigt i, hvor vigtigt forklaring og sigende ikoner er, samt hvor meget mere en app kan bruges til, hvis man lader brugeren skabe indholde selv.
+Generelt gav den brugertest os en stor indsigt i, hvor vigtigt forklaring og sigende ikoner er, samt hvor meget mere en app kan bruges til, hvis man lader brugeren skabe indhold selv.
 
 \subsection{Brugertest 3}
 
@@ -41,7 +32,7 @@ Der blev gjort udtryk for, at brugeren gerne ville have nogle specifikke oplysni
 
 Derudover ønskede brugeren, at hun kunne indtaste dato for hvornår, hun havde forspiret en plante og ikke om hvorvidt den er forspiret eller ej. Dette havde vi snakket med brugeren om førhen, men misforstået.
 
-Brugeren var stadigvæk forvirret over måden som et bed blev illustreret på, fordi hver række i et bed var kvadratiske. Til det foreslog hun, at et bed blev lavet mere aflangt på den ene led, så det er tydeligt, at hver firkant er en række (eller en del af en række) og ikke et bed. Hun tilføjede herudover, at hun godt kunne tænke sig at der var plads til minimum fem rækker / kolonner på hver led i et bed. Dette implementerede vi senere hen.
+Brugeren var stadigvæk forvirret over måden som et bed blev illustreret på, fordi hver række i et bed var kvadratiske. Til det foreslog hun, at et bed blev lavet mere aflangt på den ene led, så det blev tydeligt, at hver firkant var en række (eller en del af en række) og ikke et bed. Hun tilføjede herudover, at hun godt kunne tænke sig, at der var plads til minimum fem rækker / kolonner på hver led i et bed. Begge dele implementerede vi senere hen.
 
 Vi opdagede, at et af de skærmbilleder, som brugeren kom til, når hun skulle oprette et nyt bed, ikke var lavet til skærmstørrelsen på hendes telefon, da den var mindre end de skærmstørrelser, vi havde testet på, og noget af teksten blev derfor ikke vist. Efter denne opdagelse begyndte vi at teste på mindste skærmstørrelse med minimum API 23, for at sikre en god brugeroplevelse for alle, der kan køre appen.
 
@@ -49,22 +40,20 @@ Brugeren var forvirret over vores måde at vise plantbare planter på og syntes,
 
 \subsection{Brugertest 4}
 
-Denne brugertest var mere spontan og i samarbejde med bruger 2 efter sprint 7. Brugeren gav udtryk for at det ikke var tydeligt hvad, et bed repræsenterede - det var indforstået. Han ønskede en forklaring til hvad et bed er defineret som i appen. Her kunne man også lave en forklaring til hele appen generelt, så brugeren også fik en forståelse for andre dele. Denne mangel kan kobles til, da vi under første brugertest opdagede, at vi ikke havde brugt det rigtige fagtem for et bed, men bare kaldt det et "område". Dette ændrede vi straks med tanken på, at brugerne var de bedrevidende, uden at tænke på, at det ikke nødvendigvis er alle fremtidige brugere af appen, der endnu har opbygget et fagligt ordforråd om køkkenhaver. Det endte derfor med, at appen fik en forklaring på bede generelt samt appens opbygning.
+Denne brugertest var mere spontan og i samarbejde med bruger 2 efter sprint 7. Brugeren gav udtryk for at det ikke var tydeligt hvad, et bed repræsenterede - det var indforstået. Han ønskede en forklaring til hvad et bed er defineret som i appen. Her kunne man også lave en forklaring til hele appen generelt, så brugeren også fik en forståelse for andre dele. Denne mangel kan kobles til, da vi under første brugertest opdagede, at vi ikke havde brugt det rigtige fagterm for et bed, men bare kaldt det et "område". Dette ændrede vi straks med tanken på, at brugerne var de bedrevidende, uden at tænke på, at det ikke nødvendigvis er alle fremtidige brugere af appen, der endnu har opbygget et fagligt ordforråd om køkkenhaver. Det endte derfor med, at appen fik en forklaring på bede generelt samt appens opbygning.
 
-Brugeren gjorde også udtyk for, at det kunne være en god idé at lade brugeren styre så mange inddelinger af under-bede, som de ønsker, således at det ikke er forhåndsbestemt hvor mange niveauer man ønsker at underinddele sin køkkenhave i. FØLG OP PÅ DETTE.
+Brugeren gjorde også udtyk for, at det kunne være en god idé at lade brugeren styre så mange inddelinger af under-bede, som de ønsker, således at det ikke er forhåndsbestemt, hvor mange niveauer man ønsker at underinddele sin køkkenhave i. Dette implementerede vi ikke, men er beskrevet under fremtidige udvidelser i sektion X.
 
-Han kunne godt tænke sig noget hjælp til hvordan man kan lave specielle former af bed, hvis ens bed nu for eksempel er rundt og ikke firkantet. Det kan godt virke som om at appen kun kan bruges, hvis du har en firkantet køkkenhave. FØLG OP PÅ DETTE.
+Han kunne godt tænke sig noget hjælp til hvordan man kan lave specielle former af bed, hvis ens bed nu for eksempel er rundt og ikke firkantet. Det kan godt virke som om at appen kun kan bruges, hvis du har en firkantet køkkenhave. Dette tilføjede vi til tooltippet.
 
 \subsection{Brugertest 5}
 Denne brugertest blev udført efter sprint 9 med bruger 1. Efter dette sprint havde vi implementeret en vejr-data side med det formål, at vise brugeren hvornår appen havde registreret, at det sidst havde regnet, samt hvilken lokation, den havde taget udgangspunkt i. Brugeren ønskede at se yderligere informationer såsom hvor mange mm regn, der var faldet på en regnsvejrsdag, hvad vejrdataet skulle bruges til og hvordan appen vurderede om det talte som en regnvejrsdag. Dette går igen hånd i hånd med idéen om, at appen ikke skal fortælle dig, hvad du skal gøre, men snarere give dig et solidt beslutningsgrundlag. Det krævede i dette tilfælde mere information til brugeren.
 
-Brugeren gjorde os også opmærksom på, at man som oftest ønsker at tilføje flere planter af samme type i sit bed, og at det derfor kunne give mening at sortere listen af planter på senest tilføjet, favorit-planter eller lignende. FØLG OP PÅ DETTE.
+Brugeren gjorde os også opmærksom på, at man som oftest ønsker at tilføje flere planter af samme type i sit bed, og at det derfor kunne give mening at sortere listen af planter på senest tilføjet, favorit-planter eller lignende. Denne idé er også udfoldet i fremtidige udvidelser i sektion X.
 
-I denne brugertest ønskede brugeren at kunne inddele sine bede i områder. Dette ønske minder meget om pointen fra bruger 2 i forrige brugertest, om at det kunne gie mening, at lade brugeren inddele bede så mange gange som de ønsker. FØLg OP PÅ DETTE.
+I denne brugertest ønskede brugeren at kunne inddele sine bede i områder. Dette ønske minder meget om pointen fra bruger 2 i forrige brugertest, om at det kunne give mening, at lade brugeren inddele bede så mange gange som de ønsker.
 
 Brugeren var forvirret over startsiden, som den så ud lige nu, og foreslog at appen i stedet skulle starte med en oversigt over alle sæsoner. Dette fravalgte vi dog at gøre, da vi kunne se, at brugeren som regel kun ønskede at kigge på bede for den nuværende sæson. Vi vurderede derfor, at der i stedet var brug for en bedre forklaring i vores tool-tip på forsiden, men at den stadig skulle starte på bedene i den nyeste sæson oprettet.
-
-Under sædskifteinterval påpegede brugeren, at der manglede informationer om hvor lang tid, der måtte gå før bestemte planter igen kunne blive plantet i samme bed. Dette fandt vi ud af ikke fremgik tydeligt af vores datagrundlag. FØLG OP PÅ DETTE.
 
 Ligesom i brugertest 2, lavede brugeren en top tre over ønskede features, men pointerede dog, at det ikke var høje ønsker:
 
