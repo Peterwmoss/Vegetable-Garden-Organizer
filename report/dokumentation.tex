@@ -28,9 +28,10 @@ Appen indeholder mange klasser, der arver fra vores eget interface \texttt{Predi
     
 \end{enumerate}
 
-\subsection{Lokation}
+\subsection{Lokation og vejrdata}
+For at kunne vise vejrdata fra brugerens egen lokation, har vi lavet en Service, der begynder, når appen startes, og stopper, når den har en lokation. Ved at bruge en Service frem for asynkron kode, undgår vi race conditions, da datatet bliver udveklset igennem broadcasts og derfor ikke bliver eksekveret før en broadcast bliver modtaget.
 
-IKKE DONE. Til at hente brugerens lokation har vi lavet en service, der kører når man bruger appen som sørger for at få en cirka-lokation på brugeren, så vi kan hente vejrdata for det område brugeren er i.
+Denne lokation bruger vi til at definere en boundary box, som gives videre til DMIs API for at få vejrdata fra den nærmeste vejrstation. Vi bruger DMI, da vores app er udviklet til brug i Danmark. 
 
 \subsection{Lagring af data}
 Vi gør brug af en Room-database til at gemme de bede, sæsoner og egne planter brugeren opretter. Vi bruger en Room-database, da det er en del af Androidx og officielt understøttet af Google / Android. 
