@@ -11,7 +11,7 @@ Baseret på brugertestene beskrevet tidligere, var der ønske om en større indd
 Det kunne give mening at implementere en funktion, der viser jordtemperaturen fra din lokation ud fra DMIs data, da vi allerede bruger deres API.
 
 \subsection{Sortering af listen over planter}
-Når brugeren skal oprette eller redigere et bed, får de en liste af alle præ-definerede ig selvoprettede planter. Der er lige nu ingen sortering i den rækkefølge, de bliver vist i. Her er der flere forskellige muligheder:
+Når brugeren skal oprette eller redigere et bed, får de en liste af alle præ-definerede ig selvoprettede planter. Der er lige nu ingen sortering i den rækkefølge, de bliver vist i.  Man kunne lave en lignende sortering i listen over plantabre planter. Her er der flere forskellige muligheder:
 \begin{itemize}
    \item Lade brugeren definere favorit planter, som vises først
    \item Sortere på senest brugt. Dette er især nyttigt, hvis brugeren skal indtaste samme plante flere gange i træk
@@ -20,3 +20,14 @@ Når brugeren skal oprette eller redigere et bed, får de en liste af alle præ-
 \end{itemize}
 
 Uanset hvilken metode, man valgte, ville det give værdi for brugeren, da der lige nu ikke er noget system, så man kan ikke regne sig frem til hvor i listen, en plante findes.
+
+\subsection{Redigerbart layout i oversigt over bede}
+Som det ser ud lige nu, er der altid maksimum tre kolonner, når man kan se alle sine bede enten udendøres eller i drivhus. Det kunne måske skabe irritation for nogle brugere, hvis de f.eks. har fire bede ved siden af hinanden geografisk i deres have og dermed bliver nødt til at huske, at appens repræsentation ikke matcher positionen i virkeligheden. 
+
+For at opnå den ønskede funktionalitet kunne man lave en redigér-knap lignende den, man finder inde på et enkelt bed, der giver muglihed for at specificere hvor mange rækker og kolonner man øsnker at se oversigten i.
+
+\subsection{Flet celler}
+Hvis man har planter, der fylder mere i bredden end andre, eller som skal sås med større afstand, ville det være visuelt nemmere at holde styr på, hvis der var mulighed for at flette celler. Det ville give mulighed for at repræsenterere haven endnu mere detaljeret end lige nu.
+
+\subsection{To-do liste}
+Appen har en funktion, der giver mulighed for at skrive noter for den enkelte planter. Den giver derimod ikke mulighed for at skrive generelle noter eller lave en overordnet to-do liste. Her kunne man lave en ny tab i side-menuen, der gav adgang til at lave en to-do liste og skrive noter.
