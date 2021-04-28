@@ -1,5 +1,22 @@
 \section{Fremtidige udvidelser}
-Gennem projektet nåede vi alt i backloggen, som det også fremgik i vores burn-up chart. Der var dog enkelte ting, vi fjernede fra backloggen undervejs, da det ikke længere var del af vores ønskede mål og omfang for arbejdet frem mod afleveringen - nogle af disse features kunne dog måske stadig give mening at implementere i et fremtidigt arbejde på appen. Derudover fik vi også nye idéer undervejs, der eventuelt kan give værdi for brugeren i fremtiden.
+Gennem projektet nåede vi alt i backloggen, som det også fremgik i vores burn-up chart. Der var dog enkelte ting, vi fjernede fra backloggen undervejs, da det ikke længere var del af vores ønskede mål og omfang for arbejdet frem mod afleveringen --- nogle af disse features kunne dog måske stadig give mening at implementere i et fremtidigt arbejde på appen. Derudover fik vi også nye idéer undervejs, der eventuelt kan give værdi for brugeren i fremtiden.
 
 \subsection{Ikoner til alle planter}
 Nogle mennesker orienterer sig meget visuelt, og her ville det give god mening, hvis hver enkelte plante havde et ikon knyttet til sig. Da dette kobler sig meget til datagrundlaget -vurderede vi, at det ikke gav mening at bruge tid på at finde hvert eneklt ikon til hver af de planter, vi havde fra vores data. Det ville være oplagt at have data, der allerede havde knyttet et ikon til sig. Alternativt ville det være meget tidskrævende, at finde ikoner samt skalere og farve dem. Det vurderede vi, ikke gav mening i forhold til vores nuværende tidsramme, især når der heller ikke var nogen brugertests, der fremhævede manglen. I en fremtidig version af appen, ville det måske give mening at få et samarbejde, der kunne levere alt data herunder ikoner. 
+
+\subsection{Inddelig og gruppering af bede}
+Baseret på brugertestene beskrevet tidligere, var der ønske om en større inddeling af bede. Det ville derfor være oplagt at implementere i en fremtidig verion. Dette ønske vurderede vi ikke, der var tid til at implementere på en optimal måde, da ønskerne først kom efter sprint 7 ud af 12. Hvis man kigger på vores burn-up chart fra afsnittet om processen, lader det til at være en god beslutning, da vi først nåede i mål med vores backlog i sidste sprintkun med få story points mindre end andre sprints.
+
+\subsection{Brug af DMIs jordtemperatur}
+Det kunne give mening at implementere en funktion, der viser jordtemperaturen fra din lokation ud fra DMIs data, da vi allerede bruger deres API.
+
+\subsection{Sortering af listen over planter}
+Når brugeren skal oprette eller redigere et bed, får de en liste af alle præ-definerede ig selvoprettede planter. Der er lige nu ingen sortering i den rækkefølge, de bliver vist i. Her er der flere forskellige muligheder:
+\begin{itemize}
+   \item Lade brugeren definere favorit planter, som vises først
+   \item Sortere på senest brugt. Dette er især nyttigt, hvis brugeren skal indtaste samme plante flere gange i træk
+   \item Alfabetisk rækkefølge
+   \item Brugerdefinerede planter øverst
+\end{itemize}
+
+Uanset hvilken metode, man valgte, ville det give værdi for brugeren, da der lige nu ikke er noget system, så man kan ikke regne sig frem til hvor i listen, en plante findes.
