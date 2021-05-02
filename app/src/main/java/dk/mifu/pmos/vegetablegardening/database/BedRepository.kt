@@ -20,9 +20,9 @@ class BedRepository(private val bedDao: BedDao) {
         }
     }
 
-    suspend fun deleteBed(name: String) {
+    suspend fun deleteBed(name: String, season: Int) {
         withContext(Dispatchers.IO) {
-            bedDao.delete(name)
+            bedDao.delete(name, season)
         }
     }
 
@@ -46,5 +46,9 @@ class BedRepository(private val bedDao: BedDao) {
 
     fun findBedsWithSeason(season: Int): List<Bed>{
         return bedDao.findBedsWithSeason(season)
+    }
+
+    fun findBedsWithSeasonAndLocation(season: Int, location: BedLocation): List<Bed>{
+        return bedDao.findBedsWithSeasonAndLocation(season, location.toString())
     }
 }
