@@ -10,19 +10,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.skydoves.balloon.createBalloon
 import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.database.BedRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentDeleteBedConfirmationDialogBinding
+import dk.mifu.pmos.vegetablegardening.helpers.predicates.HigherOrderPredicate
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
+import dk.mifu.pmos.vegetablegardening.viewmodels.SeasonViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DeleteBedConfirmationDialogFragment : DialogFragment() {
     private lateinit var binding : FragmentDeleteBedConfirmationDialogBinding
 
     private val bedViewModel: BedViewModel by activityViewModels()
+    private val seasonViewModel: SeasonViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentDeleteBedConfirmationDialogBinding.inflate(inflater, container, false)
@@ -59,7 +64,23 @@ class DeleteBedConfirmationDialogFragment : DialogFragment() {
         MainScope().launch(Dispatchers.IO) {
             val dao = AppDatabase.getDatabase(requireContext()).bedDao()
             val repository = BedRepository(dao)
-            repository.deleteBed(bedViewModel.name!!)
+
+            updateOrders(repository)
+
+            repository.deleteBed(bedViewModel.name!!, seasonViewModel.currentSeason.value!!)
+
+        }
+    }
+
+    private suspend fun updateOrders(repository: BedRepository) {
+        return withContext(Dispatchers.IO) {
+            val beds = repository.findBedsWithSeasonAndLocation(seasonViewModel.currentSeason.value!!, bedViewModel.bedLocation!!)
+            val currentBed = repository.findBedByPrimaryKeys(bedViewModel.name!!, seasonViewModel.currentSeason.value!!)
+            val filteredBeds = beds.filter(HigherOrderPredicate(currentBed!!))
+            filteredBeds.forEach {
+                it.order--
+                repository.updateBed(it)
+            }
         }
     }
 

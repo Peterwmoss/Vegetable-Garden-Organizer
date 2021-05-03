@@ -47,8 +47,8 @@ class AreaOverviewFragment : Fragment() {
 
                         viewHolder as ViewHolder
 
-                        val from = viewHolder.adapterPosition
-                        val to = target.adapterPosition
+                        val from = viewHolder.bindingAdapterPosition
+                        val to = target.bindingAdapterPosition
                         val bed = viewHolder.bed
 
                         adapter.moveItem(bed, from, to)

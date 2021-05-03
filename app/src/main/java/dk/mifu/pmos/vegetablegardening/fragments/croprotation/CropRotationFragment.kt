@@ -60,10 +60,10 @@ class CropRotationFragment: Fragment() {
 
         val plants = plantViewModel.plants.value!!
 
-        MainScope().launch(Dispatchers.IO) {
-            val beds = repository.findBedsWithSeason(seasonViewModel.currentSeason.value!!)
-            val bedsLookup = beds.map {
-                it to createHistoryList(it, plants)
+        MainScope().launch(Dispatchers.Main) {
+            val beds = withContext(Dispatchers.IO) { repository.findBedsWithSeason(seasonViewModel.currentSeason.value!!) }
+            val bedsLookup = beds.map { bed ->
+                bed to createHistoryList(bed, plants)
             }.toMap()
             adapter = CropRotationAdapter(requireContext(), beds, bedsLookup)
             expandableListView.setAdapter(adapter)
@@ -73,7 +73,7 @@ class CropRotationFragment: Fragment() {
     }
 
     private suspend fun createHistoryList(initialBed: Bed, plants: List<Plant>): List<CropRotationHistoryItem> {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             val list = mutableListOf<CropRotationHistoryItem>()
             val earlierVersionsOfBed = repository.findBedsByName(initialBed.name)
 
@@ -117,6 +117,7 @@ class CropRotationFragment: Fragment() {
                     }
                 }
             }
+
             addFirstItem(earlierVersionsOfBed.head, earlierVersionsOfBed.tail, 1)
 
             return@withContext list

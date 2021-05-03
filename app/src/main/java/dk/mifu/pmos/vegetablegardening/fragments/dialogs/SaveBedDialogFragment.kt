@@ -125,7 +125,7 @@ class SaveBedDialogFragment : DialogFragment() {
         withContext(Dispatchers.IO) {
             val dao = AppDatabase.getDatabase(requireContext()).bedDao()
             val repository = BedRepository(dao)
-            repository.deleteBed(bedViewModel.name!!)
+            repository.deleteBed(bedViewModel.name!!, seasonViewModel.currentSeason.value!!)
         }
     }
 }

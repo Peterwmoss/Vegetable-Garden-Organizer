@@ -250,7 +250,7 @@ class BedDatabaseTest {
             val bed = Bed(name, 2021, BedLocation.Outdoors, columns = 0, rows = 0, order = 0)
             bedDao.insert(bed)
 
-            bedDao.delete(name)
+            bedDao.delete(name, 2021)
             val byName = bedDao.findByPrimaryKeys(name, bed.season)
 
             Assertions.assertNull(byName)
@@ -269,7 +269,7 @@ class BedDatabaseTest {
             bedDao.insert(bed2)
 
             // Delete bed 1
-            bedDao.delete(name1)
+            bedDao.delete(name1, 2021)
             val byName = bedDao.findByPrimaryKeys(name2, bed2.season)
 
             // Ensure bed 2 still in database
@@ -284,7 +284,7 @@ class BedDatabaseTest {
             val bed = Bed(nameToKeep, 2021, BedLocation.Outdoors, columns = 0, rows = 0, order = 0)
             bedDao.insert(bed)
 
-            bedDao.delete(nameToDelete)
+            bedDao.delete(nameToDelete, 2021)
             val byName = bedDao.findByPrimaryKeys(nameToKeep, bed.season)
 
             Assertions.assertNotNull(byName)
