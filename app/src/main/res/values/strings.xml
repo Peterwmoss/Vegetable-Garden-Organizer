@@ -5,7 +5,7 @@
     <string name="toolbar_create_grid">Design dit bed</string>
     <string name="toolbar_new_season">Opret en ny sæson</string>
     <string name="toolbar_edit_grid">Redigér dit bed</string>
-    <string name="toolbar_crop_rotation">Status for kommende sædskifte</string>
+    <string name="toolbar_crop_rotation">Status for sædskifte</string>
 
     <!-- Guides -->
     <string name="help">Hjælp</string>
