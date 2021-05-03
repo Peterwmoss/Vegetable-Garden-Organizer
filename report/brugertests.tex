@@ -1,4 +1,11 @@
-\section{Brugertests}
+\section{Samarbejde med brugere}
+Igennem hele prjektet har vi haft stort fokus på at lytte til vores brugere og lavde det, som de har brug for. Vi har været i kontakt med to forskellige brugere, dog kun meget lidt med bruger 2. Optimalt ville vi gerne have haft input fra flere brugere. Dette blev ikke en realitet, men ville fremtidigt kunne give en værdi for appen hvis udført.
+
+Allerede inden projektet startede havde vi en samtale med bruger 1 for at afdække behov. Denne samtale lagde udgangspunktet for vores kravspecifikation og problemformulering.
+
+Derudover har vi brugt bruger 1 til at observere hendes arbejdspraksis i forhold til at holde styr på sædskifte og anden organisering i køkkenhaven. Dette har vi taget meget udgangspunkt i, da vi ikke selv har erfaring med den praktiske del af en køkkenhave, men blot det teoretiske, vi har læst os frem til.
+
+\subsection{Brugertests}
 Vi har igennem udviklingsprocessen af appen udført X brugertests med Y forskellige brugere. Der er blevet udført brugertests efter følgende sprints med følgende brugere:
 \begin{itemize}
     \item Sprint 2 - Bruger 1
@@ -9,10 +16,10 @@ Vi har igennem udviklingsprocessen af appen udført X brugertests med Y forskell
 
 Undervejs i vores brugertests fandt vi bugs vedrørende UI, fejl, mangler og uklarheder. Vi fandt også ud af hvilke ting, der var vigtige at holde fast i og som fungerede godt. De nedenstående afsnit går mere i dybden med de enkelte brugertests, men indeholder stadig kun de vigtigste erfaringer, vi gjorde os.
 
-\subsection{Brugertest 1}
+\subsubsection{Brugertest 1}
 Ved den første brugertest, sammen med bruger 1, efter sprint 2, var der ikke meget funktionalitet endnu. Brugertesten foregik ved, at vi forklarede den overordnede idé med appen, samt at den var langt fra færdig, og lod derefter brugeren prøve appen selv. Det gav alligevel anledning til ændringer. Brugeren var meget forvirret over, hvorfor hun ikke kunne tilføje flere bede. Det blev dermed tydeligt, at vores navngivning af forskellige dele af en have ikke var korrekt, og at det, vi havde kaldt et "haveområde", skulle omdøbes til et "bed". Den ønskede funktionalitet fra brugeren var nemlig allerede implementeret, men ikke intuitiv.
 
-\subsection{Brugertest 2}
+\subsubsection{Brugertest 2}
 
 Ved den anden brugertest, sammen med bruger 1, efter sprint 5, blev brugertesten udført som en tænke-højt-test. En af hovedpointerne var, at der skulle flere forklainger til siderne. Hun var lidt forvirret over hvad, hun skulle på den enkelte side i mange tilfælde, så det valgte vi at fokusere på at gøre mere tydeligt fremadrettet.
 
@@ -24,7 +31,7 @@ Efter brugertesten snakkede vi om frø-poser, som gav idéen til at indsætte bi
 
 Generelt gav den brugertest os en stor indsigt i, hvor vigtigt forklaring og sigende ikoner er, samt hvor meget mere en app kan bruges til, hvis man lader brugeren skabe indhold selv.
 
-\subsection{Brugertest 3}
+\subsubsection{Brugertest 3}
 
 Ved tredje brugertest med bruger 1 efter sprint 7, fik vi opklaret nogle uklarheder i forhold til hvordan brugeren ønsker at holde styr på forspiring, samt hvilke detaljer om sine planter, hun ønsker at have tilgængelige.
 
@@ -38,7 +45,7 @@ Vi opdagede, at et af de skærmbilleder, som brugeren kom til, når hun skulle o
 
 Brugeren var forvirret over vores måde at vise plantbare planter på og syntes, der manglede forklaring. På det tidspunkt fungerede det ved, at hvis et bed havde tomme felter, foreslog appen nogle planter, der var sæson for lige nu, som man derefter kunne trykke på for at så. Vi foreslog, at det skulle vises på en helt anden måde, hvilket hun syntes godt om. Her tilføjede hun også, at det ikke gav så meget mening at man kunne plante en ny plante direkte i bedet med det samme, da man jo vil så de frø man har. Appen skal derimod give noget information på forhånd, man kan reagere på senere. Den tankegang tog vi meget til os, og vores fremadrettede syn på appen blev, at den skulle fungere som visualisering af mange informationer frem for at håndtere og styre alt for dig.
 
-\subsection{Brugertest 4}
+\subsubsection{Brugertest 4}
 
 Denne brugertest var mere spontan og i samarbejde med bruger 2 efter sprint 7. Brugeren gav udtryk for at det ikke var tydeligt hvad, et bed repræsenterede - det var indforstået. Han ønskede en forklaring til hvad et bed er defineret som i appen. Her kunne man også lave en forklaring til hele appen generelt, så brugeren også fik en forståelse for andre dele. Denne mangel kan kobles til, da vi under første brugertest opdagede, at vi ikke havde brugt det rigtige fagterm for et bed, men bare kaldt det et "område". Dette ændrede vi straks med tanken på, at brugerne var de bedrevidende, uden at tænke på, at det ikke nødvendigvis er alle fremtidige brugere af appen, der endnu har opbygget et fagligt ordforråd om køkkenhaver. Det endte derfor med, at appen fik en forklaring på bede generelt samt appens opbygning.
 
@@ -46,7 +53,7 @@ Brugeren gjorde også udtyk for, at det kunne være en god idé at lade brugeren
 
 Han kunne godt tænke sig noget hjælp til hvordan man kan lave specielle former af bed, hvis ens bed nu for eksempel er rundt og ikke firkantet. Det kan godt virke som om at appen kun kan bruges, hvis du har en firkantet køkkenhave. Dette tilføjede vi til tooltippet.
 
-\subsection{Brugertest 5}
+\subsubsection{Brugertest 5}
 Denne brugertest blev udført efter sprint 9 med bruger 1. Efter dette sprint havde vi implementeret en vejr-data side med det formål, at vise brugeren hvornår appen havde registreret, at det sidst havde regnet, samt hvilken lokation, den havde taget udgangspunkt i. Brugeren ønskede at se yderligere informationer såsom hvor mange mm regn, der var faldet på en regnsvejrsdag, hvad vejrdataet skulle bruges til og hvordan appen vurderede om det talte som en regnvejrsdag. Dette går igen hånd i hånd med idéen om, at appen ikke skal fortælle dig, hvad du skal gøre, men snarere give dig et solidt beslutningsgrundlag. Det krævede i dette tilfælde mere information til brugeren.
 
 Brugeren gjorde os også opmærksom på, at man som oftest ønsker at tilføje flere planter af samme type i sit bed, og at det derfor kunne give mening at sortere listen af planter på senest tilføjet, favorit-planter eller lignende. Denne idé er også udfoldet i fremtidige udvidelser i sektion X.
@@ -63,10 +70,4 @@ Ligesom i brugertest 2, lavede brugeren en top tre over ønskede features, men p
         \item Vejledning til at skrive sorten i en brugerlavet plante 
 \end{enumerate}
 
-\section{Tæt samarbejde med brugeren}
-Her noget om:
-\begin{itemize}
-    \item Vores kravspecifikation inden projektet
-    \item Info om sædskifte
-\end{itemize} 
 
