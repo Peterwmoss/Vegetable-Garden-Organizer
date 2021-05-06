@@ -12,12 +12,12 @@ Dataet er lagt ind i en \texttt{.csv}-fil, som læses ind i \texttt{PlantViewMod
 
 \subsection{Datarepræsentation}
 
-Vi har syv datastrukturer, der abstraherer bede, planter, sæsoner mm. Herunder har vi både en \texttt{Plant} og en \texttt{MyPlant}, så vi kan skelne mellem en generelt plantetype med information om f.eks. sædskifteinterval og en plante, der er plantet i et bed og dermed har informatio om f.eks. forspiringsstatus knyttet til sig. Fordelen ved at skille dem ad på denne måde er, at man ikke behøver gemme generel info for hver plante af samme type, der er placeret i et bed.
+Vi har syv datastrukturer, der abstraherer bede, planter, sæsoner mm. Herunder har vi både en \texttt{Plant} og en \texttt{MyPlant}, så vi kan skelne mellem en generelt plantetype med information om f.eks. sædskifteinterval og en plante, der er plantet i et bed og dermed har information om f.eks. forspiringsstatus knyttet til sig. Fordelen ved at skille dem ad på denne måde er, at man ikke behøver gemme generel info for hver plante af samme type, der er placeret i et bed.
 
 \subsection{User interface}
 For at bygge UI har vi brugt XML-filer. Her har vi hovedsageligt benyttet \texttt{ConstraintLayout}, da det er Googles standard layout. Ved at bruge dette layout frem for andre kan man også undgå lange og dybe hierarkier at views, der ligger inde i hinanden, da alt har en eller flere restriktioner frem for en tilhørende gruppe.
 
-Derudober har vi besluttet, at appen kun skal bruges i portræt. Hvis man lægger sin telefonskærm ned, sker der ikke noget. Det har vi vurderet giver den bedste brugeroplevelse, da man f.eks. kan placere bed i forhold til hinanden, og ikke ønsker at de skal ændre placering ved en rotation af skærmen. 
+Derudover har vi besluttet, at appen kun skal bruges i portræt. Hvis man lægger sin telefonskærm ned, sker der ikke noget. Det har vi vurderet giver den bedste brugeroplevelse, da man f.eks. kan placere bed i forhold til hinanden, og ikke ønsker at de skal ændre placering ved en rotation af skærmen. 
 
 \subsection{Prædikater}
 Appen indeholder mange klasser, der arver fra vores eget interface \texttt{Predicate}. Dette er der to store grunde til:
@@ -34,9 +34,9 @@ For at kunne vise vejrdata fra brugerens egen lokation, har vi lavet en Service,
 Denne lokation bruger vi til at definere en boundary box, som gives videre til DMIs API for at få vejrdata fra den nærmeste vejrstation. Vi bruger DMI, da vores app er udviklet til brug i Danmark. 
 
 \subsection{Lagring af data}
-Vi gør brug af en Room-database til at gemme de bede, sæsoner og egne planter brugeren opretter. Vi bruger en Room-database, da det er en del af Androidx og officielt understøttet af Google / Android. 
+Vi gør brug af en lokal Room-database til at gemme de bede, sæsoner og egne planter brugeren opretter. Vi bruger en Room-database, da det er en del af Androidx og officielt understøttet af Google / Android. 
 
 Til at tilgå vores data gør vi brug af DAO'er - Data Access Objects. Disse er en abstraktion til at tilgå, opdatere, slette mv. i databasen på en ensartet måde, så vi ikke skal skrive queries direkte til databasen hver gang vi ønsker at bruge eller ændre data deri.
-For at gøre arbejdet med disse DAO'er lidt lettere for os har vi lavet repositories, som laver en yderligere abstraktion for at vi kan kalde metoderne (såsom \texttt{updateBed}, \texttt{insertBed} osv.) asynkront, så vi ikke blokerer for UI- / Main-tråden mens vi lægger data i databasen.
+For at gøre arbejdet med disse DAO'er lidt lettere for os har vi lavet repositories, som laver en yderligere abstraktion, for at vi kan kalde metoderne (såsom \texttt{updateBed}, \texttt{insertBed} osv.) asynkront, så vi ikke blokerer for UI- / Main-tråden mens vi lægger data i databasen.
 
 Selve databasen er en singleton-instans, så vi ikke behøver at lave en ny instans hver gang vi skal tilgå databasen, da det er en relativt omstændig process. Dette er også anbefalet af Google på deres Android developer side \hyperlink{https://developer.android.com/training/data-storage/room/#database}{https://developer.android.com/training/data-storage/room/#database}
