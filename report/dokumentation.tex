@@ -6,9 +6,9 @@ Appen er bygget op omkring en enkelt aktivitet med mange tilhørende fragmenter.
 Navigation mellem fragmenter og dialog-bokse foregår med en navigationsgraf i xml, der definerer alle actions og parametre.
 
 \subsection{Datagrundlag}
-Appen indeholder data om forskellige planter, som er taget fra Årstidernes plantekalender \hyperlink{https://issuu.com/aarstiderne\_com/docs/aarstidernes-plante-og-saa-kalender}{https://issuu.com/aarstiderne\_com/docs/aarstidernes-plante-og-saa-kalender}.
+Appen indeholder data om forskellige planter, som er taget fra Årstidernes plantekalender\footcite{aarstiderne}.
 
-Dataet er lagt ind i en \texttt{.csv}-fil, som læses ind i \texttt{PlantViewModel} via en \texttt{CSVReader}. På den måde er det nemt, hvis man skulle få mere data, eller at dataet ændrer sig. 
+Dataet er lagt ind i en \texttt{csv}-fil, som læses ind i \texttt{PlantViewModel} via en \texttt{CSVReader}\footcite{opencsv}. På den måde er det nemt, hvis man skulle få mere data, eller at dataet ændrer sig. 
 
 \subsection{Datarepræsentation}
 
@@ -34,9 +34,9 @@ For at kunne vise vejrdata fra brugerens egen lokation, har vi lavet en Service,
 Denne lokation bruger vi til at definere en boundary box, som gives videre til DMIs API for at få vejrdata fra den nærmeste vejrstation. Vi bruger DMI, da vores app er udviklet til brug i Danmark. 
 
 \subsection{Lagring af data}
-Vi gør brug af en lokal Room-database til at gemme de bede, sæsoner og egne planter brugeren opretter. Vi bruger en Room-database, da det er en del af Androidx og officielt understøttet af Google / Android. 
+Vi gør brug af en lokal Room-database til at gemme de bede, sæsoner og egne planter brugeren opretter. Vi bruger en Room-database, da det er en del af AndroidX og officielt understøttet af Google / Android. 
 
 Til at tilgå vores data gør vi brug af DAO'er - Data Access Objects. Disse er en abstraktion til at tilgå, opdatere, slette mv. i databasen på en ensartet måde, så vi ikke skal skrive queries direkte til databasen hver gang vi ønsker at bruge eller ændre data deri.
 For at gøre arbejdet med disse DAO'er lidt lettere for os har vi lavet repositories, som laver en yderligere abstraktion, for at vi kan kalde metoderne (såsom \texttt{updateBed}, \texttt{insertBed} osv.) asynkront, så vi ikke blokerer for UI- / Main-tråden mens vi lægger data i databasen.
 
-Selve databasen er en singleton-instans, så vi ikke behøver at lave en ny instans hver gang vi skal tilgå databasen, da det er en relativt omstændig process. Dette er også anbefalet af Google på deres Android developer side \hyperlink{https://developer.android.com/training/data-storage/room/#database}{https://developer.android.com/training/data-storage/room/#database}
+Selve databasen er en singleton-instans, så vi ikke behøver at lave en ny instans hver gang vi skal tilgå databasen, da det er en relativt omstændig process. Dette er også anbefalet af Google på deres Android developer side\footnote{room}.
