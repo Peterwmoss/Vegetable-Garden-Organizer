@@ -39,4 +39,4 @@ Vi gør brug af en lokal Room-database til at gemme de bede, sæsoner og egne pl
 Til at tilgå vores data gør vi brug af DAO'er - Data Access Objects. Disse er en abstraktion til at tilgå, opdatere, slette mv. i databasen på en ensartet måde, så vi ikke skal skrive queries direkte til databasen hver gang vi ønsker at bruge eller ændre data deri.
 For at gøre arbejdet med disse DAO'er lidt lettere for os har vi lavet repositories, som laver en yderligere abstraktion, for at vi kan kalde metoderne (såsom \texttt{updateBed}, \texttt{insertBed} osv.) asynkront, så vi ikke blokerer for UI- / Main-tråden mens vi lægger data i databasen.
 
-Selve databasen er en singleton-instans, så vi ikke behøver at lave en ny instans hver gang vi skal tilgå databasen, da det er en relativt omstændig process. Dette er også anbefalet af Google på deres Android developer side\footnote{room}.
+Selve databasen er en singleton-instans, så vi ikke behøver at lave en ny instans hver gang vi skal tilgå databasen, da det er en relativt omstændig process. Dette er også anbefalet af Google på deres Android developer side\footcite{room}.
