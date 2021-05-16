@@ -36,8 +36,13 @@ class BedOverviewGridBuilder(
     }
 
     override fun initializeTile(coordinate: Coordinate, plant: MyPlant?, tileBinding: ListItemTileBinding) {
-        if(plant != null)
-            tileBinding.plantButton.setOnClickListener { navigate(coordinate, plant) }
+        if(plant != null) {
+            tileBinding.plantButton.setOnClickListener {
+                navController.navigate(
+                    BedOverviewFragmentDirections.toShowPlantDetailsDialog(coordinate, plant)
+                )
+            }
+        }
 
         tileBinding.plantButton.text = plant?.name ?: ""
         val params = FrameLayout.LayoutParams(getTileSideWidth(context), getTileSideHeight(context))
@@ -56,13 +61,4 @@ class BedOverviewGridBuilder(
             }
         })
     }
-
-    private fun navigate(coordinate: Coordinate, plant: MyPlant?) {
-        if(plant == null) {
-            navController.navigate(BedOverviewFragmentDirections.toChoosePlantDialog(coordinate, PlantablePredicate()))
-        } else {
-            navController.navigate(BedOverviewFragmentDirections.toShowPlantDetailsDialog(coordinate, plant))
-        }
-    }
-
 }
