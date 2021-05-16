@@ -113,9 +113,6 @@
             android:id="@+id/to_show_plant_details_dialog"
             app:destination="@id/plantDetailsDialogFragment" />
         <action
-            android:id="@+id/to_choose_plant_dialog"
-            app:destination="@id/choosePlantDialogFragment" />
-        <action
             android:id="@+id/to_create_grid"
             app:destination="@id/createGridFragment" />
         <action
