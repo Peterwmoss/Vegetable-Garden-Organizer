@@ -8,9 +8,12 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import dk.mifu.pmos.vegetablegardening.R
+import dk.mifu.pmos.vegetablegardening.database.AppDatabase
+import dk.mifu.pmos.vegetablegardening.database.PlantRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentChoosePlantBinding
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPlantPredicate
 import dk.mifu.pmos.vegetablegardening.helpers.listviews.PlantAdapter
@@ -20,6 +23,11 @@ import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.BedViewModel
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
+import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel.Companion.getUserPlants
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ChoosePlantDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentChoosePlantBinding
@@ -37,14 +45,19 @@ class ChoosePlantDialogFragment : DialogFragment() {
 
         val recyclerView = binding.choosePlantRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
-        plantViewModel.plants.observe(viewLifecycleOwner, {
-            val plants = it
-                .filter(LocationPlantPredicate(bedViewModel.bedLocation))
-                .filter(args.predicate)
-            adapter = Adapter(plants)
-            recyclerView.adapter = adapter
+        plantViewModel.plants.observe(viewLifecycleOwner, { plants ->
+            MainScope().launch(Dispatchers.Main) {
+                getUserPlants(requireContext()).observe(viewLifecycleOwner, { userPlants ->
+                    userPlants.addAll(plants)
+                    val filtered = userPlants
+                        .filter(LocationPlantPredicate(bedViewModel.bedLocation))
+                        .filter(args.predicate)
+                    adapter = Adapter(filtered)
+                    recyclerView.adapter = adapter
 
-            PlantFilter.setupSearch(adapter, binding.searchPlantEdittext)
+                    PlantFilter.setupSearch(adapter, binding.searchPlantEdittext)
+                })
+            }
         })
 
         binding.clearPlantButton.setOnClickListener {

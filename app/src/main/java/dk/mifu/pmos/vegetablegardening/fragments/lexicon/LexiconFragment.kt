@@ -19,6 +19,7 @@ import dk.mifu.pmos.vegetablegardening.helpers.listviews.PlantViewHolder
 import dk.mifu.pmos.vegetablegardening.helpers.search.PlantFilter
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel
+import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel.Companion.getUserPlants
 import dk.mifu.pmos.vegetablegardening.views.Tooltip
 import kotlinx.coroutines.*
 
@@ -53,7 +54,7 @@ class LexiconFragment: Fragment() {
         binding.searchPlantEdittext.setText("")
         plantViewModel.plants.observe(viewLifecycleOwner, { plants ->
             MainScope().launch(Dispatchers.Main) {
-                getUserPlants().observe(viewLifecycleOwner, { userPlants ->
+                getUserPlants(requireContext()).observe(viewLifecycleOwner, { userPlants ->
                     userPlants.addAll(plants)
                     val recyclerView = binding.lexiconRecyclerView
                     recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
@@ -80,14 +81,6 @@ class LexiconFragment: Fragment() {
     override fun onResume() {
         super.onResume()
         binding.searchPlantEdittext.setText("")
-    }
-
-    private suspend fun getUserPlants(): LiveData<MutableList<Plant>> {
-        return withContext(Dispatchers.IO) {
-            val dao = AppDatabase.getDatabase(requireContext()).plantDao()
-            val repository = PlantRepository(dao)
-            return@withContext repository.getAllPlants()
-        }
     }
 
     private inner class ViewHolder(view: View) : PlantViewHolder(view) {

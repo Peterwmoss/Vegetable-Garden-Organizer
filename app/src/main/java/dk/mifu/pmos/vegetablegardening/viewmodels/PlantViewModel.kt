@@ -9,12 +9,26 @@ import com.opencsv.CSVParserBuilder
 import com.opencsv.CSVReader
 import com.opencsv.CSVReaderBuilder
 import dk.mifu.pmos.vegetablegardening.R
+import dk.mifu.pmos.vegetablegardening.database.AppDatabase
+import dk.mifu.pmos.vegetablegardening.database.PlantRepository
 import dk.mifu.pmos.vegetablegardening.models.Plant
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.InputStreamReader
 import java.text.SimpleDateFormat
 import java.util.*
 
 class PlantViewModel(application: Application) : AndroidViewModel(application) {
+    companion object {
+        suspend fun getUserPlants(context: Context): LiveData<MutableList<Plant>> {
+            return withContext(Dispatchers.IO) {
+                val dao = AppDatabase.getDatabase(context).plantDao()
+                val repository = PlantRepository(dao)
+                return@withContext repository.getAllPlants()
+            }
+        }
+    }
+
     val categoryTitles: LiveData<List<String>> by lazy {
         loadCategoryTitles()
     }
