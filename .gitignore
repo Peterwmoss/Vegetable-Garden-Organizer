@@ -32,3 +32,4 @@ local.properties
 /app/.settings
 /apikey.properties
 /.settings
+/app/release
