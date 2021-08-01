@@ -16,6 +16,9 @@ import dk.mifu.pmos.vegetablegardening.R
 import dk.mifu.pmos.vegetablegardening.database.AppDatabase
 import dk.mifu.pmos.vegetablegardening.database.PlantRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentChoosePlantBinding
+import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper
+import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.hideKeyBoard
+import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.showKeyboard
 import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPlantPredicate
 import dk.mifu.pmos.vegetablegardening.helpers.listviews.PlantAdapter
 import dk.mifu.pmos.vegetablegardening.helpers.listviews.PlantViewHolder
@@ -84,6 +87,8 @@ class ChoosePlantDialogFragment : DialogFragment() {
         dialog!!.window!!.attributes = params
 
         binding.searchPlantEdittext.requestFocus()
+
+        showKeyboard(requireContext(), binding.searchPlantEdittext)
     }
 
     override fun onStop() {
@@ -93,6 +98,7 @@ class ChoosePlantDialogFragment : DialogFragment() {
         } else {
             (activity as AppCompatActivity).supportActionBar?.title = bedViewModel.name
         }
+        hideKeyBoard(requireContext(), binding.searchPlantEdittext)
     }
 
     private inner class ViewHolder(view: View) : PlantViewHolder(view) {
