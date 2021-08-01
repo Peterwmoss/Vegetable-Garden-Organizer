@@ -34,15 +34,28 @@
 
     <Button
         android:id="@+id/clear_plant_button"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/choose_plant_recycler_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/new_plant_btn"
         android:text="@string/remove_plant"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium"
         style="@style/ButtonStyle"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        android:id="@+id/new_plant_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/choose_plant_recycler_view"
+        app:layout_constraintStart_toEndOf="@id/clear_plant_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/new_plant"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        style="@style/AcceptButtonStyle"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 

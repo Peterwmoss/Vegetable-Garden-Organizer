@@ -189,6 +189,10 @@
         <argument
             android:name="predicate"
             app:argType="dk.mifu.pmos.vegetablegardening.helpers.predicates.Predicate" />
+
+        <action
+            android:id="@+id/to_new_plant_dialog"
+            app:destination="@id/customPlantDialogFragment" />
     </dialog>
 
     <!-- Plant Details Dialog -->

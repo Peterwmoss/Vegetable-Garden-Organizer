@@ -43,7 +43,7 @@
     <string name="water">Registrér vandet</string>
     <string name="new_plant">Ny plante</string>
     <string name="no_plant_name_given">Et navn er påkrævet for at lave en plante</string>
-    <string name="remove_plant">Fjern plante</string>
+    <string name="remove_plant">Ryd</string>
 
     <!-- Plant Details -->
     <string name="name">Navn</string>

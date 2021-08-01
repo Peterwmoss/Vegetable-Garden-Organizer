@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import dk.mifu.pmos.vegetablegardening.R
@@ -63,6 +64,10 @@ class ChoosePlantDialogFragment : DialogFragment() {
         binding.clearPlantButton.setOnClickListener {
             bedViewModel.plants?.remove(args.coordinate)
             dismiss()
+        }
+
+        binding.newPlantBtn.setOnClickListener {
+            findNavController().navigate(ChoosePlantDialogFragmentDirections.toNewPlantDialog())
         }
 
         return binding.root
