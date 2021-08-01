@@ -16,6 +16,7 @@ import dk.mifu.pmos.vegetablegardening.database.PlantRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentCustomPlantDialogBinding
 import dk.mifu.pmos.vegetablegardening.enums.PlantDate
 import dk.mifu.pmos.vegetablegardening.helpers.Formatter
+import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper
 import dk.mifu.pmos.vegetablegardening.models.Plant
 import kotlinx.coroutines.*
 import java.util.*
@@ -31,6 +32,8 @@ class CustomPlantDialogFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCustomPlantDialogBinding.inflate(inflater, container, false)
+
+        KeyboardHelper.showKeyboard(requireContext(), binding.plantName)
 
         formatter = Formatter(requireContext())
 
@@ -142,6 +145,8 @@ class CustomPlantDialogFragment : DialogFragment() {
     override fun onStop() {
         super.onStop()
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.plants)
+
+        KeyboardHelper.hideKeyBoard(requireContext(), binding.plantName)
     }
 
     private suspend fun deleteOldFromDatabase() {

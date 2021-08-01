@@ -8,20 +8,17 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import dk.mifu.pmos.vegetablegardening.R
-import dk.mifu.pmos.vegetablegardening.database.AppDatabase
-import dk.mifu.pmos.vegetablegardening.database.PlantRepository
 import dk.mifu.pmos.vegetablegardening.databinding.FragmentChoosePlantBinding
 import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper
 import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.hideKeyBoard
 import dk.mifu.pmos.vegetablegardening.helpers.KeyboardHelper.Companion.showKeyboard
-import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPlantPredicate
 import dk.mifu.pmos.vegetablegardening.helpers.listviews.PlantAdapter
 import dk.mifu.pmos.vegetablegardening.helpers.listviews.PlantViewHolder
+import dk.mifu.pmos.vegetablegardening.helpers.predicates.LocationPlantPredicate
 import dk.mifu.pmos.vegetablegardening.helpers.search.PlantFilter
 import dk.mifu.pmos.vegetablegardening.models.MyPlant
 import dk.mifu.pmos.vegetablegardening.models.Plant
@@ -31,7 +28,6 @@ import dk.mifu.pmos.vegetablegardening.viewmodels.PlantViewModel.Companion.getUs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class ChoosePlantDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentChoosePlantBinding
